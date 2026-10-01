@@ -52,7 +52,7 @@ cp .env.example .env
 
 ### Without Docker (the stand-in)
 
-`scripts/dev-backend.ts` answers the Supabase calls this app makes, running the real migrations on an in-process Postgres. Use it when Docker is not installed. It listens on `127.0.0.1:54321` only.
+`scripts/dev-backend.ts` answers the Supabase calls this app makes, running the real migrations on an in-process Postgres. Use it when Docker is not installed. It listens on `127.0.0.1:55321` only.
 
 ```bash
 bun run dev:backend
@@ -65,7 +65,7 @@ bun run dev
 ```
 
 - The app is at http://localhost:5173.
-- The **operator console** is at http://127.0.0.1:54321/_dev. It shows the simulated clock (with buttons for each moment of the event), the poller, the **mailbox** with the sign-in codes, the matches, `billing_report()`, the ops alerts and `result_log`.
+- The **operator console** is at http://127.0.0.1:55321/_dev. It shows the simulated clock (with buttons for each moment of the event), the poller, the **mailbox** with the sign-in codes, the matches, `billing_report()`, the ops alerts and `result_log`.
 - The data lives in memory: restarting the stand-in starts the event again from 20 Oct, 12:00 UTC.
 
 The walkthrough (definition of done, item 3):
@@ -79,17 +79,42 @@ The walkthrough (definition of done, item 3):
 
 ### With the Supabase CLI (Docker)
 
-The same app, against a real local Supabase. Stop the stand-in first: both use port 54321.
+The same app against a real local Supabase. Docker Desktop must be running. The CLI is a dev dependency of this repo (`bunx supabase …`); nothing is installed globally. Stop the stand-in first: both use port 55321.
+
+**Ports.** This project uses 55320–55329, not Supabase's default 54320–54329: Windows with WSL reserves a block of ports that, on this machine, covers the defaults (`netsh interface ipv4 show excludedportrange protocol=tcp` lists the reserved ranges).
+
+1. Start Supabase. The first run downloads about 3 GB of images. Migrations, the event file, the simulated clock and the invented seed apply by themselves (`supabase/config.toml`, `[db.seed]`).
+
+   ```bash
+   bunx supabase start
+   ```
+
+2. Put the API URL and the anon key that `bunx supabase status` prints into `.env`. These are the standard local demo keys, not secrets.
+3. Serve the results poller. `supabase/functions/.env` (git-ignored) contains `PROVIDER=fixture`.
+
+   ```bash
+   bunx supabase functions serve --env-file supabase/functions/.env
+   ```
+
+4. Let pg_cron call the poller every minute. Run each line as its own query (`bunx supabase db query "…"` or Studio at http://127.0.0.1:55323), with the local service key from `bunx supabase status`:
+
+   ```sql
+   select vault.create_secret('http://host.docker.internal:55321/functions/v1', 'functions_url');
+   select vault.create_secret('<SERVICE_ROLE_KEY from supabase status>', 'service_role_key');
+   ```
+
+5. Start the app with `bun run dev`. Sign-in codes arrive in the local mail catcher (Mailpit) at http://127.0.0.1:55324.
+6. Move the simulated clock in Studio or with `bunx supabase db query`:
+
+   ```sql
+   select public.dev_set_now('2026-10-21 20:00+00');
+   ```
+
+**The whole walkthrough as a script**, against this real stack (real Auth emails, RLS, pg_cron → edge function → settlement). It checks 21 claims. Afterwards, `bunx supabase db reset` puts the database back to the seed (redo step 4: the reset clears Vault).
 
 ```bash
-supabase start
+bun scripts/walkthrough-local.ts
 ```
-
-- Migrations apply from `supabase/migrations`; the seed runs the event file, the simulated clock and the invented seed (`supabase/config.toml`, `[db.seed]`).
-- Put the API URL and anon key that `supabase status` prints into `.env`.
-- Sign-in codes appear in the local mail viewer (Mailpit) that `supabase status` lists.
-- Results: `supabase functions serve poll-results --env-file supabase/functions/.env.local` with `PROVIDER=fixture` in that file. To let pg_cron call it every minute, create the Vault secrets listed at the top of `supabase/migrations/0009_cron_watchdog.sql`.
-- Move the simulated clock in the SQL editor: `select public.dev_set_now('2026-10-21 20:00+00');`
 
 ## Tests and checks
 
@@ -102,7 +127,17 @@ supabase start
 | `bunx tsc --noEmit` · `bun run build` · `bun run lint` | Types, build, lint |
 | `bun scripts/settle-benchmark.ts [fans]` | Settlement time for N fans on the in-process database (indicative; the real test is `loadtest/settle-100k.sql` on staging) |
 
-The SQL tests and the stand-in run on an in-process Postgres (PGlite) with a small stand-in for Supabase's `auth`, `vault`, `cron` and `net` (`supabase/dev/pglite_supabase_shim.sql`). With Docker they run unchanged against `supabase start`.
+By default the SQL tests and the stand-in run on an in-process Postgres (PGlite) with a small stand-in for Supabase's `auth`, `vault`, `cron` and `net` (`supabase/dev/pglite_supabase_shim.sql`). With `supabase start` running, the same files run on the real local Supabase database (each still rolled back):
+
+```bash
+TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres bun run test:sql
+```
+
+Supabase's own security and performance checks on the local database:
+
+```bash
+bunx supabase db advisors
+```
 
 Load tests (written, not run; staging only, after sign-off):
 

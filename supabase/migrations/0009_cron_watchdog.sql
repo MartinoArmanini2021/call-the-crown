@@ -10,7 +10,7 @@
 -- =====================================================================================================
 
 create extension if not exists pg_cron;
-create extension if not exists pg_net;
+create extension if not exists pg_net with schema extensions;   -- not public (advisor lint 0014)
 
 -- Runs the checks, then posts every unsent alert to the ops webhook. Quiet when no webhook is set.
 create function public.watchdog() returns void

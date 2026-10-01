@@ -16,7 +16,7 @@ import type { PGlite, Transaction } from "@electric-sql/pglite";
 import { bootDb, ROOT } from "./lib/db";
 import { pollAsService } from "./lib/poller";
 
-const PORT = 54321;
+const PORT = 55321;
 const ANON_KEY = "local-dev-anon-key";
 const SECRET = randomUUID(); // tokens die with the process, like the database
 const db: PGlite = await bootDb();

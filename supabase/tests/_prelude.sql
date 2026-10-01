@@ -129,7 +129,8 @@ begin
   insert into public.provider_map (provider, kind, provider_ref, our_ref)
   select 'fixture', 'match', 'fx-m' || n, n::text from generate_series(1, 6) n
   union all
-  select 'fixture', 'player', 'fx-' || p, p from unnest(array['a','b','c','d','e','f']) p;
+  select 'fixture', 'player', 'fx-' || p, p from unnest(array['a','b','c','d','e','f']) p
+  on conflict do nothing;   -- the local seed may have mapped them already
   perform t.as_owner();
 end;
 $$;

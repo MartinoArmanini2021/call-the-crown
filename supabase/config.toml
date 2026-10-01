@@ -3,19 +3,36 @@
 # same Auth settings in their dashboards (README, "Auth settings per instance").
 project_id = "six-kings-game"
 
+# Ports 55320-55329, not Supabase's default 54320-54329: Windows (with WSL / Hyper-V) reserves the
+# 54146-54345 block on this machine, so the defaults cannot bind ("ports are not available").
+# Check yours with: netsh interface ipv4 show excludedportrange protocol=tcp
+
 [api]
-port = 54321
+port = 55321
 schemas = ["public"]
 max_rows = 1000
 
 [db]
-port = 54322
+port = 55322
+shadow_port = 55320
 major_version = 17
+
+[db.pooler]
+port = 55329
 
 [db.seed]
 enabled = true
 # Local only: the event, the simulated clock, then the invented players and schedule.
 sql_paths = ["./events/sixkings_2026.sql", "./dev/sim_clock.sql", "./dev/seed_local.sql"]
+
+[studio]
+port = 55323
+
+[local_smtp]
+port = 55324
+
+[analytics]
+port = 55327
 
 [auth]
 site_url = "http://localhost:5173"
@@ -24,6 +41,11 @@ jwt_expiry = 3600
 enable_refresh_token_rotation = true
 enable_signup = true
 enable_anonymous_sign_ins = false
+
+# Local only: the default (2 emails an hour) blocks a walkthrough. Production sets its own limit
+# for the sign-up rush (plan, section e).
+[auth.rate_limit]
+email_sent = 100
 
 [auth.email]
 enable_signup = true

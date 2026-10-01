@@ -1,7 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "backend", "runtimeExecutable": "bun", "runtimeArgs": ["scripts/dev-backend.ts"], "port": 54321, "url": "http://127.0.0.1:54321/_dev" },
+    { "name": "backend", "runtimeExecutable": "bun", "runtimeArgs": ["scripts/dev-backend.ts"], "port": 55321, "url": "http://127.0.0.1:55321/_dev" },
     { "name": "web", "runtimeExecutable": "bun", "runtimeArgs": ["run", "dev", "--", "--port", "5173", "--strictPort"], "port": 5173 }
   ]
 }
