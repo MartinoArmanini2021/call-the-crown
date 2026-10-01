@@ -1,0 +1,12 @@
+{
+  "name": "six-kings-game",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "test:sql": "bun scripts/test-sql.ts"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.0"
+  }
+}

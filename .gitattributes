@@ -1,0 +1,2 @@
+# Store and check out every text file with LF, whatever the machine's git says
+* text=auto eol=lf
