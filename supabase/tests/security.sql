@@ -198,6 +198,9 @@ select t.check('a deleted league is gone with its members',
 -- 6. ingest_result: refuses inconsistent payloads, settles once, re-settles a correction and logs it
 -- ---------------------------------------------------------------------------------------------------
 select t.pick(t.uid(3), 1, 'c', '6-4 6-4');
+select t.check('a final result before the scheduled start is refused (picks are still open)',
+  t.feed(1, 'completed', 'c', '6-4 6-4')->>'reason' = 'final result before the scheduled start');
+select t.check('… and fans can still pick that match', t.pick(t.uid(2), 1, 'c', '6-3 6-3') is null);
 select public.dev_set_now('2026-10-21 18:30+00');
 select t.check('ingest rejects a payload whose winner loses on the sets',
   t.feed(1, 'completed', 'c', '4-6 4-6')->>'outcome' = 'rejected_invalid');
@@ -221,8 +224,8 @@ select t.check('after all of that the match is still unsettled',
   (select m.status = 'scheduled' and m.winner_id is null and p.pts_total is null
      from public.matches m join public.picks p on p.match_no = m.match_no and p.user_id = t.uid(3) where m.match_no = 1));
 select t.check('every rejected payload is in result_log with its raw copy and hash',
-  (select count(*) from public.result_log where outcome like 'rejected%' and raw is not null and raw_sha256 ~ '^[0-9a-f]{64}$') = 7);
-select t.check('every rejection queued an ops alert', (select count(*) from public.ops_alerts where kind = 'result_rejected') = 7);
+  (select count(*) from public.result_log where outcome like 'rejected%' and raw is not null and raw_sha256 ~ '^[0-9a-f]{64}$') = 8);
+select t.check('every rejection queued an ops alert', (select count(*) from public.ops_alerts where kind = 'result_rejected') = 8);
 
 select t.check('a valid final payload settles', t.feed(1, 'completed', 'c', '6-4 6-4')->>'outcome' = 'settled');
 select t.check('the provider listing the players the other way round is understood',

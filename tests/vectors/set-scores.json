@@ -1,0 +1,33 @@
+{
+  "_about": "Shared by src/lib/validation.ts (client) and public.validate_set_scores (server). tests/validation.test.ts runs every vector through both and fails if either disagrees with 'expect'. Scores are in the match's fixed order: player 1's games first. winner = 1 or 2 (which player is said to win).",
+  "rules": {
+    "allowed_set_scores": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]],
+    "deciding_set": "full"
+  },
+  "vectors": [
+    { "name": "straight sets for player 1", "winner": 1, "sets": 2, "scores": [[6, 4], [6, 3]], "expect": null },
+    { "name": "straight sets for player 2", "winner": 2, "sets": 2, "scores": [[4, 6], [3, 6]], "expect": null },
+    { "name": "three sets, player 1 wins", "winner": 1, "sets": 3, "scores": [[6, 4], [3, 6], [7, 6]], "expect": null },
+    { "name": "three sets, player 2 wins", "winner": 2, "sets": 3, "scores": [[6, 4], [3, 6], [5, 7]], "expect": null },
+    { "name": "every legal score", "winner": 1, "sets": 3, "scores": [[6, 0], [1, 6], [6, 2]], "expect": null },
+    { "name": "7-5 and 7-6", "winner": 1, "sets": 2, "scores": [[7, 5], [7, 6]], "expect": null },
+    { "name": "6-0 bagels", "winner": 2, "sets": 2, "scores": [[0, 6], [0, 6]], "expect": null },
+
+    { "name": "no winner", "winner": null, "sets": 2, "scores": [[6, 4], [6, 4]], "expect": "winner_required" },
+    { "name": "sets missing", "winner": 1, "sets": null, "scores": [[6, 4], [6, 4]], "expect": "sets_must_be_2_or_3" },
+    { "name": "four sets", "winner": 1, "sets": 4, "scores": [[6, 4], [6, 4]], "expect": "sets_must_be_2_or_3" },
+    { "name": "no set scores", "winner": 1, "sets": 2, "scores": null, "expect": "set_scores_required" },
+    { "name": "missing a set score (3 sets, 2 boxes)", "winner": 1, "sets": 3, "scores": [[6, 4], [3, 6]], "expect": "set_scores_incomplete" },
+    { "name": "too many set scores", "winner": 1, "sets": 2, "scores": [[6, 4], [3, 6], [6, 3]], "expect": "set_scores_incomplete" },
+    { "name": "an empty box", "winner": 1, "sets": 2, "scores": [[6, 4], [6, null]], "expect": "set_scores_incomplete" },
+    { "name": "7-3 is not a set", "winner": 1, "sets": 2, "scores": [[7, 3], [6, 4]], "expect": "illegal_set_score" },
+    { "name": "6-5 is not a set", "winner": 1, "sets": 2, "scores": [[6, 5], [6, 4]], "expect": "illegal_set_score" },
+    { "name": "6-6 is not a set", "winner": 1, "sets": 2, "scores": [[6, 6], [6, 4]], "expect": "illegal_set_score" },
+    { "name": "8-6 is not a set", "winner": 1, "sets": 2, "scores": [[8, 6], [6, 4]], "expect": "illegal_set_score" },
+    { "name": "10-8 (a match tiebreak) is not a set while the deciding set is full", "winner": 1, "sets": 3, "scores": [[6, 4], [3, 6], [10, 8]], "expect": "illegal_set_score" },
+    { "name": "a third set after a 2-0", "winner": 1, "sets": 3, "scores": [[6, 4], [6, 4], [6, 4]], "expect": "third_set_after_two_nil" },
+    { "name": "the chosen winner loses both sets", "winner": 1, "sets": 2, "scores": [[4, 6], [4, 6]], "expect": "winner_must_win_two_sets" },
+    { "name": "a split sent as two sets", "winner": 1, "sets": 2, "scores": [[6, 4], [4, 6]], "expect": "winner_must_win_two_sets" },
+    { "name": "the chosen winner loses the decider", "winner": 1, "sets": 3, "scores": [[6, 4], [4, 6], [4, 6]], "expect": "winner_must_win_two_sets" }
+  ]
+}

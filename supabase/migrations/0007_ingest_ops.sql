@@ -138,6 +138,13 @@ begin
                                                jsonb_array_length(v_scores), v_scores);
       end if;
 
+      -- A final result before our scheduled start means the schedule or the payload is wrong. Settling
+      -- would publish a result while picks are still open, so refuse and alert. If the match really
+      -- started early, the operator moves its start to the next minute (README); the next poll settles.
+      if v_reason is null and (m.starts_at is null or public.app_now() < m.starts_at) then
+        v_reason := 'final result before the scheduled start';
+      end if;
+
       if v_reason is not null then
         v_outcome := 'rejected_invalid';
       elsif m.settlement_paused then
