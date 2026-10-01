@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Operator console (local)</title>
+<style>
+  :root { --bg:#0b0b0b; --card:#181818; --raised:#242424; --accent:#e50914; --text:#fff; --muted:#9c9c9c; --line:rgb(255 255 255 / .08); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:14px/1.45 system-ui, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .warn { color: var(--muted); font-size: 12px; margin: 0 0 16px; }
+  .grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  section { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; min-width:0; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 8px; }
+  button { background:var(--raised); color:var(--text); border:1px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer; font:inherit; font-size:12px; margin:0 4px 6px 0; }
+  button.primary { background: var(--accent); border-color: var(--accent); }
+  input { background:var(--raised); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:6px 8px; font:inherit; }
+  table { width:100%; border-collapse: collapse; font-size: 12px; }
+  td, th { text-align:left; padding:4px 6px; border-top:1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; border-top: 0; }
+  code, pre { font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+  pre { white-space: pre-wrap; word-break: break-word; margin: 0; }
+  .now { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .code { font-size: 20px; font-weight: 800; letter-spacing: .2em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Operator console</h1>
+  <p class="warn">Local development only (scripts/dev-backend.ts). Nothing here exists on staging or production: there, results come only from the provider and the clock is the server's. This console has no way to type a score either; it moves the simulated clock and the fixture provider publishes results in time.</p>
+
+  <div class="grid">
+    <section>
+      <h2>Simulated clock (UTC)</h2>
+      <div class="now" id="now">…</div>
+      <div style="margin-top:8px">
+        <button data-at="2026-10-20T12:00:00Z">20 Oct 12:00 · day before</button>
+        <button data-at="2026-10-21T08:00:00Z">21 Oct 08:00 · night 1 morning</button>
+        <button data-at="2026-10-21T16:25:00Z">21 Oct 16:25 · 5 min to QF1</button>
+        <button data-at="2026-10-21T20:00:00Z">21 Oct 20:00 · after night 1</button>
+        <button data-at="2026-10-22T21:00:00Z">22 Oct 21:00 · after night 2</button>
+        <button data-at="2026-10-24T21:30:00Z">24 Oct 21:30 · after the final</button>
+      </div>
+      <form id="clock"><input id="at" type="datetime-local" step="60" /> <button class="primary">Set</button></form>
+      <button id="poll">Run the poller now</button>
+    </section>
+
+    <section>
+      <h2>Mailbox (sign-in codes)</h2>
+      <div id="mail">…</div>
+    </section>
+
+    <section style="grid-column: 1 / -1">
+      <h2>Matches</h2>
+      <div id="matches">…</div>
+    </section>
+
+    <section>
+      <h2>billing_report()</h2>
+      <pre id="billing">…</pre>
+    </section>
+
+    <section>
+      <h2>Ops alerts</h2>
+      <div id="alerts">…</div>
+    </section>
+
+    <section style="grid-column: 1 / -1">
+      <h2>result_log (latest)</h2>
+      <div id="log">…</div>
+    </section>
+  </div>
+</main>
+<script>
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const table = (rows, cols) => rows.length === 0 ? "<p style='color:var(--muted)'>none</p>" :
+    "<table><tr>" + cols.map((c) => `<th>${esc(c)}</th>`).join("") + "</tr>" +
+    rows.map((r) => "<tr>" + cols.map((c) => `<td>${esc(typeof r[c] === "object" && r[c] !== null ? JSON.stringify(r[c]) : r[c])}</td>`).join("") + "</tr>").join("") + "</table>";
+  const score = (s) => (s || []).map((x) => `${x.p1_games}-${x.p2_games}`).join(" ");
+
+  async function refresh() {
+    const s = await (await fetch("/_dev/state")).json();
+    document.getElementById("now").textContent = (s.now || "").replace("+00", " UTC").slice(0, 23);
+    document.getElementById("mail").innerHTML = s.mailbox.length === 0 ? "<p style='color:var(--muted)'>no codes sent yet</p>" :
+      s.mailbox.map((m) => `<div style="margin-bottom:6px"><span class="code">${esc(m.code)}</span> <span style="color:var(--muted)">${esc(m.email)}</span></div>`).join("");
+    document.getElementById("matches").innerHTML = table(s.matches.map((m) => ({ ...m, set_scores: score(m.set_scores) })),
+      ["match_no", "round", "p1_id", "p2_id", "starts_at", "status", "winner_id", "set_scores"]);
+    document.getElementById("billing").textContent = JSON.stringify(s.billing, null, 2);
+    document.getElementById("alerts").innerHTML = table(s.alerts, ["at", "kind", "detail"]);
+    document.getElementById("log").innerHTML = table(s.result_log, ["id", "match_no", "outcome", "note", "fetched_at"]);
+  }
+  async function setClock(at) {
+    await fetch("/_dev/clock", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ at }) });
+    refresh();
+  }
+  document.querySelectorAll("[data-at]").forEach((b) => b.addEventListener("click", () => setClock(b.dataset.at)));
+  document.getElementById("clock").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const v = document.getElementById("at").value;
+    if (v) setClock(new Date(v + "Z").toISOString());
+  });
+  document.getElementById("poll").addEventListener("click", async () => { await fetch("/_dev/poll", { method: "POST" }); refresh(); });
+  refresh();
+  setInterval(refresh, 5000);
+</script>
+</body>
+</html>

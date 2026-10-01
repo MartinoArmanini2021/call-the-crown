@@ -37,7 +37,8 @@ export function validateSetScores(
     if (!set || !isNumber(set.p1_games) || !isNumber(set.p2_games)) return "set_scores_incomplete";
     const hi = Math.max(set.p1_games, set.p2_games);
     const lo = Math.min(set.p1_games, set.p2_games);
-    if (!rules.allowed_set_scores.some(([a, b]) => a === hi && b === lo)) return "illegal_set_score";
+    if (!rules.allowed_set_scores.some(([a, b]) => a === hi && b === lo))
+      return "illegal_set_score";
     const slot = set.p1_games > set.p2_games ? 1 : 2;
     slots.push(slot);
     if (slot === winnerSlot) wins++;

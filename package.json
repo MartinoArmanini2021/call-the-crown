@@ -1,13 +1,53 @@
 {
   "name": "six-kings-game",
   "private": true,
+  "sideEffects": false,
   "type": "module",
   "scripts": {
+    "dev": "vite dev",
+    "dev:backend": "bun scripts/dev-backend.ts",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "bun test",
     "test:sql": "bun scripts/test-sql.ts",
-    "simulate": "bun scripts/simulate-event.ts"
+    "simulate": "bun scripts/simulate-event.ts",
+    "advisors": "bun scripts/run-advisors.ts",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "^5.2.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.2.0",
+    "@fontsource-variable/urbanist": "^5.2.0",
+    "@supabase/supabase-js": "^2.112.3",
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-query": "^5.101.1",
+    "@tanstack/react-router": "1.170.18",
+    "@tanstack/router-plugin": "1.168.23",
+    "clsx": "^2.1.1",
+    "posthog-js": "^1.418.10",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
-    "@electric-sql/pglite": "^0.3.0"
+    "@electric-sql/pglite": "^0.3.0",
+    "@eslint/js": "^9.32.0",
+    "@types/bun": "^1.2.0",
+    "@types/node": "^22.16.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^15.15.0",
+    "prettier": "^3.7.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.56.1",
+    "vite": "^8.2.0"
   }
 }

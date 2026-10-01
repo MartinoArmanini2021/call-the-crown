@@ -19,7 +19,9 @@ for (const file of files) {
   console.log(`\n${file}`);
   try {
     const results = await db.exec(readFileSync(join(dir, file), "utf8"));
-    const rows = results.flatMap((r) => r.rows as Record<string, unknown>[]).filter((r) => "result" in r);
+    const rows = results
+      .flatMap((r) => r.rows as Record<string, unknown>[])
+      .filter((r) => "result" in r);
     if (rows.length === 0) throw new Error("the file reported no checks");
     for (const row of rows) {
       checks++;

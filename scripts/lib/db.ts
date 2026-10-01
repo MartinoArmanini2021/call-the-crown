@@ -9,7 +9,8 @@ export const ROOT = join(import.meta.dir, "..", "..");
 const read = (...p: string[]) => readFileSync(join(ROOT, ...p), "utf8");
 
 // PGlite has no extensions to create; the shim provides the cron and net functions instead.
-const withoutExtensions = (sql: string) => sql.replace(/^create extension[^;]*;/gim, "-- (extension provided by the test shim)");
+const withoutExtensions = (sql: string) =>
+  sql.replace(/^create extension[^;]*;/gim, "-- (extension provided by the test shim)");
 
 export async function bootDb(opts: { prelude?: boolean } = {}): Promise<PGlite> {
   const db = new PGlite();

@@ -23,7 +23,11 @@ export type FetchedResult = {
   normalised: NormalisedResult;
 };
 
+// What the poller knows about the match when it asks (only the fixture adapter uses it, to replay
+// results in time; a real provider ignores it).
+export type FetchContext = { nowMs: number; startsAt: string | null };
+
 export interface ResultsAdapter {
   readonly provider: string;             // the provider name used in provider_map and result_log
-  fetchMatch(matchRef: string): Promise<FetchedResult>;
+  fetchMatch(matchRef: string, ctx: FetchContext): Promise<FetchedResult>;
 }

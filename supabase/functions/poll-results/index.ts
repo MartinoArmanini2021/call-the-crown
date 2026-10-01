@@ -8,11 +8,11 @@
 //      SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided by the platform.
 // Patterns from tennis-fantasy/supabase/functions/_shared/serviceGuard.ts and ingest-draw/index.ts
 // (retry shield for cold 502/503/504s; a heartbeat written on failure too; readable error text).
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { FixtureAdapter, type FixtureFile } from "./adapters/fixture.ts";
 import { SportradarAdapter } from "./adapters/sportradar.ts";
 import type { ResultsAdapter } from "./adapters/types.ts";
-import { dueMatches } from "./due.ts";
+import { pollOnce, type PollDb } from "./poll.ts";
 import fixtureEvent from "./fixtures/event.json" with { type: "json" };
 
 // Only the service role may run this. The gateway (verify_jwt, on by default) verifies the signature
@@ -74,6 +74,32 @@ function makeAdapter(): ResultsAdapter {
   throw new Error(`PROVIDER must be "sportradar" or "fixture", got "${provider}"`);
 }
 
+function pollDb(db: SupabaseClient): PollDb {
+  const must = <T>(r: { data: T; error: unknown }): T => {
+    if (r.error) throw r.error;
+    return r.data;
+  };
+  return {
+    appNow: async () => must(await db.rpc("app_now")) as string,
+    scheduledMatches: async () =>
+      must(await db.from("matches").select("match_no, starts_at, status, refetch_requested_at").eq("status", "scheduled")),
+    providerMatchRefs: async (provider) =>
+      new Map(
+        (must(await db.from("provider_map").select("provider_ref, our_ref").eq("provider", provider).eq("kind", "match")) as {
+          provider_ref: string;
+          our_ref: string;
+        }[]).map((r) => [Number(r.our_ref), r.provider_ref]),
+      ),
+    ingest: async (provider, normalised, raw, httpStatus) =>
+      must(
+        await db.rpc("ingest_result", { p_provider: provider, p_normalised: normalised, p_raw: raw, p_http_status: httpStatus }),
+      ) as { outcome: string },
+    heartbeat: async (ok, detail) => {
+      must(await db.rpc("ingest_heartbeat", { p_ok: ok, p_detail: detail }));
+    },
+  };
+}
+
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
@@ -82,64 +108,17 @@ Deno.serve(async (req) => {
   if (decodeJwtRole(auth.startsWith("Bearer ") ? auth.slice(7).trim() : "") !== "service_role") {
     return json({ ok: false, error: "Unauthorized" }, 401);
   }
-
-  const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
+  const client = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
     global: { fetch: retryingFetch },
     auth: { persistSession: false },
   });
-
+  const db = pollDb(client);
   try {
-    const adapter = makeAdapter();
-
-    // The server's clock (the simulated one, locally), never this function's.
-    const { data: now, error: clockErr } = await db.rpc("app_now");
-    if (clockErr) throw clockErr;
-    const nowMs = Date.parse(now as string);
-
-    const { data: matches, error: mErr } = await db
-      .from("matches")
-      .select("match_no, starts_at, status, refetch_requested_at")
-      .eq("status", "scheduled");
-    if (mErr) throw mErr;
-    const due = dueMatches(matches ?? [], nowMs);
-    if (due.length === 0) {
-      await db.rpc("ingest_heartbeat", { p_ok: true, p_detail: "no match in its window" });
-      return json({ ok: true, polled: 0 });
-    }
-
-    const { data: refs, error: rErr } = await db
-      .from("provider_map")
-      .select("provider_ref, our_ref")
-      .eq("provider", adapter.provider)
-      .eq("kind", "match");
-    if (rErr) throw rErr;
-    const refFor = new Map((refs ?? []).map((r) => [Number(r.our_ref), r.provider_ref as string]));
-
-    const outcomes: unknown[] = [];
-    for (const m of due) {
-      const ref = refFor.get(m.match_no);
-      if (!ref) {
-        outcomes.push({ match_no: m.match_no, outcome: "no provider id mapped" });
-        await db.rpc("ingest_heartbeat", { p_ok: false, p_detail: `match ${m.match_no} has no ${adapter.provider} id in provider_map` });
-        continue;
-      }
-      const fetched = await adapter.fetchMatch(ref);
-      const { data, error } = await db.rpc("ingest_result", {
-        p_provider: adapter.provider,
-        p_normalised: fetched.normalised,
-        p_raw: fetched.raw,
-        p_http_status: fetched.http_status,
-      });
-      if (error) throw error;
-      outcomes.push({ match_no: m.match_no, ...(data as object) });
-      if (fetched.http_status >= 400) {
-        await db.rpc("ingest_heartbeat", { p_ok: false, p_detail: `${adapter.provider} answered ${fetched.http_status} for match ${m.match_no}` });
-      }
-    }
-    return json({ ok: true, polled: due.length, outcomes });
+    const outcomes = await pollOnce(db, makeAdapter());
+    return json({ ok: true, outcomes });
   } catch (err) {
     const msg = errorText(err);
-    await db.rpc("ingest_heartbeat", { p_ok: false, p_detail: msg }).then(() => {}, () => {});
+    await db.heartbeat(false, msg).catch(() => {});
     return json({ ok: false, error: msg }, 500);
   }
 });

@@ -1,0 +1,87 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+/*
+ * Brand tokens. The defaults are the look of the deck the organiser approved; at boot,
+ * src/config/eventConfig.tsx overwrites each one from event_config.branding, so a new licensee
+ * changes config, not CSS. Components use only these names.
+ */
+:root {
+  --bg: #0b0b0b;
+  --card: #181818;
+  --raised: #242424;
+  --accent: #e50914;
+  --accent-deep: #b20710;
+  --accent-text: #ff4f57;
+  --text: #ffffff;
+  --text-2: #c9c9c9;
+  --text-3: #9c9c9c;
+  --line: rgb(255 255 255 / 0.08);
+  --good: #3ccf7a;
+  --font-headline: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-display: "Urbanist Variable", "Urbanist", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-raised: var(--raised);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-text: var(--accent-text);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text-2);
+  --color-ink-3: var(--text-3);
+  --color-line: var(--line);
+  --color-good: var(--good);
+  --font-headline: var(--font-headline);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* Headlines: condensed, uppercase, tight. */
+.headline {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+}
+
+/* Numbers that matter: points, ranks, countdowns. */
+.num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+/* In-app browsers: keep the bottom bar clear of the home indicator. */
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}

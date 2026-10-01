@@ -1,0 +1,42 @@
+# Local Supabase (`supabase start`). Only what differs from the CLI's defaults, plus what the brief
+# requires: email one-time codes (6 digits), no links, no social sign-in. Staging and production get the
+# same Auth settings in their dashboards (README, "Auth settings per instance").
+project_id = "six-kings-game"
+
+[api]
+port = 54321
+schemas = ["public"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[db.seed]
+enabled = true
+# Local only: the event, the simulated clock, then the invented players and schedule.
+sql_paths = ["./events/sixkings_2026.sql", "./dev/sim_clock.sql", "./dev/seed_local.sql"]
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = []
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+enable_signup = true
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = true
+# The 6-digit code confirms the address; there is no separate confirmation link.
+enable_confirmations = false
+otp_length = 6
+otp_expiry = 600
+
+# The sign-in email carries the code only, never a link (links break inside in-app browsers).
+[auth.email.template.magic_link]
+subject = "Your sign-in code"
+content_path = "./supabase/templates/code.html"
+
+[auth.email.template.confirmation]
+subject = "Your sign-in code"
+content_path = "./supabase/templates/code.html"

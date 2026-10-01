@@ -1,0 +1,7 @@
+node_modules
+dist
+bun.lock
+routeTree.gen.ts
+supabase
+*.md
+*.sql

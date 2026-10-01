@@ -28,9 +28,17 @@ describe("client validation (src/lib/validation.ts)", () => {
   }
 
   it("refuses to guess when the deciding set is a match tiebreak (open question)", () => {
-    expect(validateSetScores({ ...rules, deciding_set: "match_tiebreak" }, 1, 2, toSets([[6, 4], [6, 4]]))).toBe(
-      "deciding_set_mode_not_supported",
-    );
+    expect(
+      validateSetScores(
+        { ...rules, deciding_set: "match_tiebreak" },
+        1,
+        2,
+        toSets([
+          [6, 4],
+          [6, 4],
+        ]),
+      ),
+    ).toBe("deciding_set_mode_not_supported");
   });
 });
 
@@ -49,7 +57,10 @@ describe("server validation (public.validate_set_scores) agrees", () => {
 
   for (const v of vectors) {
     it(v.name, async () => {
-      const scores = v.scores === null ? null : JSON.stringify(v.scores.map(([a, b]) => ({ p1_games: a, p2_games: b })));
+      const scores =
+        v.scores === null
+          ? null
+          : JSON.stringify(v.scores.map(([a, b]) => ({ p1_games: a, p2_games: b })));
       const res = await db.query<{ err: string | null }>(
         "select public.validate_set_scores($1::int, $2::int, $3::jsonb) as err",
         [v.winner, v.sets, scores],

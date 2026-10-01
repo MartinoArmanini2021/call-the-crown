@@ -1,0 +1,230 @@
+// Every word the fan sees, in one file. English is complete. Arabic is wired in (right-to-left
+// layout, the language switch) and ships behind event_config.flags.arabic; its texts arrive with the
+// organiser-reviewed translation in Phase 3. Until then any missing Arabic key falls back to English.
+// {name} placeholders are filled by t(key, {name: value}).
+
+export const en = {
+  // shell
+  nav_picks: "Picks",
+  nav_results: "Results",
+  nav_board: "Leaderboard",
+  nav_leagues: "Leagues",
+  nav_profile: "Profile",
+  how_to_play: "How to play",
+  sign_in: "Sign in",
+  sign_out: "Sign out",
+  loading: "Loading",
+  could_not_load: "Could not load {what}",
+  could_not_load_body: "Nothing below is real data. Try again.",
+  retry: "Retry",
+  not_found: "This page does not exist.",
+  go_home: "Go home",
+  something_wrong: "Something went wrong",
+
+  // landing
+  landing_kicker: "Free to play",
+  landing_title: "Call every match",
+  landing_body:
+    "Pick the winner, the number of sets and the score of every set. Points for every call you get right, a bonus for every upset you see coming.",
+  landing_cta: "Play now",
+  landing_cta_signed_in: "Make your picks",
+  landing_step1: "Pick the winner",
+  landing_step2: "Call the sets",
+  landing_step3: "Nail the score",
+  landing_prizes: "Prizes for the top 3",
+  prize_terms: "Prize terms",
+
+  // sign-in
+  join_tab: "Join",
+  signin_tab: "I have an account",
+  display_name: "Display name",
+  display_name_hint: "Shown on the leaderboard. 2 to 24 characters.",
+  email: "Email",
+  send_code: "Send my code",
+  code_sent: "We sent a 6-digit code to {email}.",
+  code_label: "6-digit code",
+  verify: "Sign in",
+  resend: "Send a new code",
+  change_email: "Use another email",
+  consents_title: "Stay in touch (optional)",
+  privacy_title: "Privacy",
+  no_account: "No account with that email yet. Use Join.",
+  code_wrong: "That code is wrong or has expired.",
+  too_many_requests: "Too many attempts. Wait a minute and try again.",
+  captcha_needed: "Please complete the check above.",
+
+  // picks
+  picks_title: "Your picks",
+  picks_intro: "Winner, sets, set scores. Change them until each match starts.",
+  locks_in: "Locks in {time}",
+  locked: "Locked",
+  live_now: "In play",
+  waiting_players: "Waiting for {source}",
+  waiting_start: "Start time to come",
+  opens_when_known: "Opens when both players are known",
+  winner_of: "the winner of {match}",
+  loser_of: "the loser of {match}",
+  pick_winner: "1 · Who wins?",
+  pick_sets: "2 · How many sets?",
+  pick_scores: "3 · Score of each set",
+  sets_2: "2 sets",
+  sets_3: "3 sets",
+  set_n: "Set {n}",
+  set_won_by: "Won by",
+  win_points: "{points} pts for the win",
+  upset_bonus: "upset bonus",
+  save_pick: "Save pick",
+  saved: "Saved",
+  saving: "Saving",
+  unsaved: "Not saved yet",
+  your_pick: "Your pick",
+  no_pick: "No pick",
+  pick_complete: "{n} of {total} picked",
+  next_lock: "Next lock",
+
+  // rounds and matches
+  round_QF: "Quarter-final",
+  round_SF: "Semi-final",
+  round_3P: "Third place",
+  round_F: "Final",
+  match_label: "{round} {n}",
+  night_1: "Night 1",
+  night_2: "Night 2",
+  night_3: "Night 3",
+  vs: "v",
+
+  // results
+  results_title: "Results",
+  results_empty: "No results yet. They arrive here automatically after each match.",
+  result: "Result",
+  retired: "Retired",
+  walkover: "Walkover",
+  void_note: "Sets and set scores are void after a {status}: only the winner counts.",
+  points: "Points",
+  pts: "pts",
+  comp_winner: "Winner",
+  comp_sets: "Number of sets",
+  comp_exact: "Sets called exactly",
+  total: "Total",
+  exact_mark: "exact",
+  awaiting_result: "Awaiting the result",
+
+  // leaderboard
+  board_title: "Leaderboard",
+  global: "Global",
+  rank: "Rank",
+  player_col: "Fan",
+  points_col: "Pts",
+  exact_col: "Exact",
+  you: "you",
+  my_rank: "My rank",
+  top: "Top",
+  prev: "Previous",
+  next: "Next",
+  board_empty: "The table fills after the first result.",
+  page_of: "{from}–{to} of {total}",
+  friends_no_prizes: "Friends leagues are for bragging rights: prizes are for the global top 3.",
+
+  // leagues
+  leagues_title: "Leagues",
+  leagues_intro:
+    "Play against your friends. A league table is the global table, filtered to its members.",
+  create_league: "Create a league",
+  league_name: "League name",
+  create: "Create",
+  join_league: "Join a league",
+  league_code: "6-character code",
+  join: "Join",
+  joined: "You joined {name}",
+  invite: "Invite",
+  invite_copied: "Invite link copied",
+  code: "Code",
+  members: "{n} members",
+  member_one: "1 member",
+  owner: "Owner",
+  leave: "Leave",
+  delete_league: "Delete league",
+  remove: "Remove",
+  confirm_delete_league: "Delete {name} for everyone?",
+  confirm_leave: "Leave {name}?",
+  confirm_remove: "Remove {name} from the league?",
+  no_leagues: "You are not in a league yet.",
+  join_prompt: "You were invited to a league.",
+
+  // profile
+  profile_title: "Profile",
+  save: "Save",
+  language: "Language",
+  consents_saved: "Preferences saved",
+  delete_account: "Delete my account",
+  delete_account_body:
+    "This removes your account, your picks, your league memberships and your preferences. It cannot be undone.",
+  delete_confirm_label: "Type DELETE to confirm",
+  account_deleted: "Your account has been deleted.",
+
+  // how to play
+  htp_title: "How to play",
+  htp_enter: "For every match, enter three things",
+  htp_enter_1: "The winner.",
+  htp_enter_2: "The number of sets: 2 or 3.",
+  htp_enter_3:
+    "The score of every set. Possible set scores: {scores}. Your winner must win exactly two sets.",
+  htp_lock:
+    "Each match locks at its scheduled start. Until then you can change your pick as often as you like. Other fans' picks stay hidden until the match starts.",
+  htp_scoring: "How a match is scored",
+  htp_scoring_intro:
+    "Everything depends on calling the winner: with the wrong winner, the match scores 0.",
+  htp_winner_row: "Correct winner",
+  htp_sets_row: "Correct number of sets",
+  htp_exact_row: "Each set called exactly (same set, same player, same games)",
+  htp_upset:
+    "Upset bonus: if your winner was ranked lower than the opponent, the winner points are multiplied by 1 + gap ÷ (gap + {k}), where gap is the difference in ranking positions, and rounded to a whole point.",
+  htp_upset_example:
+    "Example: rank 10 beats rank 1 in a quarter-final. The gap is 9: {base} × {mult} = {raw}, rounded to {points} points.",
+  htp_7_6: "A 7-6 set counts as 7-6, whatever the tiebreak points.",
+  htp_two_on_three:
+    "If you call 2 sets and the match goes to 3, sets 1 and 2 can still earn credit.",
+  htp_void:
+    "Retirement or walkover: the winner points count; sets and set scores are void for everyone.",
+  htp_example_title: "Worked example (semi-final)",
+  htp_example_pick: "Your pick: {a} 6-4 3-6 6-3",
+  htp_example_result: "Result: {a} 6-4 4-6 6-3",
+  htp_example_sum: "Winner {w} + sets {s} + set 1 exact {e} + set 3 exact {e} = {total}",
+  htp_max: "Maximum score (no upsets, all two-set matches): {max}.",
+  htp_ties: "Ties on the leaderboard",
+  htp_ties_1: "Points.",
+  htp_ties_2: "Number of sets called exactly across the event.",
+  htp_ties_3: "Closest total of games in your final pick to the real final.",
+  htp_ties_4: "The earlier last change to your final pick.",
+  htp_ties_5: "The earlier account.",
+
+  // errors from the server (codes in supabase/migrations)
+  err_not_signed_in: "Please sign in first.",
+  err_locked: "This match has started: picks are closed.",
+  err_players_unknown: "The players for this match are not known yet.",
+  err_already_settled: "This match is over.",
+  err_winner_required: "Choose the winner.",
+  err_sets_must_be_2_or_3: "Choose 2 or 3 sets.",
+  err_set_scores_required: "Enter the score of every set.",
+  err_set_scores_incomplete: "Enter the score of every set.",
+  err_illegal_set_score: "That is not a possible set score.",
+  err_third_set_after_two_nil: "A third set only happens when the first two are split.",
+  err_winner_must_win_two_sets: "Your winner has to win exactly two sets.",
+  err_winner_not_in_match: "Choose one of the two players.",
+  err_too_many_leagues: "You are already in the maximum number of leagues.",
+  err_league_full: "That league is full.",
+  err_league_not_found: "No league has that code.",
+  err_too_many_attempts: "Too many wrong codes. Try again in 10 minutes.",
+  err_not_league_owner: "Only the league owner can do that.",
+  err_owner_cannot_leave: "As the owner, delete the league instead.",
+  err_display_name_length: "Display names are 2 to 24 characters.",
+  err_league_name_length: "League names are 1 to 40 characters.",
+  err_generic: "Something went wrong. Please try again.",
+};
+
+export type StringKey = keyof typeof en;
+
+export const ar: Partial<Record<StringKey, string>> = {};
+
+export const strings = { en, ar } as const;
+export type Locale = keyof typeof strings;

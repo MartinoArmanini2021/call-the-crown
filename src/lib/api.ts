@@ -1,0 +1,219 @@
+// Every read and write the app makes. Reads are public tables (event_config, players, matches), the
+// fan's own rows (picks, profiles, consents, leagues) or RPCs; every write is an RPC. The app never
+// computes points: it shows the stored breakdown and the stored potential winner points.
+import { queryOptions } from "@tanstack/react-query";
+import { supabase } from "./supabase";
+import type { SetScore } from "./validation";
+
+export type Round = "QF" | "SF" | "3P" | "F";
+
+export type Rules = {
+  winner_points: Record<Round, number>;
+  sets_points: Record<Round, number>;
+  per_set_exact: number;
+  upset_constant: number;
+  allowed_set_scores: [number, number][];
+  deciding_set: string;
+};
+export type Prize = { place: number; title: string; image_path: string | null };
+export type SponsorSlot = {
+  slot: "landing_strip" | "leaderboard_header" | "picks_footer" | "results_card";
+  image_path: string | null;
+  href: string;
+  alt: Partial<Record<"en" | "ar", string>>;
+};
+export type EventConfig = {
+  name: string;
+  timezone: string;
+  rules: Rules;
+  league_limits: { max_leagues_per_user: number; max_members: number };
+  branding: {
+    app_name?: string;
+    logo_path?: string | null;
+    colors?: Partial<Record<string, string>>;
+  };
+  prizes: Prize[];
+  prize_terms_url: string | null;
+  privacy: { version?: string; notice?: string; consent_organiser?: string; consent_gsgm?: string };
+  sponsor_slots: SponsorSlot[];
+  flags: { arabic?: boolean };
+};
+export type Player = {
+  id: string;
+  name: string;
+  name_ar: string | null;
+  country: string | null;
+  seed: number | null;
+  rank_snapshot: number;
+  image_path: string | null;
+};
+export type SlotSource =
+  { type: "player"; id: string } | { type: "winner" | "loser"; match: number };
+export type Match = {
+  match_no: number;
+  round: Round;
+  p1_source: SlotSource;
+  p2_source: SlotSource;
+  p1_id: string | null;
+  p2_id: string | null;
+  starts_at: string | null;
+  p1_win_points: number | null;
+  p2_win_points: number | null;
+  status: "scheduled" | "completed" | "retired" | "walkover";
+  winner_id: string | null;
+  set_scores: SetScore[] | null;
+};
+export type Pick = {
+  match_no: number;
+  winner_id: string;
+  sets: 2 | 3;
+  set_scores: SetScore[];
+  updated_at: string;
+  pts_winner: number | null;
+  pts_sets: number | null;
+  pts_exact: number | null;
+  exact_sets: number | null;
+  pts_total: number | null;
+};
+export type BoardRow = {
+  pos: number;
+  global_rank: number | null;
+  user_id: string;
+  display_name: string | null;
+  points: number;
+  exact_sets: number;
+  is_me: boolean;
+  total?: number;
+};
+export type League = {
+  id: string;
+  name: string;
+  code: string;
+  is_owner: boolean;
+  member_count: number;
+};
+export type Profile = { user_id: string; display_name: string | null; locale: "en" | "ar" };
+export type Consent = {
+  party: "organiser" | "gsgm";
+  granted: boolean;
+  text_version: string;
+  changed_at: string;
+};
+
+// An RPC error carries a short code (e.g. "locked"); the screens translate it.
+export class ApiError extends Error {}
+async function rpc<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
+  const { data, error } = await supabase.rpc(fn, args);
+  if (error) throw new ApiError(error.message);
+  return data as T;
+}
+async function rows<T>(
+  p: PromiseLike<{ data: unknown; error: { message: string } | null }>,
+): Promise<T> {
+  const { data, error } = await p;
+  if (error) throw new ApiError(error.message);
+  return data as T;
+}
+
+// Public event data
+export const eventConfigQuery = queryOptions({
+  queryKey: ["event_config"],
+  queryFn: () =>
+    rows<EventConfig[]>(supabase.from("event_config").select("*")).then((r) => r[0] ?? null),
+  staleTime: 5 * 60_000,
+});
+export const playersQuery = queryOptions({
+  queryKey: ["players"],
+  queryFn: () => rows<Player[]>(supabase.from("players").select("*").order("seed")),
+  staleTime: 5 * 60_000,
+});
+export const matchesQuery = queryOptions({
+  queryKey: ["matches"],
+  queryFn: () => rows<Match[]>(supabase.from("matches").select("*").order("match_no")),
+  refetchInterval: 30_000,
+});
+// The server's clock. Locks are decided by the server; the countdowns use its time, not the phone's.
+export const serverNowQuery = queryOptions({
+  queryKey: ["server_now"],
+  queryFn: async () => {
+    const before = Date.now();
+    const iso = await rpc<string>("app_now");
+    const after = Date.now();
+    return { offsetMs: Date.parse(iso) - (before + after) / 2 };
+  },
+  staleTime: 60_000,
+  refetchInterval: 60_000,
+});
+
+// The fan's own data
+export const myPicksQuery = (uid: string) =>
+  queryOptions({
+    queryKey: ["picks", uid],
+    queryFn: () => rows<Pick[]>(supabase.from("picks").select("*").eq("user_id", uid)),
+    refetchInterval: 60_000,
+  });
+export const profileQuery = (uid: string) =>
+  queryOptions({
+    queryKey: ["profile", uid],
+    queryFn: () =>
+      rows<Profile[]>(
+        supabase.from("profiles").select("user_id, display_name, locale").eq("user_id", uid),
+      ).then((r) => r[0] ?? null),
+  });
+export const consentsQuery = (uid: string) =>
+  queryOptions({
+    queryKey: ["consents", uid],
+    queryFn: () =>
+      rows<Consent[]>(
+        supabase
+          .from("consents")
+          .select("party, granted, text_version, changed_at")
+          .eq("user_id", uid)
+          .order("changed_at"),
+      ),
+  });
+export const myLeaguesQuery = (uid: string) =>
+  queryOptions({ queryKey: ["leagues", uid], queryFn: () => rpc<League[]>("my_leagues") });
+
+// Boards
+export const leaderboardQuery = (league: string | null, offset: number, limit = 50) =>
+  queryOptions({
+    queryKey: ["board", league, offset, limit],
+    queryFn: () =>
+      rpc<BoardRow[]>("get_leaderboard", { p_league: league, p_offset: offset, p_limit: limit }),
+    refetchInterval: 60_000,
+  });
+export const rankWindowQuery = (league: string | null) =>
+  queryOptions({
+    queryKey: ["rank_window", league],
+    queryFn: () => rpc<BoardRow[]>("get_rank_window", { p_league: league, p_radius: 5 }),
+    refetchInterval: 60_000,
+  });
+
+// Writes
+export const savePick = (match: number, winner: string, sets: number, setScores: SetScore[]) =>
+  rpc<{ changed: boolean }>("save_pick", {
+    p_match: match,
+    p_winner: winner,
+    p_sets: sets,
+    p_set_scores: setScores,
+  });
+export const createLeague = (name: string) =>
+  rpc<{ id: string; code: string; name: string }>("create_league", { p_name: name });
+export const joinLeague = (code: string) =>
+  rpc<{ ok: boolean; error?: string; league_id?: string; name?: string }>("join_league", {
+    p_code: code,
+  });
+export const leaveLeague = (league: string) => rpc<void>("leave_league", { p_league: league });
+export const removeMember = (league: string, user: string) =>
+  rpc<void>("remove_member", { p_league: league, p_user: user });
+export const deleteLeague = (league: string) => rpc<void>("delete_league", { p_league: league });
+export const updateProfile = (name: string, locale?: "en" | "ar") =>
+  rpc<void>("update_profile", { p_display_name: name, p_locale: locale ?? null });
+export const updateConsents = (organiser: boolean, gsgm: boolean, version: string) =>
+  rpc<void>("update_consents", { p_organiser: organiser, p_gsgm: gsgm, p_text_version: version });
+export const deleteAccount = () => rpc<void>("delete_account");
+
+// Images (organiser-supplied, in the instance's own storage bucket; never hotlinked).
+export const publicImage = (path: string | null | undefined): string | null =>
+  path ? supabase.storage.from("event").getPublicUrl(path).data.publicUrl : null;
