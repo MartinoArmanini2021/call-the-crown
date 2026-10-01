@@ -81,7 +81,11 @@ $$;
 --   set_scores follow the order of "players"; provider refs are translated through provider_map.
 -- It never raises on a bad payload: it logs the payload with its outcome and returns, so the log and
 -- the alert survive. Outcomes: not_final · rejected_unmapped · rejected_invalid · paused · unchanged ·
--- settled · resettled.
+-- awaiting_stability · settled · resettled.
+-- Stability (event_config.results_policy.stable_minutes, per provider): a final result settles, or
+-- replaces a settled one, only once the provider has reported exactly that result, without
+-- interruption, for that many minutes. Any different reading in between (another score, the bold
+-- removed, an invalid edit) restarts the clock. Wikipedia: 10 minutes.
 -- ---------------------------------------------------------------------------------------------------
 create function public.ingest_result(p_provider text, p_normalised jsonb, p_raw jsonb,
                                      p_http_status int default 200)
@@ -103,6 +107,10 @@ declare
   v_reason  text;
   v_outcome text;
   v_diff    jsonb;
+  v_canon   jsonb;
+  v_stable  int;
+  v_break_id bigint;
+  v_start   timestamptz;
 begin
   select our_ref::int into v_match from public.provider_map
    where provider = p_provider and kind = 'match' and provider_ref = v_ref;
@@ -164,6 +172,20 @@ begin
         v_reason := 'final result before the scheduled start';
       end if;
 
+      if v_reason is null then
+        v_canon := jsonb_build_object('status', v_status, 'winner', v_w, 'set_scores', v_scores);
+        v_stable := coalesce((select (results_policy->'stable_minutes'->>p_provider)::int
+                                from public.event_config), 0);
+        if v_stable > 0 then
+          -- the current run of identical readings started after the last different reading (log order)
+          select max(id) into v_break_id from public.result_log
+           where match_no = v_match and provider = p_provider and canonical is distinct from v_canon;
+          select min(seen_at) into v_start from public.result_log
+           where match_no = v_match and provider = p_provider and canonical = v_canon
+             and id > coalesce(v_break_id, 0);
+        end if;
+      end if;
+
       if v_reason is not null then
         v_outcome := 'rejected_invalid';
       elsif m.settlement_paused then
@@ -171,6 +193,16 @@ begin
       elsif m.status <> 'scheduled'
             and (m.status, m.winner_id, m.set_scores) is not distinct from (v_status, v_w, v_scores) then
         v_outcome := 'unchanged';
+      elsif v_stable > 0
+            and (v_start is null or v_start > public.app_now() - make_interval(mins => v_stable)) then
+        v_outcome := 'awaiting_stability';
+        -- A settled result now reads differently: say so at once, settle only if it holds.
+        if v_start is null and m.status <> 'scheduled' then
+          insert into public.ops_alerts (kind, detail) values ('result_change_pending',
+            jsonb_build_object('match_no', v_match, 'provider', p_provider, 'stable_minutes', v_stable,
+                               'settled', jsonb_build_object('status', m.status, 'winner', m.winner_id, 'set_scores', m.set_scores),
+                               'now_reads', v_canon));
+        end if;
       else
         if m.status = 'scheduled' then
           v_outcome := 'settled';
@@ -185,10 +217,14 @@ begin
     end if;
   end if;
 
-  insert into public.result_log (match_no, provider, http_status, raw, raw_sha256, normalised, outcome, diff, note)
-  values (v_match, p_provider, p_http_status, p_raw, v_hash, p_normalised, v_outcome, v_diff, v_reason);
+  insert into public.result_log (match_no, provider, http_status, raw, raw_sha256, normalised, outcome, diff, note, canonical)
+  values (v_match, p_provider, p_http_status, p_raw, v_hash, p_normalised, v_outcome, v_diff, v_reason, v_canon);
 
-  if v_outcome in ('rejected_unmapped', 'rejected_invalid') then
+  -- The same rejection alerts once an hour, not on every poll (a half-finished edit can sit for a while).
+  if v_outcome in ('rejected_unmapped', 'rejected_invalid') and not exists (
+       select 1 from public.ops_alerts a
+        where a.kind = 'result_rejected' and a.detail->>'match_ref' = v_ref
+          and a.detail->>'reason' = v_reason and a.at > clock_timestamp() - interval '1 hour') then
     insert into public.ops_alerts (kind, detail) values ('result_rejected',
       jsonb_build_object('match_no', v_match, 'provider', p_provider, 'match_ref', v_ref, 'reason', v_reason));
   elsif v_outcome = 'resettled' then

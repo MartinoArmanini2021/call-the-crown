@@ -6,7 +6,7 @@ import type { ResultsAdapter } from "./adapters/types.ts";
 
 export interface PollDb {
   appNow(): Promise<string>;
-  scheduledMatches(): Promise<MatchWindowRow[]>;
+  allMatches(): Promise<MatchWindowRow[]>; // six rows: dueMatches decides what to fetch
   providerMatchRefs(provider: string): Promise<Map<number, string>>;
   ingest(provider: string, normalised: unknown, raw: unknown, httpStatus: number): Promise<{ outcome: string }>;
   heartbeat(ok: boolean, detail: string): Promise<void>;
@@ -16,7 +16,7 @@ export type PollOutcome = { match_no: number; outcome: string };
 
 export async function pollOnce(db: PollDb, adapter: ResultsAdapter): Promise<PollOutcome[]> {
   const nowMs = Date.parse(await db.appNow());
-  const due = dueMatches(await db.scheduledMatches(), nowMs);
+  const due = dueMatches(await db.allMatches(), nowMs);
   if (due.length === 0) {
     await db.heartbeat(true, "no match in its window");
     return [];

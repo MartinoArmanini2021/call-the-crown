@@ -4,13 +4,16 @@
 // its window (from 15 minutes before its start until it is settled) or that the operator asked to
 // re-fetch, and hands each payload to public.ingest_result. The database decides; this only carries.
 //
-// Env: PROVIDER = sportradar | fixture · SPORTRADAR_API_KEY · SPORTRADAR_ACCESS_LEVEL (trial|production)
+// Env: PROVIDER = wikipedia | sportradar | fixture
+//      wikipedia: WIKIPEDIA_PAGE (e.g. "2026 Six Kings Slam") · WIKIPEDIA_USER_AGENT (name + contact)
+//      sportradar: SPORTRADAR_API_KEY · SPORTRADAR_ACCESS_LEVEL (trial|production)
 //      SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided by the platform.
 // Patterns from tennis-fantasy/supabase/functions/_shared/serviceGuard.ts and ingest-draw/index.ts
 // (retry shield for cold 502/503/504s; a heartbeat written on failure too; readable error text).
 import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { FixtureAdapter, type FixtureFile } from "./adapters/fixture.ts";
 import { SportradarAdapter } from "./adapters/sportradar.ts";
+import { WikipediaAdapter } from "./adapters/wikipedia.ts";
 import type { ResultsAdapter } from "./adapters/types.ts";
 import { pollOnce, type PollDb } from "./poll.ts";
 import fixtureEvent from "./fixtures/event.json" with { type: "json" };
@@ -69,9 +72,12 @@ function makeAdapter(): ResultsAdapter {
     const level = Deno.env.get("SPORTRADAR_ACCESS_LEVEL") === "trial" ? "trial" : "production";
     return new SportradarAdapter(key, level);
   }
+  if (provider === "wikipedia") {
+    return new WikipediaAdapter(Deno.env.get("WIKIPEDIA_PAGE") ?? "", Deno.env.get("WIKIPEDIA_USER_AGENT") ?? "");
+  }
   if (provider === "fixture") return new FixtureAdapter(fixtureEvent as FixtureFile);
   // No default: a silent fallback once re-processed a dead event in Grand Slam GM.
-  throw new Error(`PROVIDER must be "sportradar" or "fixture", got "${provider}"`);
+  throw new Error(`PROVIDER must be "wikipedia", "sportradar" or "fixture", got "${provider}"`);
 }
 
 function pollDb(db: SupabaseClient): PollDb {
@@ -81,8 +87,8 @@ function pollDb(db: SupabaseClient): PollDb {
   };
   return {
     appNow: async () => must(await db.rpc("app_now")) as string,
-    scheduledMatches: async () =>
-      must(await db.from("matches").select("match_no, starts_at, status, refetch_requested_at").eq("status", "scheduled")),
+    allMatches: async () =>
+      must(await db.from("matches").select("match_no, starts_at, status, refetch_requested_at, settled_at")),
     providerMatchRefs: async (provider) =>
       new Map(
         (must(await db.from("provider_map").select("provider_ref, our_ref").eq("provider", provider).eq("kind", "match")) as {

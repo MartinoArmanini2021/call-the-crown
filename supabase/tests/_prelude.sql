@@ -135,7 +135,8 @@ end;
 $$;
 
 -- The provider says match n finished: players in our order, set scores in text.
-create function t.feed(p_match int, p_status text, p_winner text, p_sets text, p_flip boolean default false)
+create function t.feed(p_match int, p_status text, p_winner text, p_sets text, p_flip boolean default false,
+                       p_provider text default 'fixture')
 returns jsonb
 language plpgsql
 as $$
@@ -157,7 +158,7 @@ begin
                     else jsonb_build_array('fx-' || m.p1_id, 'fx-' || m.p2_id) end,
     'winner', 'fx-' || p_winner, 'set_scores', v_ss);
   perform t.as_service();
-  v_out := public.ingest_result('fixture', v_norm, jsonb_build_object('fixture', v_norm));
+  v_out := public.ingest_result(p_provider, v_norm, jsonb_build_object(p_provider, v_norm));
   perform t.as_owner();
   return v_out;
 end;

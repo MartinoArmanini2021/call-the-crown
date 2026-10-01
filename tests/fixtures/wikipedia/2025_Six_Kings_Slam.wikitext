@@ -1,0 +1,71 @@
+<!-- Excerpt (the results bracket only) of the Wikipedia article "2025 Six Kings Slam", revision 1377220243 (2026-09-28T10:28:56Z), https://en.wikipedia.org/w/index.php?oldid=1377220243. Text licensed CC BY-SA 4.0. Kept as a parser test fixture. -->
+{{#invoke:bracket|8TeamBracket|compact=y|sets=3|nowrap=y|byes=1
+| 3rd=3rd place match
+
+| RD1-seed03=
+| RD1-team03='''{{flagicon|USA}} [[Taylor Fritz]]'''
+| RD1-score03-1='''6'''
+| RD1-score03-2='''6'''
+| RD1-score03-3=
+| RD1-seed04=
+| RD1-team04={{flagicon|GER}} [[Alexander Zverev]]
+| RD1-score04-1=3
+| RD1-score04-2=4
+| RD1-score04-3=
+
+| RD1-seed5=
+| RD1-team5={{flagicon|GRE}} [[Stefanos Tsitsipas]]
+| RD1-score5-1=2
+| RD1-score5-2=3
+| RD1-score5-3=
+| RD1-seed6=
+| RD1-team6={{flagicon|ITA}} '''[[Jannik Sinner]]'''
+| RD1-score6-1='''6'''
+| RD1-score6-2='''6'''
+| RD1-score6-3=
+
+
+| RD2-seed1=
+| RD2-team1='''{{flagicon|ESP}} [[Carlos Alcaraz]]'''
+| RD2-score1-1='''6'''
+| RD2-score1-2='''6'''
+| RD2-score1-3=
+| RD2-seed2=
+| RD2-team2={{flagicon|USA}} [[Taylor Fritz]]
+| RD2-score2-1=4
+| RD2-score2-2=2
+| RD2-score2-3=
+
+| RD2-seed3=
+| RD2-team3='''{{flagicon|ITA}} [[Jannik Sinner]]'''
+| RD2-score3-1='''6'''
+| RD2-score3-2='''6'''
+| RD2-score3-3=
+| RD2-seed4=
+| RD2-team4={{flagicon|SRB}} [[Novak Djokovic]]
+| RD2-score4-1=4
+| RD2-score4-2=2
+| RD2-score4-3=
+
+| RD3-seed1=
+| RD3-team1={{flagicon|ESP}} [[Carlos Alcaraz]]
+| RD3-score1-1=2
+| RD3-score1-2=4
+| RD3-score1-3=
+| RD3-seed2=
+| RD3-team2='''{{flagicon|ITA}} [[Jannik Sinner]]'''
+| RD3-score2-1='''6'''
+| RD3-score2-2='''6'''
+| RD3-score2-3=
+
+| 3rd-seed1=
+| 3rd-team1='''{{flagicon|USA}} [[Taylor Fritz]]'''
+| 3rd-score1-1='''7<sup>7</sup>'''
+| 3rd-score1-2=0
+| 3rd-score1-3=
+| 3rd-seed2=
+| 3rd-team2={{flagicon|SRB}} [[Novak Djokovic]]
+| 3rd-score2-1=6<sup>4</sup>
+| 3rd-score2-2=0<sup>r</sup>
+| 3rd-score2-3=
+}}

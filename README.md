@@ -95,8 +95,8 @@ supabase start
 
 | Command | What it proves |
 |---|---|
-| `bun test` | The client and the server agree on every legal and illegal set score (`tests/vectors/set-scores.json` through both validators); provider adapters translate correctly |
-| `bun run test:sql` | `supabase/tests/scoring.sql`, `standings.sql`, `security.sql`: every scoring component, every tiebreaker, strict ranks, and the full security list. Each file runs inside `begin … rollback` and prints one PASS/FAIL line per check |
+| `bun test` | The client and the server agree on every legal and illegal set score (`tests/vectors/set-scores.json` through both validators); the provider adapters translate correctly (Wikipedia on the real 2024 and 2025 brackets); the 2025 page replayed end to end through the poller and the database; the poller's watch window |
+| `bun run test:sql` | `supabase/tests/scoring.sql`, `standings.sql`, `security.sql`, `stability.sql`: every scoring component, every tiebreaker, strict ranks, the full security list, and the stability rule (vandal edits, interruptions, corrections). Each file runs inside `begin … rollback` and prints one PASS/FAIL line per check |
 | `bun run simulate` | The whole event end to end, as operator, fans and poller, with 22 checked claims |
 | `bun run advisors` | The Supabase security advisor's ERROR-level checks against the migrations: must be 0 ERROR |
 | `bunx tsc --noEmit` · `bun run build` · `bun run lint` | Types, build, lint |
@@ -157,17 +157,49 @@ select public.set_match_start(1, '2026-10-21 19:30+03');
 
 **A match starts early.** Move its start to the next minute at once. That locks the picks, and the next poll settles it once the provider marks it final. (A final result that arrives before the scheduled start is refused and raises an alert, so no result is ever published while picks are open.)
 
-### Map the provider ids
+### Choose the results provider and map its ids
+
+The provider is the edge function's `PROVIDER` env. For 2026 (Tino, 1 Oct 2026): **Wikipedia now, Sportradar added if a contract lands**.
+
+**Wikipedia** reads the event article's results bracket.
+
+Env:
+- `PROVIDER=wikipedia`
+- `WIKIPEDIA_PAGE=2026 Six Kings Slam` (the article title, once someone creates it)
+- `WIKIPEDIA_USER_AGENT=<app name> (<ops contact address>)`. Wikimedia asks for a contact, so use an ops address, not a personal one.
+
+Ids:
+- **Matches** are the bracket slots: QFs `RD1:3-4` and `RD1:5-6` (after the two byes), SFs `RD2:1-2` and `RD2:3-4`, the final `RD3:1-2`, third place `3rd:1-2`.
+- **Players** are the article titles the names link to.
+- Check the slots against the page once the draw is on it. Which QF feeds which SF follows the page's layout.
 
 ```sql
 insert into public.provider_map (provider, kind, provider_ref, our_ref) values
-  ('sportradar', 'match',  'sr:sport_event:…', '1'),
-  ('sportradar', 'player', 'sr:competitor:…',  'sinner');
+  ('wikipedia', 'match',  'RD1:3-4',       '1'),
+  ('wikipedia', 'player', 'Jannik Sinner', 'sinner');
 ```
 
+What to know about this source:
+- **Anyone can edit the page.** A result settles only after the page has shown exactly that result, without interruption, for **10 minutes** (`event_config.results_policy`). A vandal edit that is reverted never settles.
+- **A settled result that the page later changes** raises an immediate `result_change_pending` alert. If the change holds for 10 minutes it re-settles as a correction. To stop that, pause the match.
+- **Retirements and walkovers** are read from the page's markers: a small "r" or "ret." next to the score, and "w/o".
+- **No start times** come from the page. The schedule is always the operator's.
+- **Audit:** every reading in `result_log` keeps the page revision id, its link and the exact bracket lines it came from.
+- **Tell the organiser:** the brief promised "an external API". Wikipedia is crowd-edited, so the results are typed by Wikipedia's editors (never by us). The organiser should know the source.
+
+**Sportradar.**
+
+Env:
+- `PROVIDER=sportradar`
+- `SPORTRADAR_API_KEY`
+- `SPORTRADAR_ACCESS_LEVEL`
+
+Ids: `sr:sport_event:…` for matches and `sr:competitor:…` for players. No waiting period.
+
+For any provider:
 - Every match and every player needs a row.
-- The poller reports a missing match id in its heartbeat. `ingest_result` refuses a payload with an unmapped player and alerts.
-- Set the edge function's env: `PROVIDER=sportradar`, `SPORTRADAR_API_KEY`, `SPORTRADAR_ACCESS_LEVEL`.
+- The poller reports a missing match id in its heartbeat. `ingest_result` refuses a payload with an unmapped player and alerts (once an hour per match and reason).
+- After a match settles, the poller keeps re-reading it for 12 hours (every run for 30 minutes, then every 10), so a provider's correction is seen.
 
 ### Pause and re-fetch a result
 
@@ -186,6 +218,7 @@ select id, match_no, outcome, note, fetched_at from public.result_log order by i
 | Outcome | Meaning |
 |---|---|
 | `not_final` | The provider has no final result yet |
+| `awaiting_stability` | A valid final result, not yet shown unchanged for the provider's waiting period (Wikipedia: 10 minutes) |
 | `settled` | First settlement |
 | `unchanged` | The same final result again |
 | `resettled` | The provider changed a final result; rescored; `diff` holds before and after; alert sent |
@@ -196,7 +229,7 @@ select id, match_no, outcome, note, fetched_at from public.result_log order by i
 The watchdog checks every 5 minutes and posts to the ops webhook (Vault secret `ops_webhook`, Discord or Slack):
 
 - a match more than 4 hours past its start with no final;
-- a rejected or changed result;
+- a rejected or changed result, and a settled result the provider now shows differently (`result_change_pending`, before it re-settles);
 - a corrected result that changed a later match (`bracket_refilled`, or `bracket_conflict` when that match had started: its settlement is paused);
 - a poller that is down or failing during a match window.
 
@@ -295,4 +328,5 @@ The approved plan lists the open questions in full.
 - **League owner deletes their account** (question 10): the longest-standing member becomes owner; an empty league is deleted.
 - **Not yet decided: account deletion vs billing** (question 9). Deleting an account deletes its activity days, so a deleted fan no longer counts. A no-personal-data tombstone is ready to add if legal agrees.
 - **Arabic:** wired (right-to-left layout, the switch, the flag) with no texts yet. They come with the reviewed translation in Phase 3.
+- **Results source** (Tino, 1 Oct 2026): Wikipedia now, with the 10-minute stability rule; Sportradar added as a second source if a contract lands. The Wikipedia adapter is tested on the real 2024 and 2025 brackets (`tests/fixtures/wikipedia`, attributed excerpts) and end to end (`tests/wikipedia-replay.test.ts`).
 - **Sportradar adapter:** written from the documentation. It has not touched real data; Phase 3 checks it under a trial key.

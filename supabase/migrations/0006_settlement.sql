@@ -292,7 +292,7 @@ begin
   perform set_config('work_mem', '128MB', true);
   update public.matches
      set status = p_status, winner_id = p_winner, set_scores = p_set_scores,
-         settled_at = clock_timestamp(), result_rev = result_rev + 1
+         settled_at = public.app_now(), result_rev = result_rev + 1
    where match_no = p_match;
   perform public.score_match(p_match);
   perform public.advance_bracket(p_match);

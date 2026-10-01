@@ -20,6 +20,9 @@ create table public.event_config (
   privacy            jsonb       not null default '{}',   -- notice + consent texts with their versions
   sponsor_slots      jsonb       not null default '[]',
   flags              jsonb       not null default '{}',   -- e.g. {"arabic": false}
+  -- How long each results provider's final result must read the same before it settles. A crowd-edited
+  -- source (Wikipedia) waits, so a vandal edit that is reverted never settles; a contracted feed does not.
+  results_policy     jsonb       not null default '{"stable_minutes": {"wikipedia": 10}}',
   -- The last-resort tiebreaker's draw seed: random when the event is created, public, and locked once
   -- the first match starts (trigger in 0007). See recompute_standings in 0006.
   tiebreak_seed      text        not null default encode(sha256(convert_to(gen_random_uuid()::text, 'UTF8')), 'hex'),
@@ -154,7 +157,11 @@ create table public.result_log (
   normalised  jsonb,
   outcome     text not null,
   diff        jsonb,
-  note        text
+  note        text,
+  -- The checked result in our terms ({status, winner, set_scores} in our player order), set only for a
+  -- valid final payload. Consecutive identical values are what "stable for N minutes" measures.
+  canonical   jsonb,
+  seen_at     timestamptz not null default public.app_now()
 );
 create index result_log_match_idx on public.result_log (match_no, id);
 

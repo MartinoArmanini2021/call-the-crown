@@ -19,10 +19,10 @@ function txDb(tx: Transaction): PollDb {
   return {
     appNow: async () =>
       String((await tx.query<{ n: string }>("select public.app_now()::text as n")).rows[0]!.n),
-    scheduledMatches: async () =>
+    allMatches: async () =>
       (
         await tx.query<MatchWindowRow>(
-          "select match_no, starts_at::text, status, refetch_requested_at::text from public.matches where status = 'scheduled'",
+          "select match_no, starts_at::text, status, refetch_requested_at::text, settled_at::text from public.matches",
         )
       ).rows,
     providerMatchRefs: async (provider) =>
