@@ -50,16 +50,20 @@ begin
   return new;
 end;
 $$;
+-- The settling test sits in the WHEN clause, so a legitimate settlement of 100,000 picks never calls
+-- the guard function; any score change outside settlement still reaches it and is refused.
 create trigger picks_score_guard before update on public.picks
   for each row
   when ((old.pts_winner, old.pts_sets, old.pts_exact, old.exact_sets, old.pts_total, old.scored_rev)
         is distinct from
-        (new.pts_winner, new.pts_sets, new.pts_exact, new.exact_sets, new.pts_total, new.scored_rev))
+        (new.pts_winner, new.pts_sets, new.pts_exact, new.exact_sets, new.pts_total, new.scored_rev)
+        and current_setting('skg.settling', true) is distinct from '1')
   execute function public.guard_settlement_only();
 create trigger standings_score_guard before update on public.standings
   for each row
   when ((old.points, old.exact_sets, old.final_games_gap, old.final_pick_at, old.rank)
-        is distinct from (new.points, new.exact_sets, new.final_games_gap, new.final_pick_at, new.rank))
+        is distinct from (new.points, new.exact_sets, new.final_games_gap, new.final_pick_at, new.rank)
+        and current_setting('skg.settling', true) is distinct from '1')
   execute function public.guard_settlement_only();
 
 -- ---------------------------------------------------------------------------------------------------
@@ -100,6 +104,8 @@ declare
   v_sets_pts int;
   v_per_set  int;
   v_len      int;
+  v_win_pts  int;
+  v_done     boolean;
 begin
   select * into m from public.matches where match_no = p_match;
   if m.status = 'scheduled' then return; end if;
@@ -107,23 +113,35 @@ begin
   v_sets_pts := (v_rules->'sets_points'->>m.round)::int;
   v_per_set  := (v_rules->>'per_set_exact')::int;
   v_len      := coalesce(jsonb_array_length(m.set_scores), 0);
+  v_win_pts  := case when m.winner_id = m.p1_id then m.p1_win_points else m.p2_win_points end;
+  v_done     := m.status = 'completed';
 
+  -- One pass, no per-row sub-query (100,000 picks in one statement). A match has at most three sets,
+  -- so "sets called exactly" is three direct comparisons of set N against set N; a set either side
+  -- does not have compares as null and counts 0.
+  -- (The three components are written out in each column so the update needs no join.)
   update public.picks p
-     set (pts_winner, pts_sets, exact_sets, pts_exact, pts_total, scored_rev) = (
-       select q.w, q.s, q.x, q.x * v_per_set, q.w + q.s + q.x * v_per_set, m.result_rev
-         from (
-           select
-             case when p.winner_id = m.winner_id
-                  then case when m.winner_id = m.p1_id then m.p1_win_points else m.p2_win_points end
-                  else 0 end as w,
-             case when p.winner_id = m.winner_id and m.status = 'completed' and p.sets = v_len
-                  then v_sets_pts else 0 end as s,
-             case when p.winner_id = m.winner_id and m.status = 'completed'
-                  then (select count(*)::int from generate_series(0, least(p.sets, v_len) - 1) i
-                         where p.set_scores->i = m.set_scores->i)
-                  else 0 end as x
-         ) q
-     )
+     set pts_winner = case when p.winner_id = m.winner_id then v_win_pts else 0 end,
+         pts_sets   = case when p.winner_id = m.winner_id and v_done and p.sets = v_len then v_sets_pts else 0 end,
+         exact_sets = case when p.winner_id = m.winner_id and v_done then
+                             coalesce((p.set_scores->0 = m.set_scores->0)::int, 0)
+                           + coalesce((p.set_scores->1 = m.set_scores->1)::int, 0)
+                           + coalesce((p.set_scores->2 = m.set_scores->2)::int, 0)
+                           else 0 end,
+         pts_exact  = v_per_set * case when p.winner_id = m.winner_id and v_done then
+                             coalesce((p.set_scores->0 = m.set_scores->0)::int, 0)
+                           + coalesce((p.set_scores->1 = m.set_scores->1)::int, 0)
+                           + coalesce((p.set_scores->2 = m.set_scores->2)::int, 0)
+                           else 0 end,
+         pts_total  = case when p.winner_id = m.winner_id then
+                             v_win_pts
+                           + case when v_done and p.sets = v_len then v_sets_pts else 0 end
+                           + case when v_done then v_per_set * (
+                                 coalesce((p.set_scores->0 = m.set_scores->0)::int, 0)
+                               + coalesce((p.set_scores->1 = m.set_scores->1)::int, 0)
+                               + coalesce((p.set_scores->2 = m.set_scores->2)::int, 0)) else 0 end
+                           else 0 end,
+         scored_rev = m.result_rev
    where p.match_no = p_match;
 end;
 $$;
@@ -149,12 +167,20 @@ begin
       from jsonb_array_elements(f.set_scores) e;
   end if;
 
-  insert into public.standings as s
-    (user_id, points, exact_sets, final_games_gap, final_pick_at, rank, updated_at)
+  -- Every account has a row (handle_new_user creates it); this only covers a row that is missing.
+  insert into public.standings (user_id)
+  select pr.user_id from public.profiles pr
+   where not exists (select 1 from public.standings s where s.user_id = pr.user_id)
+  on conflict (user_id) do nothing;
+
+  -- Rewrite only the rows whose numbers or rank actually changed.
+  update public.standings s
+     set points = t.points, exact_sets = t.exact_sets, final_games_gap = t.gap,
+         final_pick_at = t.final_pick_at, rank = t.rank, updated_at = clock_timestamp()
+    from (
   select t.user_id, t.points, t.exact_sets, t.gap, t.final_pick_at,
          (row_number() over (order by t.points desc, t.exact_sets desc, t.gap asc nulls last,
-                                      t.final_pick_at asc nulls last, t.created_at asc, t.user_id asc))::int,
-         clock_timestamp()
+                                      t.final_pick_at asc nulls last, t.created_at asc, t.user_id asc))::int as rank
     from (
       select pr.user_id, pr.created_at,
              coalesce(a.points, 0)     as points,
@@ -172,10 +198,10 @@ begin
                      from public.picks k where k.match_no = f.match_no) fp
                on fp.user_id = pr.user_id
     ) t
-  on conflict (user_id) do update
-     set points = excluded.points, exact_sets = excluded.exact_sets,
-         final_games_gap = excluded.final_games_gap, final_pick_at = excluded.final_pick_at,
-         rank = excluded.rank, updated_at = excluded.updated_at;
+    ) t
+   where s.user_id = t.user_id
+     and (s.points, s.exact_sets, s.final_games_gap, s.final_pick_at, s.rank)
+         is distinct from (t.points, t.exact_sets, t.gap, t.final_pick_at, t.rank);
 end;
 $$;
 
@@ -254,6 +280,9 @@ set search_path = public
 as $$
 begin
   perform set_config('skg.settling', '1', true);
+  -- Ranking 100,000 standings is one sort; with the default 4 MB it spills to disk. This transaction
+  -- only (is_local = true) gets enough memory to sort in RAM.
+  perform set_config('work_mem', '128MB', true);
   update public.matches
      set status = p_status, winner_id = p_winner, set_scores = p_set_scores,
          settled_at = clock_timestamp(), result_rev = result_rev + 1
