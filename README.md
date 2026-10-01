@@ -282,13 +282,15 @@ loadtest/                  k6-lock-rush.js · settle-100k.sql (staging only)
 
 ## Decisions taken in Phase 1, and what is still open
 
-The approved plan lists the open questions in full. In code, the proposals stand until Tino answers:
+The approved plan lists the open questions in full.
 
-- **Deciding set** (open question 1). Only a full third set is implemented. Setting `rules.deciding_set` to anything else makes every pick and every result refuse (`deciding_set_mode_not_supported`) rather than guess.
-- **Tiebreakers 3–5** (questions 2–4):
+- **Deciding set** (open question 1): Tino is asking the organiser. Only a full third set is implemented. Setting `rules.deciding_set` to anything else makes every pick and every result refuse (`deciding_set_mode_not_supported`) rather than guess.
+- **Tiebreakers 3–5** (questions 2–4, decided by Tino on 1 Oct 2026):
   - The final-pick time is the last change to the pick on the final.
-  - With no call on the final, or a final that ended by retirement or walkover, the fan ranks after everyone with a gap.
-  - The last resort is the earlier account, then the account id.
+  - With no call on the final, the fan ranks after everyone who has one. If the final ended by retirement or walkover, the step is skipped for everyone.
+  - The last resort is a **computer draw**. Each fan's draw number is `md5(tiebreak_seed || ':' || user_id)`.
+  - The seed is random when the event is created, public (shown on How to play), and locked once the first match starts, so nobody can influence the draw and an audit can re-run it.
+  - Publish the seed before the event: it is in `event_config.tiebreak_seed`.
 - **A corrected result that changes a later match** (question 5): refill it and drop the picks naming the removed player if it has not started; pause it and alert if it has.
 - **League owner deletes their account** (question 10): the longest-standing member becomes owner; an empty league is deleted.
 - **Not yet decided: account deletion vs billing** (question 9). Deleting an account deletes its activity days, so a deleted fan no longer counts. A no-personal-data tombstone is ready to add if legal agrees.

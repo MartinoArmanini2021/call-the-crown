@@ -196,7 +196,7 @@ export const en = {
   htp_ties_2: "Number of sets called exactly across the event.",
   htp_ties_3: "Closest total of games in your final pick to the real final.",
   htp_ties_4: "The earlier last change to your final pick.",
-  htp_ties_5: "The earlier account.",
+  htp_ties_5: "A computer draw, fixed before the first match. Draw seed:",
 
   // errors from the server (codes in supabase/migrations)
   err_not_signed_in: "Please sign in first.",

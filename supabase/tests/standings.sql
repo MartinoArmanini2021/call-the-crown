@@ -1,12 +1,21 @@
 -- =====================================================================================================
 -- Standings: the maximum score, every tiebreaker in order, and strict ranks.
 -- Order: points ↓ · sets called exactly ↓ · |games in the predicted final − games in the real final| ↑
--- (no call last) · time of the last change to the final pick ↑ (no pick last) · earlier account · id.
+-- (no call last) · time of the last change to the final pick ↑ (no pick last) · the published-seed draw.
 -- Runs inside begin … rollback (bun run test:sql standings).
 -- =====================================================================================================
 begin;
 
 select t.setup_event();
+
+-- The draw seed: pick one that orders both tied pairs (6 v 7, 9 v 10) AGAINST account age, so the
+-- test proves the draw decides, not who signed up first. Allowed now: no match has started.
+create temp table draw as
+  select s as seed from (select 'test-seed-' || g as s from generate_series(1, 200) g) x
+   where md5(s || ':' || t.uid(7)::text)  < md5(s || ':' || t.uid(6)::text)
+     and md5(s || ':' || t.uid(10)::text) < md5(s || ':' || t.uid(9)::text)
+   limit 1;
+update public.event_config set tiebreak_seed = (select seed from draw);
 
 -- Results used throughout (no upsets, all two sets, so a perfect card scores the maximum):
 --   QF1 C 6-4 6-3 · QF2 D 6-4 6-3 · SF1 A 6-4 6-4 · SF2 B 6-3 6-3 · 3P C 6-4 6-4 (C v D) · F A 6-4 6-4
@@ -18,9 +27,9 @@ select t.setup_event();
 --   fan 4  (S): 0 points, final called with 26 games (gap 6)
 --   fan 5  (U): 0 points, final called with 24 games (gap 4), at 22 Oct 21:00
 --   fan 6  (V): 0 points, final called with 24 games (gap 4), at 22 Oct 22:00
---   fan 7  (Y): same as V, same moment; created after V → behind V (last resort)
+--   fan 7  (Y): same as V, same moment, created after V; the draw puts Y ahead (last resort)
 --   fan 8  (R): 0 points, final called with 20 games but the wrong winner (gap 0) → points still 0
---   fan 9, 10: no picks at all; 9 created first
+--   fan 9, 10: no picks at all; 9 created first, the draw puts 10 ahead
 select t.new_user(n) from generate_series(1, 10) n;
 
 select t.pick(t.uid(1), 1, 'c', '6-4 6-3');
@@ -72,18 +81,23 @@ select t.check('tiebreaker 3 is only a tiebreaker: a gap of 0 with the wrong win
   and (select rank from public.standings where user_id = t.uid(8)) > (select rank from public.standings where user_id = t.uid(3)));
 select t.check('tiebreaker 4: same gap, the earlier final pick ranks higher',
   (select rank from public.standings where user_id = t.uid(5)) < (select rank from public.standings where user_id = t.uid(6)));
-select t.check('last resort: identical on everything, the earlier account ranks higher',
+select t.check('a draw seed exists that reverses account age for both pairs', exists (select 1 from draw));
+select t.check('last resort: identical on everything, the published-seed draw decides (not account age)',
   (select final_pick_at from public.standings where user_id = t.uid(6)) = (select final_pick_at from public.standings where user_id = t.uid(7))
-  and (select rank from public.standings where user_id = t.uid(6)) < (select rank from public.standings where user_id = t.uid(7)));
+  and (select rank from public.standings where user_id = t.uid(7)) < (select rank from public.standings where user_id = t.uid(6)));
 select t.check('no final call ranks after every final call at equal points',
   (select max(rank) from public.standings where user_id in (t.uid(4), t.uid(5), t.uid(6), t.uid(7), t.uid(8)))
   < (select min(rank) from public.standings where user_id in (t.uid(9), t.uid(10))));
-select t.check('last resort with no picks at all: the earlier account ranks higher',
-  (select rank from public.standings where user_id = t.uid(9)) < (select rank from public.standings where user_id = t.uid(10)));
+select t.check('last resort with no picks at all: the draw decides',
+  (select rank from public.standings where user_id = t.uid(10)) < (select rank from public.standings where user_id = t.uid(9)));
+select t.check('the draw seed cannot change once play has started',
+  t.err($$ update public.event_config set tiebreak_seed = 'another' $$) = 'tiebreak_seed_locked');
+select t.check('the draw seed is public (anon can read it)',
+  has_column_privilege('anon', 'public.event_config', 'tiebreak_seed', 'SELECT'));
 
 select t.check('the full expected order',
   (select array_agg(right(user_id::text, 2) order by rank) from public.standings)
-  = array['01','02','03','08','05','06','07','04','09','10'],
+  = array['01','02','03','08','05','07','06','04','10','09'],
   (select array_to_string(array_agg(right(user_id::text, 2) order by rank), ' ') from public.standings));
 select t.check('ranks are strict: 1..n with no repeats',
   (select bool_and(rank = rn) from (select rank, row_number() over (order by rank) as rn from public.standings) x)

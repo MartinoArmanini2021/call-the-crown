@@ -37,6 +37,7 @@ export type EventConfig = {
   privacy: { version?: string; notice?: string; consent_organiser?: string; consent_gsgm?: string };
   sponsor_slots: SponsorSlot[];
   flags: { arabic?: boolean };
+  tiebreak_seed: string;
 };
 export type Player = {
   id: string;

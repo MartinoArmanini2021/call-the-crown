@@ -9,7 +9,7 @@ export const Route = createFileRoute("/how-to-play")({ component: HowToPlay });
 
 // The rules, rendered from event_config.rules: change the config and this page follows.
 function HowToPlay() {
-  const { rules } = useEvent();
+  const { rules, tiebreak_seed } = useEvent();
   const { t } = useT();
   const rounds: Round[] = ["QF", "SF", "3P", "F"];
   const scores = rules.allowed_set_scores.map(([a, b]) => `${a}-${b}`).join(", ");
@@ -100,7 +100,10 @@ function HowToPlay() {
         <li>{t("htp_ties_2")}</li>
         <li>{t("htp_ties_3")}</li>
         <li>{t("htp_ties_4")}</li>
-        <li>{t("htp_ties_5")}</li>
+        <li>
+          {t("htp_ties_5")}{" "}
+          <code className="break-all font-mono text-xs text-ink-3">{tiebreak_seed}</code>
+        </li>
       </ol>
 
       <div className="mt-8">

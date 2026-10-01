@@ -21,6 +21,25 @@ create trigger result_log_no_change before update or delete on public.result_log
 create trigger result_log_no_truncate before truncate on public.result_log
   for each statement execute function public.result_log_immutable();
 
+-- The draw seed cannot change once play has started (or a re-run could reorder a tie after the fact).
+create function public.guard_tiebreak_seed() returns trigger
+language plpgsql
+set search_path = public
+as $$
+begin
+  if new.tiebreak_seed is distinct from old.tiebreak_seed and exists (
+    select 1 from public.matches
+     where status <> 'scheduled' or (starts_at is not null and starts_at <= public.app_now())
+  ) then
+    raise exception 'tiebreak_seed_locked';
+  end if;
+  return new;
+end;
+$$;
+create trigger event_config_seed_guard before update on public.event_config
+  for each row execute function public.guard_tiebreak_seed();
+revoke all on function public.guard_tiebreak_seed() from public, anon, authenticated, service_role;
+
 -- Turns a provider's score array into ours: checks the shape, and swaps the two columns when the
 -- provider lists the players the other way round. Returns null when the shape is wrong.
 create function public.orient_set_scores(p_scores jsonb, p_flip boolean) returns jsonb

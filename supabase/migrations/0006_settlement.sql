@@ -151,7 +151,12 @@ $$;
 --   1 points ↓   2 sets called exactly ↓   3 distance between the games in the predicted final and
 --   the real final ↑ (no call, or a final that was not completed: after everyone who has one)
 --   4 time of the last change to the pick on the final ↑ (no pick on the final: last)
---   5 last resort: the earlier account, then the account id. Always decides, so ranks never tie.
+--   5 last resort: a computer draw. Each fan's draw number is md5(tiebreak_seed || ':' || user_id);
+--     the seed is fixed and published before the first match (event_config.tiebreak_seed, readable
+--     by anyone, locked once play starts), so nobody can influence the draw and an audit can re-run it.
+--     The account id breaks an md5 collision. Always decides, so ranks never tie.
+-- Decided by Tino 2026-10-01 (open questions 2–4): tiebreaker 4 = the pick on the final; tiebreaker 3
+-- as above; last resort = the published-seed draw.
 -- ---------------------------------------------------------------------------------------------------
 create function public.recompute_standings() returns void
 language plpgsql
@@ -160,6 +165,7 @@ as $$
 declare
   f             public.matches%rowtype;
   v_final_games int;
+  v_seed        text := (select tiebreak_seed from public.event_config);
 begin
   select * into f from public.matches where round = 'F' order by match_no limit 1;
   if f.status = 'completed' then
@@ -180,9 +186,10 @@ begin
     from (
   select t.user_id, t.points, t.exact_sets, t.gap, t.final_pick_at,
          (row_number() over (order by t.points desc, t.exact_sets desc, t.gap asc nulls last,
-                                      t.final_pick_at asc nulls last, t.created_at asc, t.user_id asc))::int as rank
+                                      t.final_pick_at asc nulls last,
+                                      md5(v_seed || ':' || t.user_id::text) asc, t.user_id asc))::int as rank
     from (
-      select pr.user_id, pr.created_at,
+      select pr.user_id,
              coalesce(a.points, 0)     as points,
              coalesce(a.exact_sets, 0) as exact_sets,
              case when v_final_games is not null and fp.user_id is not null

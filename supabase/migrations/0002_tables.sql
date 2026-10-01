@@ -20,6 +20,9 @@ create table public.event_config (
   privacy            jsonb       not null default '{}',   -- notice + consent texts with their versions
   sponsor_slots      jsonb       not null default '[]',
   flags              jsonb       not null default '{}',   -- e.g. {"arabic": false}
+  -- The last-resort tiebreaker's draw seed: random when the event is created, public, and locked once
+  -- the first match starts (trigger in 0007). See recompute_standings in 0006.
+  tiebreak_seed      text        not null default encode(sha256(convert_to(gen_random_uuid()::text, 'UTF8')), 'hex'),
   updated_at         timestamptz not null default now(),
   constraint rules_shape check (
     rules ? 'winner_points' and rules ? 'sets_points' and rules ? 'per_set_exact'
