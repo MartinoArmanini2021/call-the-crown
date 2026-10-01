@@ -38,6 +38,7 @@ export function MatchCard({
   now,
   children,
   defaultOpen = false,
+  after,
 }: {
   match: Match;
   matches: Match[];
@@ -46,6 +47,7 @@ export function MatchCard({
   now: number;
   children?: ReactNode; // the editor, when picks are open and the fan is signed in
   defaultOpen?: boolean;
+  after?: ReactNode; // shown at the bottom of the card whatever its state (the points breakdown)
 }) {
   const event = useEvent();
   const { t, locale } = useT();
@@ -142,6 +144,7 @@ export function MatchCard({
       </footer>
 
       {state === "open" && open && children}
+      {after}
     </article>
   );
 }

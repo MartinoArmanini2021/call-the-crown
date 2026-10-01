@@ -42,12 +42,12 @@ function Results() {
                   players={byPlayer}
                   pick={pickByMatch.get(m.match_no)}
                   now={now}
+                  after={
+                    user && m.status !== "scheduled" ? (
+                      <PointsBreakdown match={m} pick={pickByMatch.get(m.match_no)} />
+                    ) : null
+                  }
                 />
-                {user && m.status !== "scheduled" && (
-                  <div className="card -mt-3 rounded-t-none border-t-0 px-4 pb-4">
-                    <PointsBreakdown match={m} pick={pickByMatch.get(m.match_no)} />
-                  </div>
-                )}
                 {i === 0 && <SponsorSlot slot="results_card" className="mt-3" />}
               </div>
             ))}
