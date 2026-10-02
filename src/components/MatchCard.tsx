@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
@@ -36,8 +36,7 @@ export function MatchCard({
   players,
   pick,
   now,
-  children,
-  defaultOpen = false,
+  action,
   after,
 }: {
   match: Match;
@@ -45,8 +44,7 @@ export function MatchCard({
   players: Map<string, Player>;
   pick: Pick | undefined;
   now: number;
-  children?: ReactNode; // the editor, when picks are open and the fan is signed in
-  defaultOpen?: boolean;
+  action?: ReactNode; // the "Make pick" / "Edit" button, when picks are open
   after?: ReactNode; // shown at the bottom of the card whatever its state (the points breakdown)
 }) {
   const event = useEvent();
@@ -54,7 +52,6 @@ export function MatchCard({
   const label = useMatchLabel();
   const source = useSourceText();
   const state = matchState(match, now);
-  const [open, setOpen] = useState(defaultOpen);
 
   const row = (slot: 1 | 2) => {
     const id = slot === 1 ? match.p1_id : match.p2_id;
@@ -130,22 +127,9 @@ export function MatchCard({
             {t("your_pick")}: {scoreLine(pick.set_scores)}
           </span>
         )}
-        {state === "open" && children && (
-          <button
-            type="button"
-            onClick={() => setOpen((o) => !o)}
-            className="focus-ring rounded-full bg-raised px-3 py-1.5 font-semibold"
-            aria-expanded={open}
-          >
-            {pick ? `${t("your_pick")}: ${scoreLine(pick.set_scores)}` : t("save_pick")}
-            <span aria-hidden className="ms-1.5">
-              {open ? "▴" : "▾"}
-            </span>
-          </button>
-        )}
+        {state === "open" && action}
       </footer>
 
-      {state === "open" && open && children}
       {after}
     </article>
   );

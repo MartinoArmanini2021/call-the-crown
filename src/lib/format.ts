@@ -43,12 +43,3 @@ export function matchState(m: Match, nowMs: number): MatchState {
   if (!m.p1_id || !m.p2_id || !m.starts_at) return "waiting";
   return Date.parse(m.starts_at) <= nowMs ? "locked" : "open";
 }
-
-/** Which night a match is on (1, 2, 3), from the event-local date of its start. */
-export function nightOf(m: Match, matches: Match[], timezone: string): number {
-  const day = (iso: string | null) =>
-    iso ? new Intl.DateTimeFormat("en-CA", { timeZone: timezone }).format(new Date(iso)) : "";
-  const days = [...new Set(matches.map((x) => day(x.starts_at)).filter(Boolean))].sort();
-  const i = days.indexOf(day(m.starts_at));
-  return i < 0 ? 0 : i + 1;
-}

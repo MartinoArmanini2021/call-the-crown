@@ -91,3 +91,20 @@ body {
 .safe-bottom {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
+
+/* A bracket match that still needs your pick (Bracket.tsx). Calm when motion is reduced. */
+.skg-glow {
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skg-glow {
+    animation: skg-glow 2.4s ease-in-out infinite;
+  }
+  @keyframes skg-glow {
+    50% {
+      box-shadow:
+        0 0 0 1px var(--accent) inset,
+        0 0 14px rgb(229 9 20 / 0.45);
+    }
+  }
+}
