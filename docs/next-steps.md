@@ -13,6 +13,19 @@ Staging works end to end: https://preview.six-kings-game.pages.dev on Supabase p
 
 How it was set up and how to redeploy: README, "Staging (Phase 2)".
 
+## Since Phase 2 (2 Oct 2026)
+
+- **The real draw is loaded on staging:** QF1 Fritz v Zverev → SF1 against Alcaraz; QF2 de Minaur v
+  Sinner → SF2 against Djokovic (`supabase/events/sixkings_2026_draw.sql`). Tino's two test picks
+  were deleted first. Still provisional: the ranks (to be replaced by the ATP ranking of Monday
+  12 Oct 2026, before picks open on production), the start times (until the organiser's schedule),
+  and the Wikipedia slot ids (until the 2026 article exists).
+- **Player images:** organiser's Six Kings artwork, requested with `docs/organiser-player-assets.md`.
+  The `event` storage bucket exists (0011); names and initials show until the files arrive.
+- **First-time-fan fixes, all four batches, live on staging:** Saved message and Next-step banner;
+  plain sentence, worked example, Picks intro, "8 pts"; the 2–0 / 2–1 question with winner-side
+  chips and a fixed-order scoreboard; "How fans picked" totals per started match (0012).
+
 ## Phase 3: launch build (live by 17 Oct 2026)
 
 Starts only on Tino's go. From the approved plan, what it needs:
