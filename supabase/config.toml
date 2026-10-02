@@ -62,3 +62,20 @@ content_path = "./supabase/templates/code.html"
 [auth.email.template.confirmation]
 subject = "Your sign-in code"
 content_path = "./supabase/templates/code.html"
+
+# -----------------------------------------------------------------------------------------------------
+# Staging (Phase 2): project six-kings-game-staging, Frankfurt. Inherits everything above; only these
+# differ. Apply with `bunx supabase config push --project-ref rmjlqqzytahmdlmnwxfc`.
+# Email: Supabase's built-in sender for now (delivers only to members of the Supabase organisation, a
+# few an hour); the custom sender (Resend on Tino's domain) arrives in Phase 3.
+[remotes.staging]
+project_id = "rmjlqqzytahmdlmnwxfc"
+
+[remotes.staging.auth]
+site_url = "https://preview.six-kings-game.pages.dev"
+
+[remotes.staging.auth.rate_limit]
+email_sent = 2
+
+[remotes.staging.db.seed]
+enabled = false

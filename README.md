@@ -116,6 +116,44 @@ The same app against a real local Supabase. Docker Desktop must be running. The 
 bun scripts/walkthrough-local.ts
 ```
 
+## Staging (Phase 2)
+
+| What | Where |
+|---|---|
+| App (preview) | https://preview.six-kings-game.pages.dev (Cloudflare Pages project `six-kings-game`, branch `preview`; production branch `main` is not deployed) |
+| Supabase | project `six-kings-game-staging`, ref `rmjlqqzytahmdlmnwxfc`, Frankfurt (eu-central-1), organisation Astra LTD, free plan |
+| Data | invented Players A–F on the real 2026 schedule (`supabase/staging/setup_staging.sql`), provider `fixture`, real clock (no simulated clock on staging) |
+| Settings | `[remotes.staging]` in `supabase/config.toml`; public app values in `.env.staging`; the database password in `.env.staging.local` (git-ignored) |
+
+Redeploy after a change (the CLI must be logged in: `bunx supabase login`; wrangler logged in to Cloudflare):
+
+```bash
+bunx supabase db push --linked
+```
+
+```bash
+bunx supabase config push --project-ref rmjlqqzytahmdlmnwxfc
+```
+
+```bash
+bunx supabase functions deploy poll-results --project-ref rmjlqqzytahmdlmnwxfc
+```
+
+```bash
+bunx vite build --mode staging
+```
+
+```bash
+bunx wrangler pages deploy dist --project-name six-kings-game --branch preview
+```
+
+One-off settings that hold secrets live only in the Supabase dashboard, entered by Tino, never in this repo:
+
+- **Email sender:** Authentication → Emails → SMTP settings: Resend (`smtp.resend.com`, port 465, user `resend`, password = the Resend API key) from `mail.grandslamgm.com`. The free plan cannot change the sign-in email template without a custom sender, so the code-only email (`supabase/templates/code.html`) is pushed after SMTP is on.
+- **The cron's key:** SQL editor, once: `select vault.create_secret('<service_role key>', 'service_role_key');`. The poller address (`functions_url`) is already in Vault.
+
+Advisors on staging (Supabase dashboard or `get_advisors`): 0 ERROR. The remaining WARN and INFO entries are by design: fans call the security-definer RPCs, and the tables without a policy are reachable only through RPCs.
+
 ## Tests and checks
 
 | Command | What it proves |
