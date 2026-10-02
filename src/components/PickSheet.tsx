@@ -196,11 +196,7 @@ export function PickSheet({
                 return (
                   <div key={i} className="space-y-1.5">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="flex items-center gap-1.5 text-xs font-semibold text-ink-2">
-                        <span
-                          aria-hidden
-                          className={cn("h-2.5 w-2.5 rounded-full", SIDE_COLOR[by].dot)}
-                        />
+                      <span className="text-xs font-semibold text-ink-2">
                         {t("set_n", { n: i + 1 })}
                         {i === 2 && <span className="text-ink-3"> · {t("set_decider")}</span>}
                       </span>
@@ -219,7 +215,7 @@ export function PickSheet({
                             onClick={() => i < 2 && change((d) => withSetWinner(d, i as 0 | 1, s))}
                             className={cn(
                               "focus-ring max-w-[8rem] truncate rounded-full px-3 py-1 text-xs font-bold transition-colors disabled:opacity-30",
-                              by === s ? SIDE_COLOR[s].fill : SIDE_COLOR[s].text,
+                              by === s ? SIDE_COLOR[s].chosen : "text-ink-3 hover:text-ink",
                             )}
                           >
                             {short(s)}
@@ -242,7 +238,7 @@ export function PickSheet({
                             onClick={() => change((d) => withScore(d, i, [hi, lo]))}
                             className={cn(
                               "focus-ring num rounded-lg py-2 text-[13px] transition-colors",
-                              on ? SIDE_COLOR[by].fill : "bg-raised text-ink-2 hover:text-ink",
+                              on ? SIDE_COLOR[by].chosen : "bg-raised text-ink-2 hover:text-ink",
                             )}
                           >
                             {hi}-{lo}
@@ -318,17 +314,18 @@ function Choice({
     <button
       type="button"
       aria-pressed={on}
+      aria-label={sub ? `${title}, ${sub}` : title}
       onClick={onClick}
       className={cn(
-        "focus-ring flex flex-col items-start rounded-2xl border-s-4 px-3 py-2.5 text-start transition-colors",
-        SIDE_COLOR[side].edge,
-        on ? SIDE_COLOR[side].fill : "bg-raised text-ink-2 hover:text-ink",
+        "focus-ring flex flex-col items-start rounded-2xl px-3 py-2.5 text-start transition-colors",
+        on ? SIDE_COLOR[side].chosen : "bg-raised text-ink-2 hover:text-ink",
       )}
     >
-      <span className={cn("w-full truncate text-sm font-bold", !on && SIDE_COLOR[side].text)}>
-        {title}
+      <span className="flex w-full items-center gap-2 text-sm font-bold">
+        <span aria-hidden className={cn("h-2 w-2 shrink-0 rounded-full", SIDE_COLOR[side].dot)} />
+        <span className="truncate">{title}</span>
       </span>
-      {sub && <span className={cn("text-[11px]", on ? "text-bg/80" : "text-ink-3")}>{sub}</span>}
+      {sub && <span className="ps-4 text-[11px] text-ink-3">{sub}</span>}
     </button>
   );
 }

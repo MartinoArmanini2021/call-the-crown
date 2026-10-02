@@ -65,10 +65,10 @@ export function Scoreboard({
       <tbody>
         {([1, 2] as const).map((s) => (
           <tr key={s}>
-            <th
-              scope="row"
-              className={cn("truncate px-3 py-1 text-start text-xs font-bold", SIDE_COLOR[s].text)}
-            >
+            <th scope="row" className="truncate px-3 py-1 text-start text-xs font-bold text-ink">
+              <span
+                className={cn("me-2 inline-block h-3 border-s-2 align-[-1px]", SIDE_COLOR[s].line)}
+              />
               {names[s]}
               {s === winner && <span className="text-accent-text"> ●</span>}
             </th>

@@ -48,7 +48,7 @@ export function MatchCard({
     const won = match.winner_id !== null && match.winner_id === id;
     const picked = pick?.winner_id === id && id !== null;
     return (
-      <div className={cn("flex items-center gap-3 border-s-4 ps-2.5", SIDE_COLOR[slot].edge)}>
+      <div className={cn("flex items-center gap-3 border-s-2 ps-2.5", SIDE_COLOR[slot].line)}>
         <PlayerBadge player={p} size={36} />
         <div className="min-w-0 flex-1">
           <p className={cn("truncate font-semibold", match.winner_id && !won && "text-ink-3")}>
