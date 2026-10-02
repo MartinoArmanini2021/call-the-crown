@@ -406,4 +406,5 @@ The approved plan lists the open questions in full.
 - **Not yet decided: account deletion vs billing** (question 9). Deleting an account deletes its activity days, so a deleted fan no longer counts. A no-personal-data tombstone is ready to add if legal agrees.
 - **Arabic:** wired (right-to-left layout, the switch, the flag) with no texts yet. They come with the reviewed translation in Phase 3.
 - **Results source** (Tino, 1 Oct 2026): Wikipedia now, with the 10-minute stability rule; Sportradar added as a second source if a contract lands. The Wikipedia adapter is tested on the real 2024 and 2025 brackets (`tests/fixtures/wikipedia`, attributed excerpts) and end to end (`tests/wikipedia-replay.test.ts`).
+- **How numbers show** (Tino, 2 Oct 2026): points are whole numbers everywhere (8, 14, "up to 28 pts"), as the rules round every score to a whole point. Calculated shares, such as "How fans picked", show one decimal (61.5%).
 - **Sportradar adapter:** written from the documentation. It has not touched real data; Phase 3 checks it under a trial key.
