@@ -1,6 +1,6 @@
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
-import { publicImage, type Player, type SponsorSlot as Slot } from "@/lib/api";
+import { inLocale, publicImage, type Player, type SponsorSlot as Slot } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 /** A player's organiser-supplied image; nothing until it exists (names, never initials). Never a third-party hotlink. */
@@ -59,7 +59,7 @@ export const MEDAL = ["bg-gold", "bg-silver", "bg-bronze"] as const;
 
 export function PrizeStrip({ compact = false }: { compact?: boolean }) {
   const event = useEvent();
-  const { t } = useT();
+  const { t, locale } = useT();
   if (event.prizes.length === 0) return null;
   // Always one prize per line: three boxes side by side clip the text at phone width.
   return (
@@ -81,7 +81,9 @@ export function PrizeStrip({ compact = false }: { compact?: boolean }) {
                   {p.place}
                 </span>
                 {img && <img src={img} alt="" className="h-9 w-9 rounded object-cover" />}
-                <span className="min-w-0 text-sm leading-snug text-ink-2">{p.title}</span>
+                <span className="min-w-0 text-sm leading-snug text-ink-2">
+                  {inLocale(p, "title", locale)}
+                </span>
               </li>
             );
           })}

@@ -6,7 +6,7 @@ import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
-import { matchesQuery, playersQuery, publicImage, type Player } from "@/lib/api";
+import { inLocale, matchesQuery, playersQuery, publicImage, type Player } from "@/lib/api";
 import { shortTimeLeft, surname } from "@/lib/format";
 
 export const Route = createFileRoute("/")({ component: Landing });
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({ component: Landing });
 // hard-coded). First-time-fan test, 2 Oct 2026: one plain sentence and one example beat three tiles.
 function Landing() {
   const event = useEvent();
-  const { t, locale } = useT();
+  const { t, locale, setLocale } = useT();
   const { user } = useAuth();
   const now = useServerNow();
   const players = useQuery(playersQuery);
@@ -36,9 +36,9 @@ function Landing() {
   return (
     <AppShell>
       <section className="relative overflow-hidden rounded-3xl border border-line bg-[radial-gradient(120%_80%_at_100%_0%,rgb(229_9_20/0.45),transparent_60%),linear-gradient(160deg,#1d0a0b,var(--bg)_70%)] px-5 pb-6 pt-7">
-        {event.branding.event_line && (
+        {inLocale(event.branding, "event_line", locale) && (
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-2">
-            {event.branding.event_line}
+            {inLocale(event.branding, "event_line", locale)}
           </p>
         )}
         <h1 className="headline mt-3 text-6xl sm:text-7xl">{t("landing_title")}</h1>
@@ -61,7 +61,9 @@ function Landing() {
         {firstLock !== undefined && (
           <p className="mt-5 flex items-baseline gap-2">
             <span className="text-xs text-ink-2">{t("first_lock_in")}</span>
-            <span className="num text-3xl text-accent-text">{shortTimeLeft(firstLock - now)}</span>
+            <span className="num text-3xl text-accent-text">
+              {shortTimeLeft(firstLock - now, locale)}
+            </span>
           </p>
         )}
 
@@ -81,10 +83,20 @@ function Landing() {
 
       <SponsorSlot slot="landing_strip" className="mt-4" />
 
-      <p className="mt-6 text-center text-xs text-ink-3">
+      <p className="mt-6 flex justify-center gap-4 text-center text-xs text-ink-3">
         <Link to="/how-to-play" className="focus-ring underline underline-offset-2">
           {t("how_to_play")}
         </Link>
+        {event.flags.arabic && (
+          <button
+            type="button"
+            onClick={() => setLocale(locale === "ar" ? "en" : "ar")}
+            className="focus-ring underline underline-offset-2"
+            lang={locale === "ar" ? "en" : "ar"}
+          >
+            {locale === "ar" ? "English" : "العربية"}
+          </button>
+        )}
       </p>
     </AppShell>
   );
@@ -107,7 +119,9 @@ function Portrait({ player, name }: { player: Player; name: string }) {
         </>
       )}
       {first && <span className="relative truncate text-[11px] text-ink-2">{first}</span>}
-      <span className="headline relative truncate text-lg leading-tight text-ink">{last}</span>
+      <span className="headline relative line-clamp-2 break-words pb-0.5 text-base leading-snug text-ink sm:text-lg">
+        {last}
+      </span>
     </div>
   );
 }

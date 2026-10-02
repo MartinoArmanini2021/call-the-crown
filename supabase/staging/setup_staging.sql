@@ -19,7 +19,7 @@ on conflict (provider, kind, provider_ref) do update set our_ref = excluded.our_
 -- Example prizes and terms link so the review shows the layout; replaced with the organiser's text.
 update public.event_config set
   launch_at = '2026-10-02 00:00+03',
-  prizes = '[{"place":1,"title":"First prize (organiser text to come)","image_path":null},
-             {"place":2,"title":"Second prize (organiser text to come)","image_path":null},
-             {"place":3,"title":"Third prize (organiser text to come)","image_path":null}]'
+  prizes = '[{"place":1,"title":"First prize (organiser text to come)","title_ar":"الجائزة الأولى (نص المنظم لاحقاً)","image_path":null},
+             {"place":2,"title":"Second prize (organiser text to come)","title_ar":"الجائزة الثانية (نص المنظم لاحقاً)","image_path":null},
+             {"place":3,"title":"Third prize (organiser text to come)","title_ar":"الجائزة الثالثة (نص المنظم لاحقاً)","image_path":null}]'
  where id;

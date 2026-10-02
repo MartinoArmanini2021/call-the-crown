@@ -1,15 +1,19 @@
 import type { Match, Player } from "./api";
 import type { SetScore } from "./validation";
 
-/** "2d 5h", "3h 20m", "12m", "45s". Adapted from grand-slam-gm/src/lib/timeLeft.ts. */
-export function shortTimeLeft(ms: number): string {
+// Time units for the countdowns. Arabic: ي يوم, س ساعة, د دقيقة, ث ثانية (draft, organiser review).
+const UNITS = { en: ["d", "h", "m", "s"], ar: ["ي", "س", "د", "ث"] } as const;
+
+/** "2d 5h", "3h 20m", "12m 05s", "45s" (Arabic "2ي 5س"). Adapted from grand-slam-gm/src/lib/timeLeft.ts. */
+export function shortTimeLeft(ms: number, locale: string = "en"): string {
+  const [d, h, m, sec] = UNITS[locale === "ar" ? "ar" : "en"];
   const seconds = Math.max(0, Math.floor(ms / 1000));
-  if (seconds < 60) return `${seconds}s`;
+  if (seconds < 60) return `${seconds}${sec}`;
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ${String(seconds % 60).padStart(2, "0")}s`;
+  if (minutes < 60) return `${minutes}${m} ${String(seconds % 60).padStart(2, "0")}${sec}`;
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ${minutes % 60}m`;
-  return `${Math.floor(hours / 24)}d ${hours % 24}h`;
+  if (hours < 24) return `${hours}${h} ${minutes % 60}${m}`;
+  return `${Math.floor(hours / 24)}${d} ${hours % 24}${h}`;
 }
 
 /** Set scores always in the match's fixed order: player 1's games first. "6-4 3-6 7-6". */

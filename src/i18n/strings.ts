@@ -1,6 +1,8 @@
-// Every word the fan sees, in one file. English is complete. Arabic is wired in (right-to-left
-// layout, the language switch) and ships behind event_config.flags.arabic; its texts arrive with the
-// organiser-reviewed translation in Phase 3. Until then any missing Arabic key falls back to English.
+import { ar } from "./ar";
+
+// Every word the fan sees. English here; Arabic in ./ar.ts (draft for the organiser's review, complete:
+// its type refuses a missing key). Arabic ships behind event_config.flags.arabic, with right-to-left
+// layout and the language switch.
 // {name} placeholders are filled by t(key, {name: value}).
 
 export const en = {
@@ -304,8 +306,6 @@ export const en = {
 };
 
 export type StringKey = keyof typeof en;
-
-export const ar: Partial<Record<StringKey, string>> = {};
 
 export const strings = { en, ar } as const;
 export type Locale = keyof typeof strings;

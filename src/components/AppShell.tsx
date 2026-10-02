@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useT } from "@/i18n/useT";
-import { profileQuery, publicImage } from "@/lib/api";
+import { inLocale, profileQuery, publicImage } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 const TABS = [
@@ -18,7 +18,7 @@ const TABS = [
 // Fans see only the organiser's brand here.
 export function AppShell({ children, wide = false }: { children: ReactNode; wide?: boolean }) {
   const event = useEvent();
-  const { t } = useT();
+  const { t, locale } = useT();
   const { user } = useAuth();
   const profile = useQuery({ ...profileQuery(user?.id ?? ""), enabled: !!user });
   const avatar = (profile.data?.display_name || user?.email || "?").trim()[0]?.toUpperCase();
@@ -26,9 +26,11 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const logo = publicImage(event.branding.logo_path);
   // The header's short mark (branding.short_name, e.g. "Six Kings Predictor"): all but the last word
   // in the accent colour. Short enough to fit a phone; the full app name stays in the page title.
-  const headerName = (event.branding.short_name ?? event.branding.app_name ?? event.name).split(
-    " ",
-  );
+  const headerName = (
+    inLocale(event.branding, "short_name", locale) ??
+    inLocale(event.branding, "app_name", locale) ??
+    event.name
+  ).split(" ");
 
   return (
     <div className="flex min-h-dvh flex-col">

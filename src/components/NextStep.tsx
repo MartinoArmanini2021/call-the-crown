@@ -21,7 +21,7 @@ export function NextStepBanner({
   players: Map<string, Player>;
   onPick?: (m: Match) => void;
 }) {
-  const { t } = useT();
+  const { t, locale } = useT();
   const label = useMatchLabel();
   const { title } = useMatchNames(players);
   const row = "flex items-center justify-between gap-3 px-4 py-3";
@@ -41,7 +41,7 @@ export function NextStepBanner({
             </span>
           </span>
           <span className="num shrink-0 text-end text-sm text-ink-2">
-            {t("time_left", { time: shortTimeLeft(step.msLeft) })}
+            {t("time_left", { time: shortTimeLeft(step.msLeft, locale) })}
           </span>
         </>
       );
@@ -66,7 +66,9 @@ export function NextStepBanner({
           </span>
           <span className="shrink-0 text-end">
             <span className={`${kicker} block text-ink-3`}>{t("next_lock")}</span>
-            <span className="num text-xl text-accent-text">{shortTimeLeft(step.msLeft)}</span>
+            <span className="num text-xl text-accent-text">
+              {shortTimeLeft(step.msLeft, locale)}
+            </span>
           </span>
         </div>
       );

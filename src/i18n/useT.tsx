@@ -22,12 +22,18 @@ const LocaleContext = createContext<{ locale: Locale; setLocale: (l: Locale) => 
 });
 
 const STORE = "locale";
+// The fan's own choice if they made one; otherwise the phone's language (a phone set to Arabic opens
+// in Arabic). Only used when the event has Arabic switched on.
 function stored(): Locale {
+  let choice: string | null = null;
   try {
-    return localStorage.getItem(STORE) === "ar" ? "ar" : "en";
+    choice = localStorage.getItem(STORE);
   } catch {
-    return "en";
+    /* storage blocked: fall through to the phone's language */
   }
+  if (choice === "ar" || choice === "en") return choice;
+  const phone = typeof navigator === "undefined" ? "" : (navigator.language ?? "");
+  return phone.toLowerCase().startsWith("ar") ? "ar" : "en";
 }
 
 // arabicEnabled comes from event_config.flags.arabic: when it is off, the app is English only.

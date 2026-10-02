@@ -20,12 +20,12 @@
 set role service_role;
 
 select public.set_players(
-  '[{"id":"alcaraz", "name":"Carlos Alcaraz",   "country":"ESP","seed":1,"rank":3},
-    {"id":"djokovic","name":"Novak Djokovic",   "country":"SRB","seed":2,"rank":5},
-    {"id":"sinner",  "name":"Jannik Sinner",    "country":"ITA","seed":3,"rank":1},
-    {"id":"zverev",  "name":"Alexander Zverev", "country":"GER","seed":4,"rank":2},
-    {"id":"deminaur","name":"Alex de Minaur",   "country":"AUS","seed":5,"rank":7},
-    {"id":"fritz",   "name":"Taylor Fritz",     "country":"USA","seed":6,"rank":10}]',
+  '[{"id":"alcaraz", "name":"Carlos Alcaraz",   "name_ar":"كارلوس ألكاراز","country":"ESP","seed":1,"rank":3},
+    {"id":"djokovic","name":"Novak Djokovic",   "name_ar":"نوفاك ديوكوفيتش","country":"SRB","seed":2,"rank":5},
+    {"id":"sinner",  "name":"Jannik Sinner",    "name_ar":"يانيك سينر","country":"ITA","seed":3,"rank":1},
+    {"id":"zverev",  "name":"Alexander Zverev", "name_ar":"ألكسندر زفيريف","country":"GER","seed":4,"rank":2},
+    {"id":"deminaur","name":"Alex de Minaur",   "name_ar":"أليكس دي مينور","country":"AUS","seed":5,"rank":7},
+    {"id":"fritz",   "name":"Taylor Fritz",     "name_ar":"تايلور فريتز","country":"USA","seed":6,"rank":10}]',
   '[{"match_no":1,"round":"QF","p1":{"type":"player","id":"fritz"},   "p2":{"type":"player","id":"zverev"}},
     {"match_no":2,"round":"QF","p1":{"type":"player","id":"deminaur"},"p2":{"type":"player","id":"sinner"}},
     {"match_no":3,"round":"SF","p1":{"type":"player","id":"alcaraz"}, "p2":{"type":"winner","match":1}},

@@ -15,7 +15,7 @@ export type Rules = {
   allowed_set_scores: [number, number][];
   deciding_set: string;
 };
-export type Prize = { place: number; title: string; image_path: string | null };
+export type Prize = { place: number; title: string; title_ar?: string; image_path: string | null };
 export type SponsorSlot = {
   slot: "landing_strip" | "leaderboard_header" | "picks_footer" | "results_card";
   image_path: string | null;
@@ -29,14 +29,26 @@ export type EventConfig = {
   league_limits: { max_leagues_per_user: number; max_members: number };
   branding: {
     app_name?: string;
+    app_name_ar?: string;
     short_name?: string; // the header mark, e.g. "Six Kings Predictor"
+    short_name_ar?: string;
     event_line?: string; // the landing page's line about the event: venue, dates, broadcaster
+    event_line_ar?: string;
     logo_path?: string | null;
     colors?: Partial<Record<string, string>>;
   };
   prizes: Prize[];
   prize_terms_url: string | null;
-  privacy: { version?: string; notice?: string; consent_organiser?: string; consent_gsgm?: string };
+  // Each text may have an Arabic twin (notice_ar …); one version covers both languages.
+  privacy: {
+    version?: string;
+    notice?: string;
+    notice_ar?: string;
+    consent_organiser?: string;
+    consent_organiser_ar?: string;
+    consent_gsgm?: string;
+    consent_gsgm_ar?: string;
+  };
   sponsor_slots: SponsorSlot[];
   flags: { arabic?: boolean };
   tiebreak_seed: string;
@@ -234,6 +246,16 @@ export const updateProfile = (name: string, locale?: "en" | "ar") =>
 export const updateConsents = (organiser: boolean, gsgm: boolean, version: string) =>
   rpc<void>("update_consents", { p_organiser: organiser, p_gsgm: gsgm, p_text_version: version });
 export const deleteAccount = () => rpc<void>("delete_account");
+
+/**
+ * A text from event_config in the fan's language: the Arabic twin (`key_ar`) when the page is in
+ * Arabic and the organiser supplied one, otherwise the English text.
+ */
+export function inLocale<T extends object>(o: T, key: keyof T & string, locale: string) {
+  const r = o as Record<string, unknown>;
+  const ar = r[`${key}_ar`];
+  return (locale === "ar" && typeof ar === "string" && ar ? ar : r[key]) as string | undefined;
+}
 
 // Images (organiser-supplied, in the instance's own storage bucket; never hotlinked).
 export const publicImage = (path: string | null | undefined): string | null =>

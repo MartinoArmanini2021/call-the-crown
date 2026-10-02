@@ -98,8 +98,8 @@ export function Bracket({
               const status =
                 state === "open"
                   ? todo
-                    ? t("tile_pick", { time: shortTimeLeft(left) })
-                    : t("tile_picked", { time: shortTimeLeft(left) })
+                    ? t("tile_pick", { time: shortTimeLeft(left, locale) })
+                    : t("tile_picked", { time: shortTimeLeft(left, locale) })
                   : state === "locked"
                     ? t("tile_live")
                     : state === "settled"

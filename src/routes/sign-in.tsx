@@ -8,6 +8,7 @@ import { Turnstile, turnstileEnabled } from "@/components/Turnstile";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
+import { inLocale } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
@@ -170,18 +171,20 @@ function SignIn() {
                 <Consent
                   checked={consentOrg}
                   onChange={setConsentOrg}
-                  text={event.privacy.consent_organiser ?? ""}
+                  text={inLocale(event.privacy, "consent_organiser", locale) ?? ""}
                 />
                 <Consent
                   checked={consentGsgm}
                   onChange={setConsentGsgm}
-                  text={event.privacy.consent_gsgm ?? ""}
+                  text={inLocale(event.privacy, "consent_gsgm", locale) ?? ""}
                 />
                 <details className="text-xs text-ink-3">
                   <summary className="focus-ring cursor-pointer rounded font-semibold text-ink-2">
                     {t("privacy_title")}
                   </summary>
-                  <p className="mt-2 whitespace-pre-line leading-relaxed">{event.privacy.notice}</p>
+                  <p className="mt-2 whitespace-pre-line leading-relaxed">
+                    {inLocale(event.privacy, "notice", locale)}
+                  </p>
                 </details>
               </fieldset>
             )}

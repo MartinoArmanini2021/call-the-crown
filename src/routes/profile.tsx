@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { errorText, useT } from "@/i18n/useT";
 import {
   consentsQuery,
+  inLocale,
   deleteAccount,
   profileQuery,
   updateConsents,
@@ -105,8 +106,8 @@ function Profile() {
         <section className="card mb-3 space-y-3 p-4">
           <h2 className="text-sm font-semibold">{t("consents_title")}</h2>
           {[
-            [org, setOrg, event.privacy.consent_organiser],
-            [gsgm, setGsgm, event.privacy.consent_gsgm],
+            [org, setOrg, inLocale(event.privacy, "consent_organiser", locale)],
+            [gsgm, setGsgm, inLocale(event.privacy, "consent_gsgm", locale)],
           ].map(([checked, set, text], i) => (
             <label key={i} className="flex cursor-pointer items-start gap-3 text-sm text-ink-2">
               <input
@@ -123,7 +124,9 @@ function Profile() {
             <summary className="focus-ring cursor-pointer rounded font-semibold text-ink-2">
               {t("privacy_title")}
             </summary>
-            <p className="mt-2 whitespace-pre-line leading-relaxed">{event.privacy.notice}</p>
+            <p className="mt-2 whitespace-pre-line leading-relaxed">
+              {inLocale(event.privacy, "notice", locale)}
+            </p>
           </details>
           <button
             type="button"

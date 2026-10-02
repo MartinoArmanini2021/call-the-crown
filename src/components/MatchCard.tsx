@@ -130,12 +130,12 @@ export function MatchCard({
 }
 
 function Status({ state, startsAt, now }: { state: string; startsAt: string | null; now: number }) {
-  const { t } = useT();
+  const { t, locale } = useT();
   if (state === "open" && startsAt) {
     const left = Date.parse(startsAt) - now;
     return (
       <span className={cn("font-semibold", left < 3_600_000 ? "text-accent-text" : "text-ink-2")}>
-        {t("locks_in", { time: shortTimeLeft(left) })}
+        {t("locks_in", { time: shortTimeLeft(left, locale) })}
       </span>
     );
   }

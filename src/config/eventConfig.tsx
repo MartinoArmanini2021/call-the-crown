@@ -31,7 +31,7 @@ export function EventProvider({ children }: { children: ReactNode }) {
       const cssVar = COLOR_VARS[key];
       if (cssVar && value && SAFE_COLOR.test(value)) root.setProperty(cssVar, value);
     }
-    document.title = config.branding.app_name ?? config.name;
+    document.title = config.branding.app_name ?? config.name; // the English name; the page title is not localised
     const bg = config.branding.colors?.["bg"];
     if (bg && SAFE_COLOR.test(bg))
       document.querySelector('meta[name="theme-color"]')?.setAttribute("content", bg);

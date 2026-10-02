@@ -153,7 +153,7 @@ export function PickSheet({
             <h2 className="headline text-2xl leading-tight">{title(match, matches)}</h2>
             {lockMs !== null && (
               <p className="text-[11px] font-semibold text-accent-text">
-                {t("locks_in", { time: shortTimeLeft(lockMs) })}
+                {t("locks_in", { time: shortTimeLeft(lockMs, locale) })}
               </p>
             )}
           </div>
