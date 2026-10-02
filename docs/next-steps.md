@@ -1,43 +1,52 @@
 # Next steps
 
-## Paused by Tino on 2 Oct 2026, to do after the UX/UI pass: finish Phase 2 (staging sign-in)
+## Phase 2: closed on 2 Oct 2026
 
-Staging is built (README, "Staging (Phase 2)"): https://preview.six-kings-game.pages.dev on Supabase project
-`six-kings-game-staging` (`rmjlqqzytahmdlmnwxfc`, Frankfurt). Nobody can sign in yet: the free plan does
-not allow the 6-digit code email with Supabase's built-in sender, so staging needs its own sender.
+Staging works end to end: https://preview.six-kings-game.pages.dev on Supabase project
+`six-kings-game-staging` (`rmjlqqzytahmdlmnwxfc`, Frankfurt).
 
-**Tino's three steps** (his accounts and secret keys):
+- Sign-in by 6-digit code, emailed through Resend from `no-reply@mail.grandslamgm.com`. Tino received a
+  code and signed in.
+- The cron reaches the poller every minute (HTTP 200, heartbeat healthy).
+- The UX pass is live there (pick sheet, bracket, results, podium leaderboard, landing).
+- Advisors: 0 ERROR.
 
-1. **Resend:** sign up (free) at resend.com → *Domains → Add domain* `mail.grandslamgm.com`, EU region →
-   connect Cloudflare so the DNS records are added → wait for **Verified** → *API Keys → Create*,
-   **Sending access** for that domain → copy the key.
-2. **Supabase SMTP:** dashboard → *six-kings-game-staging* → *Authentication → Emails → SMTP Settings* →
-   enable custom SMTP: sender `no-reply@mail.grandslamgm.com`, name `Six Kings Slam Predictor`, host
-   `smtp.resend.com`, port `465`, username `resend`, password = the Resend key → Save.
-3. **The cron's key:** *Project Settings → API Keys → Legacy API keys* → copy **service_role** → *SQL Editor*:
-   `select vault.create_secret('PASTE_KEY', 'service_role_key');`
+How it was set up and how to redeploy: README, "Staging (Phase 2)".
 
-**Then Claude:**
+## Phase 3: launch build (live by 17 Oct 2026)
 
-1. `bunx supabase config push --project-ref rmjlqqzytahmdlmnwxfc`: 6-digit codes (staging defaults to 8),
-   10-minute expiry, the code-only email (`supabase/templates/code.html`), no confirmation email, site URL.
-2. Check that the cron reaches the poller (`net._http_response` shows 200 within a minute).
-3. ✓ Done 3 Oct 2026: staging brought up to the UX pass (0010 applied, branding.short_name and
-   branding.event_line added, poller redeployed, app redeployed). Kept for reference:
-   - `bunx supabase db push --linked` (migration 0010: per-set exact flags for Results);
-   - re-run `supabase/events/sixkings_2026.sql` on staging (`bunx supabase db query --linked -f …`)
-     for the new `branding.short_name` and `branding.event_line`;
-   - `bunx supabase functions deploy poll-results --project-ref rmjlqqzytahmdlmnwxfc` (unchanged
-     logic, but the poller now also re-reads settled matches for 12 hours);
-   - redeploy the app: `bunx vite build --mode staging`, then
-     `bunx wrangler pages deploy dist --project-name six-kings-game --branch preview`.
-4. Tino signs in on the preview link with his own email: the code arrives from `mail.grandslamgm.com`.
+Starts only on Tino's go. From the approved plan, what it needs:
 
-Phase 2 is closed when step 4 works.
+**From the organiser**
 
-## Still open (not blocking)
+- Brand kit (logo, colours, fonts) and the player photos with usage rights.
+- Confirmed players, byes and the schedule.
+- Prize text, prize images and the prize-terms URL.
+- Sponsor slots and their assets (four placements: landing strip, leaderboard header, picks footer,
+  results card).
+- The subdomain the game lives on, and a DNS record pointing it at Cloudflare Pages.
+- Arabic review of the translated texts.
+- The expected audience and peak.
+- The list of staff and test accounts to exclude from billing.
 
-- Deciding set: full set or 10-point match tiebreak (Tino is asking the organiser; the code accepts only
-  a full set until then).
-- Phase 3 extras chosen for later: Turnstile, a PostHog project, the ops alert channel.
-- The 2026 Wikipedia article does not exist yet: set `WIKIPEDIA_PAGE` when it does.
+**From Tino**
+
+- **Deciding set:** full set or 10-point match tiebreak (asked of the organiser; the code accepts only a
+  full set until then).
+- **Data residency:** sets the production Supabase region.
+- **Production plan:** Supabase Pro for the event week, and a Resend tier sized for the sign-up rush
+  (plan, section e).
+- **Legal texts:** privacy notice and the two consents.
+- **Extras chosen for Phase 3:** Turnstile, a PostHog project, the ops alert channel (Discord or Slack
+  webhook).
+- **Sign-in email sender:** confirm `mail.grandslamgm.com` for production too, or a neutral domain
+  (fans should see only the organiser's brand).
+
+**Claude**
+
+- Production instance (new Supabase project, Pages production branch, subdomain) once approved.
+- Organiser brand into `event_config`, player photos into storage.
+- Arabic strings behind `flags.arabic`.
+- Point the Wikipedia adapter at the 2026 article when it exists (`WIKIPEDIA_PAGE`); add Sportradar as a
+  second source if a contract lands.
+- Load test on staging (`loadtest/k6-lock-rush.js`, `loadtest/settle-100k.sql`).
