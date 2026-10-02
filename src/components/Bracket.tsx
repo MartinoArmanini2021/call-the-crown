@@ -9,6 +9,7 @@ import type { Match, Pick, Player } from "@/lib/api";
 import { localDay, matchState, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
+import { useMatchNames } from "./matchNames";
 
 const COLUMNS: { key: "bracket_qf" | "bracket_sf" | "bracket_last"; rounds: Match["round"][] }[] = [
   { key: "bracket_qf", rounds: ["QF"] },
@@ -37,9 +38,10 @@ export function Bracket({
     const first = inColumn(col).find((m) => m.starts_at)?.starts_at;
     return first ? localDay(first, event.timezone, locale) : "";
   };
+  const { slot: slotNames } = useMatchNames(players);
   const short = (id: string | null) => {
     const p = id ? players.get(id) : undefined;
-    if (!p) return "TBD";
+    if (!p) return "";
     const name = playerName(p, locale);
     return surname(name);
   };
@@ -79,8 +81,8 @@ export function Bracket({
                       m.winner_id === id && id && "font-bold",
                     )}
                   >
-                    <span className="truncate">
-                      {short(id)}
+                    <span className={id ? "truncate" : "text-[11px] leading-tight text-ink-3"}>
+                      {id ? short(id) : slotNames(m, slot, matches)}
                       {pick?.winner_id === id && id && <span className="text-accent-text"> ●</span>}
                     </span>
                     <span className="num shrink-0 text-[10px] text-ink-3">
@@ -111,7 +113,7 @@ export function Bracket({
                   type="button"
                   onClick={() => onSelect(m)}
                   disabled={state === "waiting"}
-                  aria-label={`${m.round} ${short(m.p1_id)} – ${short(m.p2_id)}: ${status}`}
+                  aria-label={`${slotNames(m, 1, matches)} – ${slotNames(m, 2, matches)}: ${status}`}
                   className={cn(
                     "focus-ring grid gap-0.5 rounded-xl border bg-card p-2 text-start text-[12px] transition-colors",
                     todo ? "skg-glow border-accent" : "border-line hover:border-ink-3",

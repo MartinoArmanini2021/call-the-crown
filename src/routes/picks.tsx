@@ -69,7 +69,7 @@ function Picks() {
 
       {user && matches.data && (
         <div className="mb-4">
-          <NextStepBanner step={step} matches={all} onPick={select} />
+          <NextStepBanner step={step} matches={all} players={byPlayer} onPick={select} />
         </div>
       )}
 

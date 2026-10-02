@@ -1,15 +1,13 @@
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { publicImage, type Player, type SponsorSlot as Slot } from "@/lib/api";
-import { initials } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
-/** A player's organiser-supplied image, or their initials. Never a third-party hotlink. */
+/** A player's organiser-supplied image; nothing until it exists (names, never initials). Never a third-party hotlink. */
 export function PlayerBadge({ player, size = 40 }: { player: Player | undefined; size?: number }) {
-  const { locale } = useT();
   const src = publicImage(player?.image_path);
-  const name = player ? (locale === "ar" && player.name_ar ? player.name_ar : player.name) : "?";
-  return src ? (
+  if (!src) return null;
+  return (
     <img
       src={src}
       alt=""
@@ -18,14 +16,6 @@ export function PlayerBadge({ player, size = 40 }: { player: Player | undefined;
       className="shrink-0 rounded-full bg-raised object-cover"
       style={{ width: size, height: size }}
     />
-  ) : (
-    <span
-      aria-hidden
-      className="headline flex shrink-0 items-center justify-center rounded-full bg-raised text-ink-2"
-      style={{ width: size, height: size, fontSize: size * 0.42 }}
-    >
-      {player ? initials(name) : "?"}
-    </span>
   );
 }
 

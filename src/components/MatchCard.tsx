@@ -5,6 +5,7 @@ import type { Match, Pick, Player } from "@/lib/api";
 import { localTime, matchState, scoreLine, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { PlayerBadge, playerName } from "./Brand";
+import { useMatchNames } from "./matchNames";
 
 /** "Quarter-final 1", "Semi-final 2", "Third place", "Final". */
 export function useMatchLabel() {
@@ -15,18 +16,6 @@ export function useMatchLabel() {
     return same.length > 1
       ? t("match_label", { round: t(`round_${m.round}`), n })
       : t(`round_${m.round}`);
-  };
-}
-
-/** Where a still-unknown player comes from: "the winner of Quarter-final 1" (from the bracket's sources). */
-function useSourceText() {
-  const { t } = useT();
-  const label = useMatchLabel();
-  return (m: Match, which: 1 | 2, matches: Match[]): string => {
-    const src = which === 1 ? m.p1_source : m.p2_source;
-    const from = src.type !== "player" ? matches.find((x) => x.match_no === src.match) : undefined;
-    if (!from) return "TBD";
-    return t(src.type === "loser" ? "loser_of" : "winner_of", { match: label(from, matches) });
   };
 }
 
@@ -48,7 +37,7 @@ export function MatchCard({
   const event = useEvent();
   const { t, locale } = useT();
   const label = useMatchLabel();
-  const source = useSourceText();
+  const { slot: slotNames, title } = useMatchNames(players);
   const state = matchState(match, now);
 
   const row = (slot: 1 | 2) => {
@@ -65,9 +54,7 @@ export function MatchCard({
             {p ? (
               playerName(p, locale)
             ) : (
-              <span className="text-sm font-normal text-ink-3">
-                {t("waiting_players", { source: source(match, slot, matches) })}
-              </span>
+              <span className="font-normal text-ink-2">{slotNames(match, slot, matches)}</span>
             )}
             {picked && (
               <span className="ms-2 rounded bg-accent/20 px-1.5 py-0.5 text-[10px] font-bold uppercase text-accent-text">
@@ -92,14 +79,17 @@ export function MatchCard({
   };
 
   return (
-    <article className="card p-4" aria-label={label(match, matches)}>
-      <header className="mb-3 flex items-baseline justify-between gap-2">
-        <h3 className="headline text-lg">{label(match, matches)}</h3>
-        <span className="text-[11px] text-ink-3">
-          {match.starts_at
-            ? localTime(match.starts_at, event.timezone, locale)
-            : t("waiting_start")}
-        </span>
+    <article className="card p-4" aria-label={title(match, matches)}>
+      <header className="mb-3">
+        <p className="flex justify-between gap-2 text-[11px] text-ink-3">
+          <span className="font-bold uppercase tracking-wider">{label(match, matches)}</span>
+          <span>
+            {match.starts_at
+              ? localTime(match.starts_at, event.timezone, locale)
+              : t("waiting_start")}
+          </span>
+        </p>
+        <h3 className="headline text-xl leading-tight">{title(match, matches)}</h3>
       </header>
 
       <div className="space-y-2.5">

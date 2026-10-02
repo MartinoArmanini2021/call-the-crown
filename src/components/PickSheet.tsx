@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
+import { useMatchNames } from "./matchNames";
 import { Scoreboard } from "./Scoreboard";
 
 export function PickSheet({
@@ -56,6 +57,7 @@ export function PickSheet({
   const event = useEvent();
   const { t, locale } = useT();
   const label = useMatchLabel();
+  const { title } = useMatchNames(players);
   const qc = useQueryClient();
   const [draft, setDraft] = useState<Draft>(() => fromPick(match, pick));
   const [error, setError] = useState<string | null>(null);
@@ -140,12 +142,15 @@ export function PickSheet({
         ref={panel}
         role="dialog"
         aria-modal="true"
-        aria-label={label(match, matches)}
+        aria-label={title(match, matches)}
         className="safe-bottom relative flex max-h-[92dvh] w-full max-w-xl flex-col rounded-t-3xl border-t border-line bg-card"
       >
         <div className="flex items-center justify-between px-4 pb-1 pt-3">
           <div>
-            <h2 className="headline text-2xl">{label(match, matches)}</h2>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
+              {label(match, matches)}
+            </p>
+            <h2 className="headline text-2xl leading-tight">{title(match, matches)}</h2>
             {lockMs !== null && (
               <p className="text-[11px] font-semibold text-accent-text">
                 {t("locks_in", { time: shortTimeLeft(lockMs) })}

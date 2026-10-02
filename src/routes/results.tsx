@@ -96,7 +96,11 @@ function Results() {
         )}
         {user && (
           <div className="mt-5">
-            <NextStepBanner step={nextStep(all, new Set(pickByMatch.keys()), now)} matches={all} />
+            <NextStepBanner
+              step={nextStep(all, new Set(pickByMatch.keys()), now)}
+              matches={all}
+              players={byPlayer}
+            />
           </div>
         )}
       </QueryGate>

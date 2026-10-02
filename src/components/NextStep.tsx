@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { useT } from "@/i18n/useT";
-import type { Match } from "@/lib/api";
+import type { Match, Player } from "@/lib/api";
 import { shortTimeLeft } from "@/lib/format";
 import type { NextStep } from "@/lib/nextStep";
 import { useMatchLabel } from "./MatchCard";
+import { useMatchNames } from "./matchNames";
 
 /**
  * The one thing to do next (lib/nextStep). On Picks, "Pick …" opens the pick sheet (`onPick`); on
@@ -12,14 +13,17 @@ import { useMatchLabel } from "./MatchCard";
 export function NextStepBanner({
   step,
   matches,
+  players,
   onPick,
 }: {
   step: NextStep;
   matches: Match[];
+  players: Map<string, Player>;
   onPick?: (m: Match) => void;
 }) {
   const { t } = useT();
   const label = useMatchLabel();
+  const { title } = useMatchNames(players);
   const row = "flex items-center justify-between gap-3 px-4 py-3";
   const box = `card ${row}`;
   const kicker = "text-[11px] font-bold uppercase tracking-wider";
@@ -29,9 +33,11 @@ export function NextStepBanner({
       const body = (
         <>
           <span className="min-w-0">
-            <span className={`${kicker} block text-accent-text`}>{t("next_step")}</span>
-            <span className="headline block truncate text-xl">
-              {t("next_pick", { match: label(step.match, matches) })} →
+            <span className={`${kicker} block text-accent-text`}>
+              {t("next_step")} · {label(step.match, matches)}
+            </span>
+            <span className="headline block text-xl leading-tight">
+              {t("next_pick", { match: title(step.match, matches) })} →
             </span>
           </span>
           <span className="num shrink-0 text-end text-sm text-ink-2">
@@ -71,8 +77,8 @@ export function NextStepBanner({
             <span className={`${kicker} block text-ink-3`}>{t("up_next")}</span>
             <span className="mt-0.5 block text-sm font-semibold">
               {t("opens_after", {
-                match: label(step.match, matches),
-                after: label(step.after, matches),
+                match: title(step.match, matches),
+                after: title(step.after, matches),
               })}
             </span>
           </span>
