@@ -32,6 +32,10 @@ grant execute on function auth.uid() to anon, authenticated, service_role;
 create schema vault;
 create table vault.decrypted_secrets (name text primary key, decrypted_secret text);
 
+create schema storage;
+create table storage.buckets (id text primary key, name text, public boolean, file_size_limit bigint,
+                              allowed_mime_types text[]);
+
 create schema cron;
 create table cron.job (jobname text primary key, schedule text, command text);
 create function cron.schedule(p_name text, p_schedule text, p_command text) returns bigint

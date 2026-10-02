@@ -4,6 +4,7 @@
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
+import { surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
@@ -27,7 +28,7 @@ export function ResultCard({
   const settled = match.status !== "scheduled";
   const short = (id: string | null) => {
     const name = playerName(id ? players.get(id) : undefined, locale);
-    return name.split(" ").slice(-1)[0] ?? name;
+    return surname(name);
   };
   const loser = match.winner_id === match.p1_id ? match.p2_id : match.p1_id;
   const resultSets = match.set_scores ?? [];

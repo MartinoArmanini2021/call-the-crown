@@ -122,7 +122,7 @@ bun scripts/walkthrough-local.ts
 |---|---|
 | App (preview) | https://preview.six-kings-game.pages.dev (Cloudflare Pages project `six-kings-game`, branch `preview`; production branch `main` is not deployed) |
 | Supabase | project `six-kings-game-staging`, ref `rmjlqqzytahmdlmnwxfc`, Frankfurt (eu-central-1), organisation Astra LTD, free plan |
-| Data | invented Players A–F on the real 2026 schedule (`supabase/staging/setup_staging.sql`), provider `fixture`, real clock (no simulated clock on staging) |
+| Data | the real 2026 draw with provisional ranks (`supabase/events/sixkings_2026_draw.sql`), then `supabase/staging/setup_staging.sql`: provider `fixture` (invented results mapped onto the real players), real clock (no simulated clock on staging) |
 | Settings | `[remotes.staging]` in `supabase/config.toml`; public app values in `.env.staging`; the database password in `.env.staging.local` (git-ignored) |
 
 Redeploy after a change (the CLI must be logged in: `bunx supabase login`; wrangler logged in to Cloudflare):
@@ -205,6 +205,8 @@ All operator actions run in the Supabase SQL editor of the instance (as `postgre
 
 ### Enter the players and the schedule
 
+For 2026 this is one file, `supabase/events/sixkings_2026_draw.sql` (players, bracket, start times and the Wikipedia ids). It is marked provisional: replace the ranks with the ATP ranking of Monday 12 Oct 2026 before picks open, and the start times when the organiser's schedule arrives. The parts, for any event:
+
 The players and the bracket (byes from the organiser's draw, never from ranking):
 
 ```sql
@@ -221,6 +223,7 @@ select public.set_players(
 
 - `rank` is the snapshot used for the upset bonus. Once any pick exists, ids, ranks and the bracket are frozen; only names and images can change. Once a match has started, nothing can.
 - p1/p2 is the fixed display order: set scores are always shown player 1's games first.
+- Player images: the organiser's artwork, uploaded to the public `event` bucket (migration 0011; only the service role can write) as `players/<id>.jpg`, then `update public.players set image_path = 'players/<id>.jpg' where id = '<id>';`. Until then the app shows initials and names.
 
 Start times, one per match, from the organiser's schedule. Each stays editable until that match starts and cannot be set in the past:
 
@@ -377,7 +380,8 @@ Set these in each Supabase project's dashboard; locally they are in `supabase/co
 src/                       the app (routes/, components/, i18n/strings.ts, config/, lib/api.ts)
 supabase/migrations/       0001 privileges · 0002 tables · 0003 RLS · 0004 validation · 0005 fan RPCs
                            0006 settlement · 0007 ingest + operator · 0008 billing + opt-ins · 0009 cron
-supabase/events/           one file per event (config only, no players)
+                           0010 exact-set flags · 0011 image bucket
+supabase/events/           per event: the config file, and the draw file (players, bracket, start times, ids)
 supabase/functions/poll-results/   the poller: index.ts (edge) · poll.ts · due.ts · adapters/ · fixtures/
 supabase/tests/            SQL tests (rolled back) · _prelude.sql helpers
 supabase/dev/              LOCAL ONLY: simulated clock, invented seed, PGlite shim

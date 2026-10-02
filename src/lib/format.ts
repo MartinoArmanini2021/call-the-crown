@@ -30,6 +30,12 @@ export function localTime(iso: string, timezone: string, locale: string): string
 
 export const playerById = (players: Player[]) => new Map(players.map((p) => [p.id, p]));
 
+/** The name a scoreboard uses: everything after the given name ("Alex de Minaur" → "de Minaur"). */
+export function surname(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  return parts.length > 1 ? parts.slice(1).join(" ") : name.trim();
+}
+
 export function initials(name: string): string {
   const parts = name.trim().split(/\s+/);
   return (

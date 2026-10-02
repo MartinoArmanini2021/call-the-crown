@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
 import { matchesQuery, playersQuery, publicImage, type Player } from "@/lib/api";
-import { shortTimeLeft } from "@/lib/format";
+import { shortTimeLeft, surname } from "@/lib/format";
 
 export const Route = createFileRoute("/")({ component: Landing });
 
@@ -94,8 +94,8 @@ function Landing() {
 /** A player as a portrait tile: the organiser's photo, or a short name until photos arrive. */
 function Portrait({ player, name }: { player: Player; name: string }) {
   const img = publicImage(player.image_path);
-  const last = name.split(" ").slice(-1)[0] ?? name;
-  const short = last.length > 3 ? last.slice(0, 3).toUpperCase() : last.toUpperCase();
+  const last = surname(name).replace(/\s+/g, "");
+  const short = last.slice(0, 3).toUpperCase();
   return (
     <div
       className="relative flex aspect-[3/4] items-end justify-center overflow-hidden rounded-lg border border-line bg-gradient-to-b from-raised to-card pb-1"

@@ -12,7 +12,7 @@ import { useEvent } from "@/config/eventConfig";
 import { errorText, useT } from "@/i18n/useT";
 import { savePick, type Match, type Pick, type Player } from "@/lib/api";
 import { track } from "@/lib/analytics";
-import { scoreLine, shortTimeLeft } from "@/lib/format";
+import { scoreLine, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
@@ -94,7 +94,7 @@ export function PickSheet({
     1: playerName(players.get(match.p1_id!), locale),
     2: playerName(players.get(match.p2_id!), locale),
   };
-  const short = (s: Side) => names[s].split(" ").slice(-1)[0] ?? names[s];
+  const short = (s: Side) => surname(names[s]);
   const points: Record<Side, number | null> = { 1: match.p1_win_points, 2: match.p2_win_points };
   const base = event.rules.winner_points[match.round];
 

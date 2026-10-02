@@ -4,7 +4,7 @@
 // data (each slot's source), so it follows the organiser's real draw.
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
-import { matchState, shortTimeLeft } from "@/lib/format";
+import { matchState, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 
@@ -32,7 +32,7 @@ export function Bracket({
     const p = id ? players.get(id) : undefined;
     if (!p) return "TBD";
     const name = playerName(p, locale);
-    return name.split(" ").slice(-1)[0] ?? name;
+    return surname(name);
   };
 
   return (
