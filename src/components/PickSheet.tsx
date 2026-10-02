@@ -1,64 +1,37 @@
 // The pick sheet: a panel that slides up over the page, so a whole pick fits one phone screen and
-// Save is always visible. Flow (UX review, 2 Oct 2026):
+// Save is always visible. It asks the way a fan thinks (first-time-fan test, 2 Oct 2026):
 //   1. who wins (with the stored winner points);
-//   2. tap each set's score. Every set row starts on the chosen winner's side; "↔" gives that set to
-//      the other player. The number of sets follows: two sets to the winner end it, a split brings
-//      set 3, which the winner must take. No separate "how many sets" step, no "won by" switch.
-// Scores always read in the match's fixed order: player 1's games first.
+//   2. how: 2–0, or 2–1 and which set the other player takes;
+//   3. each set's score, as chips read from the set winner's side ("6-4").
+// Under the chips, a TV-style scoreboard fills in as you tap, in the match's fixed order (player 1's
+// row on top, games under each set): that is the pick as stored and as Results shows it.
 // The server (save_pick) remains the authority; the client check only enables the button.
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { errorText, useT } from "@/i18n/useT";
 import { savePick, type Match, type Pick, type Player } from "@/lib/api";
 import { track } from "@/lib/analytics";
-import { localTime, scoreLine, shortTimeLeft, surname } from "@/lib/format";
+import { localTime, shortTimeLeft, surname } from "@/lib/format";
+import {
+  fromPick,
+  other,
+  setCount,
+  setWinner,
+  shaped,
+  toSetScores,
+  winnerLine,
+  withFormat,
+  withLost,
+  withScore,
+  withWinner,
+  type Draft,
+  type Side,
+} from "@/lib/pickDraft";
 import { cn } from "@/lib/utils";
 import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
-
-type Side = 1 | 2;
-// scores[i] = [winner of the set's games, loser of the set's games]
-type Draft = { winner: Side | null; sides: [Side, Side]; scores: ([number, number] | null)[] };
-
-const other = (s: Side): Side => (s === 1 ? 2 : 1);
-const setCount = (d: Draft) => (d.sides[0] === d.sides[1] ? 2 : 3);
-const sideOf = (d: Draft, i: number): Side => (i === 2 ? d.winner! : d.sides[i as 0 | 1]);
-
-function toSetScores(d: Draft): (SetScore | null)[] {
-  if (!d.winner) return [];
-  return Array.from({ length: setCount(d) }, (_, i) => {
-    const sc = d.scores[i];
-    if (!sc) return null;
-    return sideOf(d, i) === 1
-      ? { p1_games: sc[0], p2_games: sc[1] }
-      : { p1_games: sc[1], p2_games: sc[0] };
-  });
-}
-
-/** The score the way a fan says it, the match winner's games first: "6-4 3-6 6-3". */
-function winnerLine(d: Draft): string {
-  return d.scores
-    .slice(0, setCount(d))
-    .map((sc, i) =>
-      sc ? (sideOf(d, i) === d.winner ? `${sc[0]}-${sc[1]}` : `${sc[1]}-${sc[0]}`) : "",
-    )
-    .join(" ");
-}
-
-function fromPick(m: Match, pick: Pick | undefined): Draft {
-  if (!pick) return { winner: null, sides: [1, 1], scores: [null, null, null] };
-  const winner: Side = pick.winner_id === m.p1_id ? 1 : 2;
-  const won = (s: SetScore | undefined): Side => (s && s.p1_games < s.p2_games ? 2 : 1);
-  const scores = [0, 1, 2].map((i) => {
-    const s = pick.set_scores[i];
-    return s
-      ? ([Math.max(s.p1_games, s.p2_games), Math.min(s.p1_games, s.p2_games)] as [number, number])
-      : null;
-  });
-  return { winner, sides: [won(pick.set_scores[0]), won(pick.set_scores[1])], scores };
-}
 
 export function PickSheet({
   match,
@@ -113,7 +86,9 @@ export function PickSheet({
 
   const setScores = toSetScores(draft);
   const n = setCount(draft);
-  const invalid = validateSetScores(event.rules, draft.winner, n, setScores);
+  const invalid = shaped(draft)
+    ? validateSetScores(event.rules, draft.winner, n, setScores)
+    : "incomplete";
   const savedKey = useMemo(() => {
     const d = fromPick(match, pick);
     return JSON.stringify([d.winner, toSetScores(d)]);
@@ -121,7 +96,7 @@ export function PickSheet({
   const dirty = JSON.stringify([draft.winner, setScores]) !== savedKey;
   // A ceiling, from the stored winner points and the configured set points: never the score itself.
   const ceiling =
-    draft.winner && points[draft.winner] !== null
+    draft.winner && draft.format && points[draft.winner] !== null
       ? points[draft.winner]! + event.rules.sets_points[match.round] + event.rules.per_set_exact * n
       : null;
 
@@ -149,24 +124,9 @@ export function PickSheet({
     setError(null);
     setDraft(fn);
   };
-  const chooseWinner = (w: Side) =>
-    change((d) => (d.winner === w ? d : { ...d, winner: w, sides: [w, w] }));
-  const flip = (i: 0 | 1) =>
-    change((d) => {
-      const sides: [Side, Side] = [...d.sides];
-      sides[i] = other(sides[i]);
-      // the loser can take at most one of the first two sets
-      if (sides[0] !== d.winner && sides[1] !== d.winner) sides[1 - i] = d.winner!;
-      return { ...d, sides };
-    });
-  const chooseScore = (i: number, sc: [number, number]) =>
-    change((d) => {
-      const scores = [...d.scores];
-      scores[i] = sc;
-      return { ...d, scores };
-    });
 
   const lockMs = match.starts_at ? Date.parse(match.starts_at) - now : null;
+  const loser = draft.winner ? other(draft.winner) : null;
 
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center" role="presentation">
@@ -204,63 +164,61 @@ export function PickSheet({
         </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-3 pt-2">
-          <section>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
-              {t("pick_winner")}
-            </p>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {([1, 2] as const).map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  aria-pressed={draft.winner === s}
-                  onClick={() => chooseWinner(s)}
-                  className={cn(
-                    "focus-ring flex flex-col items-start rounded-2xl px-3 py-2.5 text-start transition-colors",
-                    draft.winner === s
-                      ? "bg-accent text-ink"
-                      : "bg-raised text-ink-2 hover:text-ink",
-                  )}
-                >
-                  <span className="w-full truncate text-sm font-bold">{names[s]}</span>
-                  {points[s] !== null && (
-                    <span
-                      className={cn("text-[11px]", draft.winner === s ? "text-ink" : "text-ink-3")}
-                    >
-                      {t("plus_pts", { points: points[s]! })}
-                      {points[s]! > base && ` · ${t("upset_bonus")}`}
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </section>
+          <Question title={t("pick_winner")}>
+            {([1, 2] as const).map((s) => (
+              <Choice
+                key={s}
+                on={draft.winner === s}
+                onClick={() => change((d) => withWinner(d, s))}
+                title={names[s]}
+                sub={
+                  points[s] !== null
+                    ? `${t("pts_if_right", { points: points[s]! })}${points[s]! > base ? ` · ${t("upset_bonus")}` : ""}`
+                    : undefined
+                }
+              />
+            ))}
+          </Question>
 
-          {draft.winner && (
+          {draft.winner && loser && (
+            <Question title={t("how_win", { name: short(draft.winner) })}>
+              <Choice
+                on={draft.format === "2-0"}
+                onClick={() => change((d) => withFormat(d, "2-0"))}
+                title="2–0"
+                sub={t("straight_sets")}
+              />
+              <Choice
+                on={draft.format === "2-1"}
+                onClick={() => change((d) => withFormat(d, "2-1"))}
+                title="2–1"
+                sub={t("takes_a_set", { name: short(loser) })}
+              />
+            </Question>
+          )}
+
+          {draft.format === "2-1" && loser && (
+            <Question title={t("which_set", { name: short(loser) })}>
+              {([0, 1] as const).map((i) => (
+                <Choice
+                  key={i}
+                  on={draft.lost === i}
+                  onClick={() => change((d) => withLost(d, i))}
+                  title={t("set_n", { n: i + 1 })}
+                />
+              ))}
+            </Question>
+          )}
+
+          {shaped(draft) && (
             <section className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
-                {t("pick_sheet_scores", { p1: short(1) })}
-              </p>
               {Array.from({ length: n }, (_, i) => {
-                const side = sideOf(draft, i);
+                const by = setWinner(draft, i);
                 return (
                   <div key={i} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-[11px]">
-                      <span className="font-semibold text-ink-2">
-                        {i === 2
-                          ? t("set_decider", { name: short(side) })
-                          : t("set_won_by_name", { n: i + 1, name: short(side) })}
-                      </span>
-                      {i < 2 && (
-                        <button
-                          type="button"
-                          onClick={() => flip(i as 0 | 1)}
-                          className="focus-ring rounded-full bg-raised px-2.5 py-1 font-semibold text-ink-2 hover:text-ink"
-                        >
-                          {t("give_set_to", { name: short(other(side)) })} ↔
-                        </button>
-                      )}
-                    </div>
+                    <p className="text-[11px] font-semibold text-ink-2">
+                      {t("set_wins_it", { n: i + 1, name: short(by) })}
+                    </p>
                     <div className="grid grid-cols-7 gap-1">
                       {event.rules.allowed_set_scores.map(([hi, lo]) => {
                         const on = draft.scores[i]?.[0] === hi && draft.scores[i]?.[1] === lo;
@@ -271,15 +229,15 @@ export function PickSheet({
                             aria-pressed={on}
                             aria-label={t("set_score_aria", {
                               n: i + 1,
-                              score: side === 1 ? `${hi}-${lo}` : `${lo}-${hi}`,
+                              score: t("wins_score", { name: short(by), score: `${hi}-${lo}` }),
                             })}
-                            onClick={() => chooseScore(i, [hi, lo])}
+                            onClick={() => change((d) => withScore(d, i, [hi, lo]))}
                             className={cn(
                               "focus-ring num rounded-lg py-2 text-[13px] transition-colors",
                               on ? "bg-accent text-ink" : "bg-raised text-ink-2 hover:text-ink",
                             )}
                           >
-                            {side === 1 ? `${hi}-${lo}` : `${lo}-${hi}`}
+                            {hi}-{lo}
                           </button>
                         );
                       })}
@@ -293,15 +251,13 @@ export function PickSheet({
 
         <div className="space-y-2 border-t border-line px-4 pb-3 pt-3">
           {draft.winner && (
-            <div className="flex items-center justify-between rounded-xl bg-raised px-3 py-2 text-xs">
-              <span className="num">
-                <b>{short(draft.winner)}</b>{" "}
-                {invalid === null ? scoreLine(setScores as SetScore[]) : "…"} · {t("n_sets", { n })}
-              </span>
-              {ceiling !== null && (
-                <span className="text-ink-3">{t("up_to_pts", { points: ceiling })}</span>
-              )}
-            </div>
+            <Scoreboard
+              names={{ 1: short(1), 2: short(2) }}
+              winner={draft.winner}
+              sets={setScores}
+              n={draft.format ? n : 2}
+              caption={t("scoreboard_caption")}
+            />
           )}
           {error && (
             <p className="text-xs text-accent-text" role="alert">
@@ -314,10 +270,116 @@ export function PickSheet({
             onClick={() => save.mutate()}
             className="focus-ring h-12 w-full rounded-full bg-accent text-sm font-bold disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {save.isPending ? t("saving") : pick && !dirty ? `✓ ${t("saved")}` : t("save_pick")}
+            {save.isPending
+              ? t("saving")
+              : pick && !dirty
+                ? `✓ ${t("saved")}`
+                : ceiling !== null
+                  ? t("save_up_to", { points: ceiling })
+                  : t("save_pick")}
           </button>
         </div>
       </div>
     </div>
+  );
+}
+
+function Question({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section>
+      <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">{title}</p>
+      <div className="mt-2 grid grid-cols-2 gap-2">{children}</div>
+    </section>
+  );
+}
+
+function Choice({
+  on,
+  onClick,
+  title,
+  sub,
+}: {
+  on: boolean;
+  onClick: () => void;
+  title: string;
+  sub?: string | undefined;
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={on}
+      onClick={onClick}
+      className={cn(
+        "focus-ring flex flex-col items-start rounded-2xl px-3 py-2.5 text-start transition-colors",
+        on ? "bg-accent text-ink" : "bg-raised text-ink-2 hover:text-ink",
+      )}
+    >
+      <span className="w-full truncate text-sm font-bold">{title}</span>
+      {sub && <span className={cn("text-[11px]", on ? "text-ink" : "text-ink-3")}>{sub}</span>}
+    </button>
+  );
+}
+
+/** The pick as a TV scoreboard, fixed order: player 1's row on top, each set's games underneath. */
+function Scoreboard({
+  names,
+  winner,
+  sets,
+  n,
+  caption,
+}: {
+  names: Record<Side, string>;
+  winner: Side;
+  sets: (SetScore | null)[];
+  n: number;
+  caption: string;
+}) {
+  const games = (s: Side, i: number) => {
+    const set = sets[i];
+    if (!set) return null;
+    return s === 1 ? set.p1_games : set.p2_games;
+  };
+  const won = (s: Side, i: number) => {
+    const set = sets[i];
+    return !!set && (s === 1 ? set.p1_games > set.p2_games : set.p2_games > set.p1_games);
+  };
+  return (
+    <table className="w-full table-fixed rounded-xl bg-raised text-sm">
+      <caption className="sr-only">{caption}</caption>
+      <thead>
+        <tr className="text-[9px] uppercase tracking-wider text-ink-3">
+          <th />
+          {[0, 1, 2].map((i) => (
+            <th key={i} scope="col" className="w-10 pt-1.5 text-center font-semibold">
+              S{i + 1}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {([1, 2] as const).map((s) => (
+          <tr key={s}>
+            <th scope="row" className="truncate px-3 py-1 text-start text-xs font-bold">
+              {names[s]}
+              {s === winner && <span className="text-accent-text"> ●</span>}
+            </th>
+            {[0, 1, 2].map((i) => {
+              const g = i < n ? games(s, i) : null;
+              return (
+                <td
+                  key={i}
+                  className={cn(
+                    "num py-1 text-center text-base",
+                    g === null ? "text-ink-3" : won(s, i) ? "text-ink" : "text-ink-3",
+                  )}
+                >
+                  {g ?? "–"}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
