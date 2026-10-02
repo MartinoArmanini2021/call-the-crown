@@ -29,6 +29,7 @@ export type EventConfig = {
   league_limits: { max_leagues_per_user: number; max_members: number };
   branding: {
     app_name?: string;
+    short_name?: string; // the header mark, e.g. "Six Kings Predictor"
     logo_path?: string | null;
     colors?: Partial<Record<string, string>>;
   };

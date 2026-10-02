@@ -65,33 +65,33 @@ export function SponsorSlot({ slot, className }: { slot: Slot["slot"]; className
 }
 
 /** The top-3 prizes, from event_config, with the link to the organiser's prize terms. */
+export const MEDAL = ["bg-gold", "bg-silver", "bg-bronze"] as const;
+
 export function PrizeStrip({ compact = false }: { compact?: boolean }) {
   const event = useEvent();
   const { t } = useT();
   if (event.prizes.length === 0) return null;
-  const medal = ["bg-accent", "bg-accent-deep", "bg-raised"];
+  // Always one prize per line: three boxes side by side clip the text at phone width.
   return (
-    <section className="card p-4">
-      <h2 className="headline text-xl">{t("landing_prizes")}</h2>
-      <ol className={cn("mt-3 grid gap-2", compact ? "grid-cols-3" : "grid-cols-1 sm:grid-cols-3")}>
+    <section className={cn("card", compact ? "p-3" : "p-4")}>
+      <h2 className={cn("headline", compact ? "text-base" : "text-xl")}>{t("landing_prizes")}</h2>
+      <ol className={cn("grid", compact ? "mt-2 gap-1.5" : "mt-3 gap-2")}>
         {[...event.prizes]
           .sort((a, b) => a.place - b.place)
           .map((p) => {
             const img = publicImage(p.image_path);
             return (
-              <li key={p.place} className="flex items-center gap-3 rounded-xl bg-raised p-2.5">
+              <li key={p.place} className="flex items-center gap-3">
                 <span
                   className={cn(
-                    "num flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm",
-                    medal[p.place - 1],
+                    "num flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs text-bg",
+                    MEDAL[p.place - 1] ?? "bg-raised",
                   )}
                 >
                   {p.place}
                 </span>
-                {img && <img src={img} alt="" className="h-10 w-10 rounded object-cover" />}
-                <span className={cn("text-sm leading-tight text-ink-2", compact && "text-xs")}>
-                  {p.title}
-                </span>
+                {img && <img src={img} alt="" className="h-9 w-9 rounded object-cover" />}
+                <span className="min-w-0 text-sm leading-snug text-ink-2">{p.title}</span>
               </li>
             );
           })}

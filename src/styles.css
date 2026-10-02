@@ -18,6 +18,9 @@
   --text-3: #9c9c9c;
   --line: rgb(255 255 255 / 0.08);
   --good: #3ccf7a;
+  --gold: #f2c14e;
+  --silver: #c9c9c9;
+  --bronze: #c08457;
   --font-headline: "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-display: "Urbanist Variable", "Urbanist", system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", system-ui, sans-serif;
@@ -36,6 +39,9 @@
   --color-ink-3: var(--text-3);
   --color-line: var(--line);
   --color-good: var(--good);
+  --color-gold: var(--gold);
+  --color-silver: var(--silver);
+  --color-bronze: var(--bronze);
   --font-headline: var(--font-headline);
   --font-display: var(--font-display);
   --font-body: var(--font-body);

@@ -83,7 +83,9 @@ export function MatchCard({
           {p && <p className="text-[11px] text-ink-3">#{p.rank_snapshot}</p>}
         </div>
         {state !== "settled" && pts !== null && (
-          <span className="num text-sm text-ink-2">{pts}</span>
+          <span className="text-xs text-ink-3">
+            <span className="num text-sm text-ink-2">+{pts}</span> {t("pts")}
+          </span>
         )}
         {won && <span className="text-sm font-bold text-good">✓</span>}
       </div>

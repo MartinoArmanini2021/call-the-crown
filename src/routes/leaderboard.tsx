@@ -119,7 +119,10 @@ function Leaderboard() {
         {rows.length === 0 ? (
           <p className="card mt-3 px-4 py-6 text-center text-sm text-ink-3">{t("board_empty")}</p>
         ) : (
-          <BoardTable rows={rows} />
+          <>
+            <BoardTable rows={rows} />
+            <p className="mt-2 text-[11px] text-ink-3">{t("exact_key")}</p>
+          </>
         )}
         {view === "top" && total > PAGE && (
           <div className="mt-3 flex justify-between">

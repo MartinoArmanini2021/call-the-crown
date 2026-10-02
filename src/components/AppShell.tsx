@@ -21,6 +21,11 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const { user } = useAuth();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const logo = publicImage(event.branding.logo_path);
+  // The header's short mark (branding.short_name, e.g. "Six Kings Predictor"): all but the last word
+  // in the accent colour. Short enough to fit a phone; the full app name stays in the page title.
+  const headerName = (event.branding.short_name ?? event.branding.app_name ?? event.name).split(
+    " ",
+  );
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -31,10 +36,8 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
               <img src={logo} alt={event.branding.app_name ?? event.name} className="h-7 w-auto" />
             ) : (
               <span className="headline truncate text-xl">
-                <span className="text-accent">
-                  {(event.branding.app_name ?? event.name).split(" ").slice(0, 2).join(" ")}
-                </span>{" "}
-                {(event.branding.app_name ?? event.name).split(" ").slice(2).join(" ")}
+                <span className="text-accent">{headerName.slice(0, -1).join(" ")}</span>{" "}
+                {headerName.slice(-1)[0]}
               </span>
             )}
           </Link>

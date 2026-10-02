@@ -30,6 +30,7 @@ insert into public.event_config (
   '{"max_leagues_per_user": 10, "max_members": 200}',
   '{
      "app_name":  "Six Kings Slam Predictor",
+     "short_name": "Six Kings Predictor",
      "logo_path": null,
      "colors": {"bg": "#0b0b0b", "card": "#181818", "raised": "#242424", "accent": "#e50914",
                 "accent_deep": "#b20710", "accent_text": "#ff4f57", "text": "#ffffff",
