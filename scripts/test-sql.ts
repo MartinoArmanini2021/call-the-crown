@@ -54,6 +54,19 @@ async function runPostgres(sql: SQL, file: string): Promise<Row[]> {
 }
 
 const sql = url ? new SQL(url) : null;
+if (sql) {
+  // The test files build their own event inside each transaction; leftovers from a walkthrough
+  // (fans, picks, settled matches) would change what they see. Start from the seed.
+  const [state] = (await sql.unsafe(
+    "select (select count(*) from auth.users)::int as users, (select count(*) from public.matches where status <> 'scheduled')::int as settled",
+  )) as { users: number; settled: number }[];
+  if (state && (state.users > 0 || state.settled > 0)) {
+    console.log(
+      `The local database is not at the seed (${state.users} account(s), ${state.settled} settled match(es)). Run \`bunx supabase db reset\` first.`,
+    );
+    process.exit(1);
+  }
+}
 console.log(url ? "database: local Supabase (Postgres)" : "database: in-process (PGlite)");
 
 let failures = 0;

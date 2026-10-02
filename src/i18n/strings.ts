@@ -120,6 +120,15 @@ export const en = {
 
   // results
   results_title: "Results",
+  beat: "{w} beat {l}",
+  row_result: "Result",
+  row_you: "You",
+  breakdown_line: "Winner {w} · Sets {s} · Exact sets {e}",
+  upset_tag: "(upset)",
+  wrong_winner: "Wrong winner: no points for this match.",
+  stat_points: "Points",
+  stat_rank: "Rank",
+  stat_scored: "Scored",
   results_empty: "No results yet. They arrive here automatically after each match.",
   result: "Result",
   retired: "Retired",
@@ -143,6 +152,7 @@ export const en = {
   exact_col: "Sets ✓",
   exact_key: "Sets ✓ = sets called exactly. On equal points, more sets ✓ ranks higher.",
   you: "you",
+  you_cap: "You",
   my_rank: "My rank",
   top: "Top",
   prev: "Previous",

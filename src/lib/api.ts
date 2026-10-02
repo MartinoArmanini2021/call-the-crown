@@ -76,6 +76,7 @@ export type Pick = {
   pts_exact: number | null;
   exact_sets: number | null;
   pts_total: number | null;
+  exact_flags: (boolean | null)[] | null; // set N called exactly (written by settlement)
 };
 export type BoardRow = {
   pos: number;

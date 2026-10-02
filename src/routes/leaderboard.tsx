@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AppShell, PageTitle } from "@/components/AppShell";
-import { PrizeStrip, SponsorSlot } from "@/components/Brand";
+import { MEDAL, PrizeStrip, SponsorSlot } from "@/components/Brand";
 import { QueryGate } from "@/components/QueryGate";
+import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useT } from "@/i18n/useT";
 import { leaderboardQuery, myLeaguesQuery, rankWindowQuery, type BoardRow } from "@/lib/api";
@@ -20,7 +21,11 @@ export const Route = createFileRoute("/leaderboard")({
   component: Leaderboard,
 });
 
+// Global board and friends leagues (the same table filtered to the members). The first page opens on
+// a podium with the prizes (global only: friends leagues have none), and your own row stays pinned
+// at the bottom while you scroll.
 function Leaderboard() {
+  const event = useEvent();
   const { t } = useT();
   const { user, loading } = useAuth();
   const navigate = useNavigate({ from: "/leaderboard" });
@@ -34,10 +39,13 @@ function Leaderboard() {
     ...leaderboardQuery(league, (page - 1) * PAGE, PAGE),
     enabled: !!user && view === "top",
   });
-  const mine = useQuery({ ...rankWindowQuery(league), enabled: !!user && view === "me" });
+  const mine = useQuery({ ...rankWindowQuery(league), enabled: !!user });
   const active = view === "top" ? top : mine;
   const rows = active.data ?? [];
   const total = top.data?.[0]?.total ?? 0;
+  const me = mine.data?.find((r) => r.is_me);
+  const podium = view === "top" && page === 1 ? rows.slice(0, 3) : [];
+  const table = view === "top" && page === 1 ? rows.slice(3) : rows;
 
   if (!loading && !user) {
     return (
@@ -59,6 +67,7 @@ function Leaderboard() {
     { id: null as string | null, name: t("global") },
     ...(leagues.data ?? []).map((l) => ({ id: l.id as string | null, name: l.name })),
   ];
+  const go = (s: Search) => void navigate({ search: { ...(league ? { league } : {}), ...s } });
 
   return (
     <AppShell>
@@ -85,20 +94,14 @@ function Leaderboard() {
         ))}
       </div>
 
-      {league === null ? (
-        <PrizeStrip compact />
-      ) : (
-        <p className="text-xs text-ink-3">{t("friends_no_prizes")}</p>
-      )}
-
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mb-3 flex items-center justify-between">
         <div className="grid grid-cols-2 rounded-full bg-card p-1 text-xs font-semibold">
           {(["top", "me"] as const).map((v) => (
             <button
               key={v}
               type="button"
               aria-pressed={view === v}
-              onClick={() => void navigate({ search: { ...(league ? { league } : {}), view: v } })}
+              onClick={() => go({ view: v })}
               className={cn(
                 "focus-ring rounded-full px-4 py-1.5",
                 view === v ? "bg-raised text-ink" : "text-ink-3",
@@ -117,10 +120,22 @@ function Leaderboard() {
 
       <QueryGate queries={[active]} label={t("board_title").toLowerCase()}>
         {rows.length === 0 ? (
-          <p className="card mt-3 px-4 py-6 text-center text-sm text-ink-3">{t("board_empty")}</p>
+          <p className="card px-4 py-6 text-center text-sm text-ink-3">{t("board_empty")}</p>
         ) : (
           <>
-            <BoardTable rows={rows} />
+            {podium.length > 0 && <Podium rows={podium} withPrizes={league === null} />}
+            {league === null && podium.length > 0 && event.prize_terms_url && (
+              <a
+                href={event.prize_terms_url}
+                target="_blank"
+                rel="noopener"
+                className="focus-ring mt-2 inline-block text-xs text-ink-3 underline underline-offset-2"
+              >
+                {t("prize_terms")}
+              </a>
+            )}
+            {league !== null && <p className="mt-2 text-xs text-ink-3">{t("friends_no_prizes")}</p>}
+            {table.length > 0 && <BoardTable rows={table} />}
             <p className="mt-2 text-[11px] text-ink-3">{t("exact_key")}</p>
           </>
         )}
@@ -129,9 +144,7 @@ function Leaderboard() {
             <button
               type="button"
               disabled={page <= 1}
-              onClick={() =>
-                void navigate({ search: { ...(league ? { league } : {}), page: page - 1 } })
-              }
+              onClick={() => go({ page: page - 1 })}
               className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
             >
               ← {t("prev")}
@@ -139,9 +152,7 @@ function Leaderboard() {
             <button
               type="button"
               disabled={page * PAGE >= total}
-              onClick={() =>
-                void navigate({ search: { ...(league ? { league } : {}), page: page + 1 } })
-              }
+              onClick={() => go({ page: page + 1 })}
               className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
             >
               {t("next")} →
@@ -149,22 +160,69 @@ function Leaderboard() {
           </div>
         )}
       </QueryGate>
+
+      {me && view === "top" && !rows.some((r) => r.is_me) && (
+        <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 mt-4">
+          <div className="grid grid-cols-[2.5rem_1fr_3.5rem_3.5rem] items-center rounded-2xl border border-accent/50 bg-[#1f0c0d] px-3 py-2.5 text-sm shadow-[0_8px_30px_-10px_black]">
+            <span className="num text-base">{me.pos}</span>
+            <span className="truncate font-semibold">
+              {t("you_cap")} · {me.display_name ?? "—"}
+            </span>
+            <span className="num text-end text-ink-3">{me.exact_sets}</span>
+            <span className="num text-end text-base">{me.points}</span>
+          </div>
+        </div>
+      )}
     </AppShell>
+  );
+}
+
+function Podium({ rows, withPrizes }: { rows: BoardRow[]; withPrizes: boolean }) {
+  const event = useEvent();
+  const { t } = useT();
+  const prize = (pos: number) => event.prizes.find((p) => p.place === pos)?.title;
+  // 2nd, 1st, 3rd: the winner in the middle, a step higher.
+  const order = [rows[1], rows[0], rows[2]];
+  return (
+    <ol className="grid grid-cols-3 items-end gap-2" aria-label={t("landing_prizes")}>
+      {order.map((r, i) =>
+        r ? (
+          <li
+            key={r.user_id}
+            className={cn(
+              "flex min-w-0 flex-col items-center gap-1 rounded-t-2xl rounded-b-md border bg-card px-2 pb-3 text-center",
+              i === 1 ? "border-gold/70 pt-5" : "border-line pt-3",
+              r.is_me && "bg-accent/10",
+            )}
+          >
+            <span
+              className={cn(
+                "num flex h-7 w-7 items-center justify-center rounded-full text-xs text-bg",
+                MEDAL[r.pos - 1] ?? "bg-raised",
+              )}
+            >
+              {r.pos}
+            </span>
+            <span className="w-full truncate text-sm font-bold">
+              {r.is_me ? t("you_cap") : (r.display_name ?? "—")}
+            </span>
+            <span className={cn("num", i === 1 ? "text-2xl" : "text-xl")}>{r.points}</span>
+            {withPrizes && prize(r.pos) && (
+              <span className="text-[10px] leading-tight text-ink-3">{prize(r.pos)}</span>
+            )}
+          </li>
+        ) : (
+          <li key={i} />
+        ),
+      )}
+    </ol>
   );
 }
 
 function BoardTable({ rows }: { rows: BoardRow[] }) {
   const { t } = useT();
-  const medal = (pos: number) =>
-    pos === 1
-      ? "bg-accent"
-      : pos === 2
-        ? "bg-accent-deep"
-        : pos === 3
-          ? "bg-raised ring-1 ring-accent/60"
-          : "";
   return (
-    <table className="mt-3 w-full text-sm">
+    <table className="mt-4 w-full text-sm">
       <thead>
         <tr className="text-[11px] uppercase tracking-wider text-ink-3">
           <th className="w-12 py-2 text-start font-bold">{t("rank")}</th>
@@ -176,16 +234,7 @@ function BoardTable({ rows }: { rows: BoardRow[] }) {
       <tbody>
         {rows.map((r) => (
           <tr key={r.user_id} className={cn("border-t border-line", r.is_me && "bg-accent/10")}>
-            <td className="py-2.5">
-              <span
-                className={cn(
-                  "num inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs",
-                  medal(r.pos),
-                )}
-              >
-                {r.pos}
-              </span>
-            </td>
+            <td className="num py-2.5 text-ink-2">{r.pos}</td>
             <td className="max-w-0 truncate py-2.5 font-semibold">
               {r.display_name ?? "—"}
               {r.is_me && (

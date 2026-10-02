@@ -86,6 +86,11 @@ select t.check('a 7-6 counts as 7-6 whatever the tiebreak points (20/10/4/34)', 
 select t.check('the stored result keeps games only',
   (select set_scores = t.ss('7-6 6-4') from public.matches where match_no = 6));
 
+select t.check('exact_flags: all three sets exact', (select exact_flags from public.picks where user_id = t.uid(5) and match_no = 1) = array[true, true, true]);
+select t.check('exact_flags: one of two exact (set 2 missed, no set 3)', (select exact_flags::text from public.picks where user_id = t.uid(2) and match_no = 2) = '{t,f,NULL}', (select exact_flags::text from public.picks where user_id = t.uid(2) and match_no = 2));
+select t.check('exact_flags: two-set call on a three-set match (set 1 only)', (select exact_flags::text from public.picks where user_id = t.uid(6) and match_no = 1) = '{t,f,NULL}', (select exact_flags::text from public.picks where user_id = t.uid(6) and match_no = 1));
+select t.check('exact_flags: none for a wrong winner or a retirement', (select exact_flags from public.picks where user_id = t.uid(4) and match_no = 2) is null and (select exact_flags from public.picks where user_id = t.uid(8) and match_no = 4) is null);
+select t.check('exact_flags agree with the exact_sets count on every scored pick', not exists (select 1 from public.picks where pts_total is not null and coalesce((select count(*) from unnest(exact_flags) f where f), 0) <> exact_sets));
 select t.check('standings = the sum of the stored breakdowns',
   not exists (select 1 from public.standings s
                where s.points <> coalesce((select sum(pts_total) from public.picks p where p.user_id = s.user_id), 0)

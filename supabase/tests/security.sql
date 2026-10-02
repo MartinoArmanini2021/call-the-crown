@@ -311,6 +311,8 @@ select t.check('even the database owner cannot settle an unplayed match by hand'
   t.err($$ update public.matches set status = 'walkover', winner_id = 'a' where match_no = 3 $$) = 'result_columns_are_settlement_only');
 select t.check('even the database owner cannot edit a pick''s points',
   t.err($$ update public.picks set pts_total = 99 where match_no = 1 $$) = 'scores_are_settlement_only');
+select t.check('even the database owner cannot edit which sets were exact',
+  t.err($$ update public.picks set exact_flags = array[true, true, true] where match_no = 1 $$) = 'scores_are_settlement_only');
 select t.check('even the database owner cannot edit the standings',
   t.err($$ update public.standings set points = 999 $$) = 'scores_are_settlement_only');
 select t.check('result_log cannot be edited or deleted',

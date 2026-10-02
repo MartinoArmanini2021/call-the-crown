@@ -37,7 +37,6 @@ export function MatchCard({
   pick,
   now,
   action,
-  after,
 }: {
   match: Match;
   matches: Match[];
@@ -45,7 +44,6 @@ export function MatchCard({
   pick: Pick | undefined;
   now: number;
   action?: ReactNode; // the "Make pick" / "Edit" button, when picks are open
-  after?: ReactNode; // shown at the bottom of the card whatever its state (the points breakdown)
 }) {
   const event = useEvent();
   const { t, locale } = useT();
@@ -129,8 +127,6 @@ export function MatchCard({
         )}
         {state === "open" && action}
       </footer>
-
-      {after}
     </article>
   );
 }
