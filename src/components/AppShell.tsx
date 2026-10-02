@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useT } from "@/i18n/useT";
-import { publicImage } from "@/lib/api";
+import { profileQuery, publicImage } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 const TABS = [
@@ -19,6 +20,8 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const event = useEvent();
   const { t } = useT();
   const { user } = useAuth();
+  const profile = useQuery({ ...profileQuery(user?.id ?? ""), enabled: !!user });
+  const avatar = (profile.data?.display_name || user?.email || "?").trim()[0]?.toUpperCase();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const logo = publicImage(event.branding.logo_path);
   // The header's short mark (branding.short_name, e.g. "Six Kings Predictor"): all but the last word
@@ -57,7 +60,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
                   path === "/profile" && "bg-accent",
                 )}
               >
-                {(user.email ?? "?")[0]?.toUpperCase()}
+                {avatar}
               </Link>
             ) : (
               <Link

@@ -12,7 +12,7 @@ import { useEvent } from "@/config/eventConfig";
 import { errorText, useT } from "@/i18n/useT";
 import { savePick, type Match, type Pick, type Player } from "@/lib/api";
 import { track } from "@/lib/analytics";
-import { scoreLine, shortTimeLeft, surname } from "@/lib/format";
+import { localTime, scoreLine, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
@@ -37,6 +37,16 @@ function toSetScores(d: Draft): (SetScore | null)[] {
   });
 }
 
+/** The score the way a fan says it, the match winner's games first: "6-4 3-6 6-3". */
+function winnerLine(d: Draft): string {
+  return d.scores
+    .slice(0, setCount(d))
+    .map((sc, i) =>
+      sc ? (sideOf(d, i) === d.winner ? `${sc[0]}-${sc[1]}` : `${sc[1]}-${sc[0]}`) : "",
+    )
+    .join(" ");
+}
+
 function fromPick(m: Match, pick: Pick | undefined): Draft {
   if (!pick) return { winner: null, sides: [1, 1], scores: [null, null, null] };
   const winner: Side = pick.winner_id === m.p1_id ? 1 : 2;
@@ -58,6 +68,7 @@ export function PickSheet({
   uid,
   now,
   onClose,
+  onSaved,
 }: {
   match: Match;
   matches: Match[];
@@ -66,6 +77,8 @@ export function PickSheet({
   uid: string;
   now: number;
   onClose: () => void;
+  /** after a save that changed the pick: what was saved and until when it can change */
+  onSaved?: (saved: { pick: string; until: string }) => void;
 }) {
   const event = useEvent();
   const { t, locale } = useT();
@@ -123,6 +136,10 @@ export function PickSheet({
     onSuccess: async (r) => {
       if (r.changed) track("pick_saved", { match_no: match.match_no, round: match.round, sets: n });
       await qc.invalidateQueries({ queryKey: ["picks", uid] });
+      onSaved?.({
+        pick: t("wins_score", { name: short(draft.winner!), score: winnerLine(draft) }),
+        until: localTime(match.starts_at!, event.timezone, locale),
+      });
       onClose();
     },
     onError: (e) => setError(errorText(t, e)),

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
+import { NextStepBanner } from "@/components/NextStep";
 import { QueryGate } from "@/components/QueryGate";
 import { ResultCard } from "@/components/ResultCard";
 import { useGame } from "@/hooks/useGame";
@@ -9,6 +10,7 @@ import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
 import { leaderboardQuery, rankWindowQuery } from "@/lib/api";
 import { matchState } from "@/lib/format";
+import { nextStep } from "@/lib/nextStep";
 
 export const Route = createFileRoute("/results")({ component: Results });
 
@@ -61,6 +63,11 @@ function Results() {
                 {i === 0 && <SponsorSlot slot="results_card" />}
               </div>
             ))}
+          </div>
+        )}
+        {user && (
+          <div className="mt-5">
+            <NextStepBanner step={nextStep(all, new Set(pickByMatch.keys()), now)} matches={all} />
           </div>
         )}
       </QueryGate>

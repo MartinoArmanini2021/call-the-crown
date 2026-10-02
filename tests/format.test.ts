@@ -1,14 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import { initials, surname } from "../src/lib/format";
 
+// Invented players (AGENTS.md).
 describe("player names", () => {
   test("the scoreboard name keeps surname particles", () => {
-    expect(surname("Alex de Minaur")).toBe("de Minaur");
-    expect(surname("Taylor Fritz")).toBe("Fritz");
-    expect(surname("Sinner")).toBe("Sinner");
+    expect(surname("Ana de Vries")).toBe("de Vries");
+    expect(surname("Tom Field")).toBe("Field");
+    expect(surname("Ray")).toBe("Ray");
   });
   test("initials are first and last word", () => {
-    expect(initials("Alex de Minaur")).toBe("AM");
-    expect(initials("Novak Djokovic")).toBe("ND");
+    expect(initials("Ana de Vries")).toBe("AV");
+    expect(initials("Tom Field")).toBe("TF");
   });
 });

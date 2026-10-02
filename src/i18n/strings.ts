@@ -107,7 +107,6 @@ export const en = {
   set_score_aria: "Set {n}: {score}",
   n_sets: "{n} sets",
   up_to_pts: "up to {points} pts",
-  your_picks_open: "{n} of {total} open picked",
   bracket_hint: "Tap a match to make your pick or see the result.",
   bracket_qf: "QF",
   bracket_sf: "SF",
@@ -119,6 +118,20 @@ export const en = {
   tile_no_pick: "No pick",
   open_now: "Open now",
   nothing_open: "Nothing to pick right now. The next matches open when their players are known.",
+
+  // after picking (first-time-fan test, 2 Oct 2026)
+  next_step: "Next step",
+  next_pick: "Pick {match}",
+  time_left: "{time} left",
+  all_set: "All set",
+  all_set_sub: "Change any pick until its first ball. Results arrive after each match.",
+  up_next: "Up next",
+  opens_after: "{match} opens after {after}",
+  event_over: "That's the event",
+  see_standings: "See the final standings",
+  saved_toast: "Saved · {pick}",
+  wins_score: "{name} wins {score}",
+  saved_toast_sub: "You can change it until {time}. Your points show on Results after the match.",
 
   // results
   results_title: "Results",

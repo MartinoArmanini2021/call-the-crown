@@ -1,16 +1,18 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
 import { Bracket } from "@/components/Bracket";
 import { MatchCard } from "@/components/MatchCard";
+import { NextStepBanner } from "@/components/NextStep";
 import { PickSheet } from "@/components/PickSheet";
 import { QueryGate } from "@/components/QueryGate";
 import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
 import type { Match } from "@/lib/api";
-import { matchState, scoreLine, shortTimeLeft } from "@/lib/format";
+import { matchState, scoreLine } from "@/lib/format";
+import { nextStep } from "@/lib/nextStep";
 
 export const Route = createFileRoute("/picks")({ component: Picks });
 
@@ -24,12 +26,17 @@ function Picks() {
   const all = matches.data ?? [];
   const [sheet, setSheet] = useState<number | null>(null);
   const close = useCallback(() => setSheet(null), []);
+  const [saved, setSaved] = useState<{ pick: string; until: string } | null>(null);
+  useEffect(() => {
+    if (!saved) return;
+    const timer = setTimeout(() => setSaved(null), 6000);
+    return () => clearTimeout(timer);
+  }, [saved]);
 
   const open = all
     .filter((m) => matchState(m, now) === "open")
     .sort((a, b) => Date.parse(a.starts_at!) - Date.parse(b.starts_at!));
-  const picked = open.filter((m) => pickByMatch.has(m.match_no)).length;
-  const nextLock = open[0]?.starts_at ? Date.parse(open[0].starts_at) - now : null;
+  const step = nextStep(all, new Set(pickByMatch.keys()), now);
   const sheetMatch = all.find((m) => m.match_no === sheet && matchState(m, now) === "open");
 
   const select = (m: Match) => {
@@ -46,27 +53,9 @@ function Picks() {
     <AppShell>
       <PageTitle title={t("picks_title")} sub={t("picks_intro")} />
 
-      {user && open.length > 0 && (
-        <div className="card mb-4 flex items-center justify-between px-4 py-3">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
-              {t("your_picks_open", { n: picked, total: open.length })}
-            </p>
-            <div className="mt-1.5 h-1.5 w-32 overflow-hidden rounded-full bg-raised">
-              <div
-                className="h-full rounded-full bg-accent"
-                style={{ width: `${(picked / open.length) * 100}%` }}
-              />
-            </div>
-          </div>
-          {nextLock !== null && (
-            <div className="text-end">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
-                {t("next_lock")}
-              </p>
-              <p className="num text-xl text-accent-text">{shortTimeLeft(nextLock)}</p>
-            </div>
-          )}
+      {user && matches.data && (
+        <div className="mb-4">
+          <NextStepBanner step={step} matches={all} onPick={select} />
         </div>
       )}
 
@@ -135,7 +124,18 @@ function Picks() {
           uid={user.id}
           now={now}
           onClose={close}
+          onSaved={setSaved}
         />
+      )}
+
+      {saved && (
+        <div
+          role="status"
+          className="fixed inset-x-0 bottom-20 z-30 mx-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-good/45 bg-card px-4 py-3 text-sm shadow-lg"
+        >
+          <p className="font-bold text-good">✓ {t("saved_toast", { pick: saved.pick })}</p>
+          <p className="mt-0.5 text-xs text-ink-2">{t("saved_toast_sub", { time: saved.until })}</p>
+        </div>
       )}
     </AppShell>
   );
