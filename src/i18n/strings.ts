@@ -144,6 +144,10 @@ export const en = {
   saved_toast_sub: "You can change it until {time}. Your points show on Results after the match.",
 
   // results
+  crowd_title: "How fans picked",
+  crowd_picks: "{n} picks",
+  crowd_you: "you",
+  crowd_top: "Most picked score: {pick} ({share})",
   results_title: "Results",
   beat: "{w} beat {l}",
   row_result: "Result",

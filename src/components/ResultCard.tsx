@@ -1,10 +1,11 @@
 // One finished (or in-play) match on the Results screen: the result and your pick set by set, the
 // sets you called exactly in green, and the points the server stored. Nothing is worked out here:
 // the green marks are picks.exact_flags, the points are picks.pts_*.
+import { useQuery } from "@tanstack/react-query";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
-import type { Match, Pick, Player } from "@/lib/api";
-import { surname } from "@/lib/format";
+import { crowdQuery, type Match, type Pick, type Player } from "@/lib/api";
+import { scoreLine, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
@@ -111,6 +112,8 @@ export function ResultCard({
         )}
       </div>
 
+      {signedIn && <CrowdBlock match={match} pick={pick} short={short} />}
+
       {settled && match.status !== "completed" && (
         <p className="text-[11px] text-ink-3">
           {t("void_note", {
@@ -130,5 +133,56 @@ export function ResultCard({
         </p>
       )}
     </article>
+  );
+}
+
+const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(1)}%`;
+
+/** How fans picked this match: share per player and the most picked score (totals, never names). */
+function CrowdBlock({
+  match,
+  pick,
+  short,
+}: {
+  match: Match;
+  pick: Pick | undefined;
+  short: (id: string | null) => string;
+}) {
+  const { t } = useT();
+  const crowd = useQuery(crowdQuery(match.match_no)).data;
+  if (!crowd || crowd.picks === 0) return null;
+  const share = crowd.p1_picks / crowd.picks;
+  const top = crowd.top_score ?? [];
+  const topWinner =
+    top.filter((s) => s.p1_games > s.p2_games).length > top.length / 2 ? match.p1_id : match.p2_id;
+  const side = (id: string | null, n: number) => (
+    <span>
+      <b>{short(id)}</b> {pct(n, crowd.picks)}
+      {pick?.winner_id === id && <span className="text-ink-3"> · {t("crowd_you")}</span>}
+    </span>
+  );
+  return (
+    <section className="space-y-1.5 border-t border-line pt-3" aria-label={t("crowd_title")}>
+      <p className="flex justify-between text-[11px] font-bold uppercase tracking-wider text-ink-3">
+        <span>{t("crowd_title")}</span>
+        <span className="num">{t("crowd_picks", { n: crowd.picks.toLocaleString("en-GB") })}</span>
+      </p>
+      <div className="flex justify-between text-xs">
+        {side(match.p1_id, crowd.p1_picks)}
+        {side(match.p2_id, crowd.p2_picks)}
+      </div>
+      <div className="flex h-2 overflow-hidden rounded-full bg-raised" aria-hidden>
+        <span className="bg-accent" style={{ width: `${share * 100}%` }} />
+        <span className="flex-1 bg-ink-3/50" />
+      </div>
+      {top.length > 0 && crowd.top_count >= 2 && (
+        <p className="text-xs text-ink-2">
+          {t("crowd_top", {
+            pick: `${short(topWinner)} · ${scoreLine(top)}`,
+            share: pct(crowd.top_count, crowd.picks),
+          })}
+        </p>
+      )}
+    </section>
   );
 }

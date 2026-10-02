@@ -194,6 +194,23 @@ export const rankWindowQuery = (league: string | null) =>
     refetchInterval: 60_000,
   });
 
+/** How fans picked a match, as totals; none until it starts (0012). Final at the first ball. */
+export type Crowd = {
+  picks: number;
+  p1_picks: number;
+  p2_picks: number;
+  top_score: SetScore[] | null;
+  top_count: number;
+};
+export const crowdQuery = (match: number) =>
+  queryOptions({
+    queryKey: ["crowd", match],
+    queryFn: () => rpc<Crowd[]>("get_match_crowd", { p_match: match }).then((r) => r[0] ?? null),
+    // fixed once there; until then (a clock a few seconds ahead of the server) ask again
+    staleTime: (q) => (q.state.data ? Infinity : 0),
+    refetchInterval: (q) => (q.state.data ? false : 60_000),
+  });
+
 // Writes
 export const savePick = (match: number, winner: string, sets: number, setScores: SetScore[]) =>
   rpc<{ changed: boolean }>("save_pick", {
