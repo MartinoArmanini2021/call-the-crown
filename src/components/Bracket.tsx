@@ -1,10 +1,12 @@
-// The whole event on one phone screen: quarter-finals, semi-finals, then the final and the
-// third-place match. What still needs your pick glows red with its own countdown; finished matches
+// The draw: the whole event on one phone screen, on Results (Tino, 2 Oct 2026: the draw belongs
+// where fans see how the event stands). Quarter-finals, semi-finals, then the final and the
+// third-place match, each column headed by its round in words and its day. What still needs your pick glows red with its own countdown; finished matches
 // show the points you scored (stored by the server, never worked out here). Built from the bracket
 // data (each slot's source), so it follows the organiser's real draw.
+import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
-import { matchState, shortTimeLeft, surname } from "@/lib/format";
+import { localDay, matchState, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 
@@ -28,6 +30,13 @@ export function Bracket({
   onSelect: (m: Match) => void;
 }) {
   const { t, locale } = useT();
+  const event = useEvent();
+  const inColumn = (col: (typeof COLUMNS)[number]) =>
+    col.rounds.flatMap((r) => matches.filter((m) => m.round === r));
+  const dayOf = (col: (typeof COLUMNS)[number]) => {
+    const first = inColumn(col).find((m) => m.starts_at)?.starts_at;
+    return first ? localDay(first, event.timezone, locale) : "";
+  };
   const short = (id: string | null) => {
     const p = id ? players.get(id) : undefined;
     if (!p) return "TBD";
@@ -36,15 +45,19 @@ export function Bracket({
   };
 
   return (
-    <div className="grid grid-cols-3 items-center gap-2" aria-label={t("picks_title")}>
-      {COLUMNS.map((col) => (
-        <div key={col.key} className="grid gap-2">
-          <p className="headline text-center text-[11px] tracking-widest text-ink-3">
-            {t(col.key)}
-          </p>
-          {col.rounds
-            .flatMap((r) => matches.filter((m) => m.round === r))
-            .map((m) => {
+    <div aria-label={t("draw_title")}>
+      <div className="mb-2 grid grid-cols-3 items-end gap-2">
+        {COLUMNS.map((col) => (
+          <h3 key={col.key} className="text-center">
+            <span className="headline block whitespace-nowrap text-[15px] leading-tight text-ink sm:text-lg">{t(col.key)}</span>
+            <span className="block text-[11px] font-semibold text-ink-3">{dayOf(col)}</span>
+          </h3>
+        ))}
+      </div>
+      <div className="grid grid-cols-3 items-center gap-2">
+        {COLUMNS.map((col) => (
+          <div key={col.key} className="grid gap-2">
+            {inColumn(col).map((m) => {
               const state = matchState(m, now);
               const pick = pickByMatch.get(m.match_no);
               const todo = state === "open" && !pick;
@@ -125,8 +138,9 @@ export function Bracket({
                 </button>
               );
             })}
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

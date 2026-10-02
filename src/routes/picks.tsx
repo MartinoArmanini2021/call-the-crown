@@ -2,7 +2,6 @@ import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { SponsorSlot, playerName } from "@/components/Brand";
-import { Bracket } from "@/components/Bracket";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
 import { PickSheet } from "@/components/PickSheet";
@@ -15,18 +14,31 @@ import type { Match } from "@/lib/api";
 import { matchState, surname } from "@/lib/format";
 import { nextStep } from "@/lib/nextStep";
 
-export const Route = createFileRoute("/picks")({ component: Picks });
+type Search = { match?: number };
 
-// The bracket on top (the whole event at a glance), then only the matches you can pick now, in the
-// order they lock. Finished matches live on Results. A pick is made in the sheet (PickSheet).
+export const Route = createFileRoute("/picks")({
+  validateSearch: (s: Record<string, unknown>): Search => {
+    const n = Number(s["match"]);
+    return Number.isInteger(n) && n > 0 ? { match: n } : {};
+  },
+  component: Picks,
+});
+
+// Only what you can do now: the next step, then the matches you can pick, in the order they lock.
+// The draw and finished matches live on Results (Tino, 2 Oct 2026). A pick is made in the sheet
+// (PickSheet); a tap on an open match in the draw arrives here as ?match=N and opens it.
 function Picks() {
   const { t, locale } = useT();
   const now = useServerNow();
   const navigate = useNavigate();
   const { user, matches, byPlayer, pickByMatch, queries } = useGame();
   const all = matches.data ?? [];
-  const [sheet, setSheet] = useState<number | null>(null);
-  const close = useCallback(() => setSheet(null), []);
+  const search = Route.useSearch();
+  const [sheet, setSheet] = useState<number | null>(search.match ?? null);
+  const close = useCallback(() => {
+    setSheet(null);
+    if (search.match) void navigate({ to: "/picks", search: {}, replace: true });
+  }, [navigate, search.match]);
   const [saved, setSaved] = useState<{ pick: string; until: string } | null>(null);
   useEffect(() => {
     if (!saved) return;
@@ -71,16 +83,7 @@ function Picks() {
       )}
 
       <QueryGate queries={queries} label={t("picks_title").toLowerCase()}>
-        <Bracket
-          matches={all}
-          players={byPlayer}
-          pickByMatch={pickByMatch}
-          now={now}
-          onSelect={select}
-        />
-        <p className="mt-2 text-center text-[11px] text-ink-3">{t("bracket_hint")}</p>
-
-        <h2 className="headline mb-2 mt-6 text-sm text-ink-3">{t("open_now")}</h2>
+        <h2 className="headline mb-2 text-sm text-ink-3">{t("open_now")}</h2>
         {open.length === 0 ? (
           <p className="card px-4 py-5 text-center text-sm text-ink-3">{t("nothing_open")}</p>
         ) : (
@@ -115,6 +118,11 @@ function Picks() {
             })}
           </div>
         )}
+        <p className="mt-4 text-center text-sm">
+          <Link to="/results" className="focus-ring font-semibold text-accent-text">
+            {t("see_draw")} →
+          </Link>
+        </p>
         <SponsorSlot slot="picks_footer" className="mt-6" />
       </QueryGate>
 

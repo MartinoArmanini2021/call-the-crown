@@ -16,6 +16,16 @@ export function shortTimeLeft(ms: number): string {
 export const scoreLine = (sets: SetScore[] | null | undefined) =>
   (sets ?? []).map((s) => `${s.p1_games}-${s.p2_games}`).join("  ");
 
+/** The event's local day, e.g. "Wed 21 Oct". */
+export function localDay(iso: string, timezone: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en-GB", {
+    timeZone: timezone,
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  }).format(new Date(iso));
+}
+
 /** The event's local time, e.g. "Wed 21 Oct, 19:30". */
 export function localTime(iso: string, timezone: string, locale: string): string {
   return new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en-GB", {
