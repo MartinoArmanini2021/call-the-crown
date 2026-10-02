@@ -21,6 +21,9 @@
   --gold: #f2c14e;
   --silver: #c9c9c9;
   --bronze: #c08457;
+  /* the two players of a match: blue and orange (distinct for colour-blind fans, apart from brand red) */
+  --p1: #4aa8ff;
+  --p2: #ff9f43;
   --font-headline: "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-display: "Urbanist Variable", "Urbanist", system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", system-ui, sans-serif;
@@ -42,6 +45,8 @@
   --color-gold: var(--gold);
   --color-silver: var(--silver);
   --color-bronze: var(--bronze);
+  --color-p1: var(--p1);
+  --color-p2: var(--p2);
   --font-headline: var(--font-headline);
   --font-display: var(--font-display);
   --font-body: var(--font-body);

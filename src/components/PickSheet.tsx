@@ -32,6 +32,7 @@ import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
 import { useMatchNames } from "./matchNames";
+import { SIDE_COLOR } from "./sides";
 import { Scoreboard } from "./Scoreboard";
 
 export function PickSheet({
@@ -172,6 +173,7 @@ export function PickSheet({
             {([1, 2] as const).map((s) => (
               <Choice
                 key={s}
+                side={s}
                 on={draft.winner === s}
                 onClick={() => change((d) => withWinner(d, s))}
                 title={names[s]}
@@ -194,7 +196,11 @@ export function PickSheet({
                 return (
                   <div key={i} className="space-y-1.5">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold text-ink-2">
+                      <span className="flex items-center gap-1.5 text-xs font-semibold text-ink-2">
+                        <span
+                          aria-hidden
+                          className={cn("h-2.5 w-2.5 rounded-full", SIDE_COLOR[by].dot)}
+                        />
                         {t("set_n", { n: i + 1 })}
                         {i === 2 && <span className="text-ink-3"> · {t("set_decider")}</span>}
                       </span>
@@ -213,7 +219,7 @@ export function PickSheet({
                             onClick={() => i < 2 && change((d) => withSetWinner(d, i as 0 | 1, s))}
                             className={cn(
                               "focus-ring max-w-[8rem] truncate rounded-full px-3 py-1 text-xs font-bold transition-colors disabled:opacity-30",
-                              by === s ? "bg-ink text-bg" : "text-ink-2 hover:text-ink",
+                              by === s ? SIDE_COLOR[s].fill : SIDE_COLOR[s].text,
                             )}
                           >
                             {short(s)}
@@ -236,7 +242,7 @@ export function PickSheet({
                             onClick={() => change((d) => withScore(d, i, [hi, lo]))}
                             className={cn(
                               "focus-ring num rounded-lg py-2 text-[13px] transition-colors",
-                              on ? "bg-accent text-ink" : "bg-raised text-ink-2 hover:text-ink",
+                              on ? SIDE_COLOR[by].fill : "bg-raised text-ink-2 hover:text-ink",
                             )}
                           >
                             {hi}-{lo}
@@ -296,11 +302,13 @@ function Question({ title, children }: { title: string; children: ReactNode }) {
 }
 
 function Choice({
+  side,
   on,
   onClick,
   title,
   sub,
 }: {
+  side: 1 | 2;
   on: boolean;
   onClick: () => void;
   title: string;
@@ -312,12 +320,15 @@ function Choice({
       aria-pressed={on}
       onClick={onClick}
       className={cn(
-        "focus-ring flex flex-col items-start rounded-2xl px-3 py-2.5 text-start transition-colors",
-        on ? "bg-accent text-ink" : "bg-raised text-ink-2 hover:text-ink",
+        "focus-ring flex flex-col items-start rounded-2xl border-s-4 px-3 py-2.5 text-start transition-colors",
+        SIDE_COLOR[side].edge,
+        on ? SIDE_COLOR[side].fill : "bg-raised text-ink-2 hover:text-ink",
       )}
     >
-      <span className="w-full truncate text-sm font-bold">{title}</span>
-      {sub && <span className={cn("text-[11px]", on ? "text-ink" : "text-ink-3")}>{sub}</span>}
+      <span className={cn("w-full truncate text-sm font-bold", !on && SIDE_COLOR[side].text)}>
+        {title}
+      </span>
+      {sub && <span className={cn("text-[11px]", on ? "text-bg/80" : "text-ink-3")}>{sub}</span>}
     </button>
   );
 }

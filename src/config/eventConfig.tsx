@@ -17,6 +17,8 @@ const COLOR_VARS: Record<string, string> = {
   text: "--text",
   text_secondary: "--text-2",
   text_muted: "--text-3",
+  p1: "--p1",
+  p2: "--p2",
 };
 const SAFE_COLOR = /^#[0-9a-f]{3,8}$/i;
 

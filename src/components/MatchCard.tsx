@@ -6,6 +6,7 @@ import { localTime, matchState, scoreLine, shortTimeLeft, surname } from "@/lib/
 import { cn } from "@/lib/utils";
 import { PlayerBadge, playerName } from "./Brand";
 import { useMatchNames } from "./matchNames";
+import { SIDE_COLOR } from "./sides";
 
 /** "Quarter-final 1", "Semi-final 2", "Third place", "Final". */
 export function useMatchLabel() {
@@ -47,7 +48,7 @@ export function MatchCard({
     const won = match.winner_id !== null && match.winner_id === id;
     const picked = pick?.winner_id === id && id !== null;
     return (
-      <div className="flex items-center gap-3">
+      <div className={cn("flex items-center gap-3 border-s-4 ps-2.5", SIDE_COLOR[slot].edge)}>
         <PlayerBadge player={p} size={36} />
         <div className="min-w-0 flex-1">
           <p className={cn("truncate font-semibold", match.winner_id && !won && "text-ink-3")}>

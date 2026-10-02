@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { SIDE_COLOR } from "./sides";
 import type { SetScore } from "@/lib/validation";
 
 type Side = 1 | 2;
@@ -64,7 +65,10 @@ export function Scoreboard({
       <tbody>
         {([1, 2] as const).map((s) => (
           <tr key={s}>
-            <th scope="row" className="truncate px-3 py-1 text-start text-xs font-bold">
+            <th
+              scope="row"
+              className={cn("truncate px-3 py-1 text-start text-xs font-bold", SIDE_COLOR[s].text)}
+            >
               {names[s]}
               {s === winner && <span className="text-accent-text"> ●</span>}
             </th>
@@ -80,7 +84,7 @@ export function Scoreboard({
                       : g === null
                         ? "text-ink-3"
                         : won(s, i)
-                          ? "text-ink"
+                          ? SIDE_COLOR[s].text
                           : "text-ink-3",
                   )}
                 >
