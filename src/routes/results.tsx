@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
-import { Bracket } from "@/components/Bracket";
+import { Draw } from "@/components/Draw";
 import { NextStepBanner } from "@/components/NextStep";
 import { QueryGate } from "@/components/QueryGate";
 import { ResultCard } from "@/components/ResultCard";
@@ -66,7 +66,7 @@ function Results() {
           <h2 id="draw-title" className="headline mb-3 text-2xl">
             {t("draw_title")}
           </h2>
-          <Bracket
+          <Draw
             matches={all}
             players={byPlayer}
             pickByMatch={pickByMatch}

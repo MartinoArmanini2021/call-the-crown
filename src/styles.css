@@ -113,3 +113,39 @@ body {
     }
   }
 }
+
+/* The draw on Results (Draw.tsx): a live pulse, the dashed line of a path still to be decided moving
+   toward the next match, and the champion's crown catching the light. Still when motion is reduced. */
+.skg-flow {
+  background-image: linear-gradient(to bottom, var(--text-3) 50%, transparent 50%);
+  background-size: 2px 10px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skg-live-dot {
+    animation: skg-live 1.2s ease-in-out infinite;
+  }
+  .skg-flow {
+    animation: skg-flow 1s linear infinite;
+  }
+  .skg-flow-up {
+    animation-direction: reverse;
+  }
+  .skg-crown {
+    animation: skg-crown 3s ease-in-out infinite;
+  }
+  @keyframes skg-live {
+    50% {
+      opacity: 0.3;
+    }
+  }
+  @keyframes skg-flow {
+    to {
+      background-position: 0 10px;
+    }
+  }
+  @keyframes skg-crown {
+    50% {
+      filter: drop-shadow(0 0 10px rgb(242 193 78 / 0.7));
+    }
+  }
+}
