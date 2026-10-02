@@ -38,7 +38,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
             {logo ? (
               <img src={logo} alt={event.branding.app_name ?? event.name} className="h-7 w-auto" />
             ) : (
-              <span className="headline truncate text-xl">
+              <span className="headline truncate text-lg sm:text-xl">
                 <span className="text-accent">{headerName.slice(0, -1).join(" ")}</span>{" "}
                 {headerName.slice(-1)[0]}
               </span>
@@ -47,7 +47,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
           <nav className="flex shrink-0 items-center gap-1 text-sm">
             <Link
               to="/how-to-play"
-              className="focus-ring rounded-full px-3 py-1.5 text-ink-2 hover:text-ink"
+              className="focus-ring rounded-full px-2 py-1.5 sm:px-3 text-ink-2 hover:text-ink"
             >
               {t("how_to_play")}
             </Link>
@@ -65,7 +65,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
             ) : (
               <Link
                 to="/sign-in"
-                className="focus-ring rounded-full bg-accent px-4 py-1.5 font-bold"
+                className="focus-ring rounded-full bg-accent px-3 py-1.5 sm:px-4 font-bold"
               >
                 {t("sign_in")}
               </Link>

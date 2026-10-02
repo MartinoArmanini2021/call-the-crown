@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { PrizeStrip } from "@/components/Brand";
+import { playerName } from "@/components/Brand";
 import { useEvent } from "@/config/eventConfig";
+import { useGame } from "@/hooks/useGame";
 import { useT } from "@/i18n/useT";
 import type { Round } from "@/lib/api";
+import { surname } from "@/lib/format";
 
 export const Route = createFileRoute("/how-to-play")({ component: HowToPlay });
 
@@ -12,7 +15,12 @@ export const Route = createFileRoute("/how-to-play")({ component: HowToPlay });
 // maths" (Tino, 2 Oct 2026: "it needs to be easy to understand").
 function HowToPlay() {
   const { rules, tiebreak_seed } = useEvent();
-  const { t } = useT();
+  const { t, locale } = useT();
+  const { matches, byPlayer } = useGame();
+  const name = (id: string | null | undefined) => {
+    const p = id ? byPlayer.get(id) : undefined;
+    return p ? surname(playerName(p, locale)) : null;
+  };
   const rounds: Round[] = ["QF", "SF", "3P", "F"];
   const scores = rules.allowed_set_scores.map(([a, b]) => `${a}-${b}`).join(", ");
   const sf = rules.winner_points.SF;
@@ -32,6 +40,26 @@ function HowToPlay() {
     base: rules.winner_points.QF,
     points: Math.floor(rules.winner_points.QF * (1 + gap / (gap + rules.upset_constant)) + 0.5),
   };
+  // With the draw known, the same idea told with the real players: the quarter-final with the biggest
+  // stored upset bonus (its points are the server's p1/p2_win_points, not worked out here).
+  const realUpset = (matches.data ?? [])
+    .filter((m) => m.round === "QF" && m.p1_id && m.p2_id)
+    .flatMap((m) => {
+      const [lo, hi, pts] =
+        (m.p1_win_points ?? 0) >= (m.p2_win_points ?? 0)
+          ? [m.p1_id, m.p2_id, m.p1_win_points]
+          : [m.p2_id, m.p1_id, m.p2_win_points];
+      const low = byPlayer.get(lo!);
+      const high = byPlayer.get(hi!);
+      return low && high && pts !== null && pts > rules.winner_points.QF
+        ? [{ low, high, points: pts }]
+        : [];
+    })
+    .sort((a, b) => b.points - a.points)[0];
+  // The worked example names the first semi-final's seeded player when the draw is in.
+  const sfPlayer =
+    name((matches.data ?? []).find((m) => m.round === "SF" && m.p1_id)?.p1_id) ??
+    t("example_player");
 
   const h2 = "headline mb-3 mt-8 text-2xl";
   const line = (ok: boolean, label: string, pts: number) => (
@@ -97,10 +125,10 @@ function HowToPlay() {
       <section className="card p-4 text-sm">
         <div className="grid grid-cols-2 gap-2">
           <p className="num rounded-xl bg-raised px-3 py-2">
-            {t("htp_example_pick", { a: "Player A" })}
+            {t("htp_example_pick", { a: sfPlayer })}
           </p>
           <p className="num rounded-xl bg-raised px-3 py-2">
-            {t("htp_example_result", { a: "Player A" })}
+            {t("htp_example_result", { a: sfPlayer })}
           </p>
         </div>
         <ul className="mt-3 grid gap-1.5">
@@ -118,7 +146,18 @@ function HowToPlay() {
       <h2 className={h2}>{t("htp_upset_title")}</h2>
       <div className="card space-y-2 p-4 text-sm text-ink-2">
         <p>{t("htp_upset")}</p>
-        <p className="text-ink">{t("htp_upset_example", upsetExample)}</p>
+        <p className="text-ink">
+          {realUpset
+            ? t("htp_upset_real", {
+                low: surname(playerName(realUpset.low, locale)),
+                lowRank: realUpset.low.rank_snapshot ?? "–",
+                high: surname(playerName(realUpset.high, locale)),
+                highRank: realUpset.high.rank_snapshot ?? "–",
+                points: realUpset.points,
+                base: rules.winner_points.QF,
+              })
+            : t("htp_upset_example", upsetExample)}
+        </p>
         <details className="text-xs text-ink-3">
           <summary className="focus-ring cursor-pointer rounded font-semibold">
             {t("htp_upset_maths_title")}

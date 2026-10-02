@@ -250,6 +250,8 @@ export const en = {
     "Back the lower-ranked player and win more. The bigger the gap in the world ranking, the bigger the bonus.",
   htp_upset_example:
     "Example: world no. {low} beats world no. {high} in a quarter-final: {points} points for the winner instead of {base}.",
+  htp_upset_real:
+    "Example: if {low} (world no. {lowRank}) beats {high} (world no. {highRank}) in their quarter-final, the winner scores {points} points instead of {base}.",
   htp_upset_maths_title: "The exact maths",
   htp_upset_maths:
     "Winner points × (1 + gap ÷ (gap + {k})), where gap is the difference in ranking places, rounded to a whole point (halves round up). Rankings are fixed before the first match.",

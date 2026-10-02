@@ -47,7 +47,7 @@ function Landing() {
         </p>
 
         {(players.data ?? []).length > 0 && (
-          <ul className="mt-5 grid grid-cols-6 gap-1.5" aria-label={t("landing_players")}>
+          <ul className="mt-5 grid grid-cols-3 gap-2" aria-label={t("landing_players")}>
             {[...(players.data ?? [])]
               .sort((a, b) => (a.seed ?? 99) - (b.seed ?? 99))
               .map((p) => (
@@ -90,26 +90,24 @@ function Landing() {
   );
 }
 
-/** A player as a portrait tile: the organiser's photo, or a short name until photos arrive. */
+/** A player as a tile with their name: the organiser's photo behind it once photos arrive. */
 function Portrait({ player, name }: { player: Player; name: string }) {
   const img = publicImage(player.image_path);
-  const last = surname(name).replace(/\s+/g, "");
-  const short = last.slice(0, 3).toUpperCase();
+  const last = surname(name);
+  const first = name.slice(0, name.length - last.length).trim();
   return (
     <div
-      className="relative flex aspect-[3/4] items-end justify-center overflow-hidden rounded-lg border border-line bg-gradient-to-b from-raised to-card pb-1"
+      className="relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-lg border border-line bg-gradient-to-b from-raised to-card px-2 pb-1.5"
       title={name}
     >
-      {img && <img src={img} alt={name} className="absolute inset-0 h-full w-full object-cover" />}
-      <span
-        className={
-          img
-            ? "headline relative text-sm text-ink drop-shadow"
-            : "headline absolute inset-0 flex items-center justify-center text-xl text-ink-2"
-        }
-      >
-        {short}
-      </span>
+      {img && (
+        <>
+          <img src={img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+        </>
+      )}
+      {first && <span className="relative truncate text-[11px] text-ink-2">{first}</span>}
+      <span className="headline relative truncate text-lg leading-tight text-ink">{last}</span>
     </div>
   );
 }
