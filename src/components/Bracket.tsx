@@ -72,7 +72,7 @@ export function Bracket({
                       {state === "settled"
                         ? games.join(" ")
                         : state === "open" && pts !== null
-                          ? `+${pts}`
+                          ? `${pts} ${t("pts")}`
                           : ""}
                     </span>
                   </span>

@@ -12,7 +12,8 @@ import { shortTimeLeft, surname } from "@/lib/format";
 export const Route = createFileRoute("/")({ component: Landing });
 
 // The front door leads with the event: where and when, the six players, how long until the first
-// picks close, and what each call is worth (all from config and the bracket; nothing hard-coded).
+// picks close, and a worked example of how a pick scores (all from config and the bracket; nothing
+// hard-coded). First-time-fan test, 2 Oct 2026: one plain sentence and one example beat three tiles.
 function Landing() {
   const event = useEvent();
   const { t, locale } = useT();
@@ -27,11 +28,10 @@ function Landing() {
     .filter((ms) => ms > now)
     .sort((a, b) => a - b)[0];
 
-  const { winner_points: wp, sets_points: sp, per_set_exact: pe } = event.rules;
-  const range = (o: Record<string, number>) => {
-    const v = Object.values(o);
-    return `${Math.min(...v)}–${Math.max(...v)}`;
-  };
+  const count = (matches.data ?? []).length;
+  // the example is a quarter-final pick, so it names a quarter-final player
+  const qf = (matches.data ?? []).find((m) => m.round === "QF" && m.p1_id);
+  const top = (players.data ?? []).find((p) => p.id === qf?.p1_id);
 
   return (
     <AppShell>
@@ -42,6 +42,9 @@ function Landing() {
           </p>
         )}
         <h1 className="headline mt-3 text-6xl sm:text-7xl">{t("landing_title")}</h1>
+        <p className="mt-2 max-w-md text-sm text-ink-2">
+          {t("landing_sentence", { n: count || 6 })}
+        </p>
 
         {(players.data ?? []).length > 0 && (
           <ul className="mt-5 grid grid-cols-6 gap-1.5" aria-label={t("landing_players")}>
@@ -70,11 +73,7 @@ function Landing() {
         </Link>
       </section>
 
-      <ul className="mt-4 grid grid-cols-3 gap-2" aria-label={t("htp_scoring")}>
-        <WorthTile label={t("worth_winner")} value={range(wp)} note={t("worth_winner_note")} />
-        <WorthTile label={t("worth_sets")} value={`+${range(sp)}`} note={t("worth_sets_note")} />
-        <WorthTile label={t("worth_exact")} value={`+${pe}`} note={t("worth_exact_note")} />
-      </ul>
+      <ScoringExample name={top ? surname(playerName(top, locale)) : t("example_player")} />
 
       <div className="mt-4">
         <PrizeStrip />
@@ -115,12 +114,52 @@ function Portrait({ player, name }: { player: Player; name: string }) {
   );
 }
 
-function WorthTile({ label, value, note }: { label: string; value: string; note: string }) {
+/**
+ * How a pick scores, worked through once: a quarter-final pick of 6-4 6-3 against a 6-4 7-5 result.
+ * The points are read from the rules (winner, sets, per exact set), never computed from a real pick.
+ */
+function ScoringExample({ name }: { name: string }) {
+  const event = useEvent();
+  const { t } = useT();
+  const { winner_points: wp, sets_points: sp, per_set_exact: pe } = event.rules;
+  const lines: [string, number][] = [
+    [t("example_winner"), wp.QF],
+    [t("example_sets", { n: 2 }), sp.QF],
+    [t("example_exact", { n: 1 }), pe],
+  ];
   return (
-    <li className="card grid gap-0.5 px-3 py-3">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-ink-3">{label}</span>
-      <span className="num text-2xl">{value}</span>
-      <span className="text-[11px] text-ink-3">{note}</span>
-    </li>
+    <section className="card mt-4 px-4 py-4" aria-labelledby="example-title">
+      <h2 id="example-title" className="headline text-lg">
+        {t("example_title")}
+      </h2>
+      <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
+        <p className="rounded-xl bg-raised px-3 py-2">
+          <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-3">
+            {t("example_you_pick")}
+          </span>
+          <span className="num">{name} 6-4 6-3</span>
+        </p>
+        <p className="rounded-xl bg-raised px-3 py-2">
+          <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-3">
+            {t("example_result")}
+          </span>
+          <span className="num">{name} 6-4 7-5</span>
+        </p>
+      </div>
+      <ul className="mt-3 grid gap-1.5 text-sm">
+        {lines.map(([label, pts]) => (
+          <li key={label} className="flex justify-between gap-3 text-ink-2">
+            <span>
+              <span className="text-good">✓</span> {label}
+            </span>
+            <b className="num text-ink">+{pts}</b>
+          </li>
+        ))}
+        <li className="mt-1 flex justify-between gap-3 border-t border-line pt-2 font-semibold">
+          <span>{t("example_total")}</span>
+          <b className="num text-accent-text">{wp.QF + sp.QF + pe}</b>
+        </li>
+      </ul>
+    </section>
   );
 }

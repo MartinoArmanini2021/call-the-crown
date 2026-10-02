@@ -6,6 +6,7 @@ import { Bracket } from "@/components/Bracket";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
 import { PickSheet } from "@/components/PickSheet";
+import { PicksIntro } from "@/components/PicksIntro";
 import { QueryGate } from "@/components/QueryGate";
 import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
@@ -52,6 +53,7 @@ function Picks() {
   return (
     <AppShell>
       <PageTitle title={t("picks_title")} sub={t("picks_intro")} />
+      <PicksIntro />
 
       {user && matches.data && (
         <div className="mb-4">
