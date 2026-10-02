@@ -6,9 +6,8 @@ import {
   shaped,
   toSetScores,
   winnerLine,
-  withFormat,
-  withLost,
   withScore,
+  withSetWinner,
   withWinner,
 } from "../src/lib/pickDraft";
 
@@ -17,7 +16,7 @@ const match = { match_no: 1, p1_id: "c", p2_id: "f" } as Match;
 
 describe("the pick sheet's draft", () => {
   test("F wins 6-4 6-3: winner-side chips, stored player 1 first", () => {
-    let d = withFormat(withWinner(EMPTY, 2), "2-0");
+    let d = withWinner(EMPTY, 2);
     d = withScore(withScore(d, 0, [6, 4]), 1, [6, 3]);
     expect(toSetScores(d)).toEqual([
       { p1_games: 4, p2_games: 6 },
@@ -27,7 +26,7 @@ describe("the pick sheet's draft", () => {
   });
 
   test("F wins 2-1, C takes set 1: set 1 stored C first, set 3 goes to F", () => {
-    let d = withLost(withFormat(withWinner(EMPTY, 2), "2-1"), 0);
+    let d = withSetWinner(withWinner(EMPTY, 2), 0, 1);
     d = withScore(withScore(withScore(d, 0, [7, 5]), 1, [6, 2]), 2, [7, 6]);
     expect(toSetScores(d)).toEqual([
       { p1_games: 7, p2_games: 5 },
@@ -37,9 +36,19 @@ describe("the pick sheet's draft", () => {
     expect(winnerLine(d)).toBe("5-7, 6-2, 7-6");
   });
 
-  test("2-1 needs the lost set before the set rows show", () => {
-    expect(shaped(withFormat(withWinner(EMPTY, 1), "2-1"))).toBe(false);
-    expect(shaped(withLost(withFormat(withWinner(EMPTY, 1), "2-1"), 1))).toBe(true);
+  test("choosing the winner shows two sets, both on the winner's side", () => {
+    const d = withWinner(EMPTY, 1);
+    expect(shaped(d)).toBe(true);
+    expect([d.format, d.lost]).toEqual(["2-0", null]);
+  });
+
+  test("the set toggles: one set to the other player brings set 3; back again ends it 2-0", () => {
+    let d = withSetWinner(withWinner(EMPTY, 2), 1, 1);
+    expect([d.format, d.lost]).toEqual(["2-1", 1]);
+    d = withSetWinner(d, 0, 1); // the other set to the loser too: set 2 goes back to the winner
+    expect([d.format, d.lost]).toEqual(["2-1", 0]);
+    d = withSetWinner(d, 0, 2);
+    expect([d.format, d.lost]).toEqual(["2-0", null]);
   });
 
   test("a saved pick reopens as the same answers", () => {
@@ -58,7 +67,7 @@ describe("the pick sheet's draft", () => {
   });
 
   test("switching the winner keeps the shape and the set scores", () => {
-    let d = withLost(withFormat(withWinner(EMPTY, 2), "2-1"), 1);
+    let d = withSetWinner(withWinner(EMPTY, 2), 1, 1);
     d = withScore(d, 0, [6, 4]);
     const flipped = withWinner(d, 1);
     expect([flipped.format, flipped.lost]).toEqual(["2-1", 1]);

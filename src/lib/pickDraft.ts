@@ -1,6 +1,7 @@
-// A pick while it is being made in the pick sheet, asked the way a fan thinks (first-time-fan test,
-// 2 Oct 2026): who wins; 2–0 or 2–1; for 2–1, which set the other player takes; then each set's score
-// from the set winner's side ("6-4"). It converts to the stored form, set scores in the match's fixed
+// A pick while it is being made in the pick sheet: who wins the match, then for each set a toggle
+// for who wins it and the score from the set winner's side ("6-4") (first-time-fan test and Tino's
+// follow-up, 2 Oct 2026). Sets start on the match winner's side; giving set 1 or 2 to the other player
+// brings set 3, which the match winner must take. It converts to the stored form, set scores in the match's fixed
 // order (player 1's games first), which is also how the sheet's scoreboard shows it.
 import type { Match, Pick } from "./api";
 import type { SetScore } from "./validation";
@@ -71,14 +72,26 @@ export function fromPick(m: Match, pick: Pick | undefined): Draft {
   };
 }
 
-/** Changing the winner keeps the shape (2–0, or 2–1 with the same set lost) and the set scores. */
-export const withWinner = (d: Draft, w: Side): Draft => ({ ...d, winner: w });
-export const withFormat = (d: Draft, f: Format): Draft => ({
+/**
+ * Choosing the winner starts both sets on the winner's side (2–0). Changing it later keeps the shape
+ * (2–0, or 2–1 with the same set going to the other player) and the set scores.
+ */
+export const withWinner = (d: Draft, w: Side): Draft => ({
   ...d,
-  format: f,
-  lost: f === "2-0" ? null : d.lost,
+  winner: w,
+  format: d.format ?? "2-0",
 });
-export const withLost = (d: Draft, i: 0 | 1): Draft => ({ ...d, lost: i });
+
+/**
+ * The set toggle: set i (0 or 1) goes to player s. Giving it to the match loser makes it 2–1 with that
+ * set lost (the loser can take only one of the first two, so the other goes back to the winner);
+ * giving the lost set back to the winner makes it 2–0. Set 3 always belongs to the match winner.
+ */
+export function withSetWinner(d: Draft, i: 0 | 1, s: Side): Draft {
+  if (!d.winner) return d;
+  if (s !== d.winner) return { ...d, format: "2-1", lost: i };
+  return d.format === "2-1" && d.lost === i ? { ...d, format: "2-0", lost: null } : d;
+}
 export function withScore(d: Draft, i: number, sc: [number, number]): Draft {
   const scores = [...d.scores];
   scores[i] = sc;
