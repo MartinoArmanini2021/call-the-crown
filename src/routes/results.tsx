@@ -42,7 +42,7 @@ function Results() {
             <Stat
               label={t("stat_rank")}
               value={me?.global_rank ? String(me.global_rank) : "–"}
-              of={ranked ? ranked.toLocaleString("en-GB") : null}
+              of={me?.global_rank && ranked ? ranked.toLocaleString("en-GB") : null}
             />
             <Stat label={t("stat_scored")} value={String(settledCount)} of={String(all.length)} />
           </div>
@@ -86,12 +86,13 @@ function Stat({
   of?: string | null;
   accent?: boolean;
 }) {
+  const { t } = useT();
   return (
     <div className="card px-3 py-2.5">
       <p className="text-[10px] font-bold uppercase tracking-wider text-ink-3">{label}</p>
       <p className={accent ? "num text-2xl text-accent-text" : "num text-2xl"}>
         {value}
-        {of && <span className="text-xs font-semibold text-ink-3"> /{of}</span>}
+        {of && <span className="text-xs font-semibold text-ink-3"> {t("stat_of", { n: of })}</span>}
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
-import { SponsorSlot } from "@/components/Brand";
+import { SponsorSlot, playerName } from "@/components/Brand";
 import { Bracket } from "@/components/Bracket";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
@@ -12,7 +12,7 @@ import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
 import type { Match } from "@/lib/api";
-import { matchState, scoreLine } from "@/lib/format";
+import { matchState, surname } from "@/lib/format";
 import { nextStep } from "@/lib/nextStep";
 
 export const Route = createFileRoute("/picks")({ component: Picks });
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/picks")({ component: Picks });
 // The bracket on top (the whole event at a glance), then only the matches you can pick now, in the
 // order they lock. Finished matches live on Results. A pick is made in the sheet (PickSheet).
 function Picks() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const now = useServerNow();
   const navigate = useNavigate();
   const { user, matches, byPlayer, pickByMatch, queries } = useGame();
@@ -105,7 +105,9 @@ function Picks() {
                           : "focus-ring rounded-full bg-accent px-4 py-1.5 font-bold"
                       }
                     >
-                      {pick ? `${t("edit_pick")} · ${scoreLine(pick.set_scores)}` : t("make_pick")}
+                      {pick
+                        ? `✓ ${t("pick_summary", { name: surname(playerName(byPlayer.get(pick.winner_id), locale)), n: pick.sets })} · ${t("edit_pick")}`
+                        : t("make_pick")}
                     </button>
                   }
                 />

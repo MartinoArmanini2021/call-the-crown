@@ -9,6 +9,7 @@ import { scoreLine, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
+import { Scoreboard } from "./Scoreboard";
 
 export function ResultCard({
   match,
@@ -38,16 +39,8 @@ export function ResultCard({
   const scored = pick?.pts_total !== null && pick?.pts_total !== undefined;
   const upset = scored && (pick.pts_winner ?? 0) > event.rules.winner_points[match.round];
 
-  const cell = (s: { p1_games: number; p2_games: number } | undefined, hit = false) => (
-    <span
-      className={cn(
-        "num rounded-md py-1 text-center text-[13px]",
-        s ? (hit ? "bg-good/20 text-good" : "bg-raised") : "bg-raised/40 text-ink-3",
-      )}
-    >
-      {s ? `${s.p1_games}-${s.p2_games}` : "–"}
-    </span>
-  );
+  const side = (id: string | null) => (id === null ? null : id === match.p1_id ? 1 : 2);
+  const names = { 1: short(match.p1_id), 2: short(match.p2_id) };
 
   return (
     <article className="card space-y-3 p-4" aria-label={label(match, matches)}>
@@ -78,39 +71,29 @@ export function ResultCard({
         ) : null}
       </header>
 
-      <div
-        className="grid items-center gap-1.5"
-        style={{ gridTemplateColumns: `3.5rem repeat(${columns}, minmax(0, 1fr))` }}
-      >
-        <span />
-        {Array.from({ length: columns }, (_, i) => (
-          <span key={i} className="text-center text-[10px] uppercase tracking-wider text-ink-3">
-            {t("set_n", { n: i + 1 })}
-          </span>
-        ))}
-        {settled && (
-          <>
-            <span className="text-[11px] text-ink-3">{t("row_result")}</span>
-            {Array.from({ length: columns }, (_, i) => (
-              <span key={i} className="contents">
-                {cell(resultSets[i])}
-              </span>
-            ))}
-          </>
-        )}
-        {signedIn && pick && (
-          <>
-            <span className="text-[11px] text-ink-3">
-              {t("row_you")} · {short(pick.winner_id)}
-            </span>
-            {Array.from({ length: columns }, (_, i) => (
-              <span key={i} className="contents">
-                {cell(pickSets[i], pick.exact_flags?.[i] === true)}
-              </span>
-            ))}
-          </>
-        )}
-      </div>
+      {settled && (
+        <Scoreboard
+          title={t("row_result")}
+          names={names}
+          winner={side(match.winner_id)}
+          sets={resultSets}
+          n={resultSets.length}
+          columns={columns}
+          caption={t("row_result")}
+        />
+      )}
+      {signedIn && pick && (
+        <Scoreboard
+          title={t("your_pick")}
+          names={names}
+          winner={side(pick.winner_id)}
+          sets={pickSets}
+          n={pickSets.length}
+          columns={columns}
+          marks={pick.exact_flags}
+          caption={t("your_pick")}
+        />
+      )}
 
       {signedIn && <CrowdBlock match={match} pick={pick} short={short} />}
 
@@ -165,7 +148,11 @@ function CrowdBlock({
     <section className="space-y-1.5 border-t border-line pt-3" aria-label={t("crowd_title")}>
       <p className="flex justify-between text-[11px] font-bold uppercase tracking-wider text-ink-3">
         <span>{t("crowd_title")}</span>
-        <span className="num">{t("crowd_picks", { n: crowd.picks.toLocaleString("en-GB") })}</span>
+        <span className="num">
+          {crowd.picks === 1
+            ? t("crowd_pick_one")
+            : t("crowd_picks", { n: crowd.picks.toLocaleString("en-GB") })}
+        </span>
       </p>
       <div className="flex justify-between text-xs">
         {side(match.p1_id, crowd.p1_picks)}

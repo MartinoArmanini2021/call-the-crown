@@ -36,6 +36,7 @@ export const en = {
   example_sets: "Right number of sets ({n})",
   example_exact: "Set {n} exactly right",
   example_total: "Total (more for an upset)",
+  example_miss: "Set 2: you said 6-3, it was 7-5",
   landing_cta_signed_in: "Make your picks",
   landing_prizes: "Prizes for the top 3",
   prize_terms: "Prize terms",
@@ -61,7 +62,8 @@ export const en = {
 
   // picks
   picks_title: "Your picks",
-  picks_intro: "Winner, sets, set scores. Change them until each match starts.",
+  picks_intro:
+    "Pick who wins each match and the score. You can change a pick until the match starts.",
   locks_in: "Locks in {time}",
   locked: "Locked",
   live_now: "In play",
@@ -96,7 +98,9 @@ export const en = {
   // pick sheet + bracket (UX review, 2 Oct 2026)
   close: "Close",
   make_pick: "Make pick",
-  edit_pick: "Edit",
+  edit_pick: "Change",
+  pick_summary: "{name} in {n} sets",
+  world_rank: "World no. {rank}",
   set_score_aria: "Set {n}: {score}",
   // entering the score (first-time-fan test, 2 Oct 2026)
   pts_if_right: "{points} pts if right",
@@ -144,6 +148,7 @@ export const en = {
   // results
   crowd_title: "How fans picked",
   crowd_picks: "{n} picks",
+  crowd_pick_one: "1 pick",
   crowd_you: "you",
   crowd_top: "Most picked score: {pick} ({share})",
   results_title: "Results",
@@ -153,9 +158,10 @@ export const en = {
   breakdown_line: "Winner {w} · Sets {s} · Exact sets {e}",
   upset_tag: "(upset)",
   wrong_winner: "Wrong winner: no points for this match.",
-  stat_points: "Points",
-  stat_rank: "Rank",
-  stat_scored: "Scored",
+  stat_points: "Your points",
+  stat_rank: "Your rank",
+  stat_scored: "Matches played",
+  stat_of: "of {n}",
   results_empty: "No results yet. They arrive here automatically after each match.",
   result: "Result",
   retired: "Retired",
@@ -191,7 +197,7 @@ export const en = {
   // leagues
   leagues_title: "Leagues",
   leagues_intro:
-    "Play against your friends. A league table is the global table, filtered to its members.",
+    "Make a mini-league with friends: create one, share its code, and see who's best among you. Your points are the same as on the main table.",
   create_league: "Create a league",
   league_name: "League name",
   create: "Create",
@@ -227,39 +233,46 @@ export const en = {
 
   // how to play
   htp_title: "How to play",
-  htp_enter: "For every match, enter three things",
-  htp_enter_1: "The winner.",
-  htp_enter_2: "The number of sets: 2 or 3.",
-  htp_enter_3:
-    "The score of every set. Possible set scores: {scores}. Your winner must win exactly two sets.",
-  htp_lock:
-    "Each match locks at its scheduled start. Until then you can change your pick as often as you like. Other fans' picks stay hidden until the match starts.",
-  htp_scoring: "How a match is scored",
+  htp_enter: "Make a pick",
+  htp_enter_1: "Pick who wins the match.",
+  htp_enter_2:
+    "For each set, tap who wins it, then the score ({scores}). If the other player takes set 1 or 2, a third set appears: the winner of the match takes it.",
+  htp_enter_3: "Change it as often as you like until the match starts.",
+  htp_lock: "When a match starts, its picks lock. Nobody sees other fans' picks before that.",
+  htp_scoring: "What a pick earns",
   htp_scoring_intro:
-    "Everything depends on calling the winner: with the wrong winner, the match scores 0.",
-  htp_winner_row: "Correct winner",
-  htp_sets_row: "Correct number of sets",
-  htp_exact_row: "Each set called exactly (same set, same player, same games)",
+    "Nothing counts unless your winner is right: the wrong winner scores 0 for that match.",
+  htp_winner_row: "Right winner",
+  htp_sets_row: "Right number of sets (2 or 3)",
+  htp_exact_row: "Each set exactly right (same player, same score)",
+  htp_upset_title: "Upset bonus",
   htp_upset:
-    "Upset bonus: if your winner was ranked lower than the opponent, the winner points are multiplied by 1 + gap ÷ (gap + {k}), where gap is the difference in ranking positions, and rounded to a whole point.",
+    "Back the lower-ranked player and win more. The bigger the gap in the world ranking, the bigger the bonus.",
   htp_upset_example:
-    "Example: rank 10 beats rank 1 in a quarter-final. The gap is 9: {base} × {mult} = {raw}, rounded to {points} points.",
-  htp_7_6: "A 7-6 set counts as 7-6, whatever the tiebreak points.",
+    "Example: world no. {low} beats world no. {high} in a quarter-final: {points} points for the winner instead of {base}.",
+  htp_upset_maths_title: "The exact maths",
+  htp_upset_maths:
+    "Winner points × (1 + gap ÷ (gap + {k})), where gap is the difference in ranking places, rounded to a whole point (halves round up). Rankings are fixed before the first match.",
+  htp_small_print: "Good to know",
+  htp_7_6: "A 7-6 set counts as 7-6, whatever the tiebreak score.",
   htp_two_on_three:
-    "If you call 2 sets and the match goes to 3, sets 1 and 2 can still earn credit.",
+    "If you said 2 sets and the match goes to 3, sets 1 and 2 can still be exactly right.",
   htp_void:
-    "Retirement or walkover: the winner points count; sets and set scores are void for everyone.",
-  htp_example_title: "Worked example (semi-final)",
-  htp_example_pick: "Your pick: {a} 6-4 3-6 6-3",
-  htp_example_result: "Result: {a} 6-4 4-6 6-3",
-  htp_example_sum: "Winner {w} + sets {s} + set 1 exact {e} + set 3 exact {e} = {total}",
-  htp_max: "Maximum score (no upsets, all two-set matches): {max}.",
-  htp_ties: "Ties on the leaderboard",
-  htp_ties_1: "Points.",
-  htp_ties_2: "Number of sets called exactly across the event.",
-  htp_ties_3: "Closest total of games in your final pick to the real final.",
-  htp_ties_4: "The earlier last change to your final pick.",
-  htp_ties_5: "A computer draw, fixed before the first match. Draw seed:",
+    "If a player retires or doesn't start, only the winner counts: no points for sets or set scores, for anyone.",
+  htp_example_title: "Example (semi-final)",
+  htp_example_pick: "You pick {a} 6-4, 3-6, 6-3",
+  htp_example_result: "{a} wins 6-4, 4-6, 6-3",
+  htp_example_winner: "Right winner",
+  htp_example_sets: "Right number of sets (3)",
+  htp_example_exact: "Sets 1 and 3 exactly right",
+  htp_example_miss: "Set 2: you said 3-6, it was 4-6",
+  htp_example_total: "Total",
+  htp_max: "The most you can score without upsets, if every match ends in 2 sets: {max} points.",
+  htp_ties: "If fans have the same points",
+  htp_ties_1: "More sets exactly right over the whole event.",
+  htp_ties_2: "In the final: your total games closest to the real total.",
+  htp_ties_3: "Whoever made their final pick earlier (their last change counts).",
+  htp_ties_4: "A computer draw, fixed before the first match. Its code:",
 
   // errors from the server (codes in supabase/migrations)
   err_not_signed_in: "Please sign in first.",

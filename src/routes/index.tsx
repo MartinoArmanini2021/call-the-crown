@@ -73,11 +73,11 @@ function Landing() {
         </Link>
       </section>
 
-      <ScoringExample name={top ? surname(playerName(top, locale)) : t("example_player")} />
-
       <div className="mt-4">
         <PrizeStrip />
       </div>
+
+      <ScoringExample name={top ? surname(playerName(top, locale)) : t("example_player")} />
 
       <SponsorSlot slot="landing_strip" className="mt-4" />
 
@@ -155,6 +155,10 @@ function ScoringExample({ name }: { name: string }) {
             <b className="num text-ink">+{pts}</b>
           </li>
         ))}
+        <li className="flex justify-between gap-3 text-ink-3">
+          <span>✗ {t("example_miss")}</span>
+          <b className="num">+0</b>
+        </li>
         <li className="mt-1 flex justify-between gap-3 border-t border-line pt-2 font-semibold">
           <span>{t("example_total")}</span>
           <b className="num text-accent-text">{wp.QF + sp.QF + pe}</b>

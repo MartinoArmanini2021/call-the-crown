@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
-import { localTime, matchState, scoreLine, shortTimeLeft } from "@/lib/format";
+import { localTime, matchState, scoreLine, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { PlayerBadge, playerName } from "./Brand";
 
@@ -75,11 +75,15 @@ export function MatchCard({
               </span>
             )}
           </p>
-          {p && <p className="text-[11px] text-ink-3">#{p.rank_snapshot}</p>}
+          {p && (
+            <p className="text-[11px] text-ink-3">
+              {t("world_rank", { rank: p.rank_snapshot ?? "–" })}
+            </p>
+          )}
         </div>
         {state !== "settled" && pts !== null && (
           <span className="text-xs text-ink-3">
-            <span className="num text-sm text-ink-2">+{pts}</span> {t("pts")}
+            <span className="num text-sm text-ink-2">{pts}</span> {t("pts")}
           </span>
         )}
         {won && <span className="text-sm font-bold text-good">✓</span>}
@@ -121,8 +125,12 @@ export function MatchCard({
           <Status state={state} startsAt={match.starts_at} now={now} />
         )}
         {pick && state !== "open" && (
-          <span className="num text-ink-3">
-            {t("your_pick")}: {scoreLine(pick.set_scores)}
+          <span className="text-ink-3">
+            {t("your_pick")}:{" "}
+            {t("pick_summary", {
+              name: surname(playerName(players.get(pick.winner_id), locale)),
+              n: pick.sets,
+            })}
           </span>
         )}
         {state === "open" && action}

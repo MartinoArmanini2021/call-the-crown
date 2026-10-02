@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
+import { Scoreboard } from "./Scoreboard";
 
 export function PickSheet({
   match,
@@ -313,69 +314,5 @@ function Choice({
       <span className="w-full truncate text-sm font-bold">{title}</span>
       {sub && <span className={cn("text-[11px]", on ? "text-ink" : "text-ink-3")}>{sub}</span>}
     </button>
-  );
-}
-
-/** The pick as a TV scoreboard, fixed order: player 1's row on top, each set's games underneath. */
-function Scoreboard({
-  names,
-  winner,
-  sets,
-  n,
-  caption,
-}: {
-  names: Record<Side, string>;
-  winner: Side;
-  sets: (SetScore | null)[];
-  n: number;
-  caption: string;
-}) {
-  const games = (s: Side, i: number) => {
-    const set = sets[i];
-    if (!set) return null;
-    return s === 1 ? set.p1_games : set.p2_games;
-  };
-  const won = (s: Side, i: number) => {
-    const set = sets[i];
-    return !!set && (s === 1 ? set.p1_games > set.p2_games : set.p2_games > set.p1_games);
-  };
-  return (
-    <table className="w-full table-fixed rounded-xl bg-raised text-sm">
-      <caption className="sr-only">{caption}</caption>
-      <thead>
-        <tr className="text-[9px] uppercase tracking-wider text-ink-3">
-          <th />
-          {[0, 1, 2].map((i) => (
-            <th key={i} scope="col" className="w-10 pt-1.5 text-center font-semibold">
-              S{i + 1}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {([1, 2] as const).map((s) => (
-          <tr key={s}>
-            <th scope="row" className="truncate px-3 py-1 text-start text-xs font-bold">
-              {names[s]}
-              {s === winner && <span className="text-accent-text"> ●</span>}
-            </th>
-            {[0, 1, 2].map((i) => {
-              const g = i < n ? games(s, i) : null;
-              return (
-                <td
-                  key={i}
-                  className={cn(
-                    "num py-1 text-center text-base",
-                    g === null ? "text-ink-3" : won(s, i) ? "text-ink" : "text-ink-3",
-                  )}
-                >
-                  {g ?? "–"}
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
   );
 }
