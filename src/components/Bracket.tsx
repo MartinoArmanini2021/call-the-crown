@@ -49,7 +49,9 @@ export function Bracket({
       <div className="mb-2 grid grid-cols-3 items-end gap-2">
         {COLUMNS.map((col) => (
           <h3 key={col.key} className="text-center">
-            <span className="headline block whitespace-nowrap text-[15px] leading-tight text-ink sm:text-lg">{t(col.key)}</span>
+            <span className="headline block whitespace-nowrap text-[15px] leading-tight text-ink sm:text-lg">
+              {t(col.key)}
+            </span>
             <span className="block text-[11px] font-semibold text-ink-3">{dayOf(col)}</span>
           </h3>
         ))}

@@ -128,7 +128,8 @@ export const en = {
   intro_1: "Pick a winner",
   intro_1_sub: "Tap a match, then the player you think wins.",
   intro_2: "Call the score",
-  intro_2_sub: "For each set, tap who wins it, then the score. Each part you get right earns points.",
+  intro_2_sub:
+    "For each set, tap who wins it, then the score. Each part you get right earns points.",
   intro_3: "Change it until the first ball",
   intro_3_sub: "A pick locks when its match starts. Your points arrive after the match.",
   intro_ok: "Got it",
