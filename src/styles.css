@@ -21,9 +21,9 @@
   --gold: #f2c14e;
   --silver: #c9c9c9;
   --bronze: #c08457;
-  /* the two players of a match: sky blue and amber (distinct for colour-blind fans, apart from brand red) */
-  --p1: #7cc0ff;
-  --p2: #ffb86b;
+  /* the two players of a match: royal violet and champagne gold, the colours of kings (distinct for colour-blind fans, apart from brand red and the green for "correct") */
+  --p1: #b794ff;
+  --p2: #ecd9a4;
   --font-headline: "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-display: "Urbanist Variable", "Urbanist", system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", system-ui, sans-serif;
