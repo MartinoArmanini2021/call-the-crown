@@ -22,7 +22,8 @@ not allow the 6-digit code email with Supabase's built-in sender, so staging nee
 1. `bunx supabase config push --project-ref rmjlqqzytahmdlmnwxfc`: 6-digit codes (staging defaults to 8),
    10-minute expiry, the code-only email (`supabase/templates/code.html`), no confirmation email, site URL.
 2. Check that the cron reaches the poller (`net._http_response` shows 200 within a minute).
-3. Bring staging up to the UX pass (done locally 2 Oct 2026, commits 071247d…):
+3. ✓ Done 3 Oct 2026: staging brought up to the UX pass (0010 applied, branding.short_name and
+   branding.event_line added, poller redeployed, app redeployed). Kept for reference:
    - `bunx supabase db push --linked` (migration 0010: per-set exact flags for Results);
    - re-run `supabase/events/sixkings_2026.sql` on staging (`bunx supabase db query --linked -f …`)
      for the new `branding.short_name` and `branding.event_line`;
