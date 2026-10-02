@@ -22,8 +22,14 @@ not allow the 6-digit code email with Supabase's built-in sender, so staging nee
 1. `bunx supabase config push --project-ref rmjlqqzytahmdlmnwxfc`: 6-digit codes (staging defaults to 8),
    10-minute expiry, the code-only email (`supabase/templates/code.html`), no confirmation email, site URL.
 2. Check that the cron reaches the poller (`net._http_response` shows 200 within a minute).
-3. Redeploy the app after the UX/UI changes (`bunx vite build --mode staging`, then
-   `bunx wrangler pages deploy dist --project-name six-kings-game --branch preview`).
+3. Bring staging up to the UX pass (done locally 2 Oct 2026, commits 071247d…):
+   - `bunx supabase db push --linked` (migration 0010: per-set exact flags for Results);
+   - re-run `supabase/events/sixkings_2026.sql` on staging (`bunx supabase db query --linked -f …`)
+     for the new `branding.short_name` and `branding.event_line`;
+   - `bunx supabase functions deploy poll-results --project-ref rmjlqqzytahmdlmnwxfc` (unchanged
+     logic, but the poller now also re-reads settled matches for 12 hours);
+   - redeploy the app: `bunx vite build --mode staging`, then
+     `bunx wrangler pages deploy dist --project-name six-kings-game --branch preview`.
 4. Tino signs in on the preview link with his own email: the code arrives from `mail.grandslamgm.com`.
 
 Phase 2 is closed when step 4 works.

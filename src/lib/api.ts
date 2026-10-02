@@ -30,6 +30,7 @@ export type EventConfig = {
   branding: {
     app_name?: string;
     short_name?: string; // the header mark, e.g. "Six Kings Predictor"
+    event_line?: string; // the landing page's line about the event: venue, dates, broadcaster
     logo_path?: string | null;
     colors?: Partial<Record<string, string>>;
   };

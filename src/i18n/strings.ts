@@ -22,15 +22,17 @@ export const en = {
   something_wrong: "Something went wrong",
 
   // landing
-  landing_kicker: "Free to play",
   landing_title: "Call every match",
-  landing_body:
-    "Pick the winner, the number of sets and the score of every set. Points for every call you get right, a bonus for every upset you see coming.",
-  landing_cta: "Play now",
+  landing_cta: "Play free",
+  landing_players: "The six players",
+  first_lock_in: "Next picks close in",
+  worth_winner: "Right winner",
+  worth_winner_note: "+ upset bonus",
+  worth_sets: "Right sets",
+  worth_sets_note: "2 or 3",
+  worth_exact: "Each set exact",
+  worth_exact_note: "e.g. 6-4",
   landing_cta_signed_in: "Make your picks",
-  landing_step1: "Pick the winner",
-  landing_step2: "Call the sets",
-  landing_step3: "Nail the score",
   landing_prizes: "Prizes for the top 3",
   prize_terms: "Prize terms",
 
