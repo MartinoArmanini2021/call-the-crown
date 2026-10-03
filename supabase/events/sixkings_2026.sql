@@ -30,7 +30,7 @@ insert into public.event_config (
   '{"max_leagues_per_user": 10, "max_members": 200}',
   '{
      "app_name":  "Six Kings Slam Predictor",
-     "short_name": "Six Kings Predictor",
+     "short_name": "Six Kings Slam Predictor",
      "event_line": "Riyadh · anb Arena · 21, 22 & 24 October · Live on Netflix",
      "app_name_ar":  "توقعات بطولة الملوك الستة",
      "short_name_ar": "توقعات الملوك الستة",

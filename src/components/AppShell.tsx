@@ -24,7 +24,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const avatar = (profile.data?.display_name || user?.email || "?").trim()[0]?.toUpperCase();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const logo = publicImage(event.branding.logo_path);
-  // The header's short mark (branding.short_name, e.g. "Six Kings Predictor"): all but the last word
+  // The header's short mark (branding.short_name, e.g. "Six Kings Slam Predictor"): all but the last word
   // in the accent colour. Short enough to fit a phone; the full app name stays in the page title.
   const headerName = (
     inLocale(event.branding, "short_name", locale) ??
@@ -47,11 +47,16 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
             )}
           </Link>
           <nav className="flex shrink-0 items-center gap-1 text-sm">
+            {/* On a phone a "?" keeps the full app name in view; the words from sm up. */}
             <Link
               to="/how-to-play"
-              className="focus-ring rounded-full px-2 py-1.5 sm:px-3 text-ink-2 hover:text-ink"
+              aria-label={t("how_to_play")}
+              className="focus-ring flex h-9 w-9 items-center justify-center rounded-full bg-raised font-bold text-ink-2 hover:text-ink sm:h-auto sm:w-auto sm:bg-transparent sm:px-3 sm:py-1.5 sm:font-normal"
             >
-              {t("how_to_play")}
+              <span aria-hidden className="sm:hidden">
+                ?
+              </span>
+              <span className="hidden sm:inline">{t("how_to_play")}</span>
             </Link>
             {user ? (
               <Link

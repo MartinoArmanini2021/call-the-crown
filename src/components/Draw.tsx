@@ -1,13 +1,11 @@
-// "Road to the crown": the draw on Results (Tino, 2 Oct 2026: "more visual, more engaging, more
-// dynamic"). Built upright for a phone: the top half of the draw flows down, the bottom half flows
-// up, and both meet at the Final in the middle under a crown, with the third-place match beside it.
-//   Quarter-final 1  →  Semi-final 1  →  THE FINAL  ←  Semi-final 2  ←  Quarter-final 2
-// A stage strip on top says where the event is and what is next. Every card shows the players by
-// name in their colours, the set scores once played, a live pulse while in play, and your pick with
-// ✓ +points / ✗ once settled (stored by the server, never worked out here). The line between two
-// matches lights up gold once the winner is through. The structure comes from the bracket's sources,
-// so any six-player draw with two byes works; anything else falls back to a list by round.
-import type { ReactNode } from "react";
+// The draw on Results, horizontal (Tino, 3 Oct 2026: "a horizontal structure that adapts to the
+// screen ... almost interactive"; the big gold box and the player colours go). Three stage columns,
+// left to right: Quarter-finals → Semi-finals → Final day. On a phone held upright they are a
+// carousel: one column fills the screen with the next peeking in, a swipe moves a stage, and the
+// stage tabs on top both show where you are and jump there. Held sideways (or on a wider screen) all
+// three columns sit side by side. It opens on the current stage. Each card: the players by name, set
+// scores once played, the winner with a small crown, a live pulse, and your pick with ✓ +points / ✗.
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
@@ -16,7 +14,6 @@ import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
 import { useMatchNames } from "./matchNames";
-import { SIDE_COLOR } from "./sides";
 
 type Props = {
   matches: Match[];
@@ -26,61 +23,27 @@ type Props = {
   onSelect: (m: Match) => void;
 };
 
-const feeds = (from: Match, to: Match) =>
-  [to.p1_source, to.p2_source].some((s) => s.type !== "player" && s.match === from.match_no);
+const STAGES = [
+  { key: "bracket_qf", rounds: ["QF"] },
+  { key: "bracket_sf", rounds: ["SF"] },
+  { key: "bracket_last", rounds: ["F", "3P"] },
+] as const;
 
 export function Draw(props: Props) {
-  const { matches } = props;
-  const sfs = matches.filter((m) => m.round === "SF").sort((a, b) => a.match_no - b.match_no);
-  const final = matches.find((m) => m.round === "F");
-  const third = matches.find((m) => m.round === "3P");
-  const qfFor = (sf: Match | undefined) =>
-    sf && matches.find((m) => m.round === "QF" && feeds(m, sf));
-  const [sf1, sf2] = sfs;
-  const qf1 = qfFor(sf1);
-  const qf2 = qfFor(sf2);
-
-  if (!sf1 || !sf2 || !final || !qf1 || !qf2) {
-    // Not the six-player shape: every match as a card, in round order.
-    return (
-      <div className="space-y-3">
-        <StageStrip {...props} />
-        {matches.map((m) => (
-          <DrawCard key={m.match_no} m={m} {...props} />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <StageStrip {...props} />
-      <div className="mt-4 flex flex-col">
-        <DrawCard m={qf1} {...props} />
-        <Connector from={qf1} to={sf1} down {...props} />
-        <DrawCard m={sf1} {...props} />
-        <Connector from={sf1} to={final} down {...props} />
-        <FinalBlock final={final} third={third} {...props} />
-        <Connector from={sf2} to={final} down={false} {...props} />
-        <DrawCard m={sf2} {...props} />
-        <Connector from={qf2} to={sf2} down={false} {...props} />
-        <DrawCard m={qf2} {...props} />
-      </div>
-    </div>
-  );
-}
-
-/** Quarter-finals · Semi-finals · Final day: done ✓, now (glowing), to come; and the next match. */
-function StageStrip({ matches, players, now }: Props) {
+  const { matches, players, now } = props;
   const { t, locale } = useT();
   const event = useEvent();
   const { title } = useMatchNames(players);
-  const stages = [
-    { key: "bracket_qf" as const, rounds: ["QF"] },
-    { key: "bracket_sf" as const, rounds: ["SF"] },
-    { key: "bracket_last" as const, rounds: ["3P", "F"] },
-  ].map((st) => {
-    const ms = matches.filter((m) => st.rounds.includes(m.round));
+  const scroller = useRef<HTMLDivElement>(null);
+
+  const stages = STAGES.map((st) => {
+    const ms = matches
+      .filter((m) => (st.rounds as readonly string[]).includes(m.round))
+      .sort(
+        (a, b) =>
+          st.rounds.indexOf(a.round as never) - st.rounds.indexOf(b.round as never) ||
+          a.match_no - b.match_no,
+      );
     const first = ms
       .map((m) => m.starts_at)
       .filter(Boolean)
@@ -88,27 +51,70 @@ function StageStrip({ matches, players, now }: Props) {
     const done = ms.length > 0 && ms.every((m) => m.status !== "scheduled");
     return { ...st, ms, first, done };
   });
-  const current = stages.findIndex((s) => !s.done);
+  const current = Math.max(
+    0,
+    stages.findIndex((s) => !s.done),
+  );
+  const [active, setActive] = useState(current);
+
+  // Which column is in view (phone carousel); every column is in view when they sit side by side.
+  const columns = () => [...(scroller.current?.children ?? [])] as HTMLElement[];
+  // Sideways only (the page itself never jumps), by the distance to the column's start edge, so it
+  // works in both directions (Arabic scrolls right to left).
+  const goTo = (i: number, smooth = true) => {
+    const box = scroller.current;
+    const col = columns()[i];
+    if (!box || !col) return;
+    const style = getComputedStyle(box);
+    const pad = parseFloat(style.paddingInlineStart) || 0;
+    const b = box.getBoundingClientRect();
+    const c = col.getBoundingClientRect();
+    const delta = style.direction === "rtl" ? c.right - (b.right - pad) : c.left - (b.left + pad);
+    box.scrollBy({ left: delta, behavior: smooth ? "smooth" : "auto" });
+    setActive(i);
+  };
+  useEffect(() => {
+    goTo(current, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current]);
+  // the column most in view is the active one (direction-proof)
+  const onScroll = () => {
+    const box = scroller.current?.getBoundingClientRect();
+    if (!box) return;
+    let best = 0;
+    let most = -1;
+    columns().forEach((c, i) => {
+      const r = c.getBoundingClientRect();
+      const seen = Math.min(r.right, box.right) - Math.max(r.left, box.left);
+      if (seen > most) [best, most] = [i, seen];
+    });
+    setActive(best);
+  };
+
   const next = matches
     .filter((m) => m.status === "scheduled" && m.starts_at && Date.parse(m.starts_at) > now)
     .sort((a, b) => Date.parse(a.starts_at!) - Date.parse(b.starts_at!))[0];
   const live = matches.find((m) => matchState(m, now) === "locked");
 
   return (
-    <div className="card overflow-hidden p-3">
-      <ol className="grid grid-cols-3 gap-1.5">
+    <div>
+      <div className="grid grid-cols-3 gap-1.5" role="tablist" aria-label={t("draw_title")}>
         {stages.map((s, i) => (
-          <li
+          <button
             key={s.key}
+            type="button"
+            role="tab"
+            aria-selected={active === i}
+            onClick={() => goTo(i)}
             className={cn(
-              "rounded-xl px-2 py-2 text-center",
-              i === current ? "bg-accent/15 ring-1 ring-inset ring-accent/60" : "bg-raised",
+              "focus-ring rounded-xl px-2 py-2 text-center transition-colors",
+              active === i ? "bg-raised ring-1 ring-inset ring-ink-3" : "bg-card",
             )}
           >
             <span
               className={cn(
                 "headline block whitespace-nowrap text-[15px] leading-tight",
-                s.done ? "text-ink-3" : "text-ink",
+                s.done ? "text-ink-3" : i === current ? "text-ink" : "text-ink-2",
               )}
             >
               {s.done && <span className="text-good">✓ </span>}
@@ -117,14 +123,15 @@ function StageStrip({ matches, players, now }: Props) {
             <span className="block text-[11px] text-ink-3">
               {s.first ? localDay(s.first, event.timezone, locale) : ""}
             </span>
-          </li>
+          </button>
         ))}
-      </ol>
+      </div>
+
       {(live || next) && (
-        <p className="mt-2.5 flex items-center justify-between gap-2 px-1 text-xs">
+        <p className="mt-2 flex items-center justify-between gap-2 px-1 text-xs">
           {live ? (
-            <span className="flex items-center gap-1.5 font-semibold text-accent-text">
-              <span className="skg-live-dot h-2 w-2 rounded-full bg-accent" />
+            <span className="flex min-w-0 items-center gap-1.5 truncate font-semibold text-accent-text">
+              <span className="skg-live-dot h-2 w-2 shrink-0 rounded-full bg-accent" />
               {t("draw_live")} · {title(live, matches)}
             </span>
           ) : (
@@ -139,89 +146,51 @@ function StageStrip({ matches, players, now }: Props) {
           )}
         </p>
       )}
-    </div>
-  );
-}
 
-/** The line between two matches: gold once the winner is through, a moving dash before. */
-function Connector({
-  from,
-  to,
-  down,
-  matches,
-  players,
-}: Props & { from: Match; to: Match; down: boolean }) {
-  const { t, locale } = useT();
-  const label = useMatchLabel();
-  const through = from.status !== "scheduled" && from.winner_id;
-  const name = through ? surname(playerName(players.get(from.winner_id!), locale)) : null;
-  return (
-    <div className="relative flex h-12 items-center justify-center" aria-hidden>
-      <span
-        className={cn(
-          "absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2",
-          through
-            ? "bg-gradient-to-b from-gold/40 via-gold to-gold/40"
-            : cn("skg-flow opacity-60", !down && "skg-flow-up"),
-        )}
-      />
-      <span
-        className={cn(
-          "relative rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider",
-          through ? "border-gold/50 bg-bg text-gold" : "border-line bg-bg text-ink-3",
-        )}
+      <div
+        ref={scroller}
+        onScroll={onScroll}
+        className="-mx-4 mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-4 px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
-        {through
-          ? `${t("draw_through", { name: name! })} ${down ? "↓" : "↑"}`
-          : `${t("draw_winner_to", { match: label(to, matches) })} ${down ? "↓" : "↑"}`}
-      </span>
-    </div>
-  );
-}
-
-/** The Final under a crown, with the third-place match beside it. */
-function FinalBlock(props: Props & { final: Match; third: Match | undefined }) {
-  const { final, third, players } = props;
-  const { t, locale } = useT();
-  const champion =
-    final.status !== "scheduled" && final.winner_id
-      ? playerName(players.get(final.winner_id), locale)
-      : null;
-  return (
-    <section className="relative rounded-3xl border border-gold/40 bg-[radial-gradient(120%_70%_at_50%_0%,rgb(242_193_78/0.16),transparent_70%)] p-3">
-      <div className="mb-2 flex flex-col items-center text-gold">
-        <Crown className={cn("h-8 w-8", champion && "skg-crown")} />
-        {champion ? (
-          <p className="mt-1 text-center">
-            <span className="block text-[11px] font-bold uppercase tracking-[0.2em]">
-              {t("draw_champion")}
-            </span>
-            <span className="headline block text-3xl leading-tight text-ink">{champion}</span>
-          </p>
-        ) : (
-          <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.2em]">{t("draw_who")}</p>
-        )}
+        {stages.map((s, i) => (
+          <section
+            key={s.key}
+            aria-label={t(s.key)}
+            className="flex w-[84%] shrink-0 snap-start flex-col justify-around gap-3 sm:w-auto"
+          >
+            {s.ms.map((m) => (
+              <DrawCard key={m.match_no} m={m} final={m.round === "F"} {...props} />
+            ))}
+            {i < stages.length - 1 && <span className="sr-only">→</span>}
+          </section>
+        ))}
       </div>
-      <DrawCard m={final} big {...props} />
-      {third && (
-        <div className="mt-2">
-          <DrawCard m={third} small {...props} />
-        </div>
-      )}
-    </section>
+
+      {/* where you are in the carousel (phones held upright only) */}
+      <div className="mt-3 flex justify-center gap-1.5 sm:hidden" aria-hidden>
+        {stages.map((s, i) => (
+          <span
+            key={s.key}
+            className={cn(
+              "h-1.5 rounded-full transition-all",
+              active === i ? "w-5 bg-ink" : "w-1.5 bg-ink-3/50",
+            )}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
 function DrawCard({
   m,
-  big = false,
-  small = false,
+  final,
   matches,
   players,
   pickByMatch,
   now,
   onSelect,
-}: Props & { m: Match; big?: boolean; small?: boolean }) {
+}: Props & { m: Match; final: boolean }) {
   const { t, locale } = useT();
   const event = useEvent();
   const label = useMatchLabel();
@@ -233,34 +202,28 @@ function DrawCard({
   const todo = state === "open" && !pick;
   const left = m.starts_at ? Date.parse(m.starts_at) - now : 0;
   const nameOf = (id: string) => surname(playerName(players.get(id), locale));
+  const champion = final && settled && m.winner_id ? nameOf(m.winner_id) : null;
 
   const row = (side: 1 | 2) => {
     const id = side === 1 ? m.p1_id : m.p2_id;
     const won = settled && m.winner_id === id && id !== null;
-    const lost = settled && !won;
     const games = settled
       ? (m.set_scores ?? []).map((s) => (side === 1 ? s.p1_games : s.p2_games))
       : [];
-    const mine = pick?.winner_id === id && id !== null;
     return (
-      <div className={cn("flex items-center gap-2.5", lost && "opacity-45")}>
-        <span className={cn("h-5 shrink-0 border-s-2", SIDE_COLOR[side].line)} />
+      <div className={cn("flex items-center gap-2", settled && !won && "opacity-45")}>
         <span
-          className={cn(
-            "min-w-0 flex-1 truncate",
-            id ? "font-semibold text-ink" : "text-ink-3",
-            big && id && "text-lg",
-          )}
+          className={cn("min-w-0 flex-1 truncate", id ? "font-semibold text-ink" : "text-ink-3")}
         >
           {id ? nameOf(id) : slot(m, side, matches)}
-          {mine && (
-            <span className={cn("ms-1.5 text-[10px] font-bold uppercase", SIDE_COLOR[side].text)}>
+          {pick?.winner_id === id && id && (
+            <span className="ms-1.5 text-[10px] font-bold uppercase text-accent-text">
               {t("draw_mine")}
             </span>
           )}
         </span>
         {won && <Crown className="h-3.5 w-3.5 shrink-0 text-gold" />}
-        <span className="num flex shrink-0 gap-2 text-base">
+        <span className="num flex shrink-0 gap-2 text-[15px]">
           {games.map((g, i) => {
             const set = m.set_scores![i]!;
             const setWon = side === 1 ? set.p1_games > set.p2_games : set.p2_games > set.p1_games;
@@ -288,26 +251,17 @@ function DrawCard({
     <span className="text-ink-3">{localTime(m.starts_at, event.timezone, locale)}</span>
   ) : null;
 
-  // The last line adds what the row tag ("your pick") does not say: the outcome, or the lock.
   const scored = (pick?.pts_total ?? 0) > 0;
-  const footer: ReactNode = settled ? (
-    pick ? (
+  const footer: ReactNode =
+    settled && pick ? (
       <span className={cn("font-semibold", scored ? "text-good" : "text-ink-3")}>
-        {scored ? `✓ ${t("draw_called")}` : `✗ ${t("draw_missed")}`} ·{" "}
-        {t("plus_pts", { points: pick.pts_total ?? 0 })}
+        {scored ? "✓" : "✗"} {t("plus_pts", { points: pick.pts_total ?? 0 })}
       </span>
-    ) : null
-  ) : state === "open" ? (
-    todo ? (
-      <span className="font-bold text-accent-text">
-        {t("draw_pick_now", { time: shortTimeLeft(left, locale) })} →
+    ) : todo ? (
+      <span className="font-semibold text-accent-text">
+        {t("draw_pick_now", { time: shortTimeLeft(left, locale) })}
       </span>
-    ) : (
-      <span className="text-ink-2">
-        ✓ {t("draw_picked")} · {t("locks_in", { time: shortTimeLeft(left, locale) })}
-      </span>
-    )
-  ) : null;
+    ) : null;
 
   return (
     <button
@@ -316,21 +270,40 @@ function DrawCard({
       disabled={state === "waiting"}
       aria-label={`${label(m, matches)}: ${slot(m, 1, matches)} – ${slot(m, 2, matches)}`}
       className={cn(
-        "focus-ring block w-full rounded-2xl border bg-card text-start transition-colors",
-        small ? "p-2.5 text-sm" : "p-3.5",
-        todo ? "skg-glow border-accent" : live ? "border-accent/60" : "border-line",
+        "focus-ring block w-full rounded-2xl border bg-card p-3 text-start transition-colors",
+        final
+          ? "border-gold/50"
+          : todo
+            ? "skg-glow border-accent"
+            : live
+              ? "border-accent/60"
+              : "border-line",
         state !== "waiting" && "hover:border-ink-3",
       )}
     >
       <div className="mb-2 flex items-baseline justify-between gap-2 text-[11px]">
-        <span className="font-bold uppercase tracking-wider text-ink-3">{label(m, matches)}</span>
+        <span
+          className={cn(
+            "flex items-center gap-1 font-bold uppercase tracking-wider",
+            final ? "text-gold" : "text-ink-3",
+          )}
+        >
+          {final && <Crown className="h-3 w-3" />}
+          {label(m, matches)}
+        </span>
         {status}
       </div>
-      <div className={cn("space-y-1.5", big && "space-y-2")}>
+      <div className="space-y-1.5">
         {row(1)}
         {row(2)}
       </div>
-      {footer && <div className="mt-2.5 border-t border-line pt-2 text-xs">{footer}</div>}
+      {champion && (
+        <p className="mt-2 flex items-center gap-1.5 text-xs font-bold text-gold">
+          <Crown className="skg-crown h-3.5 w-3.5" />
+          {t("draw_champion")}: {champion}
+        </p>
+      )}
+      {footer && <div className="mt-2 text-xs">{footer}</div>}
     </button>
   );
 }

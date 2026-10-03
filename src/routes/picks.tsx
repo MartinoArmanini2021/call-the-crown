@@ -1,7 +1,7 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
-import { SponsorSlot, playerName } from "@/components/Brand";
+import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
 import { PickSheet } from "@/components/PickSheet";
@@ -11,7 +11,7 @@ import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
 import type { Match } from "@/lib/api";
-import { matchState, surname } from "@/lib/format";
+import { matchState } from "@/lib/format";
 import { nextStep } from "@/lib/nextStep";
 
 type Search = { match?: number };
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/picks")({
 // The draw and finished matches live on Results (Tino, 2 Oct 2026). A pick is made in the sheet
 // (PickSheet); a tap on an open match in the draw arrives here as ?match=N and opens it.
 function Picks() {
-  const { t, locale } = useT();
+  const { t } = useT();
   const now = useServerNow();
   const navigate = useNavigate();
   const { user, matches, byPlayer, pickByMatch, queries } = useGame();
@@ -52,9 +52,12 @@ function Picks() {
   const step = nextStep(all, new Set(pickByMatch.keys()), now);
   const sheetMatch = all.find((m) => m.match_no === sheet && matchState(m, now) === "open");
 
-  const select = (m: Match) => {
+  // which player the fan tapped on the card, if any: the sheet opens with that winner chosen
+  const [startWith, setStartWith] = useState<1 | 2 | undefined>(undefined);
+  const select = (m: Match, side?: 1 | 2) => {
     const state = matchState(m, now);
     if (state === "open") {
+      setStartWith(side);
       if (user) setSheet(m.match_no);
       else void navigate({ to: "/sign-in", search: { redirect: "/picks" } });
     } else if (state === "settled" || state === "locked") {
@@ -98,21 +101,7 @@ function Picks() {
                   players={byPlayer}
                   pick={pick}
                   now={now}
-                  action={
-                    <button
-                      type="button"
-                      onClick={() => select(m)}
-                      className={
-                        pick
-                          ? "focus-ring num rounded-full bg-raised px-3 py-1.5 font-semibold"
-                          : "focus-ring rounded-full bg-accent px-4 py-1.5 font-bold"
-                      }
-                    >
-                      {pick
-                        ? `✓ ${t("pick_summary", { name: surname(playerName(byPlayer.get(pick.winner_id), locale)), n: pick.sets })} · ${t("edit_pick")}`
-                        : t("make_pick")}
-                    </button>
-                  }
+                  onPick={(side) => select(m, side)}
                 />
               );
             })}
@@ -135,6 +124,7 @@ function Picks() {
           players={byPlayer}
           uid={user.id}
           now={now}
+          startWith={startWith}
           onClose={close}
           onSaved={setSaved}
         />

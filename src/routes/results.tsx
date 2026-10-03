@@ -48,7 +48,7 @@ function Results() {
   const points = [...pickByMatch.values()].reduce((sum, p) => sum + (p.pts_total ?? 0), 0);
 
   return (
-    <AppShell>
+    <AppShell wide>
       <PageTitle title={t("results_title")} />
       <QueryGate queries={queries} label={t("results_title").toLowerCase()}>
         {user && settledCount > 0 && (

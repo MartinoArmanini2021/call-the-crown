@@ -116,7 +116,9 @@ export const ar: Record<StringKey, string> = {
   // pick sheet + bracket
   close: "إغلاق",
   make_pick: "توقّع",
-  edit_pick: "غيّر",
+  edit_pick: "عدّل التوقع",
+  card_who_wins: "من سيفوز؟",
+  card_stake: "حتى {points} نقطة في هذه المباراة",
   pick_summary: "{name} في {n} مجموعات",
   world_rank: "المصنف {rank} عالمياً",
   set_score_aria: "المجموعة {n}: {score}",

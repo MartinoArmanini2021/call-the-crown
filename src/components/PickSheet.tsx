@@ -15,6 +15,7 @@ import { savePick, type Match, type Pick, type Player } from "@/lib/api";
 import { track } from "@/lib/analytics";
 import { localTime, shortTimeLeft, surname } from "@/lib/format";
 import {
+  EMPTY,
   fromPick,
   setCount,
   setWinner,
@@ -44,6 +45,7 @@ export function PickSheet({
   now,
   onClose,
   onSaved,
+  startWith,
 }: {
   match: Match;
   matches: Match[];
@@ -54,13 +56,17 @@ export function PickSheet({
   onClose: () => void;
   /** after a save that changed the pick: what was saved and until when it can change */
   onSaved?: (saved: { pick: string; until: string }) => void;
+  /** the player tapped on the match card: starts as the winner when there is no pick yet */
+  startWith?: 1 | 2 | undefined;
 }) {
   const event = useEvent();
   const { t, locale } = useT();
   const label = useMatchLabel();
   const { title } = useMatchNames(players);
   const qc = useQueryClient();
-  const [draft, setDraft] = useState<Draft>(() => fromPick(match, pick));
+  const [draft, setDraft] = useState<Draft>(() =>
+    !pick && startWith ? withWinner(EMPTY, startWith) : fromPick(match, pick),
+  );
   const [error, setError] = useState<string | null>(null);
   const panel = useRef<HTMLDivElement>(null);
 

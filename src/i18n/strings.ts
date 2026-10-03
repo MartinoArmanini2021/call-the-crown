@@ -119,7 +119,9 @@ export const en = {
   // pick sheet + bracket (UX review, 2 Oct 2026)
   close: "Close",
   make_pick: "Make pick",
-  edit_pick: "Change",
+  edit_pick: "Edit pick",
+  card_who_wins: "Who wins?",
+  card_stake: "Up to {points} pts on this match",
   pick_summary: "{name} in {n} sets",
   world_rank: "World no. {rank}",
   set_score_aria: "Set {n}: {score}",

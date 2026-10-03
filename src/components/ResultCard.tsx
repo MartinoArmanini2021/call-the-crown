@@ -80,6 +80,7 @@ export function ResultCard({
           n={resultSets.length}
           columns={columns}
           caption={t("row_result")}
+          plain
         />
       )}
       {signedIn && pick && (
@@ -92,6 +93,7 @@ export function ResultCard({
           columns={columns}
           marks={pick.exact_flags}
           caption={t("your_pick")}
+          plain
         />
       )}
 

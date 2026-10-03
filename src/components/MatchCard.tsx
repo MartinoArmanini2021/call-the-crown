@@ -1,10 +1,9 @@
-import type { ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
-import { localTime, matchState, scoreLine, shortTimeLeft, surname } from "@/lib/format";
+import { localTime, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { PlayerBadge, playerName } from "./Brand";
+import { playerName } from "./Brand";
 import { useMatchNames } from "./matchNames";
 import { SIDE_COLOR } from "./sides";
 
@@ -20,68 +19,89 @@ export function useMatchLabel() {
   };
 }
 
+/**
+ * An open match on Picks (Tino, 3 Oct 2026: "sell the idea of picking, without being pushy"). The
+ * match name leads, big. The two players are the way in: "Who wins?" with each player as a tile
+ * (world ranking, the points a right call is worth, the upset bonus when there is one); tapping a
+ * player opens the pick sheet with that player already chosen. The footer shows the stake and the
+ * lock; once picked, the tile is marked and the button says "Edit pick". Points are the stored
+ * potential winner points; the stake is a ceiling from them and the configured set points.
+ */
 export function MatchCard({
   match,
   matches,
   players,
   pick,
   now,
-  action,
+  onPick,
 }: {
   match: Match;
   matches: Match[];
   players: Map<string, Player>;
   pick: Pick | undefined;
   now: number;
-  action?: ReactNode; // the "Make pick" / "Edit" button, when picks are open
+  /** open the pick sheet; with a side, that player starts as the winner */
+  onPick: (side?: 1 | 2) => void;
 }) {
   const event = useEvent();
   const { t, locale } = useT();
   const label = useMatchLabel();
-  const { slot: slotNames, title } = useMatchNames(players);
-  const state = matchState(match, now);
+  const { title } = useMatchNames(players);
+  const base = event.rules.winner_points[match.round];
+  const points = { 1: match.p1_win_points, 2: match.p2_win_points } as const;
+  const best = Math.max(points[1] ?? 0, points[2] ?? 0);
+  const stake = best + event.rules.sets_points[match.round] + 3 * event.rules.per_set_exact;
+  const left = match.starts_at ? Date.parse(match.starts_at) - now : null;
 
-  const row = (slot: 1 | 2) => {
-    const id = slot === 1 ? match.p1_id : match.p2_id;
+  const tile = (side: 1 | 2) => {
+    const id = side === 1 ? match.p1_id : match.p2_id;
     const p = id ? players.get(id) : undefined;
-    const pts = slot === 1 ? match.p1_win_points : match.p2_win_points;
-    const won = match.winner_id !== null && match.winner_id === id;
-    const picked = pick?.winner_id === id && id !== null;
+    const pts = points[side];
+    const mine = pick?.winner_id === id && id !== null;
     return (
-      <div className={cn("flex items-center gap-3 border-s-2 ps-2.5", SIDE_COLOR[slot].line)}>
-        <PlayerBadge player={p} size={36} />
-        <div className="min-w-0 flex-1">
-          <p className={cn("truncate font-semibold", match.winner_id && !won && "text-ink-3")}>
-            {p ? (
-              playerName(p, locale)
-            ) : (
-              <span className="font-normal text-ink-2">{slotNames(match, slot, matches)}</span>
-            )}
-            {picked && (
-              <span className="ms-2 rounded bg-accent/20 px-1.5 py-0.5 text-[10px] font-bold uppercase text-accent-text">
-                {t("your_pick")}
-              </span>
-            )}
-          </p>
-          {p && (
-            <p className="text-[11px] text-ink-3">
-              {t("world_rank", { rank: p.rank_snapshot ?? "–" })}
-            </p>
-          )}
-        </div>
-        {state !== "settled" && pts !== null && (
-          <span className="text-xs text-ink-3">
-            <span className="num text-sm text-ink-2">{pts}</span> {t("pts")}
+      <button
+        type="button"
+        onClick={() => onPick(pick ? undefined : side)}
+        aria-pressed={mine}
+        aria-label={`${p ? playerName(p, locale) : ""}${pts !== null ? `, ${t("pts_if_right", { points: pts })}` : ""}`}
+        className={cn(
+          "focus-ring flex flex-col items-start rounded-2xl px-3 py-3 text-start transition-colors",
+          mine ? SIDE_COLOR[side].chosen : "bg-raised hover:bg-raised/70",
+        )}
+      >
+        <span className="flex w-full items-center gap-1.5">
+          <span aria-hidden className={cn("h-2 w-2 shrink-0 rounded-full", SIDE_COLOR[side].dot)} />
+          <span className="headline truncate text-xl leading-tight text-ink">
+            {p ? surname(playerName(p, locale)) : ""}
+          </span>
+        </span>
+        {p && (
+          <span className="ps-3.5 text-[11px] text-ink-3">
+            {t("world_rank", { rank: p.rank_snapshot ?? "–" })}
           </span>
         )}
-        {won && <span className="text-sm font-bold text-good">✓</span>}
-      </div>
+        {pts !== null && (
+          <span className="mt-1.5 ps-3.5 text-xs">
+            <b className="num text-ink">{pts}</b> <span className="text-ink-3">{t("pts")}</span>
+            {pts > base && (
+              <span className="ms-1.5 inline-block whitespace-nowrap rounded bg-gold/15 px-1 py-0.5 text-[10px] font-bold uppercase text-gold">
+                {t("upset_bonus")}
+              </span>
+            )}
+          </span>
+        )}
+        {mine && (
+          <span className="mt-1.5 ps-3.5 text-[10px] font-bold uppercase tracking-wider">
+            ✓ {t("your_pick")}
+          </span>
+        )}
+      </button>
     );
   };
 
   return (
     <article className="card p-4" aria-label={title(match, matches)}>
-      <header className="mb-3">
+      <header>
         <p className="flex justify-between gap-2 text-[11px] text-ink-3">
           <span className="font-bold uppercase tracking-wider">{label(match, matches)}</span>
           <span>
@@ -90,60 +110,46 @@ export function MatchCard({
               : t("waiting_start")}
           </span>
         </p>
-        <h3 className="headline text-xl leading-tight">{title(match, matches)}</h3>
+        <h3 className="headline mt-1 text-3xl leading-none">{title(match, matches)}</h3>
       </header>
 
-      <div className="space-y-2.5">
-        {row(1)}
-        {row(2)}
+      <p className="mb-2 mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-3">
+        {t("card_who_wins")}
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        {tile(1)}
+        {tile(2)}
       </div>
 
-      <footer className="mt-3 flex items-center justify-between gap-2 text-xs">
-        {state === "settled" ? (
-          <span>
-            <span className="text-ink-3">
-              {t(
-                match.status === "completed"
-                  ? "result"
-                  : match.status === "retired"
-                    ? "retired"
-                    : "walkover",
-              )}
-            </span>{" "}
-            <span className="num font-bold">{scoreLine(match.set_scores)}</span>
-          </span>
-        ) : (
-          <Status state={state} startsAt={match.starts_at} now={now} />
-        )}
-        {pick && state !== "open" && (
-          <span className="text-ink-3">
-            {t("your_pick")}:{" "}
-            {t("pick_summary", {
-              name: surname(playerName(players.get(pick.winner_id), locale)),
-              n: pick.sets,
-            })}
-          </span>
-        )}
-        {state === "open" && action}
+      <footer className="mt-4 flex items-center justify-between gap-3 text-xs">
+        <span className="min-w-0 text-ink-2">
+          {pick ? (
+            <b className="text-ink">
+              {t("pick_summary", {
+                name: surname(playerName(players.get(pick.winner_id), locale)),
+                n: pick.sets,
+              })}
+            </b>
+          ) : (
+            <>{t("card_stake", { points: stake })}</>
+          )}
+          {left !== null && (
+            <span className={cn("block", left < 3_600_000 ? "text-accent-text" : "text-ink-3")}>
+              {t("locks_in", { time: shortTimeLeft(left, locale) })}
+            </span>
+          )}
+        </span>
+        <button
+          type="button"
+          onClick={() => onPick()}
+          className={cn(
+            "focus-ring shrink-0 rounded-full px-4 py-2 text-sm font-bold",
+            pick ? "bg-raised text-ink ring-1 ring-inset ring-ink-3" : "bg-accent text-ink",
+          )}
+        >
+          {pick ? t("edit_pick") : t("make_pick")}
+        </button>
       </footer>
     </article>
-  );
-}
-
-function Status({ state, startsAt, now }: { state: string; startsAt: string | null; now: number }) {
-  const { t, locale } = useT();
-  if (state === "open" && startsAt) {
-    const left = Date.parse(startsAt) - now;
-    return (
-      <span className={cn("font-semibold", left < 3_600_000 ? "text-accent-text" : "text-ink-2")}>
-        {t("locks_in", { time: shortTimeLeft(left, locale) })}
-      </span>
-    );
-  }
-  if (state === "locked")
-    return <span className="font-semibold text-accent-text">● {t("live_now")}</span>;
-  if (state === "settled") return <span className="text-ink-3">{t("result")}</span>;
-  return (
-    <span className="text-ink-3">{startsAt ? t("opens_when_known") : t("waiting_start")}</span>
   );
 }
