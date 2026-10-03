@@ -123,6 +123,26 @@ claim(
   consents,
 );
 
+// Tino, 3 Oct 2026: the code proves the email once; every later sign-in is email + password.
+// Invented local test credential (this script and the local stack only).
+section("2b. Later sign-ins: email + password, no email needed");
+const PASSWORD = "Six-kings-local-1";
+claim(
+  (await fan.auth.updateUser({ password: "short1" })).error !== null,
+  "a password under 8 characters is refused",
+);
+must(await fan.auth.updateUser({ password: PASSWORD }), "updateUser");
+const later = await fresh().auth.signInWithPassword({ email: EMAIL, password: PASSWORD });
+claim(
+  !later.error && later.data.user?.id === uid,
+  "the fan signs in again with email + password, without a new code",
+);
+claim(
+  (await fresh().auth.signInWithPassword({ email: EMAIL, password: "Wrong-password-1" })).error !==
+    null,
+  "a wrong password is refused",
+);
+
 section("3. Day 1 (20 Oct, Riyadh): picks — winner, sets, set scores");
 const pick = (m: number, w: string, sets: [number, number][]) =>
   fan.rpc("save_pick", {

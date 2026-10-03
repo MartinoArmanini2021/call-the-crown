@@ -363,8 +363,9 @@ Set these in each Supabase project's dashboard; locally they are in `supabase/co
 
 **Sign-in**
 
-- Email provider with a 6-digit code.
-- The sign-in email template shows `{{ .Token }}` and no link (`supabase/templates/code.html`).
+- Joining: a 6-digit email code confirms the address once, then the fan chooses a password (at least 8 characters, `minimum_password_length`). Every later sign-in: email + password. "Forgot your password?" signs in with a code and offers a new password (Tino, 3 Oct 2026; the brief had code-only sign-in).
+- The code email template shows `{{ .Token }}` and no link (`supabase/templates/code.html`).
+- Production (Pro plan): turn on leaked-password protection (Authentication → Attack protection).
 - No magic links, no Google or Apple, no anonymous sign-in.
 
 **Email delivery and captcha**

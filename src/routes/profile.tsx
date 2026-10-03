@@ -33,6 +33,7 @@ function Profile() {
   const [gsgm, setGsgm] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [confirm, setConfirm] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   useEffect(() => setName(profile.data?.display_name ?? ""), [profile.data]);
   useEffect(() => {
@@ -136,6 +137,40 @@ function Profile() {
                 () => updateConsents(org, gsgm, event.privacy.version ?? "unknown"),
                 t("consents_saved"),
               )
+            }
+          >
+            {t("save")}
+          </button>
+        </section>
+
+        {/* Password for the next sign-in (Tino, 3 Oct 2026); the email code stays the fallback. */}
+        <section className="card mb-3 p-4">
+          <label className="block text-sm font-semibold">
+            {t("password_change")}
+            <input
+              className={input}
+              type="password"
+              aria-label={t("password_change")}
+              autoComplete="new-password"
+              minLength={8}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </label>
+          <p className="mt-1 text-xs text-ink-3">{t("password_hint")}</p>
+          <button
+            type="button"
+            disabled={newPassword.length < 8}
+            className="focus-ring mt-3 h-10 rounded-full bg-raised px-5 text-sm font-semibold disabled:opacity-40"
+            onClick={() =>
+              void act(async () => {
+                const { error } = await supabase.auth.updateUser({ password: newPassword });
+                if (error)
+                  throw new Error(
+                    error.message.toLowerCase().includes("weak") ? "password_weak" : "generic",
+                  );
+                setNewPassword("");
+              }, t("password_changed"))
             }
           >
             {t("save")}

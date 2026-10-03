@@ -1,6 +1,9 @@
-// Email one-time code (6 digits): no magic links (they break inside in-app browsers), no social
-// sign-in. "Join" creates the account with the display name and the two unticked consents, each
-// stored server-side with the version of the text shown (handle_new_user, 0005_user_rpcs.sql).
+// Joining: a 6-digit email code proves the address once, then the fan chooses a password. Every
+// later sign-in: email + password (Tino, 3 Oct 2026: "email verification only once, then a password").
+// "Forgot your password?" signs in with a code instead and offers a new password, so nobody is locked
+// out. No magic links (they break inside in-app browsers), no social sign-in. "Join" creates the
+// account with the display name and the two unticked consents, each stored server-side with the
+// version of the text shown (handle_new_user, 0005_user_rpcs.sql).
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useState, type FormEvent } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
@@ -33,7 +36,11 @@ function SignIn() {
   const search = Route.useSearch();
 
   const [mode, setMode] = useState<"join" | "signin">("join");
-  const [step, setStep] = useState<"email" | "code">("email");
+  // signin + useCode: the "forgot your password" path (a code instead of the password)
+  const [useCode, setUseCode] = useState(false);
+  const [step, setStep] = useState<"email" | "code" | "password">("email");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [consentOrg, setConsentOrg] = useState(false);
@@ -48,6 +55,8 @@ function SignIn() {
     const m = msg.toLowerCase();
     if (m.includes("signups not allowed") || m.includes("user not found")) return t("no_account");
     if (m.includes("rate") || m.includes("too many")) return t("too_many_requests");
+    if (m.includes("invalid login credentials")) return t("wrong_password");
+    if (m.includes("weak") || m.includes("pwned") || m.includes("known")) return t("password_weak");
     if (m.includes("expired") || m.includes("invalid")) return t("code_wrong");
     return t("err_generic");
   };
@@ -80,6 +89,41 @@ function SignIn() {
     setStep("code");
   }
 
+  const done = () => {
+    const to = search.code
+      ? `/leagues?code=${encodeURIComponent(search.code)}`
+      : safeRedirect(search.redirect);
+    void navigate({ to });
+  };
+
+  async function signInWithPassword(e: FormEvent) {
+    e.preventDefault();
+    if (turnstileEnabled() && !captcha) return setError(t("captcha_needed"));
+    setBusy(true);
+    setError(null);
+    const { error: err } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+      ...(captcha ? { options: { captchaToken: captcha } } : {}),
+    });
+    setBusy(false);
+    if (err) return setError(authError(err.message));
+    track("signed_in", { method: "password" });
+    done();
+  }
+
+  async function savePassword(e: FormEvent) {
+    e.preventDefault();
+    if (password.length < 8) return setError(t("password_too_short"));
+    setBusy(true);
+    setError(null);
+    const { error: err } = await supabase.auth.updateUser({ password });
+    setBusy(false);
+    if (err) return setError(authError(err.message));
+    track("password_set");
+    done();
+  }
+
   async function verify(e: FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -91,16 +135,45 @@ function SignIn() {
     });
     setBusy(false);
     if (err) return setError(authError(err.message));
-    track(mode === "join" ? "signed_up" : "signed_in");
-    const to = search.code
-      ? `/leagues?code=${encodeURIComponent(search.code)}`
-      : safeRedirect(search.redirect);
-    void navigate({ to });
+    track(mode === "join" ? "signed_up" : "signed_in", { method: "code" });
+    // The email is proven: now the password for every later sign-in (a new one after "forgot").
+    setPassword("");
+    setStep("password");
   }
 
   const input =
     "focus-ring mt-1.5 h-12 w-full rounded-xl border border-line bg-raised px-4 text-base text-ink placeholder:text-ink-3";
   const nameOk = name.trim().length >= 2 && name.trim().length <= 24;
+  const withPassword = mode === "signin" && !useCode;
+
+  const passwordInput = (purpose: "current" | "new") => (
+    <label className="block text-sm font-semibold">
+      {t(purpose === "new" ? "password_new" : "password")}
+      <span className="relative mt-1.5 block">
+        <input
+          className={cn(input, "mt-0 pe-20")}
+          type={showPassword ? "text" : "password"}
+          aria-label={t(purpose === "new" ? "password_new" : "password")}
+          autoComplete={purpose === "new" ? "new-password" : "current-password"}
+          minLength={purpose === "new" ? 8 : undefined}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoFocus={purpose === "new"}
+        />
+        <button
+          type="button"
+          onClick={() => setShowPassword((v) => !v)}
+          className="focus-ring absolute inset-y-0 end-2 my-auto h-8 rounded-full px-3 text-xs font-semibold text-ink-2"
+        >
+          {t(showPassword ? "password_hide" : "password_show")}
+        </button>
+      </span>
+      {purpose === "new" && (
+        <span className="mt-1 block text-xs font-normal text-ink-3">{t("password_hint")}</span>
+      )}
+    </label>
+  );
 
   return (
     <AppShell>
@@ -120,6 +193,7 @@ function SignIn() {
                 aria-selected={mode === m}
                 onClick={() => {
                   setMode(m);
+                  setUseCode(false);
                   setError(null);
                 }}
                 className={cn(
@@ -132,7 +206,7 @@ function SignIn() {
             ))}
           </div>
 
-          <form onSubmit={sendCode} className="space-y-4">
+          <form onSubmit={withPassword ? signInWithPassword : sendCode} className="space-y-4">
             {mode === "join" && (
               <label className="block text-sm font-semibold">
                 {t("display_name")}
@@ -189,6 +263,8 @@ function SignIn() {
               </fieldset>
             )}
 
+            {withPassword && passwordInput("current")}
+
             <Turnstile onToken={onToken} />
             {error && (
               <p className="text-sm text-accent-text" role="alert">
@@ -200,10 +276,54 @@ function SignIn() {
               disabled={busy || (mode === "join" && !nameOk)}
               className="focus-ring h-12 w-full rounded-full bg-accent text-sm font-bold disabled:opacity-40"
             >
-              {t("send_code")}
+              {withPassword ? t("verify") : t("send_code")}
             </button>
+            {mode === "signin" && (
+              <p className="text-center text-xs">
+                <button
+                  type="button"
+                  className="focus-ring rounded text-ink-2 underline"
+                  onClick={() => {
+                    setUseCode((v) => !v);
+                    setError(null);
+                  }}
+                >
+                  {t(useCode ? "use_password" : "forgot_password")}
+                </button>
+              </p>
+            )}
           </form>
         </>
+      ) : step === "password" ? (
+        <form onSubmit={savePassword} className="space-y-4">
+          <p className="text-sm text-ink-2">
+            {t(mode === "join" ? "password_new_sub" : "password_reset_sub")}
+          </p>
+          {passwordInput("new")}
+          {error && (
+            <p className="text-sm text-accent-text" role="alert">
+              {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            disabled={busy || password.length < 8}
+            className="focus-ring h-12 w-full rounded-full bg-accent text-sm font-bold disabled:opacity-40"
+          >
+            {t("password_save")}
+          </button>
+          {mode === "signin" && (
+            <p className="text-center text-xs">
+              <button
+                type="button"
+                className="focus-ring rounded text-ink-2 underline"
+                onClick={done}
+              >
+                {t("not_now")}
+              </button>
+            </p>
+          )}
+        </form>
       ) : (
         <form onSubmit={verify} className="space-y-4">
           <p className="text-sm text-ink-2">{t("code_sent", { email: email.trim() })}</p>

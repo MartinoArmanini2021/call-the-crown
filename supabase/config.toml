@@ -41,6 +41,9 @@ jwt_expiry = 3600
 enable_refresh_token_rotation = true
 enable_signup = true
 enable_anonymous_sign_ins = false
+# Password sign-in after the first code (Tino, 3 Oct 2026). Production adds leaked-password
+# protection (Pro plan, dashboard → Authentication → Attack protection).
+minimum_password_length = 8
 
 # Local only: the default (2 emails an hour) blocks a walkthrough. Production sets its own limit
 # for the sign-up rush (plan, section e).

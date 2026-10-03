@@ -61,6 +61,25 @@ export const en = {
   code_wrong: "That code is wrong or has expired.",
   too_many_requests: "Too many attempts. Wait a minute and try again.",
   captcha_needed: "Please complete the check above.",
+  password: "Password",
+  password_new: "Choose a password",
+  password_hint: "At least 8 characters.",
+  password_new_sub:
+    "Your email is confirmed. From now on you sign in with your email and this password.",
+  password_reset_sub:
+    "You're in. Set a new password for next time, or skip it and use a code again.",
+  password_save: "Save and continue",
+  password_show: "Show",
+  password_hide: "Hide",
+  password_too_short: "Use at least 8 characters.",
+  password_weak: "That password is too common. Choose another one.",
+  wrong_password: "Email or password is wrong. Forgot it? Sign in with a code.",
+  forgot_password: "Forgot your password? Sign in with a code",
+  use_password: "Sign in with your password",
+  not_now: "Not now",
+  password_change: "New password",
+  password_changed: "Password saved. Use it next time you sign in.",
+  err_password_weak: "That password is too common. Choose another one.",
 
   // picks
   picks_title: "Your picks",
