@@ -1,6 +1,9 @@
 // One run of the poller, independent of where it runs: the edge function (index.ts) gives it a
 // Supabase client, the local stand-in and the simulation give it a direct database connection.
 // It only carries: every decision about a result is made by public.ingest_result.
+// Health (audit F-05, 3 Oct 2026): one heartbeat per run, written at the end from every match the run
+// visited, healthy only if each one was mapped and answered. A match that throws is reported and the
+// run carries on with the next one.
 import { dueMatches, type MatchWindowRow } from "./due.ts";
 import type { ResultsAdapter } from "./adapters/types.ts";
 
@@ -23,19 +26,29 @@ export async function pollOnce(db: PollDb, adapter: ResultsAdapter): Promise<Pol
   }
   const refs = await db.providerMatchRefs(adapter.provider);
   const out: PollOutcome[] = [];
+  const problems: string[] = [];
   for (const m of due) {
     const ref = refs.get(m.match_no);
     if (!ref) {
-      await db.heartbeat(false, `match ${m.match_no} has no ${adapter.provider} id in provider_map`);
+      problems.push(`match ${m.match_no} has no ${adapter.provider} id in provider_map`);
       out.push({ match_no: m.match_no, outcome: "no provider id mapped" });
       continue;
     }
-    const fetched = await adapter.fetchMatch(ref, { nowMs, startsAt: m.starts_at });
-    const r = await db.ingest(adapter.provider, fetched.normalised, fetched.raw, fetched.http_status);
-    out.push({ match_no: m.match_no, outcome: r.outcome });
-    if (fetched.http_status >= 400) {
-      await db.heartbeat(false, `${adapter.provider} answered ${fetched.http_status} for match ${m.match_no}`);
+    try {
+      const fetched = await adapter.fetchMatch(ref, { nowMs, startsAt: m.starts_at });
+      const r = await db.ingest(adapter.provider, fetched.normalised, fetched.raw, fetched.http_status);
+      out.push({ match_no: m.match_no, outcome: r.outcome });
+      if (fetched.http_status >= 400) {
+        problems.push(`${adapter.provider} answered ${fetched.http_status} for match ${m.match_no}`);
+      }
+    } catch (e) {
+      problems.push(`match ${m.match_no}: ${e instanceof Error ? e.message : String(e)}`);
+      out.push({ match_no: m.match_no, outcome: "error" });
     }
   }
+  await db.heartbeat(
+    problems.length === 0,
+    problems.length === 0 ? out.map((o) => `${o.match_no}:${o.outcome}`).join(" ") : problems.join("; "),
+  );
   return out;
 }

@@ -18,33 +18,53 @@ select t.check('the policy: wikipedia waits 10 minutes, other providers do not',
   (select results_policy->'stable_minutes'->>'wikipedia' from public.event_config) = '10'
   and (select results_policy->'stable_minutes'->'fixture' from public.event_config) is null);
 
+-- A poller run every 2 minutes from p_from to p_to, each reading the same thing; the last outcome.
+-- (The real poller reads a match whose result is waiting on every run, once a minute: 0016.)
+create function t.read_run(p_match int, p_from timestamptz, p_to timestamptz, p_status text,
+                           p_winner text, p_sets text) returns text
+language plpgsql
+as $$
+declare ts timestamptz := p_from; o text;
+begin
+  while ts <= p_to loop
+    perform public.dev_set_now(ts);
+    o := t.feed(p_match, p_status, p_winner, p_sets, false, 'wikipedia')->>'outcome';
+    ts := ts + interval '2 minutes';
+  end loop;
+  return o;
+end;
+$$;
+
 -- QF1: the page shows C winning 6-4 6-4 from 18:00 and keeps showing it.
 select public.dev_set_now('2026-10-21 18:00+00');
 select t.check('18:00 first reading of a final: awaiting stability, not settled',
   t.feed(1, 'completed', 'c', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'awaiting_stability');
 select t.check('… the match is still unsettled and the pick unscored',
   (select status from public.matches where match_no = 1) = 'scheduled' and t.pts(t.uid(1), 1) = '');
-select public.dev_set_now('2026-10-21 18:05+00');
-select t.check('18:05 same reading: still awaiting',
-  t.feed(1, 'completed', 'c', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'awaiting_stability');
+select t.check('… and it is marked to be read on every run until confirmed (F-09)',
+  (select refetch_requested_at is not null from public.matches where match_no = 1));
+select t.check('18:02–18:08 same reading: still awaiting',
+  t.read_run(1, '2026-10-21 18:02+00', '2026-10-21 18:08+00', 'completed', 'c', '6-4 6-4') = 'awaiting_stability');
 select public.dev_set_now('2026-10-21 18:10+00');
 select t.check('18:10 same reading, 10 minutes after the first: settled',
   t.feed(1, 'completed', 'c', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'settled');
 select t.check('… and the pick is scored', t.pts(t.uid(1), 1) = '8/4/4/16');
 
--- QF2: the reading is interrupted (the bold removed at 18:04), so the clock restarts at 18:08.
+-- QF2, F-09: two readings 10 minutes apart are not 10 minutes of watching.
 select public.dev_set_now('2026-10-21 18:00+00');
 select t.feed(2, 'completed', 'd', '6-4 6-4', false, 'wikipedia');
-select public.dev_set_now('2026-10-21 18:04+00');
+select public.dev_set_now('2026-10-21 18:10+00');
+select t.check('F-09 a reading 10 minutes after the last one (nothing seen in between): the clock restarts',
+  t.feed(2, 'completed', 'd', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'awaiting_stability');
+-- QF2: the reading is interrupted (the bold removed at 18:14), so the clock restarts at 18:16.
+select t.read_run(2, '2026-10-21 18:12+00', '2026-10-21 18:12+00', 'completed', 'd', '6-4 6-4');
+select public.dev_set_now('2026-10-21 18:14+00');
 select t.check('an interrupted reading (no winner shown) is logged as not final',
   t.feed(2, 'live', 'd', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'not_final');
-select public.dev_set_now('2026-10-21 18:08+00');
-select t.feed(2, 'completed', 'd', '6-4 6-4', false, 'wikipedia');
-select public.dev_set_now('2026-10-21 18:15+00');
-select t.check('18:15: 15 minutes after the first reading but only 7 since the interruption: awaiting',
-  t.feed(2, 'completed', 'd', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'awaiting_stability');
-select public.dev_set_now('2026-10-21 18:18+00');
-select t.check('18:18: 10 minutes of the restarted run: settled',
+select t.check('18:16–18:24: 24 minutes after the first reading but only 8 since the interruption: awaiting',
+  t.read_run(2, '2026-10-21 18:16+00', '2026-10-21 18:24+00', 'completed', 'd', '6-4 6-4') = 'awaiting_stability');
+select public.dev_set_now('2026-10-21 18:26+00');
+select t.check('18:26: 10 minutes of the restarted run: settled',
   t.feed(2, 'completed', 'd', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'settled');
 
 -- QF1 is vandalised after settlement, then reverted.
@@ -53,14 +73,13 @@ select t.check('a vandal edit on a settled match: awaiting stability, nothing ch
   t.feed(1, 'completed', 'f', '4-6 4-6', false, 'wikipedia')->>'outcome' = 'awaiting_stability');
 select t.check('… the settled result stands', (select winner_id from public.matches where match_no = 1) = 'c');
 select t.check('… and the operator is alerted at once', (select count(*) from public.ops_alerts where kind = 'result_change_pending') = 1);
-select public.dev_set_now('2026-10-21 18:23+00');
+select public.dev_set_now('2026-10-21 18:22+00');
 select t.check('the edit is reverted: unchanged', t.feed(1, 'completed', 'c', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'unchanged');
 select public.dev_set_now('2026-10-21 18:30+00');
 select t.check('the vandal edit again at 18:30: awaiting (its clock restarted after the revert)',
   t.feed(1, 'completed', 'f', '4-6 4-6', false, 'wikipedia')->>'outcome' = 'awaiting_stability');
-select public.dev_set_now('2026-10-21 18:35+00');
-select t.check('18:35 still the edit: awaiting, and no second alert for the same run',
-  t.feed(1, 'completed', 'f', '4-6 4-6', false, 'wikipedia')->>'outcome' = 'awaiting_stability'
+select t.check('18:32–18:38 still the edit: awaiting, and no second alert for the same run',
+  t.read_run(1, '2026-10-21 18:32+00', '2026-10-21 18:38+00', 'completed', 'f', '4-6 4-6') = 'awaiting_stability'
   and (select count(*) from public.ops_alerts where kind = 'result_change_pending') = 2);
 select t.check('… the settled result still stands, the pick still scores',
   (select winner_id from public.matches where match_no = 1) = 'c' and t.pts(t.uid(1), 1) = '8/4/4/16');
@@ -70,6 +89,14 @@ select public.dev_set_now('2026-10-21 18:40+00');
 select t.check('the change held 10 minutes: re-settled as a correction',
   t.feed(1, 'completed', 'f', '4-6 4-6', false, 'wikipedia')->>'outcome' = 'resettled');
 select t.check('… the pick is rescored', t.pts(t.uid(1), 1) = '0/0/0/0');
+
+-- F-09, the audit's case: in the slow watch, an edit seen at 18:50 and again at 19:00 never re-settles.
+select public.dev_set_now('2026-10-21 18:50+00');
+select t.feed(1, 'completed', 'c', '6-4 6-4', false, 'wikipedia');
+select public.dev_set_now('2026-10-21 19:00+00');
+select t.check('F-09 two readings 10 minutes apart do not re-settle a short-lived edit',
+  t.feed(1, 'completed', 'c', '6-4 6-4', false, 'wikipedia')->>'outcome' = 'awaiting_stability'
+  and (select winner_id from public.matches where match_no = 1) = 'f');
 
 -- The same rejection alerts once an hour, not on every poll.
 select public.dev_set_now('2026-10-22 17:00+00');

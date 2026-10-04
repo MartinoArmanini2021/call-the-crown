@@ -38,6 +38,16 @@ let db: PGlite;
 const at = (iso: string) => db.query("select public.dev_set_now($1)", [iso]);
 const poll = async () =>
   Object.fromEntries((await pollAsService(db, wikipedia())).map((o) => [o.match_no, o.outcome]));
+/** The cron: one poll a minute from `from` up to `to` (the stability rule needs an unbroken watch,
+ * audit F-09); the outcomes of the last poll. */
+const pollEveryMinute = async (from: string, to: string) => {
+  let last: Record<string, string> = {};
+  for (let t = Date.parse(from); t <= Date.parse(to); t += 60_000) {
+    await at(new Date(t).toISOString());
+    last = await poll();
+  }
+  return last;
+};
 const match = async (n: number) =>
   (
     await db.query<{
@@ -89,12 +99,14 @@ describe("the 2025 page, replayed", () => {
     expect((await poll())[1]).toBe("rejected_invalid");
   });
 
-  it("night 1: the first readings wait, 11 minutes later both quarter-finals settle", async () => {
+  it("night 1: the first readings wait, after 10 minutes of watching both quarter-finals settle", async () => {
     await at("2026-10-21 20:00+00");
     expect(await poll()).toEqual({ 1: "awaiting_stability", 2: "awaiting_stability" });
-    await at("2026-10-21 20:05+00");
-    expect(await poll()).toEqual({ 1: "awaiting_stability", 2: "awaiting_stability" });
-    await at("2026-10-21 20:11+00");
+    expect(await pollEveryMinute("2026-10-21T20:01:00Z", "2026-10-21T20:09:00Z")).toEqual({
+      1: "awaiting_stability",
+      2: "awaiting_stability",
+    });
+    await at("2026-10-21 20:10+00");
     expect(await poll()).toEqual({ 1: "settled", 2: "settled" });
     expect(await match(1)).toMatchObject({ status: "completed", winner_id: "fritz" });
     // the page lists Tsitsipas first; our match too — Sinner won 6-2 6-3
@@ -112,14 +124,14 @@ describe("the 2025 page, replayed", () => {
   });
 
   it("nights 2 and 3: everything settles; the page's player order is mapped to ours", async () => {
-    await at("2026-10-22 21:00+00");
-    await poll();
-    await at("2026-10-22 21:11+00");
-    expect(await poll()).toMatchObject({ 3: "settled", 4: "settled" });
-    await at("2026-10-24 21:00+00");
-    await poll();
-    await at("2026-10-24 21:11+00");
-    expect(await poll()).toMatchObject({ 5: "settled", 6: "settled" });
+    expect(await pollEveryMinute("2026-10-22T21:00:00Z", "2026-10-22T21:10:00Z")).toMatchObject({
+      3: "settled",
+      4: "settled",
+    });
+    expect(await pollEveryMinute("2026-10-24T21:00:00Z", "2026-10-24T21:10:00Z")).toMatchObject({
+      5: "settled",
+      6: "settled",
+    });
     expect(await match(5)).toMatchObject({
       status: "retired",
       p1_id: "fritz",

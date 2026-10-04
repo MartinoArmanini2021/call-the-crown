@@ -231,7 +231,13 @@ Start times, one per match, from the organiser's schedule. Each stays editable u
 select public.set_match_start(1, '2026-10-21 19:30+03');
 ```
 
-**A match starts early.** Move its start to the next minute at once. That locks the picks, and the next poll settles it once the provider marks it final. (A final result that arrives before the scheduled start is refused and raises an alert, so no result is ever published while picks are open.)
+**A match starts early, or a walkover is announced before the start.** The poller reads each match from 60 minutes before its start, and a live or final reading before the scheduled start raises a `started_before_schedule` alert at once. Close the picks immediately:
+
+```sql
+select public.lock_match_now(1);   -- its start becomes this moment: picks for match 1 close now
+```
+
+The next poll settles it once the provider marks it final. (A final result that arrives before the start is refused, so no result is ever published while picks are open.) Whether picks saved after the real first ball are voided is a rule decision, still open.
 
 ### Choose the results provider and map its ids
 
@@ -283,7 +289,10 @@ For any provider:
 select public.pause_settlement(3, true);    -- payloads for match 3 are logged as "paused", nothing settles
 select public.pause_settlement(3, false);   -- resume: the next poll settles the latest final payload
 select public.request_refetch(3);           -- the next poll fetches match 3 whatever its window
+select public.reseat_paused_match(3);       -- after bracket_conflict: take match 3's players from the corrected bracket and resume
 ```
+
+**A corrected result changed a match that had already started** (`bracket_conflict`: that match is paused, and the provider's result for it, naming the real players, cannot settle while our match has the old ones). Run `reseat_paused_match(n)`: it takes the players from the corrected bracket, stores their potential points and resumes settlement. It takes no score; the provider's result then settles the match.
 
 What the poller did, latest first:
 
@@ -307,7 +316,8 @@ The watchdog checks every 5 minutes and posts to the ops webhook (Vault secret `
 - a match more than 4 hours past its start with no final;
 - a rejected or changed result, and a settled result the provider now shows differently (`result_change_pending`, before it re-settles);
 - a corrected result that changed a later match (`bracket_refilled`, or `bracket_conflict` when that match had started: its settlement is paused);
-- a poller that is down or failing during a match window.
+- a match the provider shows under way, or decided, before its scheduled start (`started_before_schedule`);
+- a poller that is down or failing during a match window. Health is written once per poller run, healthy only if every match it visited was mapped and answered, so one failing match is never hidden by another.
 
 ### Pull the billing report
 

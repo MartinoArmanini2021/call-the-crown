@@ -15,11 +15,12 @@ const at = (iso: string) => Date.parse(iso);
 const due = (r: MatchWindowRow, iso: string) => dueMatches([r], at(iso)).length === 1;
 
 describe("an unsettled match", () => {
-  it("is not fetched more than 15 minutes before its start", () => {
-    expect(due(row({}), "2026-10-21T16:14:00Z")).toBe(false);
+  // 60 minutes, so a match that starts early is seen (audit F-03, 4 Oct 2026; it was 15)
+  it("is not fetched more than 60 minutes before its start", () => {
+    expect(due(row({}), "2026-10-21T15:29:00Z")).toBe(false);
   });
-  it("is fetched from 15 minutes before its start, every run", () => {
-    expect(due(row({}), "2026-10-21T16:15:00Z")).toBe(true);
+  it("is fetched from 60 minutes before its start, every run", () => {
+    expect(due(row({}), "2026-10-21T15:30:00Z")).toBe(true);
     expect(due(row({}), "2026-10-21T23:00:00Z")).toBe(true);
   });
   it("without a start time is not fetched, unless the operator asks", () => {

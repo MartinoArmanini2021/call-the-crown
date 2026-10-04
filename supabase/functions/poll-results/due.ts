@@ -1,6 +1,8 @@
 // Which matches the poller fetches on this run. Pure, so the local simulation and the tests use it too.
-//   - an unsettled match: from 15 minutes before its start, every run (or at once if the operator asked
-//     for a re-fetch);
+//   - an unsettled match: from 60 minutes before its start, every run, so a match that starts early is
+//     seen (audit F-03; it was 15 minutes);
+//   - any match the operator asked to re-fetch, or whose result is waiting to be confirmed (ingest_result
+//     sets the same flag, audit F-09): every run;
 //   - a settled match: still watched for 12 hours, so a provider's later correction is seen (brief:
 //     re-settle idempotently, log the difference, alert). Every run for the first 30 minutes, then
 //     every 10 minutes.
@@ -12,7 +14,7 @@ export type MatchWindowRow = {
   settled_at: string | null;
 };
 
-export const WINDOW_LEAD_MS = 15 * 60_000;
+export const WINDOW_LEAD_MS = 60 * 60_000;
 export const WATCH_AFTER_SETTLE_MS = 12 * 60 * 60_000;
 const EVERY_RUN_AFTER_SETTLE_MS = 30 * 60_000;
 const SLOW_EVERY_MS = 10 * 60_000;

@@ -172,10 +172,10 @@ const days = (
 claim(days.join() === "2026-10-20,2026-10-21", "two pick days recorded server-side", days);
 
 section("5. Night 1: the poller runs before, during and after the quarter-finals");
-await setClock(db, "2026-10-21 16:10+00");
+await setClock(db, "2026-10-21 15:20+00");
 claim(
   Object.keys(await poll(db)).length === 0,
-  "16:10 UTC: no match in its window, the provider is not called",
+  "15:20 UTC: no match in its window (it opens 60 minutes before a start), the provider is not called",
 );
 await setClock(db, "2026-10-21 16:20+00");
 const early = await poll(db);
