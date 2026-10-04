@@ -90,15 +90,6 @@ function Picks() {
         </Link>
       </div>
 
-      {!user && (
-        <Link
-          to="/sign-in"
-          className="focus-ring card mb-4 block px-4 py-3 text-sm font-semibold text-accent-text"
-        >
-          {t("sign_in")} →
-        </Link>
-      )}
-
       <QueryGate queries={queries} label={t("picks_title").toLowerCase()}>
         {open.length === 0 ? (
           user && step.kind !== "none" ? (
