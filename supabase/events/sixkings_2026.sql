@@ -50,9 +50,8 @@ insert into public.event_config (
    ]',
   null,
   '{
-     "version": "draft-1",
-     "notice": "Privacy notice placeholder, pending legal review. It will name both parties: the organiser and Grand Slam GM.",
-     "consent_organiser": "Placeholder: I would like to receive news and offers from the organiser.",
+     "version": "draft-2",
+     "notice": "Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.",
      "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM."
    }',
   '[]',

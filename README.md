@@ -1,6 +1,6 @@
 # Six Kings Slam Predictor
 
-A free prediction game licensed to the organiser of the Six Kings Slam (Riyadh, 21, 22 and 24 October 2026). Fans pick, for every match, the winner, the number of sets and the score of every set. Results arrive automatically from a results provider; no person ever types one.
+**Call the Crown**: a free prediction game for the six-player exhibition in Riyadh (21, 22 and 24 October 2026), run by Grand Slam GM as a standalone app (4 Oct 2026: the organiser is not licensing it; the event is described, never used as the brand). Fans pick, for every match, the winner, the number of sets and the score of every set. Results arrive automatically from a results provider; no person ever types one.
 
 It is built as a **template**: one event per instance. A new licensee is a new Supabase project, a new Pages project and a new event file. No new code.
 
@@ -223,7 +223,7 @@ select public.set_players(
 
 - `rank` is the snapshot used for the upset bonus. Once any pick exists, ids, ranks and the bracket are frozen; only names and images can change. Once a match has started, nothing can.
 - p1/p2 is the fixed display order: set scores are always shown player 1's games first.
-- Player images: the organiser's artwork, uploaded to the public `event` bucket (migration 0011; only the service role can write) as `players/<id>.jpg`, then `update public.players set image_path = 'players/<id>.jpg' where id = '<id>';`. Until then the app shows initials and names.
+- Player images: the official ATP headshots, hotlinked by ATP id: `image_path` = `https://www.atptour.com/-/media/alias/player-headshot/<ATP id>` (set in the draw file). An uploaded image (`players/<id>.jpg` in the `event` bucket) also works. A wrong ATP id shows a generic silhouette, not an error: check the faces by eye. With no image the app shows the name only.
 
 Start times, one per match, from the organiser's schedule. Each stays editable until that match starts and cannot be set in the past:
 
@@ -345,8 +345,7 @@ update public.profiles set is_staff = true where user_id in (…);
 ### Export the opt-in lists
 
 ```sql
-\copy (select * from public.export_optins('organiser')) to 'optins-organiser.csv' csv header
-\copy (select * from public.export_optins('gsgm'))      to 'optins-gsgm.csv'      csv header
+select * from public.export_optins('gsgm');   -- in the SQL editor, then Download as CSV (the psql \copy command does not work there)
 ```
 
 - Each fan's latest answer counts.

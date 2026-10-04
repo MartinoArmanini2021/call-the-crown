@@ -2,7 +2,7 @@
 // later sign-in: email + password (Tino, 3 Oct 2026: "email verification only once, then a password").
 // "Forgot your password?" signs in with a code instead and offers a new password, so nobody is locked
 // out. No magic links (they break inside in-app browsers), no social sign-in. "Join" creates the
-// account; the display name and the two unticked consents are written only after the code is verified,
+// account; the display name and the unticked opt-in (Grand Slam GM only since 4 Oct 2026: no organiser) are written only after the code is verified,
 // by the proven owner (update_profile, update_consents), each consent with the version of the text
 // shown. Before that, a new account has both consents not granted (audit 3 Oct 2026, F-02, 0013).
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -44,7 +44,6 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [consentOrg, setConsentOrg] = useState(false);
   const [consentGsgm, setConsentGsgm] = useState(false);
   const [code, setCode] = useState("");
   const [captcha, setCaptcha] = useState<string | null>(null);
@@ -135,7 +134,7 @@ function SignIn() {
       // keeps both consents not granted (the safe default) and Profile can set them.
       await Promise.all([
         updateProfile(name.trim(), locale),
-        updateConsents(consentOrg, consentGsgm, event.privacy.version ?? "unknown"),
+        updateConsents(false, consentGsgm, event.privacy.version ?? "unknown"),
       ]).catch(() => track("join_details_failed"));
     }
     setBusy(false);
@@ -246,11 +245,6 @@ function SignIn() {
               <fieldset className="card space-y-3 p-4">
                 <legend className="sr-only">{t("consents_title")}</legend>
                 <p className="text-sm font-semibold">{t("consents_title")}</p>
-                <Consent
-                  checked={consentOrg}
-                  onChange={setConsentOrg}
-                  text={inLocale(event.privacy, "consent_organiser", locale) ?? ""}
-                />
                 <Consent
                   checked={consentGsgm}
                   onChange={setConsentGsgm}

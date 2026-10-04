@@ -44,8 +44,6 @@ export type EventConfig = {
     version?: string;
     notice?: string;
     notice_ar?: string;
-    consent_organiser?: string;
-    consent_organiser_ar?: string;
     consent_gsgm?: string;
     consent_gsgm_ar?: string;
   };

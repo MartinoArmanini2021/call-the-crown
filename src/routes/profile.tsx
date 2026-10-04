@@ -29,7 +29,6 @@ function Profile() {
   const consents = useQuery({ ...consentsQuery(user?.id ?? ""), enabled: !!user });
 
   const [name, setName] = useState("");
-  const [org, setOrg] = useState(false);
   const [gsgm, setGsgm] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [confirm, setConfirm] = useState("");
@@ -39,7 +38,6 @@ function Profile() {
   useEffect(() => {
     const latest = (party: string) =>
       [...(consents.data ?? [])].reverse().find((c) => c.party === party)?.granted ?? false;
-    setOrg(latest("organiser"));
     setGsgm(latest("gsgm"));
   }, [consents.data]);
 
@@ -106,21 +104,17 @@ function Profile() {
 
         <section className="card mb-3 space-y-3 p-4">
           <h2 className="text-sm font-semibold">{t("consents_title")}</h2>
-          {[
-            [org, setOrg, inLocale(event.privacy, "consent_organiser", locale)],
-            [gsgm, setGsgm, inLocale(event.privacy, "consent_gsgm", locale)],
-          ].map(([checked, set, text], i) => (
-            <label key={i} className="flex cursor-pointer items-start gap-3 text-sm text-ink-2">
-              <input
-                type="checkbox"
-                aria-label={text as string}
-                checked={checked as boolean}
-                onChange={(e) => (set as (v: boolean) => void)(e.target.checked)}
-                className="focus-ring mt-0.5 h-5 w-5 shrink-0 accent-[var(--accent)]"
-              />
-              <span>{text as string}</span>
-            </label>
-          ))}
+          {/* One opt-in (Tino, 4 Oct 2026: the app runs standalone, there is no organiser list). */}
+          <label className="flex cursor-pointer items-start gap-3 text-sm text-ink-2">
+            <input
+              type="checkbox"
+              aria-label={inLocale(event.privacy, "consent_gsgm", locale) ?? ""}
+              checked={gsgm}
+              onChange={(e) => setGsgm(e.target.checked)}
+              className="focus-ring mt-0.5 h-5 w-5 shrink-0 accent-[var(--accent)]"
+            />
+            <span>{inLocale(event.privacy, "consent_gsgm", locale)}</span>
+          </label>
           <details className="text-xs text-ink-3">
             <summary className="focus-ring cursor-pointer rounded font-semibold text-ink-2">
               {t("privacy_title")}
@@ -134,7 +128,8 @@ function Profile() {
             className="focus-ring h-10 rounded-full bg-raised px-5 text-sm font-bold"
             onClick={() =>
               act(
-                () => updateConsents(org, gsgm, event.privacy.version ?? "unknown"),
+                // the organiser opt-in no longer exists: always "no" (withdraws any earlier yes)
+                () => updateConsents(false, gsgm, event.privacy.version ?? "unknown"),
                 t("consents_saved"),
               )
             }
