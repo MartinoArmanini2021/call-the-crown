@@ -2,8 +2,9 @@
 // later sign-in: email + password (Tino, 3 Oct 2026: "email verification only once, then a password").
 // "Forgot your password?" signs in with a code instead and offers a new password, so nobody is locked
 // out. No magic links (they break inside in-app browsers), no social sign-in. "Join" creates the
-// account with the display name and the two unticked consents, each stored server-side with the
-// version of the text shown (handle_new_user, 0005_user_rpcs.sql).
+// account; the display name and the two unticked consents are written only after the code is verified,
+// by the proven owner (update_profile, update_consents), each consent with the version of the text
+// shown. Before that, a new account has both consents not granted (audit 3 Oct 2026, F-02, 0013).
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useState, type FormEvent } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
@@ -11,7 +12,7 @@ import { Turnstile, turnstileEnabled } from "@/components/Turnstile";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
-import { inLocale } from "@/lib/api";
+import { inLocale, updateConsents, updateProfile } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
@@ -55,7 +56,9 @@ function SignIn() {
     const m = msg.toLowerCase();
     if (m.includes("signups not allowed") || m.includes("user not found")) return t("no_account");
     if (m.includes("rate") || m.includes("too many")) return t("too_many_requests");
-    if (m.includes("invalid login credentials")) return t("wrong_password");
+    // An address that never entered its code has no password yet (0013): the code path proves it.
+    if (m.includes("invalid login credentials") || m.includes("not confirmed"))
+      return t("wrong_password");
     if (m.includes("weak") || m.includes("pwned") || m.includes("known")) return t("password_weak");
     if (m.includes("expired") || m.includes("invalid")) return t("code_wrong");
     return t("err_generic");
@@ -71,17 +74,7 @@ function SignIn() {
       options: {
         shouldCreateUser: mode === "join",
         ...(captcha ? { captchaToken: captcha } : {}),
-        ...(mode === "join"
-          ? {
-              data: {
-                display_name: name.trim(),
-                locale,
-                consent_organiser: consentOrg,
-                consent_gsgm: consentGsgm,
-                consent_text_version: event.privacy.version ?? "unknown",
-              },
-            }
-          : {}),
+        ...(mode === "join" ? { data: { display_name: name.trim(), locale } } : {}),
       },
     });
     setBusy(false);
@@ -133,8 +126,19 @@ function SignIn() {
       token: code.trim(),
       type: "email",
     });
+    if (err) {
+      setBusy(false);
+      return setError(authError(err.message));
+    }
+    if (mode === "join") {
+      // The owner's own name and answers, now that the address is proven. If this fails the account
+      // keeps both consents not granted (the safe default) and Profile can set them.
+      await Promise.all([
+        updateProfile(name.trim(), locale),
+        updateConsents(consentOrg, consentGsgm, event.privacy.version ?? "unknown"),
+      ]).catch(() => track("join_details_failed"));
+    }
     setBusy(false);
-    if (err) return setError(authError(err.message));
     track(mode === "join" ? "signed_up" : "signed_in", { method: "code" });
     // The email is proven: now the password for every later sign-in (a new one after "forgot").
     setPassword("");

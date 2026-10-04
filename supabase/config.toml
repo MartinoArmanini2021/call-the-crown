@@ -52,8 +52,11 @@ email_sent = 100
 
 [auth.email]
 enable_signup = true
-# The 6-digit code confirms the address; there is no separate confirmation link.
-enable_confirmations = false
+# ON: an address is verified only by entering its 6-digit code (the confirmation email carries the
+# code, never a link). OFF would mark every typed address verified and let the public password sign-up
+# endpoint hand out accounts with no email at all (audit 3 Oct 2026, F-01). Must be ON in every
+# project: dashboard → Authentication → Sign In / Providers → Email → "Confirm email".
+enable_confirmations = true
 otp_length = 6
 otp_expiry = 600
 

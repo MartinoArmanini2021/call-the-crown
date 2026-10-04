@@ -69,20 +69,26 @@ end;
 $$;
 
 -- A verified fan with both consents as given. created_at is spaced so the last-resort tiebreaker is
--- deterministic in tests.
+-- deterministic in tests. New accounts start with both consents not granted (0013); the fan's answers
+-- are then written into those two rows, as if given on the Join screen with text version test-1.
 create function t.new_user(p_n int, p_name text default null, p_org boolean default false,
                            p_gsgm boolean default false, p_verified boolean default true) returns uuid
-language sql
+language plpgsql
 as $$
+declare v_id uuid;
+begin
   insert into auth.users (id, email, email_confirmed_at, raw_user_meta_data, created_at)
   values (('00000000-0000-0000-0000-' || lpad(p_n::text, 12, '0'))::uuid,
           'fan' || p_n || '@example.test',
           case when p_verified then now() end,
-          jsonb_build_object('display_name', coalesce(p_name, 'Fan ' || p_n),
-                             'consent_organiser', p_org, 'consent_gsgm', p_gsgm,
-                             'consent_text_version', 'test-1'),
+          jsonb_build_object('display_name', coalesce(p_name, 'Fan ' || p_n)),
           timestamptz '2026-10-01 00:00+00' + make_interval(mins => p_n))
-  returning id
+  returning id into v_id;
+  update public.consents
+     set granted = case party when 'organiser' then p_org else p_gsgm end, text_version = 'test-1'
+   where user_id = v_id;
+  return v_id;
+end;
 $$;
 create function t.uid(p_n int) returns uuid
 language sql immutable

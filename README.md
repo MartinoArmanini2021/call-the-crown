@@ -367,6 +367,8 @@ Set these in each Supabase project's dashboard; locally they are in `supabase/co
 - The code email template shows `{{ .Token }}` and no link (`supabase/templates/code.html`).
 - Production (Pro plan): turn on leaked-password protection (Authentication → Attack protection).
 - No magic links, no Google or Apple, no anonymous sign-in.
+- **"Confirm email" ON** (`enable_confirmations = true`). With it off, any typed address counts as verified and the public password sign-up endpoint hands out accounts with no email (audit 3 Oct 2026, F-01). Check after setting up an instance: a bare `signUp(email, password)` must return no session.
+- New accounts start with both consents not granted; the app writes the fan's own name and answers only after the code is verified (F-02, migration 0013).
 
 **Email delivery and captcha**
 

@@ -88,14 +88,19 @@ section(
 );
 await db.query(
   `insert into auth.users (id, email, email_confirmed_at, raw_user_meta_data) values
-   ($1, 'fan1@example.test', now(), '{"display_name": "Fan One", "consent_organiser": true, "consent_gsgm": true, "consent_text_version": "draft-1"}'),
+   ($1, 'fan1@example.test', now(), '{"display_name": "Fan One"}'),
    ($2, 'fan2@example.test', now(), '{"display_name": "Fan Two"}'),
    ($3, 'fan3@example.test', now(), '{"display_name": "Fan Three"}')`,
   [FAN, ...OTHERS],
 );
+// New accounts start with both consents not granted (0013); the verified fan's own answers follow.
+await as(db, { uid: FAN }, (tx) =>
+  tx.query("select public.update_consents(true, true, 'draft-1')"),
+);
 const consents = (
   await db.query<{ party: string; granted: boolean; text_version: string }>(
-    "select party, granted, text_version from public.consents where user_id = $1 order by party",
+    `select distinct on (party) party, granted, text_version from public.consents
+      where user_id = $1 order by party, changed_at desc`,
     [FAN],
   )
 ).rows;

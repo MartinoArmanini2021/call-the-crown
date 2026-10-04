@@ -84,21 +84,30 @@ claim(
 claim((await anon.from("picks").select("*")).error !== null, "anon cannot read picks at all");
 
 section("2. A fan signs up with both consents: real Supabase Auth, 6-digit code by email");
+// Audit 3 Oct 2026, F-01: nobody gets an account by typing an address. The bare password sign-up
+// endpoint gives no session, and its password is wiped until the address is proven (0013).
+const SQUATTER = `squat${Date.now() % 100000}@example.test`;
+const squat = await fresh().auth.signUp({ email: SQUATTER, password: "Squatter-pass-1" });
+claim(!squat.data.session, "the bare password sign-up gives no session without the emailed code");
+claim(
+  !!(await fresh().auth.signInWithPassword({ email: SQUATTER, password: "Squatter-pass-1" })).error,
+  "… and its password does not work on the unproven address",
+);
 const fan = fresh();
 must(
   await fan.auth.signInWithOtp({
     email: EMAIL,
-    options: {
-      shouldCreateUser: true,
-      data: {
-        display_name: "Fan One",
-        consent_organiser: true,
-        consent_gsgm: true,
-        consent_text_version: "draft-1",
-      },
-    },
+    options: { shouldCreateUser: true, data: { display_name: "Fan One" } },
   }),
   "signInWithOtp",
+);
+const [before] = await db`select u.email_confirmed_at, array_agg(c.granted) as granted
+                            from auth.users u join public.consents c on c.user_id = u.id
+                           where u.email = ${EMAIL} group by u.email_confirmed_at`;
+claim(
+  before.email_confirmed_at === null && before.granted.every((g: boolean) => !g),
+  "before the code: the address is not verified and both consents start not granted",
+  before,
 );
 const mail = await latestMail(EMAIL);
 const code = /\b(\d{6})\b/.exec(mail.text)?.[1];
@@ -113,13 +122,26 @@ const session = must(
 );
 const uid = session.user!.id;
 claim(!!session.session, "the code signs the fan in");
+// F-02: the name and answers are written by the proven owner, after the code (as the app does).
+must(
+  await fan.rpc("update_profile", { p_display_name: "Fan One", p_locale: "en" }),
+  "update_profile",
+);
+must(
+  await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" }),
+  "update_consents",
+);
 const consents = must(
-  await fan.from("consents").select("party, granted, text_version").order("party"),
+  await fan
+    .from("consents")
+    .select("party, granted, text_version, changed_at")
+    .order("changed_at", { ascending: false }),
   "consents",
 );
+const latest = ["organiser", "gsgm"].map((p) => consents.find((c) => c.party === p));
 claim(
-  consents.length === 2 && consents.every((c) => c.granted && c.text_version === "draft-1"),
-  "both consents stored server-side with the text version",
+  latest.every((c) => c?.granted && c.text_version === "draft-1") && consents.length === 4,
+  "both consents stored server-side with the text version (history: not granted, then granted)",
   consents,
 );
 
