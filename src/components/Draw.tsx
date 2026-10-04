@@ -59,7 +59,9 @@ export function Draw(props: Props) {
   const [active, setActive] = useState(current);
 
   // Which column is in view (phone carousel); every column is in view when they sit side by side.
-  const columns = () => [...(scroller.current?.children ?? [])] as HTMLElement[];
+  const columns = () => [
+    ...(scroller.current?.querySelectorAll<HTMLElement>(":scope > section") ?? []),
+  ];
   // Sideways only (the page itself never jumps), by the distance to the column's start edge, so it
   // works in both directions (Arabic scrolls right to left).
   const goTo = (i: number, smooth = true) => {
@@ -166,13 +168,14 @@ export function Draw(props: Props) {
       <div
         ref={scroller}
         onScroll={onScroll}
-        className="-mx-4 mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-4 px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+        className="relative -mx-4 mt-3 flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-px-4 px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
       >
+        <StageLines scroller={scroller} matches={matches} />
         {stages.map((s, i) => (
           <section
             key={s.key}
             aria-label={t(s.key)}
-            className="flex w-[84%] shrink-0 snap-start flex-col justify-around gap-3 sm:w-auto"
+            className="relative z-10 flex w-[84%] shrink-0 snap-start flex-col justify-around gap-3 sm:w-auto"
           >
             {s.ms.map((m) =>
               m.round === "F" ? (
@@ -203,6 +206,90 @@ export function Draw(props: Props) {
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * The lines that link the stages (Tino, 4 Oct 2026): each quarter-final to the semi-final its winner
+ * plays, each semi-final to the final. Measured from where the cards really are, so they follow the
+ * phone carousel, the three columns side by side, and Arabic (right to left). Solid once the earlier
+ * match is played, dashed while it is to come; the two into the final in gold.
+ */
+function StageLines({
+  scroller,
+  matches,
+}: {
+  scroller: React.RefObject<HTMLDivElement | null>;
+  matches: Match[];
+}) {
+  const [lines, setLines] = useState<{ d: string; tone: "done" | "todo" | "final" }[]>([]);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  // useEffect, not useLayoutEffect: this component sits inside the scroller, and a child's layout effect
+  // runs before the parent's ref is attached (scroller.current would still be null on the first pass).
+  useEffect(() => {
+    const box = scroller.current;
+    if (!box) return;
+    const measure = () => {
+      const b = box.getBoundingClientRect();
+      const at = (n: number) => {
+        const c = box.querySelector<HTMLElement>(`[data-match="${n}"]`);
+        if (!c) return null;
+        const r = c.getBoundingClientRect();
+        const x = box.scrollLeft - b.left;
+        return { l: r.left + x, r: r.right + x, y: r.top - b.top + box.scrollTop + r.height / 2 };
+      };
+      const out: { d: string; tone: "done" | "todo" | "final" }[] = [];
+      for (const m of matches) {
+        for (const src of [m.p1_source, m.p2_source]) {
+          if (src.type !== "winner") continue;
+          const a = at(src.match);
+          const z = at(m.match_no);
+          if (!a || !z) continue;
+          const forward = z.l > a.l;
+          const x1 = forward ? a.r : a.l;
+          const x2 = forward ? z.l : z.r;
+          const mid = (x1 + x2) / 2;
+          const from = matches.find((x) => x.match_no === src.match);
+          out.push({
+            d: `M${x1} ${a.y} H${mid} V${z.y} H${x2}`,
+            tone: m.round === "F" ? "final" : from && from.status !== "scheduled" ? "done" : "todo",
+          });
+        }
+      }
+      setLines(out);
+      setSize({ w: box.scrollWidth, h: box.scrollHeight });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    box.querySelectorAll(":scope > section").forEach((c) => ro.observe(c));
+    return () => ro.disconnect();
+  }, [scroller, matches]);
+  return (
+    <svg
+      aria-hidden
+      width={size.w}
+      height={size.h}
+      className="pointer-events-none absolute left-0 top-0 z-0"
+    >
+      {lines.map((l, i) => (
+        <path
+          key={i}
+          d={l.d}
+          fill="none"
+          strokeWidth={1.5}
+          strokeLinejoin="round"
+          strokeDasharray={l.tone === "todo" ? "4 4" : undefined}
+          stroke={
+            l.tone === "final"
+              ? "rgb(242 193 78 / 0.55)"
+              : l.tone === "done"
+                ? "rgb(255 255 255 / 0.35)"
+                : "rgb(255 255 255 / 0.18)"
+          }
+        />
+      ))}
+    </svg>
   );
 }
 
@@ -237,6 +324,7 @@ function Rows({
             key={side}
             className={cn("flex items-center gap-2", settled && !won && "opacity-45")}
           >
+            {id && <PlayerPhoto player={players.get(id)} size={big ? 30 : 24} />}
             <span
               className={cn(
                 "min-w-0 flex-1 truncate",
@@ -327,29 +415,15 @@ function Status({ m, now }: { m: Match; now: number }) {
 /** A quarter-final, a semi-final, or (compact) the 3rd-place match. */
 function DrawCard(props: CardProps & { compact?: boolean }) {
   const { m, matches, players, pickByMatch, now, onSelect, compact = false } = props;
-  const { t, locale } = useT();
   const label = useMatchLabel();
   const { slot } = useMatchNames(players);
   const state = matchState(m, now);
-  const settled = state === "settled";
   const todo = state === "open" && !pickByMatch.get(m.match_no);
-
-  // Where the winner goes, by name: "Winner meets Alcaraz", "Winner to the final", "Fritz through".
-  const next = matches.find((x) =>
-    [x.p1_source, x.p2_source].some((s) => s.type === "winner" && s.match === m.match_no),
-  );
-  const fromP1 = next?.p1_source.type === "winner" && next.p1_source.match === m.match_no;
-  const path = !next
-    ? null
-    : settled && m.winner_id
-      ? t("draw_through", { name: surname(playerName(players.get(m.winner_id), locale)) })
-      : next.round === "F"
-        ? t("draw_winner_final")
-        : t("draw_winner_meets", { name: slot(next, fromP1 ? 2 : 1, matches) });
 
   return (
     <button
       type="button"
+      data-match={m.match_no}
       onClick={() => onSelect(m)}
       disabled={state === "waiting"}
       aria-label={`${label(m, matches)}: ${slot(m, 1, matches)} – ${slot(m, 2, matches)}`}
@@ -371,14 +445,6 @@ function DrawCard(props: CardProps & { compact?: boolean }) {
         <Status m={m} now={now} />
       </div>
       <Rows {...props} />
-      {path && (
-        <p className="mt-2 flex items-center gap-1 text-2xs text-ink-3">
-          <span aria-hidden className="rtl:rotate-180">
-            →
-          </span>
-          <span className={cn("truncate", settled && "font-semibold text-ink-2")}>{path}</span>
-        </p>
-      )}
       <PickFooter {...props} />
     </button>
   );
@@ -407,6 +473,7 @@ function FinalCard(props: CardProps) {
       onClick={() => onSelect(m)}
       disabled={state === "waiting"}
       aria-label={`${label(m, matches)}: ${slot(m, 1, matches)} – ${slot(m, 2, matches)}`}
+      data-match={m.match_no}
       className="skg-final focus-ring relative block w-full rounded-3xl p-px text-start"
     >
       <div className="skg-final-inner relative overflow-hidden rounded-[calc(1.5rem-1px)] px-4 pb-4 pt-4">
@@ -449,8 +516,9 @@ function FaceOff({ m, matches, players, pickByMatch }: CardProps) {
         )}
         <p
           className={cn(
-            "headline w-full truncate text-2xl leading-tight",
-            id ? "text-ink" : "text-ink-3",
+            "headline w-full leading-tight",
+            // a known player: one big line; "Winner SF1" before the semis: smaller, may wrap
+            id ? "truncate text-2xl text-ink" : "text-lg text-ink-3",
           )}
         >
           {id ? surname(playerName(players.get(id), locale)) : slot(m, n, matches)}

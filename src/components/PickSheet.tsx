@@ -33,6 +33,7 @@ import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
 import { useMatchNames } from "./matchNames";
+import { CourtPicker } from "./CourtPicker";
 import { SIDE_COLOR } from "./sides";
 import { Scoreboard } from "./Scoreboard";
 
@@ -202,22 +203,14 @@ export function PickSheet({
         </div>
 
         <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-3 pt-2">
-          <Question title={t("pick_winner")}>
-            {([1, 2] as const).map((s) => (
-              <Choice
-                key={s}
-                side={s}
-                on={draft.winner === s}
-                onClick={() => change((d) => withWinner(d, s))}
-                title={names[s]}
-                sub={
-                  points[s] !== null
-                    ? `${t("pts_if_right", { points: points[s]! })}${points[s]! > base ? ` · ${t("upset_bonus")}` : ""}`
-                    : undefined
-                }
-              />
-            ))}
-          </Question>
+          <CourtPicker
+            players={{ 1: players.get(match.p1_id!), 2: players.get(match.p2_id!) }}
+            names={names}
+            points={points}
+            base={base}
+            winner={draft.winner ?? null}
+            onPick={(s) => change((d) => withWinner(d, s))}
+          />
 
           {shaped(draft) && (
             <section className="space-y-3">
@@ -318,47 +311,5 @@ export function PickSheet({
         </div>
       </div>
     </div>
-  );
-}
-
-function Question({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section>
-      <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">{title}</p>
-      <div className="mt-2 grid grid-cols-2 gap-2">{children}</div>
-    </section>
-  );
-}
-
-function Choice({
-  side,
-  on,
-  onClick,
-  title,
-  sub,
-}: {
-  side: 1 | 2;
-  on: boolean;
-  onClick: () => void;
-  title: string;
-  sub?: string | undefined;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={on}
-      aria-label={sub ? `${title}, ${sub}` : title}
-      onClick={onClick}
-      className={cn(
-        "focus-ring flex flex-col items-start rounded-2xl px-3 py-2.5 text-start transition-colors",
-        on ? SIDE_COLOR[side].chosen : "bg-raised text-ink-2 hover:text-ink",
-      )}
-    >
-      <span className="flex w-full items-center gap-2 text-sm font-bold">
-        <span aria-hidden className={cn("h-2 w-2 shrink-0 rounded-full", SIDE_COLOR[side].dot)} />
-        <span className="truncate">{title}</span>
-      </span>
-      {sub && <span className="ps-4 text-2xs text-ink-3">{sub}</span>}
-    </button>
   );
 }
