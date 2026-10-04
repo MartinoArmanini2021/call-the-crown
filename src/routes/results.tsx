@@ -73,7 +73,7 @@ function Results() {
             now={now}
             onSelect={selectInDraw}
           />
-          <p className="mt-2 text-center text-[11px] text-ink-3">{t("draw_hint")}</p>
+          <p className="mt-2 text-center text-2xs text-ink-3">{t("draw_hint")}</p>
         </section>
 
         {shown.length === 0 ? (
@@ -122,7 +122,7 @@ function Stat({
   const { t } = useT();
   return (
     <div className="card px-3 py-2.5">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-ink-3">{label}</p>
+      <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">{label}</p>
       <p className={accent ? "num text-2xl text-accent-text" : "num text-2xl"}>
         {value}
         {of && <span className="text-xs font-semibold text-ink-3"> {t("stat_of", { n: of })}</span>}

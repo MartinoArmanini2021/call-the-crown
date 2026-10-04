@@ -76,7 +76,7 @@ export function MatchCard({
           </span>
         </span>
         {p && (
-          <span className="ps-3.5 text-[11px] text-ink-3">
+          <span className="ps-3.5 text-2xs text-ink-3">
             {t("world_rank", { rank: p.rank_snapshot ?? "–" })}
           </span>
         )}
@@ -84,14 +84,14 @@ export function MatchCard({
           <span className="mt-1.5 ps-3.5 text-xs">
             <b className="num text-ink">{pts}</b> <span className="text-ink-3">{t("pts")}</span>
             {pts > base && (
-              <span className="ms-1.5 inline-block whitespace-nowrap rounded bg-gold/15 px-1 py-0.5 text-[10px] font-bold uppercase text-gold">
+              <span className="ms-1.5 inline-block whitespace-nowrap rounded bg-gold/15 px-1 py-0.5 text-2xs font-bold uppercase text-gold">
                 {t("upset_bonus")}
               </span>
             )}
           </span>
         )}
         {mine && (
-          <span className="mt-1.5 ps-3.5 text-[10px] font-bold uppercase tracking-wider">
+          <span className="mt-1.5 ps-3.5 text-2xs font-bold uppercase tracking-wider">
             ✓ {t("your_pick")}
           </span>
         )}
@@ -102,7 +102,7 @@ export function MatchCard({
   return (
     <article className="card p-4" aria-label={title(match, matches)}>
       <header>
-        <p className="flex justify-between gap-2 text-[11px] text-ink-3">
+        <p className="flex justify-between gap-2 text-2xs text-ink-3">
           <span className="font-bold uppercase tracking-wider">{label(match, matches)}</span>
           <span>
             {match.starts_at
@@ -113,7 +113,7 @@ export function MatchCard({
         <h3 className="headline mt-1 text-3xl leading-none">{title(match, matches)}</h3>
       </header>
 
-      <p className="mb-2 mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-3">
+      <p className="mb-2 mt-4 text-2xs font-bold uppercase tracking-wider text-ink-3">
         {t("card_who_wins")}
       </p>
       <div className="grid grid-cols-2 gap-2">

@@ -154,12 +154,12 @@ export function PickSheet({
       >
         <div className="flex items-center justify-between px-4 pb-1 pt-3">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
+            <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">
               {label(match, matches)}
             </p>
             <h2 className="headline text-2xl leading-tight">{title(match, matches)}</h2>
             {lockMs !== null && (
-              <p className="text-[11px] font-semibold text-accent-text">
+              <p className="text-2xs font-semibold text-accent-text">
                 {t("locks_in", { time: shortTimeLeft(lockMs, locale) })}
               </p>
             )}
@@ -194,7 +194,7 @@ export function PickSheet({
 
           {shaped(draft) && (
             <section className="space-y-3">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
+              <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">
                 {t("pick_sets")}
               </p>
               {Array.from({ length: n }, (_, i) => {
@@ -297,7 +297,7 @@ export function PickSheet({
 function Question({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section>
-      <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">{title}</p>
+      <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">{title}</p>
       <div className="mt-2 grid grid-cols-2 gap-2">{children}</div>
     </section>
   );
@@ -331,7 +331,7 @@ function Choice({
         <span aria-hidden className={cn("h-2 w-2 shrink-0 rounded-full", SIDE_COLOR[side].dot)} />
         <span className="truncate">{title}</span>
       </span>
-      {sub && <span className="ps-4 text-[11px] text-ink-3">{sub}</span>}
+      {sub && <span className="ps-4 text-2xs text-ink-3">{sub}</span>}
     </button>
   );
 }

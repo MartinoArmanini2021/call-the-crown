@@ -93,7 +93,7 @@ function HowToPlay() {
       <div className="card overflow-x-auto p-1">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-[11px] uppercase tracking-wider text-ink-3">
+            <tr className="text-2xs uppercase tracking-wider text-ink-3">
               <th className="p-2.5 text-start font-bold" />
               {rounds.map((r) => (
                 <th key={r} className="p-2.5 text-end font-bold">

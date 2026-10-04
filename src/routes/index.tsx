@@ -37,7 +37,7 @@ function Landing() {
     <AppShell>
       <section className="relative overflow-hidden rounded-3xl border border-line bg-[radial-gradient(120%_80%_at_100%_0%,rgb(229_9_20/0.45),transparent_60%),linear-gradient(160deg,#1d0a0b,var(--bg)_70%)] px-5 pb-6 pt-7">
         {inLocale(event.branding, "event_line", locale) && (
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-2">
+          <p className="text-2xs font-semibold uppercase tracking-[0.16em] text-ink-2">
             {inLocale(event.branding, "event_line", locale)}
           </p>
         )}
@@ -118,7 +118,7 @@ function Portrait({ player, name }: { player: Player; name: string }) {
           <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
         </>
       )}
-      {first && <span className="relative truncate text-[11px] text-ink-2">{first}</span>}
+      {first && <span className="relative truncate text-2xs text-ink-2">{first}</span>}
       <span className="headline relative line-clamp-2 break-words pb-0.5 text-base leading-snug text-ink sm:text-lg">
         {last}
       </span>
@@ -146,13 +146,13 @@ function ScoringExample({ name }: { name: string }) {
       </h2>
       <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
         <p className="rounded-xl bg-raised px-3 py-2">
-          <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-3">
+          <span className="block text-2xs font-bold uppercase tracking-wider text-ink-3">
             {t("example_you_pick")}
           </span>
           <span className="num">{name} 6-4 6-3</span>
         </p>
         <p className="rounded-xl bg-raised px-3 py-2">
-          <span className="block text-[10px] font-bold uppercase tracking-wider text-ink-3">
+          <span className="block text-2xs font-bold uppercase tracking-wider text-ink-3">
             {t("example_result")}
           </span>
           <span className="num">{name} 6-4 7-5</span>

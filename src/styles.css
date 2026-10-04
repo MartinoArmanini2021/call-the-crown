@@ -52,6 +52,16 @@
   --font-body: var(--font-body);
 }
 
+/* Type scale (Tino, 4 Oct 2026: "balanced size of text", no tiny text). Nothing in the app is smaller
+   than 12px: text-2xs (12px) for small uppercase labels and badges, text-xs (13px) for secondary
+   lines, text-sm (14px) and up for reading. */
+@theme {
+  --text-2xs: 0.75rem;
+  --text-2xs--line-height: 1rem;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.125rem;
+}
+
 html,
 body {
   background: var(--bg);
@@ -146,6 +156,48 @@ body {
   @keyframes skg-crown {
     50% {
       filter: drop-shadow(0 0 10px rgb(242 193 78 / 0.7));
+    }
+  }
+}
+
+/* The final's card (Draw.tsx, 4 Oct 2026): a thin gold frame (the 1px padding of .skg-final shows this
+   gradient), a soft gold light falling from the top that fades out inside the card, and a slow sheen
+   crossing the frame. Still when motion is reduced. */
+.skg-final {
+  background: linear-gradient(
+    135deg,
+    rgb(242 193 78 / 0.95),
+    rgb(242 193 78 / 0.25) 35%,
+    rgb(242 193 78 / 0.25) 65%,
+    rgb(242 193 78 / 0.95)
+  );
+}
+.skg-final-inner {
+  background:
+    radial-gradient(120% 75% at 50% 0%, rgb(242 193 78 / 0.13), transparent 62%), var(--card);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skg-final-inner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgb(255 236 170 / 0.07) 50%,
+      transparent 65%
+    );
+    transform: translateX(-100%);
+    animation: skg-sheen 7s ease-in-out infinite;
+  }
+  @keyframes skg-sheen {
+    0%,
+    55% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
     }
   }
 }

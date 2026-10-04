@@ -1,7 +1,8 @@
 // Players by name, everywhere (Tino, 2 Oct 2026: "Use the player names"). A slot whose player is not
-// known yet shows who it can still be, from the bracket's sources: the semi-final against the winner
-// of Fritz v Zverev reads "Alcaraz v Fritz or Zverev"; the final, before the semis, "Alcaraz, Fritz
-// or Zverev v Djokovic, de Minaur or Sinner". Never "TBD" or "the winner of Quarter-final 1".
+// known yet says where the player comes from, short (Tino, 4 Oct 2026: "Winner A in the Semis and the
+// same in the Final; no carry-over names that make the text too long"): the semi-final against the
+// winner of Fritz v Zverev reads "Alcaraz v Winner QF1"; the final before the semis, "Winner SF1 v
+// Winner SF2"; the 3rd-place match, "Loser SF1 v Loser SF2". Once that match is played, the name.
 import { useT } from "@/i18n/useT";
 import type { Match, Player } from "@/lib/api";
 import { surname } from "@/lib/format";
@@ -29,18 +30,22 @@ export function slotCandidates(m: Match, side: 1 | 2, matches: Match[], depth = 
 export function useMatchNames(players: Map<string, Player>) {
   const { t, locale } = useT();
   const nameOf = (id: string) => surname(playerName(players.get(id), locale));
-  const list = (ids: string[]) =>
-    ids.length === 0
-      ? t("to_be_decided")
-      : ids.length === 1
-        ? nameOf(ids[0]!)
-        : t("either", {
-            names: ids.slice(0, -1).map(nameOf).join(", "),
-            last: nameOf(ids[ids.length - 1]!),
-          });
-  /** "Fritz", or who it can still be: "Fritz or Zverev". */
-  const slot = (m: Match, side: 1 | 2, matches: Match[]) => list(slotCandidates(m, side, matches));
-  /** "Fritz v Zverev", "Alcaraz v Fritz or Zverev". */
+  /** "QF1", "SF2": a match by its short round code and number within the round. */
+  const short = (m: Match, matches: Match[]) => {
+    const same = matches.filter((x) => x.round === m.round);
+    const n = same.length > 1 ? same.findIndex((x) => x.match_no === m.match_no) + 1 : "";
+    return t("match_short", { round: t(`short_${m.round}`), n });
+  };
+  /** "Fritz", or where the player comes from: "Winner QF1", "Loser SF2". */
+  const slot = (m: Match, side: 1 | 2, matches: Match[]) => {
+    const known = slotCandidates(m, side, matches);
+    if (known.length === 1) return nameOf(known[0]!);
+    const src = side === 1 ? m.p1_source : m.p2_source;
+    const from = src.type !== "player" ? matches.find((x) => x.match_no === src.match) : undefined;
+    if (!from) return t("to_be_decided");
+    return t(src.type === "winner" ? "slot_winner" : "slot_loser", { match: short(from, matches) });
+  };
+  /** "Fritz v Zverev", "Alcaraz v Winner QF1". */
   const title = (m: Match, matches: Match[]) =>
     t("vs_title", { a: slot(m, 1, matches), b: slot(m, 2, matches) });
   return { slot, title };

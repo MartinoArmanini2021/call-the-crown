@@ -4,6 +4,7 @@ import { AppShell, PageTitle } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
+import { PickPager } from "@/components/PickPager";
 import { PickSheet } from "@/components/PickSheet";
 import { PicksIntro } from "@/components/PicksIntro";
 import { QueryGate } from "@/components/QueryGate";
@@ -24,9 +25,10 @@ export const Route = createFileRoute("/picks")({
   component: Picks,
 });
 
-// Only what you can do now: the next step, then the matches you can pick, in the order they lock.
-// The draw and finished matches live on Results (Tino, 2 Oct 2026). A pick is made in the sheet
-// (PickSheet); a tap on an open match in the draw arrives here as ?match=N and opens it.
+// Only what you can do now: the next step, then the matches you can pick, in the order they lock, one
+// per screen (PickPager, 4 Oct 2026). The draw and finished matches live on Results (Tino, 2 Oct 2026).
+// A pick is made in the sheet (PickSheet); a tap on an open match in the draw arrives here as ?match=N,
+// opens it, and shows that match. After a save the pager moves on to the next match without a pick.
 function Picks() {
   const { t } = useT();
   const now = useServerNow();
@@ -51,6 +53,15 @@ function Picks() {
     .sort((a, b) => Date.parse(a.starts_at!) - Date.parse(b.starts_at!));
   const step = nextStep(all, new Set(pickByMatch.keys()), now);
   const sheetMatch = all.find((m) => m.match_no === sheet && matchState(m, now) === "open");
+  // which match the pager shows: a deep link, else the first one still without a pick
+  const [focus, setFocus] = useState<number | undefined>(search.match);
+  const firstTodo = open.find((m) => !pickByMatch.has(m.match_no))?.match_no;
+  const shown = focus ?? firstTodo;
+  const onSaved = (s: { pick: string; until: string }, savedMatch?: number) => {
+    setSaved(s);
+    const after = open.find((m) => m.match_no !== savedMatch && !pickByMatch.has(m.match_no));
+    if (after) setFocus(after.match_no);
+  };
 
   // which player the fan tapped on the card, if any: the sheet opens with that winner chosen
   const [startWith, setStartWith] = useState<1 | 2 | undefined>(undefined);
@@ -90,22 +101,23 @@ function Picks() {
         {open.length === 0 ? (
           <p className="card px-4 py-5 text-center text-sm text-ink-3">{t("nothing_open")}</p>
         ) : (
-          <div className="space-y-3">
-            {open.map((m) => {
-              const pick = pickByMatch.get(m.match_no);
-              return (
-                <MatchCard
-                  key={m.match_no}
-                  match={m}
-                  matches={all}
-                  players={byPlayer}
-                  pick={pick}
-                  now={now}
-                  onPick={(side) => select(m, side)}
-                />
-              );
-            })}
-          </div>
+          <PickPager
+            matches={open}
+            all={all}
+            players={byPlayer}
+            pickByMatch={pickByMatch}
+            focus={shown}
+            render={(m) => (
+              <MatchCard
+                match={m}
+                matches={all}
+                players={byPlayer}
+                pick={pickByMatch.get(m.match_no)}
+                now={now}
+                onPick={(side) => select(m, side)}
+              />
+            )}
+          />
         )}
         <p className="mt-4 text-center text-sm">
           <Link to="/results" className="focus-ring font-semibold text-accent-text">
@@ -126,7 +138,7 @@ function Picks() {
           now={now}
           startWith={startWith}
           onClose={close}
-          onSaved={setSaved}
+          onSaved={(s) => onSaved(s, sheetMatch.match_no)}
         />
       )}
 

@@ -26,7 +26,7 @@ export function NextStepBanner({
   const { title } = useMatchNames(players);
   const row = "flex items-center justify-between gap-3 px-4 py-3";
   const box = `card ${row}`;
-  const kicker = "text-[11px] font-bold uppercase tracking-wider";
+  const kicker = "text-2xs font-bold uppercase tracking-wider";
 
   switch (step.kind) {
     case "pick": {

@@ -46,7 +46,7 @@ export function ResultCard({
     <article className="card space-y-3 p-4" aria-label={label(match, matches)}>
       <header className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-ink-3">
+          <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">
             {label(match, matches)}
           </p>
           <h3 className="headline truncate text-xl">
@@ -56,13 +56,13 @@ export function ResultCard({
           </h3>
         </div>
         {!settled ? (
-          <span className="shrink-0 rounded-full bg-accent/20 px-2.5 py-1 text-[11px] font-bold text-accent-text">
+          <span className="shrink-0 rounded-full bg-accent/20 px-2.5 py-1 text-2xs font-bold text-accent-text">
             {t("tile_live")}
           </span>
         ) : signedIn ? (
           <span
             className={cn(
-              "num shrink-0 rounded-full px-2.5 py-1 text-[12px]",
+              "num shrink-0 rounded-full px-2.5 py-1 text-xs",
               scored && pick.pts_total! > 0 ? "bg-good/15 text-good" : "bg-raised text-ink-3",
             )}
           >
@@ -100,14 +100,14 @@ export function ResultCard({
       {signedIn && <CrowdBlock match={match} pick={pick} short={short} />}
 
       {settled && match.status !== "completed" && (
-        <p className="text-[11px] text-ink-3">
+        <p className="text-2xs text-ink-3">
           {t("void_note", {
             status: t(match.status === "retired" ? "retired" : "walkover").toLowerCase(),
           })}
         </p>
       )}
       {settled && signedIn && scored && (
-        <p className="text-[12px] text-ink-2">
+        <p className="text-xs text-ink-2">
           {pick.pts_winner === 0
             ? t("wrong_winner")
             : t("breakdown_line", {
@@ -148,7 +148,7 @@ function CrowdBlock({
   );
   return (
     <section className="space-y-1.5 border-t border-line pt-3" aria-label={t("crowd_title")}>
-      <p className="flex justify-between text-[11px] font-bold uppercase tracking-wider text-ink-3">
+      <p className="flex justify-between text-2xs font-bold uppercase tracking-wider text-ink-3">
         <span>{t("crowd_title")}</span>
         <span className="num">
           {crowd.picks === 1

@@ -48,7 +48,7 @@ export function Scoreboard({
     <table className="w-full table-fixed rounded-xl bg-raised text-sm">
       <caption className="sr-only">{caption}</caption>
       <thead>
-        <tr className="text-[9px] uppercase tracking-wider text-ink-3">
+        <tr className="text-2xs uppercase tracking-wider text-ink-3">
           <th className="px-3 pt-1.5 text-start font-bold">{title}</th>
           {cols.map((i) => (
             <th

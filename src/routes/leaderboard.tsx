@@ -136,7 +136,7 @@ function Leaderboard() {
             )}
             {league !== null && <p className="mt-2 text-xs text-ink-3">{t("friends_no_prizes")}</p>}
             {table.length > 0 && <BoardTable rows={table} />}
-            <p className="mt-2 text-[11px] text-ink-3">{t("exact_key")}</p>
+            <p className="mt-2 text-2xs text-ink-3">{t("exact_key")}</p>
           </>
         )}
         {view === "top" && total > PAGE && (
@@ -208,7 +208,7 @@ function Podium({ rows, withPrizes }: { rows: BoardRow[]; withPrizes: boolean })
             </span>
             <span className={cn("num", i === 1 ? "text-2xl" : "text-xl")}>{r.points}</span>
             {withPrizes && prize(r.pos) && (
-              <span className="text-[10px] leading-tight text-ink-3">{prize(r.pos)}</span>
+              <span className="text-2xs leading-tight text-ink-3">{prize(r.pos)}</span>
             )}
           </li>
         ) : (
@@ -224,7 +224,7 @@ function BoardTable({ rows }: { rows: BoardRow[] }) {
   return (
     <table className="mt-4 w-full text-sm">
       <thead>
-        <tr className="text-[11px] uppercase tracking-wider text-ink-3">
+        <tr className="text-2xs uppercase tracking-wider text-ink-3">
           <th className="w-12 py-2 text-start font-bold">{t("rank")}</th>
           <th className="py-2 text-start font-bold">{t("player_col")}</th>
           <th className="w-14 py-2 text-end font-bold">{t("exact_col")}</th>

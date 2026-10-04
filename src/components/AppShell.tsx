@@ -35,15 +35,16 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-4">
+        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-3 px-4 sm:h-20">
           <Link to="/" className="focus-ring flex min-w-0 items-center gap-2 rounded">
             {logo ? (
-              <img src={logo} alt={event.branding.app_name ?? event.name} className="h-7 w-auto" />
+              <img
+                src={logo}
+                alt={event.branding.app_name ?? event.name}
+                className="h-11 w-auto sm:h-14"
+              />
             ) : (
-              <span className="headline truncate text-lg sm:text-xl">
-                <span className="text-accent">{headerName.slice(0, -1).join(" ")}</span>{" "}
-                {headerName.slice(-1)[0]}
-              </span>
+              <Wordmark words={headerName} spread={locale !== "ar"} />
             )}
           </Link>
           <nav className="flex shrink-0 items-center gap-1 text-sm">
@@ -96,7 +97,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
                 key={tab.to}
                 to={tab.to}
                 className={cn(
-                  "focus-ring flex flex-col items-center gap-0.5 pt-2.5 text-[11px] font-semibold",
+                  "focus-ring flex flex-col items-center gap-0.5 pt-2.5 text-2xs font-semibold",
                   active ? "text-ink" : "text-ink-3",
                 )}
               >
@@ -110,6 +111,42 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
         </div>
       </nav>
     </div>
+  );
+}
+
+/**
+ * The game's name as a logo (Tino, 4 Oct 2026: "a bigger game name logo at the top"): a gold crown,
+ * then two stacked lines, all but the last word in the accent colour on top ("SIX KINGS SLAM") and the
+ * last word in white underneath ("PREDICTOR"), its letters spread to the same width so the two lines
+ * read as one block. Arabic letters join, so they are never spread apart: centred instead.
+ */
+function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {
+  const top = words.slice(0, -1).join(" ");
+  const last = words.slice(-1)[0] ?? "";
+  return (
+    <span className="flex items-center gap-2">
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden
+        fill="currentColor"
+        className="h-8 w-8 shrink-0 text-gold sm:h-10 sm:w-10"
+      >
+        <path d="M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Zm2 11h14v1.5H5V19.5Z" />
+      </svg>
+      <span className="headline inline-grid leading-[0.92]">
+        <span className="whitespace-nowrap text-[26px] text-accent sm:text-[34px]">{top}</span>
+        {spread ? (
+          <span aria-hidden className="flex justify-between text-[17px] sm:text-[22px]">
+            {[...last].map((ch, i) => (
+              <span key={i}>{ch}</span>
+            ))}
+          </span>
+        ) : (
+          <span className="text-center text-[17px] sm:text-[22px]">{last}</span>
+        )}
+        {spread && <span className="sr-only">{last}</span>}
+      </span>
+    </span>
   );
 }
 
