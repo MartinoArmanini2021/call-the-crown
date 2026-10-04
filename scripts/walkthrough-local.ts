@@ -85,13 +85,29 @@ claim((await anon.from("picks").select("*")).error !== null, "anon cannot read p
 
 section("2. A fan signs up with both consents: real Supabase Auth, 6-digit code by email");
 // Audit 3 Oct 2026, F-01: nobody gets an account by typing an address. The bare password sign-up
-// endpoint gives no session, and its password is wiped until the address is proven (0013).
+// endpoint gives no session, its password does not work while the address is unproven, and it is
+// wiped when the real owner proves the address with the emailed code (0014).
 const SQUATTER = `squat${Date.now() % 100000}@example.test`;
 const squat = await fresh().auth.signUp({ email: SQUATTER, password: "Squatter-pass-1" });
 claim(!squat.data.session, "the bare password sign-up gives no session without the emailed code");
 claim(
   !!(await fresh().auth.signInWithPassword({ email: SQUATTER, password: "Squatter-pass-1" })).error,
   "… and its password does not work on the unproven address",
+);
+await Bun.sleep(1500); // the resend interval
+const owner = fresh();
+must(
+  await owner.auth.signInWithOtp({ email: SQUATTER, options: { shouldCreateUser: true } }),
+  "owner signInWithOtp",
+);
+const ownerCode = /\b(\d{6})\b/.exec((await latestMail(SQUATTER)).text)?.[1];
+must(
+  await owner.auth.verifyOtp({ email: SQUATTER, token: ownerCode!, type: "email" }),
+  "owner verifyOtp",
+);
+claim(
+  !!(await fresh().auth.signInWithPassword({ email: SQUATTER, password: "Squatter-pass-1" })).error,
+  "when the real owner proves the address with their code, the stranger's password is gone",
 );
 const fan = fresh();
 must(
@@ -311,7 +327,8 @@ const report = must(await service.rpc("billing_report"), "billing") as {
   qualified: number;
 };
 claim(
-  report.qualified === 1 && report.verified === 1,
+  // verified 2: the fan, and the owner who proved the squatted address in section 2
+  report.qualified === 1 && report.verified === 2,
   `billing_report: registered ${report.registered}, verified ${report.verified}, qualified ${report.qualified}`,
   report,
 );

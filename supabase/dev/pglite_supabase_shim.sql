@@ -19,6 +19,7 @@ create table auth.users (
   email              text unique,
   email_confirmed_at timestamptz,
   encrypted_password varchar(255),
+  confirmation_sent_at timestamptz,
   raw_user_meta_data jsonb default '{}',
   created_at         timestamptz not null default now()
 );

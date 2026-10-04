@@ -405,23 +405,23 @@ select t.check('a league the deleted fan owned passes to its longest-standing me
   (select owner_id from public.leagues where id = (select (l->>'id')::uuid from lg2)) = t.uid(1));
 
 -- ---------------------------------------------------------------------------------------------------
--- 11. an address counts only once proven (audit 3 Oct 2026, F-01 and F-02; 0013)
+-- 11. an address counts only once proven (audit 3 Oct 2026, F-01 and F-02; 0013, 0014)
 -- ---------------------------------------------------------------------------------------------------
 select t.as_owner();
-insert into auth.users (id, email, encrypted_password, raw_user_meta_data) values
-  (t.uid(91), 'squat91@example.test', 'bcrypt-hash-from-a-stranger',
+-- A stranger's sign-up with someone else's address: unconfirmed, a code emailed to the real owner.
+insert into auth.users (id, email, encrypted_password, confirmation_sent_at, raw_user_meta_data) values
+  (t.uid(91), 'squat91@example.test', 'bcrypt-hash-from-a-stranger', now(),
    '{"display_name": "Planted Name", "consent_organiser": true, "consent_gsgm": true, "consent_text_version": "forged"}');
 select t.check('a new account starts with both consents NOT granted, whatever the sign-up request said',
   (select bool_and(not granted) and count(*) = 2 and bool_and(text_version <> 'forged')
      from public.consents where user_id = t.uid(91)));
-select t.check('no password is stored on an address nobody has proven',
-  (select encrypted_password = '' from auth.users where id = t.uid(91)));
-update auth.users set encrypted_password = 'another-stranger-hash' where id = t.uid(91);
-select t.check('… nor can one be set later while it is unproven',
-  (select encrypted_password = '' from auth.users where id = t.uid(91)));
-select t.check('the unproven address is not exported, even with consent rows forged afterwards',
-  not exists (select 1 from public.export_optins('organiser') where email = 'squat91@example.test'));
+select t.check('the unproven address is not exported, and not counted as verified',
+  not exists (select 1 from public.export_optins('organiser') where email = 'squat91@example.test')
+  and not exists (select 1 from public.export_optins('gsgm') where email = 'squat91@example.test'));
+-- The real owner enters the emailed code.
 update auth.users set email_confirmed_at = now() where id = t.uid(91);
+select t.check('the stranger''s password does not survive the owner''s proof',
+  (select encrypted_password = '' from auth.users where id = t.uid(91)));
 select t.as_user(t.uid(91));
 select public.update_profile('Real Owner', 'en');
 select public.update_consents(false, false, 'draft-1');
@@ -432,9 +432,10 @@ select t.check('once proven, the owner''s own name stands and nothing was grante
 update auth.users set encrypted_password = 'owner-hash' where id = t.uid(91);
 select t.check('a proven account keeps the password its owner sets',
   (select encrypted_password = 'owner-hash' from auth.users where id = t.uid(91)));
-insert into auth.users (id, email, email_confirmed_at, encrypted_password) values
-  (t.uid(92), 'admin92@example.test', now(), 'admin-made-hash');
-select t.check('an account created already confirmed (Auth admin API) keeps its password',
+-- The Auth admin API: writes the account unconfirmed, sends no email, confirms it a moment later.
+insert into auth.users (id, email, encrypted_password) values (t.uid(92), 'admin92@example.test', 'admin-made-hash');
+update auth.users set email_confirmed_at = now() where id = t.uid(92);
+select t.check('an account created through the Auth admin API keeps its password',
   (select encrypted_password = 'admin-made-hash' from auth.users where id = t.uid(92)));
 
 select * from t.report();
