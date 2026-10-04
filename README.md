@@ -75,7 +75,7 @@ The walkthrough (definition of done, item 3):
 3. Pick both quarter-finals: winner, sets, set scores.
 4. Console: **21 Oct 08:00**, a new Riyadh day. Change a pick.
 5. Console: **21 Oct 20:00**. The fixture provider publishes both quarter-final results (90 minutes after each start); the poller settles them and the semi-finals open.
-6. Results shows the breakdown per component; Leaderboard shows the table and the top-3 prizes; the console's `billing_report()` counts the fan as qualified (picks on two days).
+6. Results shows the breakdown per component; Standings shows the table and the top-3 prizes (and the friends leagues); the console's `billing_report()` counts the fan as qualified (picks on two days).
 
 ### With the Supabase CLI (Docker)
 

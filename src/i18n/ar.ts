@@ -9,7 +9,6 @@ export const ar: Record<StringKey, string> = {
   nav_picks: "توقعاتي",
   nav_results: "النتائج",
   nav_board: "الترتيب",
-  nav_leagues: "الدوريات",
   nav_profile: "الملف الشخصي",
   how_to_play: "طريقة اللعب",
   sign_in: "دخول",
@@ -218,6 +217,9 @@ export const ar: Record<StringKey, string> = {
 
   // leaderboard
   board_title: "الترتيب",
+  add_league: "دوري",
+  league_sheet_title: "انضم إلى دوري أو أنشئ واحداً",
+  manage: "إدارة",
   global: "العام",
   rank: "المركز",
   player_col: "المشجع",
@@ -236,7 +238,6 @@ export const ar: Record<StringKey, string> = {
     "دوريات الأصدقاء للتحدي فقط: الجوائز لأصحاب المراكز الثلاثة الأولى في الترتيب العام.",
 
   // leagues
-  leagues_title: "الدوريات",
   leagues_intro:
     "أنشئ دورياً صغيراً مع أصدقائك: أنشئه، شارك رمزه، واعرف من الأفضل بينكم. نقاطك هي نفسها في الترتيب العام.",
   create_league: "أنشئ دورياً",

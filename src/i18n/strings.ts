@@ -9,8 +9,7 @@ export const en = {
   // shell
   nav_picks: "Picks",
   nav_results: "Results",
-  nav_board: "Leaderboard",
-  nav_leagues: "Leagues",
+  nav_board: "Standings",
   nav_profile: "Profile",
   how_to_play: "How to play",
   sign_in: "Sign in",
@@ -222,7 +221,10 @@ export const en = {
   awaiting_result: "Awaiting the result",
 
   // leaderboard
-  board_title: "Leaderboard",
+  board_title: "Standings",
+  add_league: "League",
+  league_sheet_title: "Join or create a league",
+  manage: "Manage",
   global: "Global",
   rank: "Rank",
   player_col: "Fan",
@@ -240,7 +242,6 @@ export const en = {
   friends_no_prizes: "Friends leagues are for bragging rights: prizes are for the global top 3.",
 
   // leagues
-  leagues_title: "Leagues",
   leagues_intro:
     "Make a mini-league with friends: create one, share its code, and see who's best among you. Your points are the same as on the main table.",
   create_league: "Create a league",

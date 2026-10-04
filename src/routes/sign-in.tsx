@@ -83,7 +83,7 @@ function SignIn() {
 
   const done = () => {
     const to = search.code
-      ? `/leagues?code=${encodeURIComponent(search.code)}`
+      ? `/standings?join=${encodeURIComponent(search.code)}`
       : safeRedirect(search.redirect);
     void navigate({ to });
   };

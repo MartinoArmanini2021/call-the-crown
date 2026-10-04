@@ -88,7 +88,7 @@ export function NextStepBanner({
       );
     case "over":
       return (
-        <Link to="/leaderboard" className={`${box} focus-ring`}>
+        <Link to="/standings" className={`${box} focus-ring`}>
           <span>
             <span className={`${kicker} block text-ink-3`}>{t("event_over")}</span>
             <span className="mt-0.5 block text-sm font-semibold">{t("see_standings")} →</span>

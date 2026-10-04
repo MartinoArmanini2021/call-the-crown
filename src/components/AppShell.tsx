@@ -10,8 +10,7 @@ import { cn } from "@/lib/utils";
 const TABS = [
   { to: "/picks", key: "nav_picks", icon: "◎" },
   { to: "/results", key: "nav_results", icon: "✓" },
-  { to: "/leaderboard", key: "nav_board", icon: "≡" },
-  { to: "/leagues", key: "nav_leagues", icon: "◇" },
+  { to: "/standings", key: "nav_board", icon: "≡" },
 ] as const;
 
 // The frame of every screen: brand header, content column, bottom tabs (thumb reach on phones).
@@ -89,7 +88,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
       </main>
 
       <nav className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t border-line bg-bg/95 backdrop-blur">
-        <div className="mx-auto grid max-w-xl grid-cols-4">
+        <div className="mx-auto grid max-w-xl grid-cols-3">
           {TABS.map((tab) => {
             const active = path.startsWith(tab.to);
             return (
