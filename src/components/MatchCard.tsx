@@ -3,7 +3,7 @@ import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
 import { localTime, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { playerName } from "./Brand";
+import { PlayerPhoto, playerName } from "./Brand";
 import { useMatchNames } from "./matchNames";
 import { SIDE_COLOR } from "./sides";
 
@@ -69,6 +69,7 @@ export function MatchCard({
           mine ? SIDE_COLOR[side].chosen : "bg-raised hover:bg-raised/70",
         )}
       >
+        <PlayerPhoto player={p} size={48} className="mb-2" />
         <span className="flex w-full items-center gap-1.5">
           <span aria-hidden className={cn("h-2 w-2 shrink-0 rounded-full", SIDE_COLOR[side].dot)} />
           <span className="headline truncate text-xl leading-tight text-ink">

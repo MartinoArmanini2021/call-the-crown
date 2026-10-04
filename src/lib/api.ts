@@ -30,7 +30,7 @@ export type EventConfig = {
   branding: {
     app_name?: string;
     app_name_ar?: string;
-    short_name?: string; // the header mark, e.g. "Six Kings Predictor"
+    short_name?: string; // the header mark, e.g. "Call the Crown"
     short_name_ar?: string;
     event_line?: string; // the landing page's line about the event: venue, dates, broadcaster
     event_line_ar?: string;
@@ -275,5 +275,10 @@ export function inLocale<T extends object>(o: T, key: keyof T & string, locale: 
 }
 
 // Images (organiser-supplied, in the instance's own storage bucket; never hotlinked).
+/** An image from the event bucket, or a full https address as it is (the ATP headshots, 4 Oct 2026). */
 export const publicImage = (path: string | null | undefined): string | null =>
-  path ? supabase.storage.from("event").getPublicUrl(path).data.publicUrl : null;
+  !path
+    ? null
+    : path.startsWith("https://")
+      ? path
+      : supabase.storage.from("event").getPublicUrl(path).data.publicUrl;

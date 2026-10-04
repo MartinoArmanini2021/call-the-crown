@@ -1,7 +1,9 @@
 -- =====================================================================================================
--- Event setup — Six Kings Slam 2026. One file per licensee/event; run once by the operator (SQL editor,
+-- Event setup — Riyadh, October 2026. One file per event; run once by the operator (SQL editor,
 -- as postgres) after the migrations. Re-runnable: it upserts the single event_config row.
 -- Rules = the deck the organiser received. Do not change them here without a decision from Tino.
+-- The app's own name, "Call the Crown" (Tino, 4 Oct 2026: the organiser is not licensing it, so the app
+-- runs standalone under its own name and logo; the event is described, never used as the brand).
 --
 -- STILL PLACEHOLDERS (see README, "Open questions"): launch_at, the rank snapshot date, the prize text
 -- and terms URL, the privacy and consent texts (legal review), the sponsor slots, the deciding-set mode.
@@ -14,7 +16,7 @@ insert into public.event_config (
   rules, league_limits, branding, prizes, prize_terms_url, privacy, sponsor_slots, flags
 ) values (
   true,
-  'Six Kings Slam 2026 Predictor',
+  'Call the Crown · Riyadh 2026',
   'Asia/Riyadh',
   null,                                        -- set at launch
   '2026-10-24 23:59:59+03',                    -- 24 Oct 23:59 Riyadh
@@ -29,12 +31,12 @@ insert into public.event_config (
    }',
   '{"max_leagues_per_user": 10, "max_members": 200}',
   '{
-     "app_name":  "Six Kings Slam Predictor",
-     "short_name": "Six Kings Slam Predictor",
-     "event_line": "Riyadh · anb Arena · 21, 22 & 24 October · Live on Netflix",
-     "app_name_ar":  "توقعات بطولة الملوك الستة",
-     "short_name_ar": "توقعات الملوك الستة",
-     "event_line_ar": "الرياض · anb أرينا · 21 و22 و24 أكتوبر · مباشرة على نتفليكس",
+     "app_name":  "Call the Crown",
+     "short_name": "Call the Crown",
+     "event_line": "Six players · Riyadh · 21, 22 & 24 October",
+     "app_name_ar":  "توقّع التاج",
+     "short_name_ar": "توقّع التاج",
+     "event_line_ar": "ستة لاعبين · الرياض · 21 و22 و24 أكتوبر",
      "logo_path": null,
      "colors": {"bg": "#0b0b0b", "card": "#181818", "raised": "#242424", "accent": "#e50914",
                 "accent_deep": "#b20710", "accent_text": "#ff4f57", "text": "#ffffff",

@@ -1,18 +1,17 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
-import { AppShell, PageTitle } from "@/components/AppShell";
+import { AppShell } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
 import { PickPager } from "@/components/PickPager";
 import { PickSheet } from "@/components/PickSheet";
-import { PicksIntro } from "@/components/PicksIntro";
 import { QueryGate } from "@/components/QueryGate";
 import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
 import type { Match } from "@/lib/api";
-import { matchState } from "@/lib/format";
+import { matchState, shortTimeLeft } from "@/lib/format";
 import { nextStep } from "@/lib/nextStep";
 
 type Search = { match?: number };
@@ -25,12 +24,14 @@ export const Route = createFileRoute("/picks")({
   component: Picks,
 });
 
-// Only what you can do now: the next step, then the matches you can pick, in the order they lock, one
-// per screen (PickPager, 4 Oct 2026). The draw and finished matches live on Results (Tino, 2 Oct 2026).
+// Only what you can do now: the matches you can pick, in the order they lock, one per screen (PickPager,
+// 4 Oct 2026). The top is one short line (Tino, 4 Oct 2026: the match on screen straight away): the title
+// with a link to How to play, then "1 of 2 picked · Next lock 1d 4h" above the match tabs. With nothing
+// open, the next step (waiting for a result, or the event is over) is the content instead. The draw and finished matches live on Results (Tino, 2 Oct 2026).
 // A pick is made in the sheet (PickSheet); a tap on an open match in the draw arrives here as ?match=N,
 // opens it, and shows that match. After a save the pager moves on to the next match without a pick.
 function Picks() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const now = useServerNow();
   const navigate = useNavigate();
   const { user, matches, byPlayer, pickByMatch, queries } = useGame();
@@ -56,6 +57,7 @@ function Picks() {
   // which match the pager shows: a deep link, else the first one still without a pick
   const [focus, setFocus] = useState<number | undefined>(search.match);
   const firstTodo = open.find((m) => !pickByMatch.has(m.match_no))?.match_no;
+  const pickedOpen = open.filter((m) => pickByMatch.has(m.match_no)).length;
   const shown = focus ?? firstTodo;
   const onSaved = (s: { pick: string; until: string }, savedMatch?: number) => {
     setSaved(s);
@@ -78,14 +80,15 @@ function Picks() {
 
   return (
     <AppShell>
-      <PageTitle title={t("picks_title")} sub={t("picks_intro")} />
-      <PicksIntro />
-
-      {user && matches.data && (
-        <div className="mb-4">
-          <NextStepBanner step={step} matches={all} players={byPlayer} onPick={select} />
-        </div>
-      )}
+      <div className="mb-3 flex items-baseline justify-between gap-3">
+        <h1 className="headline text-4xl">{t("picks_title")}</h1>
+        <Link
+          to="/how-to-play"
+          className="focus-ring shrink-0 rounded text-sm font-semibold text-ink-2 underline underline-offset-4"
+        >
+          {t("how_to_play")}
+        </Link>
+      </div>
 
       {!user && (
         <Link
@@ -97,9 +100,12 @@ function Picks() {
       )}
 
       <QueryGate queries={queries} label={t("picks_title").toLowerCase()}>
-        <h2 className="headline mb-2 text-sm text-ink-3">{t("open_now")}</h2>
         {open.length === 0 ? (
-          <p className="card px-4 py-5 text-center text-sm text-ink-3">{t("nothing_open")}</p>
+          user && step.kind !== "none" ? (
+            <NextStepBanner step={step} matches={all} players={byPlayer} onPick={select} />
+          ) : (
+            <p className="card px-4 py-5 text-center text-sm text-ink-3">{t("nothing_open")}</p>
+          )
         ) : (
           <PickPager
             matches={open}
@@ -107,6 +113,22 @@ function Picks() {
             players={byPlayer}
             pickByMatch={pickByMatch}
             focus={shown}
+            status={
+              <p className="flex items-center justify-between gap-3">
+                <span
+                  className={pickedOpen === open.length ? "font-semibold text-good" : "text-ink-2"}
+                >
+                  {pickedOpen === open.length && "✓ "}
+                  {t("picks_status", { n: pickedOpen, total: open.length })}
+                </span>
+                <span className="text-ink-3">
+                  {t("next_lock")}{" "}
+                  <b className="num text-accent-text">
+                    {shortTimeLeft(Date.parse(open[0]!.starts_at!) - now, locale)}
+                  </b>
+                </span>
+              </p>
+            }
             render={(m) => (
               <MatchCard
                 match={m}

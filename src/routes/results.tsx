@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useCallback, useState } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
 import { Draw } from "@/components/Draw";
 import { NextStepBanner } from "@/components/NextStep";
 import { QueryGate } from "@/components/QueryGate";
-import { ResultCard } from "@/components/ResultCard";
+import { ResultSheet } from "@/components/ResultSheet";
 import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
@@ -16,8 +17,8 @@ import { nextStep } from "@/lib/nextStep";
 export const Route = createFileRoute("/results")({ component: Results });
 
 // Where you stand first (points, rank among all fans, matches played), then the draw (the whole
-// event at a glance), then every finished or in-play match, latest first, with your pick set by set
-// against the result.
+// event at a glance). A finished or in-play match opens from its card in the draw, as a sheet with your
+// pick set by set against the result (Tino, 4 Oct 2026: no second list of the same matches below).
 function Results() {
   const { t } = useT();
   const now = useServerNow(30_000);
@@ -30,15 +31,13 @@ function Results() {
         ? navigate({ to: "/picks", search: { match: m.match_no } })
         : navigate({ to: "/sign-in", search: { redirect: "/picks" } }));
     } else if (state === "settled" || state === "locked") {
-      document
-        .getElementById(`result-${m.match_no}`)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setOpen(m.match_no);
     }
   };
+  const [open, setOpen] = useState<number | null>(null);
+  const close = useCallback(() => setOpen(null), []);
   const all = matches.data ?? [];
-  const shown = all
-    .filter((m) => ["settled", "locked"].includes(matchState(m, now)))
-    .sort((a, b) => Date.parse(b.starts_at ?? "") - Date.parse(a.starts_at ?? ""));
+  const openMatch = all.find((m) => m.match_no === open);
   const settledCount = all.filter((m) => m.status !== "scheduled").length;
 
   const rankWindow = useQuery({ ...rankWindowQuery(null), enabled: !!user });
@@ -76,24 +75,7 @@ function Results() {
           <p className="mt-2 text-center text-2xs text-ink-3">{t("draw_hint")}</p>
         </section>
 
-        {shown.length === 0 ? (
-          <p className="card px-4 py-6 text-center text-sm text-ink-3">{t("results_empty")}</p>
-        ) : (
-          <div className="space-y-3">
-            {shown.map((m, i) => (
-              <div key={m.match_no} id={`result-${m.match_no}`} className="scroll-mt-20 space-y-3">
-                <ResultCard
-                  match={m}
-                  matches={all}
-                  pick={pickByMatch.get(m.match_no)}
-                  players={byPlayer}
-                  signedIn={!!user}
-                />
-                {i === 0 && <SponsorSlot slot="results_card" />}
-              </div>
-            ))}
-          </div>
-        )}
+        <SponsorSlot slot="results_card" />
         {user && (
           <div className="mt-5">
             <NextStepBanner
@@ -104,6 +86,16 @@ function Results() {
           </div>
         )}
       </QueryGate>
+      {openMatch && (
+        <ResultSheet
+          match={openMatch}
+          matches={all}
+          pick={pickByMatch.get(openMatch.match_no)}
+          players={byPlayer}
+          signedIn={!!user}
+          onClose={close}
+        />
+      )}
     </AppShell>
   );
 }

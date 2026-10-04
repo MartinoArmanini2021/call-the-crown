@@ -13,7 +13,7 @@ import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
 import { localDay, localTime, matchState, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { playerName } from "./Brand";
+import { PlayerPhoto, playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
 import { useMatchNames } from "./matchNames";
 
@@ -443,9 +443,15 @@ function FaceOff({ m, matches, players, pickByMatch }: CardProps) {
     const id = n === 1 ? m.p1_id : m.p2_id;
     const rank = id ? players.get(id)?.rank_snapshot : undefined;
     return (
-      <div className="min-w-0 flex-1 text-center">
+      <div className="flex min-w-0 flex-1 flex-col items-center text-center">
+        {id && (
+          <PlayerPhoto player={players.get(id)} size={64} className="mb-2 ring-1 ring-gold/50" />
+        )}
         <p
-          className={cn("headline truncate text-2xl leading-tight", id ? "text-ink" : "text-ink-3")}
+          className={cn(
+            "headline w-full truncate text-2xl leading-tight",
+            id ? "text-ink" : "text-ink-3",
+          )}
         >
           {id ? surname(playerName(players.get(id), locale)) : slot(m, n, matches)}
         </p>

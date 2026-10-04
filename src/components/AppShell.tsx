@@ -24,7 +24,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const avatar = (profile.data?.display_name || user?.email || "?").trim()[0]?.toUpperCase();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const logo = publicImage(event.branding.logo_path);
-  // The header's short mark (branding.short_name, e.g. "Six Kings Slam Predictor"), drawn by Wordmark:
+  // The header's short mark (branding.short_name, e.g. "Call the Crown"), drawn by Wordmark:
   // all but the last word on top, the last word underneath. The full app name stays in the page title.
   const headerName = (
     inLocale(event.branding, "short_name", locale) ??

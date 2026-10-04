@@ -481,5 +481,12 @@ select t.check('F-17 after an account deletion the ranks close up (1, 2: no gap)
 select t.check('… and a plain score update outside settlement is still refused',
   t.err('update public.standings set points = 99 where user_id = ''' || t.uid(2) || '''') like '%scores_are_settlement_only%');
 
+-- 13. a fan who joins after a result is ranked at once, last (0017)
+select t.new_user(84, 'Late Joiner');
+select t.check('a fan who joins after a result is on the board at once, in last place',
+  (select rank from public.standings where user_id = t.uid(84)) = 3
+  and (select array_agg(rank order by rank) from public.standings where rank is not null) = array[1, 2, 3],
+  (select array_agg(rank order by rank)::text from public.standings where rank is not null));
+
 select * from t.report();
 rollback;

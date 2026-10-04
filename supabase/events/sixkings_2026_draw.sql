@@ -13,19 +13,21 @@
 --     until the organiser's schedule arrives; start times stay editable until each match starts.
 --   · Wikipedia slot ids follow the 2024 and 2025 brackets; check them against the 2026 article once it
 --     exists (README, "Choose the results provider and map its ids").
--- Player images: the organiser's Six Kings Slam artwork, uploaded to the instance's `event` bucket as
--- players/<id>.jpg, then: update public.players set image_path = 'players/<id>.jpg' where id = '<id>';
+-- Player images: the official ATP headshots, hotlinked by ATP id (Tino, 4 Oct 2026: the app runs
+-- standalone, no organiser artwork; the same pictures Grand Slam GM uses, never re-hosted). A wrong id
+-- shows ATP's generic silhouette instead of failing, so check the faces by eye after loading.
+-- image_path may be a storage path (an uploaded image) or a full https address (these).
 -- =====================================================================================================
 
 set role service_role;
 
 select public.set_players(
-  '[{"id":"alcaraz", "name":"Carlos Alcaraz",   "name_ar":"كارلوس ألكاراز","country":"ESP","seed":1,"rank":3},
-    {"id":"djokovic","name":"Novak Djokovic",   "name_ar":"نوفاك ديوكوفيتش","country":"SRB","seed":2,"rank":5},
-    {"id":"sinner",  "name":"Jannik Sinner",    "name_ar":"يانيك سينر","country":"ITA","seed":3,"rank":1},
-    {"id":"zverev",  "name":"Alexander Zverev", "name_ar":"ألكسندر زفيريف","country":"GER","seed":4,"rank":2},
-    {"id":"deminaur","name":"Alex de Minaur",   "name_ar":"أليكس دي مينور","country":"AUS","seed":5,"rank":7},
-    {"id":"fritz",   "name":"Taylor Fritz",     "name_ar":"تايلور فريتز","country":"USA","seed":6,"rank":10}]',
+  '[{"id":"alcaraz", "name":"Carlos Alcaraz",   "name_ar":"كارلوس ألكاراز","country":"ESP","seed":1,"rank":3,"image_path":"https://www.atptour.com/-/media/alias/player-headshot/A0E2"},
+    {"id":"djokovic","name":"Novak Djokovic",   "name_ar":"نوفاك ديوكوفيتش","country":"SRB","seed":2,"rank":5,"image_path":"https://www.atptour.com/-/media/alias/player-headshot/D643"},
+    {"id":"sinner",  "name":"Jannik Sinner",    "name_ar":"يانيك سينر","country":"ITA","seed":3,"rank":1,"image_path":"https://www.atptour.com/-/media/alias/player-headshot/S0AG"},
+    {"id":"zverev",  "name":"Alexander Zverev", "name_ar":"ألكسندر زفيريف","country":"GER","seed":4,"rank":2,"image_path":"https://www.atptour.com/-/media/alias/player-headshot/Z355"},
+    {"id":"deminaur","name":"Alex de Minaur",   "name_ar":"أليكس دي مينور","country":"AUS","seed":5,"rank":7,"image_path":"https://www.atptour.com/-/media/alias/player-headshot/DH58"},
+    {"id":"fritz",   "name":"Taylor Fritz",     "name_ar":"تايلور فريتز","country":"USA","seed":6,"rank":10,"image_path":"https://www.atptour.com/-/media/alias/player-headshot/FB98"}]',
   '[{"match_no":1,"round":"QF","p1":{"type":"player","id":"fritz"},   "p2":{"type":"player","id":"zverev"}},
     {"match_no":2,"round":"QF","p1":{"type":"player","id":"deminaur"},"p2":{"type":"player","id":"sinner"}},
     {"match_no":3,"round":"SF","p1":{"type":"player","id":"alcaraz"}, "p2":{"type":"winner","match":1}},

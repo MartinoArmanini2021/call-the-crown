@@ -1,19 +1,36 @@
+import { useState } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { inLocale, publicImage, type Player, type SponsorSlot as Slot } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
-/** A player's organiser-supplied image; nothing until it exists (names, never initials). Never a third-party hotlink. */
-export function PlayerBadge({ player, size = 40 }: { player: Player | undefined; size?: number }) {
+/**
+ * A player's photo: the official ATP headshot (Tino, 4 Oct 2026; hotlinked, never re-hosted) or an
+ * uploaded image. Nothing when there is none or it fails to load: the name always carries the player,
+ * never initials.
+ */
+export function PlayerPhoto({
+  player,
+  size = 40,
+  className,
+}: {
+  player: Player | undefined;
+  size?: number;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
   const src = publicImage(player?.image_path);
-  if (!src) return null;
+  if (!src || failed) return null;
   return (
     <img
       src={src}
       alt=""
       width={size}
       height={size}
-      className="shrink-0 rounded-full bg-raised object-cover"
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+      className={cn("shrink-0 rounded-full bg-raised object-cover object-top", className)}
       style={{ width: size, height: size }}
     />
   );
