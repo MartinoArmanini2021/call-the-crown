@@ -24,8 +24,8 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const avatar = (profile.data?.display_name || user?.email || "?").trim()[0]?.toUpperCase();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const logo = publicImage(event.branding.logo_path);
-  // The header's short mark (branding.short_name, e.g. "Six Kings Slam Predictor"): all but the last word
-  // in the accent colour. Short enough to fit a phone; the full app name stays in the page title.
+  // The header's short mark (branding.short_name, e.g. "Six Kings Slam Predictor"), drawn by Wordmark:
+  // all but the last word on top, the last word underneath. The full app name stays in the page title.
   const headerName = (
     inLocale(event.branding, "short_name", locale) ??
     inLocale(event.branding, "app_name", locale) ??
@@ -115,34 +115,48 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
 }
 
 /**
- * The game's name as a logo (Tino, 4 Oct 2026: "a bigger game name logo at the top"): a gold crown,
- * then two stacked lines, all but the last word in the accent colour on top ("SIX KINGS SLAM") and the
- * last word in white underneath ("PREDICTOR"), its letters spread to the same width so the two lines
- * read as one block. Arabic letters join, so they are never spread apart: centred instead.
+ * The game's name as a logo (Tino, 4 Oct 2026: "a bigger game name logo at the top"; then "go with the
+ * crowned ball"): the mark, a red tennis ball wearing a gold crown (also public/favicon.svg), then two
+ * stacked lines, all but the last word in white on top ("SIX KINGS SLAM") and the last word in gold
+ * underneath ("PREDICTOR"), its letters spread to the same width so the two lines read as one block.
+ * Arabic letters join, so they are never spread apart: centred instead.
  */
 function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {
   const top = words.slice(0, -1).join(" ");
   const last = words.slice(-1)[0] ?? "";
   return (
     <span className="flex items-center gap-2">
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden
-        fill="currentColor"
-        className="h-8 w-8 shrink-0 text-gold sm:h-10 sm:w-10"
-      >
-        <path d="M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Zm2 11h14v1.5H5V19.5Z" />
+      <svg viewBox="0 0 100 100" aria-hidden className="h-10 w-10 shrink-0 sm:h-12 sm:w-12">
+        <circle cx="50" cy="60" r="34" fill="var(--accent)" />
+        <path
+          d="M23 37 C41 51 41 69 23 83"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="4.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M77 37 C59 51 59 69 77 83"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="4.5"
+          strokeLinecap="round"
+        />
+        <g transform="rotate(-12 50 18)" fill="var(--gold)">
+          <path d="M31 30 L31 12 L39 22 L50 6 L61 22 L69 12 L69 30 Z" />
+          <rect x="30" y="29.5" width="40" height="5.5" rx="1.5" />
+        </g>
       </svg>
       <span className="headline inline-grid leading-[0.92]">
-        <span className="whitespace-nowrap text-[26px] text-accent sm:text-[34px]">{top}</span>
+        <span className="whitespace-nowrap text-[26px] text-ink sm:text-[34px]">{top}</span>
         {spread ? (
-          <span aria-hidden className="flex justify-between text-[17px] sm:text-[22px]">
+          <span aria-hidden className="flex justify-between text-[17px] text-gold sm:text-[22px]">
             {[...last].map((ch, i) => (
               <span key={i}>{ch}</span>
             ))}
           </span>
         ) : (
-          <span className="text-center text-[17px] sm:text-[22px]">{last}</span>
+          <span className="text-center text-[17px] text-gold sm:text-[22px]">{last}</span>
         )}
         {spread && <span className="sr-only">{last}</span>}
       </span>

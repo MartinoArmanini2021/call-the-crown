@@ -100,10 +100,8 @@ export function ResultCard({
       {signedIn && <CrowdBlock match={match} pick={pick} short={short} />}
 
       {settled && match.status !== "completed" && (
-        <p className="text-2xs text-ink-3">
-          {t("void_note", {
-            status: t(match.status === "retired" ? "retired" : "walkover").toLowerCase(),
-          })}
+        <p className="text-xs text-ink-3">
+          {t(match.status === "retired" ? "void_note_retired" : "void_note_walkover")}
         </p>
       )}
       {settled && signedIn && scored && (

@@ -69,6 +69,12 @@ export function PickSheet({
   );
   const [error, setError] = useState<string | null>(null);
   const panel = useRef<HTMLDivElement>(null);
+  // The saved pick can arrive after the sheet opens (a full page load of /picks?match=N: the picks
+  // are still loading). Until the fan touches anything, the sheet follows the saved pick (audit F-15).
+  const touched = useRef(false);
+  useEffect(() => {
+    if (pick && !touched.current) setDraft(fromPick(match, pick));
+  }, [match, pick]);
 
   // Behave like a dialog: lock the page behind, Escape closes, focus moves in and back out.
   useEffect(() => {
@@ -76,7 +82,27 @@ export function PickSheet({
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     panel.current?.querySelector<HTMLElement>("button")?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    // Escape closes; Tab and Shift+Tab stay inside the sheet (a modal dialog, audit F-16).
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") return onClose();
+      if (e.key !== "Tab" || !panel.current) return;
+      const items = [
+        ...panel.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ].filter((el) => el.offsetParent !== null);
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      const inside = panel.current.contains(document.activeElement);
+      if (e.shiftKey && (document.activeElement === first || !inside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (document.activeElement === last || !inside)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = overflow;
@@ -130,6 +156,7 @@ export function PickSheet({
   });
 
   const change = (fn: (d: Draft) => Draft) => {
+    touched.current = true;
     setError(null);
     setDraft(fn);
   };
