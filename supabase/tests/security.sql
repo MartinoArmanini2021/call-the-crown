@@ -438,5 +438,48 @@ update auth.users set email_confirmed_at = now() where id = t.uid(92);
 select t.check('an account created through the Auth admin API keeps its password',
   (select encrypted_password = 'admin-made-hash' from auth.users where id = t.uid(92)));
 
+-- ---------------------------------------------------------------------------------------------------
+-- 12. leagues and ranks (audit F-10, F-12, F-17; 0015)
+-- ---------------------------------------------------------------------------------------------------
+select t.as_owner();
+select t.new_user(81, 'Owner Eighty-One');
+select t.new_user(82, 'Member Eighty-Two');
+select t.new_user(83, 'Member Eighty-Three');
+select t.as_user(t.uid(81));
+create temp table lg3 as select public.create_league('Removals') as l;
+grant select on lg3 to public;
+select t.as_user(t.uid(82));
+select public.join_league((select l->>'code' from lg3));
+select t.as_user(t.uid(83));
+select public.join_league((select l->>'code' from lg3));
+select t.as_user(t.uid(81));
+select public.remove_member((select (l->>'id')::uuid from lg3), t.uid(82));
+select t.as_user(t.uid(82));
+select t.check('F-10 a member removed by the owner cannot rejoin with the code',
+  (public.join_league((select l->>'code' from lg3)))->>'error' = 'removed_from_league');
+select t.as_owner();
+select t.check('… and is still out of the league',
+  not exists (select 1 from public.league_members
+               where league_id = (select (l->>'id')::uuid from lg3) and user_id = t.uid(82)));
+-- F-12: the owner's account deleted outside the app (Auth admin API, dashboard): a plain delete.
+delete from auth.users where id = t.uid(81);
+select t.check('F-12 an owner deleted outside the app hands the league to the longest-standing member',
+  (select owner_id from public.leagues where id = (select (l->>'id')::uuid from lg3)) = t.uid(83));
+
+-- F-17: three ranked fans; the leader deletes their account; the others move up, no gap.
+select set_config('skg.settling', '1', true);
+update public.standings set rank = null;
+update public.standings set rank = case user_id when t.uid(1) then 1 when t.uid(2) then 2 when t.uid(83) then 3 end
+ where user_id in (t.uid(1), t.uid(2), t.uid(83));
+select set_config('skg.settling', '0', true);
+select t.as_user(t.uid(1));
+select public.delete_account();
+select t.as_owner();
+select t.check('F-17 after an account deletion the ranks close up (1, 2: no gap)',
+  (select array_agg(rank order by rank) from public.standings where rank is not null) = array[1, 2],
+  (select array_agg(rank order by rank)::text from public.standings where rank is not null));
+select t.check('… and a plain score update outside settlement is still refused',
+  t.err('update public.standings set points = 99 where user_id = ''' || t.uid(2) || '''') like '%scores_are_settlement_only%');
+
 select * from t.report();
 rollback;

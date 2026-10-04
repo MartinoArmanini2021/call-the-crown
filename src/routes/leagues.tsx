@@ -12,7 +12,7 @@ import {
   createLeague,
   deleteLeague,
   joinLeague,
-  leaderboardQuery,
+  leagueMembersQuery,
   leaveLeague,
   myLeaguesQuery,
   removeMember,
@@ -187,7 +187,10 @@ function LeagueCard({
   const { t } = useT();
   const [managing, setManaging] = useState(false);
   const [copied, setCopied] = useState(false);
-  const members = useQuery({ ...leaderboardQuery(league.id, 0, 100), enabled: managing });
+  const members = useQuery({
+    ...leagueMembersQuery(league.id, league.member_count),
+    enabled: managing,
+  });
   const run = (fn: () => Promise<unknown>) => fn().then(onChange, onError);
 
   async function share() {

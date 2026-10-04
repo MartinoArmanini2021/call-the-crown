@@ -199,6 +199,23 @@ export const leaderboardQuery = (league: string | null, offset: number, limit = 
       rpc<BoardRow[]>("get_leaderboard", { p_league: league, p_offset: offset, p_limit: limit }),
     refetchInterval: 60_000,
   });
+/** Every member of a league, for its owner (a league holds up to 200, a board page 100: audit F-13). */
+export const leagueMembersQuery = (league: string, count: number) =>
+  queryOptions({
+    queryKey: ["board", league, "all", count],
+    queryFn: async () =>
+      (
+        await Promise.all(
+          Array.from({ length: Math.max(1, Math.ceil(count / 100)) }, (_, i) =>
+            rpc<BoardRow[]>("get_leaderboard", {
+              p_league: league,
+              p_offset: i * 100,
+              p_limit: 100,
+            }),
+          ),
+        )
+      ).flat(),
+  });
 export const rankWindowQuery = (league: string | null) =>
   queryOptions({
     queryKey: ["rank_window", league],
