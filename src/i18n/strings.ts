@@ -284,7 +284,9 @@ export const en = {
   htp_enter_2:
     "For each set, tap who wins it, then the score ({scores}). If the other player takes set 1 or 2, a third set appears: the winner of the match takes it.",
   htp_enter_3: "Change it as often as you like until the match starts.",
-  htp_lock: "When a match starts, its picks lock. Nobody sees other fans' picks before that.",
+  htp_lock:
+    "When a match starts, its picks lock. Nobody sees other fans' picks before that. If a match starts earlier than scheduled, a pick saved after it really started does not count.",
+  void_late: "No points: this pick was saved after the match had already started ({time}).",
   htp_scoring: "What a pick earns",
   htp_scoring_intro:
     "Nothing counts unless your winner is right: the wrong winner scores 0 for that match.",

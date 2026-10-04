@@ -237,7 +237,7 @@ select public.set_match_start(1, '2026-10-21 19:30+03');
 select public.lock_match_now(1);   -- its start becomes this moment: picks for match 1 close now
 ```
 
-The next poll settles it once the provider marks it final. (A final result that arrives before the start is refused, so no result is ever published while picks are open.) Whether picks saved after the real first ball are voided is a rule decision, still open.
+The next poll settles it once the provider marks it final. (A final result that arrives before the start is refused, so no result is ever published while picks are open.) Picks saved after the real start are void (Tino, 4 Oct 2026; migration 0018): at settlement the real start is the first accepted in-play reading of the unbroken run that ends in the result, and a pick last changed at or after it scores 0. Results tells the fan why. The sooner you lock, the fewer picks are voided.
 
 ### Choose the results provider and map its ids
 

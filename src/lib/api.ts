@@ -75,6 +75,8 @@ export type Match = {
   status: "scheduled" | "completed" | "retired" | "walkover";
   winner_id: string | null;
   set_scores: SetScore[] | null;
+  /** the real start, set at settlement from the provider's readings (0018); null until then */
+  started_at: string | null;
 };
 export type Pick = {
   match_no: number;

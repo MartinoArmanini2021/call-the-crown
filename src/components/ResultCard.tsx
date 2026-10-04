@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { crowdQuery, type Match, type Pick, type Player } from "@/lib/api";
-import { scoreLine, surname } from "@/lib/format";
+import { localTime, scoreLine, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
@@ -106,13 +106,18 @@ export function ResultCard({
       )}
       {settled && signedIn && scored && (
         <p className="text-xs text-ink-2">
-          {pick.pts_winner === 0
-            ? t("wrong_winner")
-            : t("breakdown_line", {
-                w: `${pick.pts_winner}${upset ? ` ${t("upset_tag")}` : ""}`,
-                s: pick.pts_sets ?? 0,
-                e: pick.pts_exact ?? 0,
-              })}
+          {/* 0018: a pick last changed once the match was really under way scores nothing */}
+          {match.started_at && Date.parse(pick.updated_at) >= Date.parse(match.started_at)
+            ? t("void_late", {
+                time: localTime(match.started_at, event.timezone, locale),
+              })
+            : pick.pts_winner === 0
+              ? t("wrong_winner")
+              : t("breakdown_line", {
+                  w: `${pick.pts_winner}${upset ? ` ${t("upset_tag")}` : ""}`,
+                  s: pick.pts_sets ?? 0,
+                  e: pick.pts_exact ?? 0,
+                })}
         </p>
       )}
     </article>

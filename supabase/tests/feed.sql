@@ -7,6 +7,8 @@ begin;
 select t.setup_event();   -- QF1 C v F starts 21 Oct 16:30 UTC, QF2 D v E 17:40, SF1 A v winner QF1 22 Oct 16:30
 select t.new_user(1);
 select t.pick(t.uid(1), 1, 'c', '6-4 6-4');
+select t.new_user(2);
+select t.pick(t.uid(2), 1, 'c', '6-4 6-4');   -- fan 2 picks before the match starts and keeps it
 
 -- F-05: a payload no longer writes the poller's health (the poller writes it once per run).
 delete from public.ops_health;
@@ -48,6 +50,14 @@ select t.check('F-06 a walkover reported before the start alerts the operator',
   exists (select 1 from public.ops_alerts
            where kind = 'started_before_schedule' and (detail->>'match_no')::int = 2));
 
+-- 0018: a short "under way" blip (a vandal edit) that goes back to "not started" is not the start.
+select public.dev_set_now('2026-10-21 17:10+00');
+select t.feed(2, 'live', 'd', '');
+select public.dev_set_now('2026-10-21 17:12+00');
+select t.feed(2, 'scheduled', 'd', '');
+select public.dev_set_now('2026-10-21 17:15+00');
+select t.check('fans can still pick after the blip', t.pick(t.uid(2), 2, 'd', '6-4 6-4') is null);
+
 -- F-07: retirement and walkover payloads are checked.
 select public.dev_set_now('2026-10-21 20:00+00');
 select t.check('F-07 a walkover that carries set scores is refused',
@@ -66,9 +76,20 @@ select t.check('F-07 a "retirement" after the winner had already won is refused 
   t.feed(2, 'retired', 'd', '6-4 6-4')->>'reason' = 'the winner had already won the match: not a retirement');
 select t.check('a plausible retirement (6-4 2-1) settles',
   t.feed(2, 'retired', 'd', '6-4 2-1')->>'outcome' = 'settled');
+select t.check('a live blip that went back to "not started" is not the real start',
+  (select started_at is null from public.matches where match_no = 2));
+select t.check('… so the pick made after the blip counts (retirement: the winner points)',
+  (select pts_winner > 0 from public.picks where user_id = t.uid(2) and match_no = 2));
 
 -- F-08: a correction after the next match started pauses it; the operator re-seats it.
 select t.check('QF1 settles: C wins', t.feed(1, 'completed', 'c', '6-4 6-4')->>'outcome' = 'settled');
+-- 0018: QF1 was under way from 16:20 (the first live reading); fan 1 changed the pick at 16:21.
+select t.check('the real start is stored: the first live reading (16:20), not the scheduled 16:30',
+  (select started_at = timestamptz '2026-10-21 16:20+00' from public.matches where match_no = 1));
+select t.check('a pick changed after the real start is void: 0 in every component',
+  t.pts(t.uid(1), 1) = '0/0/0/0');
+select t.check('a pick made before the real start scores as usual',
+  t.pts(t.uid(2), 1) = '8/4/4/16');
 select public.dev_set_now('2026-10-22 17:00+00');   -- SF1 (A v C) is under way
 select t.check('a correction (F won QF1) after SF1 started is re-settled',
   t.feed(1, 'completed', 'f', '4-6 4-6')->>'outcome' = 'resettled');
