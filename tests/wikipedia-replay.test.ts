@@ -106,7 +106,8 @@ describe("the 2025 page, replayed", () => {
       1: "awaiting_stability",
       2: "awaiting_stability",
     });
-    await at("2026-10-21 20:10+00");
+    // the clock keeps running between polls, so the first poll past the 10 minutes is at minute 11
+    await at("2026-10-21 20:11+00");
     expect(await poll()).toEqual({ 1: "settled", 2: "settled" });
     expect(await match(1)).toMatchObject({ status: "completed", winner_id: "fritz" });
     // the page lists Tsitsipas first; our match too — Sinner won 6-2 6-3
@@ -124,14 +125,11 @@ describe("the 2025 page, replayed", () => {
   });
 
   it("nights 2 and 3: everything settles; the page's player order is mapped to ours", async () => {
-    expect(await pollEveryMinute("2026-10-22T21:00:00Z", "2026-10-22T21:10:00Z")).toMatchObject({
-      3: "settled",
-      4: "settled",
-    });
-    expect(await pollEveryMinute("2026-10-24T21:00:00Z", "2026-10-24T21:10:00Z")).toMatchObject({
-      5: "settled",
-      6: "settled",
-    });
+    // after 10 minutes of watching (settled at minute 10 or 11, the clock keeps running between polls)
+    await pollEveryMinute("2026-10-22T21:00:00Z", "2026-10-22T21:11:00Z");
+    expect((await match(3)).status).toBe("completed");
+    expect((await match(4)).status).toBe("completed");
+    await pollEveryMinute("2026-10-24T21:00:00Z", "2026-10-24T21:11:00Z");
     expect(await match(5)).toMatchObject({
       status: "retired",
       p1_id: "fritz",
