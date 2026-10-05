@@ -295,7 +295,7 @@ export const en = {
   htp_exact_row: "Each set exactly right (same player, same score)",
   htp_upset_title: "Upset bonus",
   htp_upset:
-    "Back the lower-ranked player and win more. The bigger the gap in the world ranking, the bigger the bonus.",
+    "Pick the lower-ranked player and score more if they win. The bigger the gap in the world ranking, the bigger the bonus.",
   htp_upset_example:
     "Example: world no. {low} beats world no. {high} in a quarter-final: {points} points for the winner instead of {base}.",
   htp_upset_real:
