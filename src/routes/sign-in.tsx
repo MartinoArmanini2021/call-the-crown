@@ -13,6 +13,7 @@ import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
 import { inLocale, updateConsents, updateProfile } from "@/lib/api";
+import { authErrorKey } from "@/lib/authError";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
@@ -51,17 +52,7 @@ function SignIn() {
   const [error, setError] = useState<string | null>(null);
   const onToken = useCallback((tok: string | null) => setCaptcha(tok), []);
 
-  const authError = (msg: string) => {
-    const m = msg.toLowerCase();
-    if (m.includes("signups not allowed") || m.includes("user not found")) return t("no_account");
-    if (m.includes("rate") || m.includes("too many")) return t("too_many_requests");
-    // An address that never entered its code has no password yet (0013): the code path proves it.
-    if (m.includes("invalid login credentials") || m.includes("not confirmed"))
-      return t("wrong_password");
-    if (m.includes("weak") || m.includes("pwned") || m.includes("known")) return t("password_weak");
-    if (m.includes("expired") || m.includes("invalid")) return t("code_wrong");
-    return t("err_generic");
-  };
+  const authError = (msg: string) => t(authErrorKey(msg));
 
   async function sendCode(e?: FormEvent) {
     e?.preventDefault();
