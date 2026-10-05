@@ -110,10 +110,16 @@ The same app against a real local Supabase. Docker Desktop must be running. The 
    select public.dev_set_now('2026-10-21 20:00+00');
    ```
 
-**The whole walkthrough as a script**, against this real stack (real Auth emails, RLS, pg_cron → edge function → settlement). It checks 21 claims. Afterwards, `bunx supabase db reset` puts the database back to the seed (redo step 4: the reset clears Vault).
+**The whole walkthrough as a script**, against this real stack (real Auth emails, RLS, pg_cron → edge function → settlement). It checks 28 claims. Afterwards, `bunx supabase db reset` puts the database back to the seed (redo step 4: the reset clears Vault).
 
 ```bash
 bun scripts/walkthrough-local.ts
+```
+
+**save_pick under real concurrency** (PGlite has one connection, so the SQL tests cannot race): an operator holding a match row (lock now, an earlier start, a corrected result refilling the bracket) while fans save, and fifty fans across the lock second. It runs in a private throwaway database on the same Postgres server and drops it afterwards; the seed database and its clock are untouched. 20 claims.
+
+```bash
+bun scripts/race-local.ts
 ```
 
 ## Staging (Phase 2)

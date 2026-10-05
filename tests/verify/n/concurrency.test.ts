@@ -224,7 +224,7 @@ describe.skipIf(!up)("N2 concurrent save_pick on real Postgres (private database
   // the match with a plain SELECT (0005:66), so while the operator's transaction is open a fan's save
   // reads the OLD start and is accepted, stamped after the NEW start, and nothing voids it later
   // (0018 voids by the provider's real start, not by starts_at).
-  test("BUG race: a save during an uncommitted lock_match_now is accepted and stamped after the new start", async () => {
+  test("N3 race (fixed by 0045): a save during an uncommitted lock_match_now waits and is refused", async () => {
     await resetRound(2, 60_000);
     const op = await sql.reserve();
     let lockAt = 0;
@@ -262,7 +262,7 @@ describe.skipIf(!up)("N2 concurrent save_pick on real Postgres (private database
     expect(rows.filter((r) => Number(r.at) >= Number(m.ms))).toEqual([]);
   }, 60_000);
 
-  test("BUG race: an existing pick CHANGED during an uncommitted set_match_start (earlier) survives, stamped after the new start", async () => {
+  test("N3 race (fixed by 0045): a pick changed during an uncommitted set_match_start (earlier) waits and is refused", async () => {
     await resetRound(2, 60_000);
     const first: Call = { user: 51, target: 0, winner: "d", scores: score(1) };
     await savePick(first, 2);

@@ -1,6 +1,6 @@
 Working agreements for anyone, human or agent, changing this repository:
 
-- Every change closes on the gates: `bun test`, `bun run test:sql`, `bunx tsc --noEmit`, `bun run build`, `bun run lint`, `bun run advisors`. A change to `supabase/` also closes on the real local stack: `TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres bun run test:sql`, `bunx supabase db advisors --local` (no issues), `bun scripts/walkthrough-local.ts`.
+- Every change closes on the gates: `bun test`, `bun run test:sql`, `bunx tsc --noEmit`, `bun run build`, `bun run lint`, `bun run advisors`. A change to `supabase/` also closes on the real local stack: `TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55322/postgres bun run test:sql`, `bunx supabase db advisors --local` (no issues), `bun scripts/walkthrough-local.ts`, `bun scripts/race-local.ts`.
 - No person ever enters or edits a match result. There is no UI, RPC or SQL path for it and none may be added. Results come only from the provider adapter through `public.ingest_result`.
 - The client never computes points. It shows the stored breakdown and the stored potential winner points.
 - Game rules are fixed by the brief and live in `event_config.rules`. No rule changes from this repository; anything ambiguous is an open question, not code.

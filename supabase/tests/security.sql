@@ -488,5 +488,13 @@ select t.check('a fan who joins after a result is on the board at once, in last 
   and (select array_agg(rank order by rank) from public.standings where rank is not null) = array[1, 2, 3],
   (select array_agg(rank order by rank)::text from public.standings where rank is not null));
 
+-- save_pick must wait for an operator who holds the match row (lock_match_now, set_match_start, a
+-- correction refilling the bracket) and judge the pick on the committed row (0045). PGlite cannot race two
+-- transactions; the races themselves run in scripts/race-local.ts. This keeps the row lock from being
+-- dropped by a later rewrite of save_pick.
+select t.check('save_pick reads the match row FOR SHARE (races: scripts/race-local.ts)',
+  pg_get_functiondef('public.save_pick(int, text, int, jsonb)'::regprocedure)
+    ~* 'from public.matches where match_no = p_match for share');
+
 select * from t.report();
 rollback;
