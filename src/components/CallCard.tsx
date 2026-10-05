@@ -82,6 +82,8 @@ export function CallCardSheet({
   });
   const [png, setPng] = useState<{ blob: Blob; url: string } | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  // the share text, shown to copy by hand when the clipboard was refused (full-debug F6)
+  const [manual, setManual] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const method = canShareFiles() ? "share" : "download";
@@ -184,10 +186,13 @@ export function CallCardSheet({
     a.click();
     try {
       await navigator.clipboard.writeText(text);
+      setNotice(t("share_fallback"));
+      setManual(null);
     } catch {
-      /* clipboard refused: the image is still saved */
+      // clipboard refused: the image is still saved; never say "Link copied", show the text instead
+      setNotice(null);
+      setManual(text);
     }
-    setNotice(t("share_fallback"));
     track("call_card_shared", { kind, match_no: matchNo, method, locale });
   }
 
@@ -224,6 +229,15 @@ export function CallCardSheet({
         {notice && (
           <p role="status" className="text-center text-sm font-semibold text-good">
             {notice}
+          </p>
+        )}
+        {manual && (
+          <p
+            role="status"
+            dir="auto"
+            className="select-all break-words rounded-xl bg-raised px-3 py-2 text-sm text-ink-2"
+          >
+            {manual}
           </p>
         )}
         <div className="flex gap-2">
