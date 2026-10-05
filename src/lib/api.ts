@@ -196,6 +196,20 @@ export const leaderboardQuery = (league: string | null, offset: number, limit = 
       rpc<BoardRow[]>("get_leaderboard", { p_league: league, p_offset: offset, p_limit: limit }),
     refetchInterval: 60_000,
   });
+/** Crews (0021): leagues of 5+ ranked by their best 5's average; the top 10 plus my own leagues. */
+export type CrewRow = {
+  rank: number;
+  league_id: string;
+  name: string;
+  avg_points: number;
+  is_mine: boolean;
+};
+export const crewBoardQuery = () =>
+  queryOptions({
+    queryKey: ["board", "crews"],
+    queryFn: () => rpc<CrewRow[]>("get_crew_board", { p_limit: 10 }),
+    refetchInterval: 60_000,
+  });
 /** Every member of a league, for its owner (a league holds up to 200, a board page 100: audit F-13). */
 export const leagueMembersQuery = (league: string, count: number) =>
   queryOptions({

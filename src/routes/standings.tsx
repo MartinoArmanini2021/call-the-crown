@@ -11,6 +11,7 @@ import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { MEDAL, SponsorSlot } from "@/components/Brand";
+import { CrewsBoard } from "@/components/Crews";
 import { QueryGate } from "@/components/QueryGate";
 import { useAuth } from "@/hooks/useAuth";
 import { errorText, useT } from "@/i18n/useT";
@@ -41,6 +42,8 @@ type Search = {
   add?: "create" | "join";
   /** the league just joined from an invite (the "joined" message) */
   joined?: string;
+  /** the Crews tab: leagues ranked against each other (brief "bragging rights", Phase 4) */
+  crews?: boolean;
 };
 const PAGE = 50;
 
@@ -59,6 +62,7 @@ export const Route = createFileRoute("/standings")({
       : {}),
     ...(s["add"] === "create" || s["add"] === "join" ? { add: s["add"] } : {}),
     ...(typeof s["joined"] === "string" ? { joined: s["joined"] } : {}),
+    ...(s["crews"] === true || s["crews"] === "1" || s["crews"] === 1 ? { crews: true } : {}),
   }),
   component: Standings,
 });
@@ -69,7 +73,8 @@ function Standings() {
   const navigate = useNavigate({ from: "/standings" });
   const qc = useQueryClient();
   const search = Route.useSearch();
-  const league = search.league ?? null;
+  const crews = !!search.crews;
+  const league = crews ? null : (search.league ?? null);
   const view = search.view ?? "top";
   const page = search.page ?? 1;
   const [sheet, setSheet] = useState(!!search.join || !!search.add);
@@ -139,6 +144,22 @@ function Standings() {
     { id: null as string | null, name: t("global") },
     ...(leagues.data ?? []).map((l) => ({ id: l.id as string | null, name: l.name })),
   ];
+  // the tab row: Global, Crews, then the fan's leagues
+  const tabButton = (tab: (typeof tabs)[number]) => (
+    <button
+      key={tab.id ?? "global"}
+      role="tab"
+      type="button"
+      aria-selected={!crews && league === tab.id}
+      onClick={() => void navigate({ search: { ...(tab.id ? { league: tab.id } : {}), view } })}
+      className={cn(
+        "focus-ring max-w-[12rem] shrink-0 truncate rounded-full px-4 py-2 text-sm font-semibold",
+        !crews && league === tab.id ? "bg-accent text-ink" : "bg-card text-ink-2",
+      )}
+    >
+      {tab.name}
+    </button>
+  );
   const go = (s: Search) => void navigate({ search: { ...(league ? { league } : {}), ...s } });
 
   return (
@@ -158,23 +179,20 @@ function Standings() {
       )}
 
       <div className="-mx-4 mb-3 flex gap-2 overflow-x-auto px-4 pb-1" role="tablist">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id ?? "global"}
-            role="tab"
-            type="button"
-            aria-selected={league === tab.id}
-            onClick={() =>
-              void navigate({ search: { ...(tab.id ? { league: tab.id } : {}), view } })
-            }
-            className={cn(
-              "focus-ring max-w-[12rem] shrink-0 truncate rounded-full px-4 py-2 text-sm font-semibold",
-              league === tab.id ? "bg-accent text-ink" : "bg-card text-ink-2",
-            )}
-          >
-            {tab.name}
-          </button>
-        ))}
+        {tabs.slice(0, 1).map(tabButton)}
+        <button
+          role="tab"
+          type="button"
+          aria-selected={crews}
+          onClick={() => void navigate({ search: { crews: true } })}
+          className={cn(
+            "focus-ring shrink-0 rounded-full px-4 py-2 text-sm font-semibold",
+            crews ? "bg-gold text-bg" : "bg-card text-gold",
+          )}
+        >
+          ♛ {t("crews_tab")}
+        </button>
+        {tabs.slice(1).map(tabButton)}
         <button
           type="button"
           onClick={() => setSheet(true)}
@@ -184,89 +202,99 @@ function Standings() {
         </button>
       </div>
 
-      {current && (
-        <LeagueBar
-          league={current}
-          onChange={() => {
-            refresh();
-            void navigate({ search: { view } });
-          }}
-          onRemoved={refresh}
-          onError={(e) => setError(errorText(t, e))}
-        />
-      )}
-      {league === null && (leagues.data ?? []).length === 0 && leagues.isSuccess && (
-        <p className="mb-3 text-xs text-ink-3">{t("leagues_intro")}</p>
-      )}
+      {crews ? (
+        <CrewsBoard leagues={leagues.data ?? []} />
+      ) : (
+        <>
+          {current && (
+            <LeagueBar
+              league={current}
+              onChange={() => {
+                refresh();
+                void navigate({ search: { view } });
+              }}
+              onRemoved={refresh}
+              onError={(e) => setError(errorText(t, e))}
+            />
+          )}
+          {league === null && (leagues.data ?? []).length === 0 && leagues.isSuccess && (
+            <p className="mb-3 text-xs text-ink-3">{t("leagues_intro")}</p>
+          )}
 
-      <div className="mb-3 flex items-center justify-between">
-        <div className="grid grid-cols-2 rounded-full bg-card p-1 text-xs font-semibold">
-          {(["top", "me"] as const).map((v) => (
-            <button
-              key={v}
-              type="button"
-              aria-pressed={view === v}
-              onClick={() => go({ view: v })}
-              className={cn(
-                "focus-ring rounded-full px-4 py-1.5",
-                view === v ? "bg-raised text-ink" : "text-ink-3",
-              )}
-            >
-              {t(v === "top" ? "top" : "my_rank")}
-            </button>
-          ))}
-        </div>
-        {view === "top" && total > PAGE && (
-          <span className="text-xs text-ink-3">
-            {t("page_of", { from: (page - 1) * PAGE + 1, to: Math.min(page * PAGE, total), total })}
-          </span>
-        )}
-      </div>
-
-      <QueryGate queries={[active]} label={t("board_title").toLowerCase()}>
-        {rows.length === 0 ? (
-          <p className="card px-4 py-6 text-center text-sm text-ink-3">{t("board_empty")}</p>
-        ) : (
-          <>
-            {podium.length > 0 && <Podium rows={podium} />}
-            <p className="mt-2 text-xs text-ink-3">{t("leagues_bragging")}</p>
-            {table.length > 0 && <BoardTable rows={table} />}
-            <p className="mt-2 text-2xs text-ink-3">{t("exact_key")}</p>
-          </>
-        )}
-        {view === "top" && total > PAGE && (
-          <div className="mt-3 flex justify-between">
-            <button
-              type="button"
-              disabled={page <= 1}
-              onClick={() => go({ page: page - 1 })}
-              className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
-            >
-              ← {t("prev")}
-            </button>
-            <button
-              type="button"
-              disabled={page * PAGE >= total}
-              onClick={() => go({ page: page + 1 })}
-              className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
-            >
-              {t("next")} →
-            </button>
+          <div className="mb-3 flex items-center justify-between">
+            <div className="grid grid-cols-2 rounded-full bg-card p-1 text-xs font-semibold">
+              {(["top", "me"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  aria-pressed={view === v}
+                  onClick={() => go({ view: v })}
+                  className={cn(
+                    "focus-ring rounded-full px-4 py-1.5",
+                    view === v ? "bg-raised text-ink" : "text-ink-3",
+                  )}
+                >
+                  {t(v === "top" ? "top" : "my_rank")}
+                </button>
+              ))}
+            </div>
+            {view === "top" && total > PAGE && (
+              <span className="text-xs text-ink-3">
+                {t("page_of", {
+                  from: (page - 1) * PAGE + 1,
+                  to: Math.min(page * PAGE, total),
+                  total,
+                })}
+              </span>
+            )}
           </div>
-        )}
-      </QueryGate>
 
-      {me && view === "top" && !rows.some((r) => r.is_me) && (
-        <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 mt-4">
-          <div className="grid grid-cols-[2.5rem_1fr_3.5rem_3.5rem] items-center rounded-2xl border border-accent/50 bg-[#1f0c0d] px-3 py-2.5 text-sm shadow-[0_8px_30px_-10px_black]">
-            <span className="num text-base">{me.pos}</span>
-            <span className="truncate font-semibold">
-              {t("you_cap")} · {me.display_name ?? "—"}
-            </span>
-            <span className="num text-end text-ink-3">{me.exact_sets}</span>
-            <span className="num text-end text-base">{me.points}</span>
-          </div>
-        </div>
+          <QueryGate queries={[active]} label={t("board_title").toLowerCase()}>
+            {rows.length === 0 ? (
+              <p className="card px-4 py-6 text-center text-sm text-ink-3">{t("board_empty")}</p>
+            ) : (
+              <>
+                {podium.length > 0 && <Podium rows={podium} />}
+                <p className="mt-2 text-xs text-ink-3">{t("leagues_bragging")}</p>
+                {table.length > 0 && <BoardTable rows={table} />}
+                <p className="mt-2 text-2xs text-ink-3">{t("exact_key")}</p>
+              </>
+            )}
+            {view === "top" && total > PAGE && (
+              <div className="mt-3 flex justify-between">
+                <button
+                  type="button"
+                  disabled={page <= 1}
+                  onClick={() => go({ page: page - 1 })}
+                  className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
+                >
+                  ← {t("prev")}
+                </button>
+                <button
+                  type="button"
+                  disabled={page * PAGE >= total}
+                  onClick={() => go({ page: page + 1 })}
+                  className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
+                >
+                  {t("next")} →
+                </button>
+              </div>
+            )}
+          </QueryGate>
+
+          {me && view === "top" && !rows.some((r) => r.is_me) && (
+            <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 mt-4">
+              <div className="grid grid-cols-[2.5rem_1fr_3.5rem_3.5rem] items-center rounded-2xl border border-accent/50 bg-[#1f0c0d] px-3 py-2.5 text-sm shadow-[0_8px_30px_-10px_black]">
+                <span className="num text-base">{me.pos}</span>
+                <span className="truncate font-semibold">
+                  {t("you_cap")} · {me.display_name ?? "—"}
+                </span>
+                <span className="num text-end text-ink-3">{me.exact_sets}</span>
+                <span className="num text-end text-base">{me.points}</span>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       {sheet && (

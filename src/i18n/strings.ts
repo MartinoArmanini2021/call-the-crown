@@ -277,6 +277,18 @@ export const en = {
   share_fallback: "Image saved. Link copied.",
   share_text_my_call: "My call for {match}. Think you know better? Join my league: {url}",
   share_text_called: "I called it: {score}. Join my league: {url}",
+
+  // Crews (brief "bragging rights", Phase 4)
+  crews_tab: "Crews",
+  crews_title: "Top crews",
+  crews_rule:
+    "Leagues with 5 or more members, ranked by the average points of each league's best 5.",
+  crews_needs_1: "{league} needs 1 more member to enter.",
+  crews_needs_2: "{league} needs 2 more members to enter.",
+  crews_needs: "{league} needs {n} more members to enter.",
+  crews_yours: "Your league: #{rank}",
+  crews_empty: "No league has 5 members yet. Yours could be first.",
+  crew_crowned: "Crowned crew",
   code: "Code",
   members: "{n} members",
   member_one: "1 member",

@@ -29,7 +29,7 @@ insert into public.event_config (
      "allowed_set_scores": [[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]],
      "deciding_set":       "full"
    }',
-  '{"max_leagues_per_user": 10, "max_members": 200}',
+  '{"max_leagues_per_user": 10, "max_members": 200, "crew_min_members": 5}',
   '{
      "app_name":  "Call the Crown",
      "short_name": "Call the Crown",
