@@ -1,0 +1,16 @@
+# Cloudflare Pages response headers (audit 5 Oct 2026, P8). The content policy names hosts by pattern
+# so one file serves every instance: Supabase (any project), PostHog's own cloud (a custom
+# VITE_POSTHOG_HOST must be added here), Turnstile, and the hotlinked ATP headshots.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://*.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://www.atptour.com; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.posthog.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+/index.html
+  Cache-Control: no-cache
+
+/
+  Cache-Control: no-cache
