@@ -238,11 +238,15 @@ export const rankWindowQuery = (league: string | null) =>
  * How fans picked a match, as shares (one decimal), never counts: nothing until it starts, and nothing
  * at all below flags.rarity_min_picks picks (0012, 0019). Final at the first ball.
  */
+/** The share card's rarity (0023): percentages only, rounded down; never a count. */
 export type CallStats = {
   threshold_met: boolean;
-  picks_total: number | null;
-  same_winner: number | null;
-  same_exact: number | null;
+  winner_pct: number | null;
+  exact_pct: number | null;
+  /** same winner on 40% of picks or fewer */
+  winner_rare: boolean | null;
+  /** same exact score on 20% of picks or fewer */
+  exact_rare: boolean | null;
 };
 export type Crowd = {
   p1_share: number;

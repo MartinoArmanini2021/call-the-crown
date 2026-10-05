@@ -4,7 +4,7 @@
 //     when picks close, in Riyadh time.
 //   - "I called it": a finished match where the fan picked the winner. Exact (every played set called
 //     exactly), winner only (ticks under the exact sets), or void (retirement or walkover: winner only,
-//     no ticks, and the void line). A rarity line only from get_my_call_stats (0020), only above the
+//     no ticks, and the void line). A rarity line only from get_my_call_stats (0020, 0023), only above the
 //     minimum, and never for a majority pick: exact at 20% or less, winner at 40% or less.
 // cardSpec() turns the game's data into the words and numbers on the card (pure, unit-tested);
 // drawCard() paints it; cardPng() waits for the fonts and returns the PNG.
@@ -43,10 +43,9 @@ export type CardSpec = {
   ribbon: string | null;
 };
 
-/** "7%", whole number rounded down; below 1%, the pct_under_1 words. */
-export function shareText(n: number, total: number, t: Tr): string {
-  const pct = (100 * n) / total;
-  return pct < 1 ? t("pct_under_1") : `${Math.floor(pct)}%`;
+/** "7%" from the server's whole percentage (already rounded down); 0 means below 1%. */
+export function shareText(pct: number, t: Tr): string {
+  return pct < 1 ? t("pct_under_1") : `${pct}%`;
 }
 
 /** Night 1, 2, 3: the event-local days that have matches, in order. */
@@ -160,20 +159,18 @@ export function cardSpec(input: {
       : sets.map((_, i) => variant === "exact" || pick.exact_flags?.[i] === true);
   const lines: CardSpec["lines"] = [];
   if (variant === "void") lines.push({ text: t("card_void"), tone: "plain" });
-  const total = stats?.threshold_met ? (stats.picks_total ?? 0) : 0;
-  if (total > 0) {
+  // The server decides what is rare (0023: exact score 20% or fewer, winner 40% or fewer, on exact
+  // fractions) and sends whole percentages only.
+  if (stats?.threshold_met) {
     const winnerName = names[side(m.winner_id) - 1] ?? "";
-    if (variant === "exact" && stats!.same_exact !== null && stats!.same_exact / total <= 0.2)
+    if (variant === "exact" && stats.exact_rare && stats.exact_pct !== null)
       lines.push({
-        text: t("card_rarity_exact", { share: shareText(stats!.same_exact, total, t) }),
+        text: t("card_rarity_exact", { share: shareText(stats.exact_pct, t) }),
         tone: "gold",
       });
-    if (variant !== "exact" && stats!.same_winner !== null && stats!.same_winner / total <= 0.4)
+    if (variant !== "exact" && stats.winner_rare && stats.winner_pct !== null)
       lines.push({
-        text: t("card_rarity_winner", {
-          share: shareText(stats!.same_winner, total, t),
-          name: winnerName,
-        }),
+        text: t("card_rarity_winner", { share: shareText(stats.winner_pct, t), name: winnerName }),
         tone: "gold",
       });
   }

@@ -57,11 +57,18 @@ const pick = (over: Partial<Pick>): Pick => ({
   exact_flags: null,
   ...over,
 });
-const stats = (total: number | null, winner: number | null, exact: number | null): CallStats => ({
-  threshold_met: total !== null,
-  picks_total: total,
-  same_winner: winner,
-  same_exact: exact,
+// What get_my_call_stats (0023) returns: whole percentages and the server's "rare" answers.
+const stats = (
+  winnerPct: number,
+  exactPct: number,
+  winnerRare: boolean,
+  exactRare: boolean,
+): CallStats => ({
+  threshold_met: true,
+  winner_pct: winnerPct,
+  exact_pct: exactPct,
+  winner_rare: winnerRare,
+  exact_rare: exactRare,
 });
 const spec = (
   kind: "my_call" | "called_it",
@@ -87,13 +94,12 @@ const spec = (
   });
 
 describe("percent on a card", () => {
-  test("a whole number, rounded down", () => {
-    expect(shareText(19, 100, tEn)).toBe("19%");
-    expect(shareText(199, 1000, tEn)).toBe("19%");
+  test("the server's whole percentage, as is", () => {
+    expect(shareText(19, tEn)).toBe("19%");
   });
-  test("below 1%: the words", () => {
-    expect(shareText(4, 1000, tEn)).toBe("under 1%");
-    expect(shareText(4, 1000, tAr)).toBe("أقل من 1%");
+  test("0 (below 1%): the words", () => {
+    expect(shareText(0, tEn)).toBe("under 1%");
+    expect(shareText(0, tAr)).toBe("أقل من 1%");
   });
 });
 
@@ -188,23 +194,23 @@ describe("I called it", () => {
     expect(s.ticks).toEqual([]);
     expect(s.lines[0]).toEqual({ text: "Retirement: only the winner counts.", tone: "plain" });
   });
-  test("rarity, exact: shown at 20% or less, never above", () => {
-    expect(spec("called_it", done(), scored(), stats(100, 60, 20)).lines).toEqual([
+  test("rarity, exact: shown when the server says rare, never otherwise", () => {
+    expect(spec("called_it", done(), scored(), stats(60, 20, false, true)).lines).toEqual([
       { text: "Only 20% of fans called this exact score.", tone: "gold" },
     ]);
-    expect(spec("called_it", done(), scored(), stats(100, 60, 21)).lines).toEqual([]);
+    expect(spec("called_it", done(), scored(), stats(60, 21, false, false)).lines).toEqual([]);
   });
   test("rarity, winner only: shown at 40% or less, with the winner's name", () => {
     const m = done({ set_scores: ss("6-4 3-6 6-3") });
     const p = scored({ sets: 3, set_scores: ss("6-4 4-6 6-2"), exact_flags: [true, false, false] });
-    expect(spec("called_it", m, p, stats(1000, 400, 3)).lines).toEqual([
+    expect(spec("called_it", m, p, stats(40, 0, true, true)).lines).toEqual([
       { text: "Only 40% backed Alpha.", tone: "gold" },
     ]);
-    expect(spec("called_it", m, p, stats(1000, 401, 3)).lines).toEqual([]);
+    expect(spec("called_it", m, p, stats(40, 0, false, true)).lines).toEqual([]); // 40.1%: floored to 40, not rare
   });
   test("void with a rare winner: the void line, then the rarity line", () => {
     const m = done({ status: "retired", set_scores: ss("6-4 2-1") });
-    const s = spec("called_it", m, scored({ exact_flags: null }), stats(200, 30, 1));
+    const s = spec("called_it", m, scored({ exact_flags: null }), stats(15, 0, true, true));
     expect(s.lines.map((l) => l.text)).toEqual([
       "Retirement: only the winner counts.",
       "Only 15% backed Alpha.",
@@ -213,9 +219,10 @@ describe("I called it", () => {
   test("below the minimum (threshold not met): no rarity line", () => {
     const below: CallStats = {
       threshold_met: false,
-      picks_total: null,
-      same_winner: null,
-      same_exact: null,
+      winner_pct: null,
+      exact_pct: null,
+      winner_rare: null,
+      exact_rare: null,
     };
     expect(spec("called_it", done(), scored(), below).lines).toEqual([]);
     expect(spec("called_it", done(), scored(), null).lines).toEqual([]);
