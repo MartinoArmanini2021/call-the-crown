@@ -12,7 +12,7 @@ import { Turnstile, turnstileEnabled } from "@/components/Turnstile";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
-import { inLocale, updateConsents, updateProfile } from "@/lib/api";
+import { inLocale, setReminderOptin, updateConsents, updateProfile } from "@/lib/api";
 import { setPendingJoin } from "@/lib/leagueIntent";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
@@ -46,6 +46,8 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [consentGsgm, setConsentGsgm] = useState(false);
+  // night reminder emails: unticked by default (brief "bragging rights", Phase 5)
+  const [consentReminders, setConsentReminders] = useState(false);
   const [code, setCode] = useState("");
   const [captcha, setCaptcha] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -137,6 +139,7 @@ function SignIn() {
       await Promise.all([
         updateProfile(name.trim(), locale),
         updateConsents(false, consentGsgm, event.privacy.version ?? "unknown"),
+        ...(consentReminders ? [setReminderOptin(true)] : []),
       ]).catch(() => track("join_details_failed"));
     }
     setBusy(false);
@@ -251,6 +254,11 @@ function SignIn() {
                   checked={consentGsgm}
                   onChange={setConsentGsgm}
                   text={inLocale(event.privacy, "consent_gsgm", locale) ?? ""}
+                />
+                <Consent
+                  checked={consentReminders}
+                  onChange={setConsentReminders}
+                  text={t("reminder_optin")}
                 />
                 <details className="text-xs text-ink-3">
                   <summary className="focus-ring cursor-pointer rounded font-semibold text-ink-2">

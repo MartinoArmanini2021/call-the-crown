@@ -289,6 +289,15 @@ export const en = {
   crews_yours: "Your league: #{rank}",
   crews_empty: "No league has 5 members yet. Yours could be first.",
   crew_crowned: "Crowned crew",
+
+  // Perfect Night and reminders (brief "bragging rights", Phase 5)
+  reminder_optin: "Email me 2 hours before picks close each night",
+  perfect_night: "Perfect Night {n}",
+  perfect_night_sub: "Every winner right on night {n}.",
+  card_perfect_ribbon: "PERFECT NIGHT",
+  unsub_title: "Stop reminder emails?",
+  unsub_button: "Turn off reminders",
+  unsub_done: "Reminders are off.",
   code: "Code",
   members: "{n} members",
   member_one: "1 member",

@@ -9,8 +9,8 @@ import { useEvent } from "@/config/eventConfig";
 import { useGame } from "@/hooks/useGame";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
-import { inLocale, myCallStatsQuery, myLeaguesQuery } from "@/lib/api";
-import { cardPng, cardSpec, type CardKind } from "@/lib/callCard";
+import { badgesQuery, inLocale, myCallStatsQuery, myLeaguesQuery } from "@/lib/api";
+import { cardPng, cardSpec, nightOf, type CardKind } from "@/lib/callCard";
 import { scoreLine, surname } from "@/lib/format";
 import { inviteLink } from "@/lib/leagueIntent";
 import { cn } from "@/lib/utils";
@@ -72,6 +72,10 @@ export function CallCardSheet({
   const all = matches.data ?? [];
   const match = all.find((m) => m.match_no === matchNo);
   const pick = pickByMatch.get(matchNo);
+  const badges = useQuery({
+    ...badgesQuery(user?.id ?? ""),
+    enabled: kind === "called_it" && !!user,
+  });
   const stats = useQuery({
     ...myCallStatsQuery(matchNo),
     enabled: kind === "called_it" && !!user,
@@ -83,7 +87,11 @@ export function CallCardSheet({
   const method = canShareFiles() ? "share" : "download";
 
   const league = user && leagues.data ? activeLeague(user.id, leagues.data) : undefined;
-  const ready = !!match && !!pick && leagues.isFetched && (kind === "my_call" || stats.isFetched);
+  const ready =
+    !!match &&
+    !!pick &&
+    leagues.isFetched &&
+    (kind === "my_call" || (stats.isFetched && badges.isFetched));
   const url = league ? inviteLink(league.code) : window.location.origin;
 
   useEffect(() => {
@@ -108,6 +116,11 @@ export function CallCardSheet({
         event.name
       ).split(" "),
       stats: stats.data ?? null,
+      perfect:
+        kind === "called_it" &&
+        (badges.data ?? []).some(
+          (b) => b.perfect && b.night_no === nightOf(match, all, event.timezone),
+        ),
       code: league?.code ?? null,
       host: window.location.host,
     });

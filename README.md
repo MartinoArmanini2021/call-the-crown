@@ -353,6 +353,22 @@ select * from public.export_optins('gsgm');   -- in the SQL editor, then Downloa
 - Each row carries the consent time and the version of the text the fan saw.
 - The full history is in `consents`.
 
+### Night reminder emails
+
+Fans who ticked "Email me 2 hours before picks close each night" (the `reminders` consent) get one email per night, about 2 hours before its first match, if they still have a match to pick. pg_cron job `send-reminders` calls the edge function of the same name every 5 minutes, with the same Vault secrets as the poller (0022).
+
+Edge function env (secrets on the project, `supabase/functions/.env` locally):
+- `RESEND_API_KEY`: without it every run is a **dry run**: rows marked `dry_run` in `reminder_sends`, a line in `ops_health` (key `send-reminders`), nothing sent.
+- `REMINDER_FROM`: the same sender as the sign-in emails.
+- `PUBLIC_APP_URL`: the app's address, for the button and the unsubscribe page.
+- `REMINDER_UNSUB_SECRET`: a long random string that signs the unsubscribe links. Changing it breaks every link already sent.
+
+`reminder-unsubscribe` runs with `verify_jwt = false` (`supabase/config.toml`): it is opened from an email. It accepts POST only (a GET never unsubscribes) and refuses a bad token with 403. A failed send is marked `failed` with an `ops_alerts` row and is never retried.
+
+```sql
+select status, count(*) from public.reminder_sends group by 1;   -- per night: add night_no
+```
+
 ### Audit: every settled result matches the provider
 
 ```sql

@@ -69,6 +69,12 @@ content_path = "./supabase/templates/code.html"
 subject = "Your sign-in code"
 content_path = "./supabase/templates/code.html"
 
+# Edge functions. poll-results and send-reminders keep verify_jwt on (the default): only the service
+# key from Vault starts them. reminder-unsubscribe is opened from an email by a mail app or a fan with no
+# Supabase key, so its gateway check is off; it accepts POST only and checks the HMAC token itself.
+[functions.reminder-unsubscribe]
+verify_jwt = false
+
 # -----------------------------------------------------------------------------------------------------
 # Staging (Phase 2): project six-kings-game-staging, Frankfurt. Inherits everything above; only these
 # differ. Apply with `bunx supabase config push --project-ref rmjlqqzytahmdlmnwxfc`.

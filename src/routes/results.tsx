@@ -6,6 +6,7 @@ import { SponsorSlot } from "@/components/Brand";
 import { Draw } from "@/components/Draw";
 import { NextStepBanner } from "@/components/NextStep";
 import { QueryGate } from "@/components/QueryGate";
+import { PerfectNightBadges } from "@/components/PerfectNight";
 import { ResultSheet } from "@/components/ResultSheet";
 import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
@@ -49,6 +50,7 @@ function Results() {
   return (
     <AppShell wide>
       <PageTitle title={t("results_title")} />
+      {user && <PerfectNightBadges uid={user.id} className="mb-4" />}
       <QueryGate queries={queries} label={t("results_title").toLowerCase()}>
         {user && settledCount > 0 && (
           <div className="mb-5 grid grid-cols-3 gap-2">

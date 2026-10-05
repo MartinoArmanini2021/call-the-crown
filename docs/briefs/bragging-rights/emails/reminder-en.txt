@@ -1,0 +1,11 @@
+Subject: Picks close in 2 hours
+List-Unsubscribe: <https://project.example.test/functions/v1/reminder-unsubscribe?u=00000000-0000-0000-0000-00000000f001&t=rQjb0V99OdFN9Bk2y0z6RfhDNqy06HXH3E5r1PYU2Ws>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+
+Night 2 starts at 19:30 Riyadh time.
+You haven't called 1 of tonight's 2 matches yet.
+You're #3 of 8 in Office Crew.
+
+Make my picks: https://callthecrown.example/picks
+
+You're getting this because you asked for reminders. Turn them off: https://callthecrown.example/unsubscribe?u=00000000-0000-0000-0000-00000000f001&t=rQjb0V99OdFN9Bk2y0z6RfhDNqy06HXH3E5r1PYU2Ws

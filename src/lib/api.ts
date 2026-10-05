@@ -107,7 +107,7 @@ export type League = {
 };
 export type Profile = { user_id: string; display_name: string | null; locale: "en" | "ar" };
 export type Consent = {
-  party: "organiser" | "gsgm";
+  party: "organiser" | "gsgm" | "reminders";
   granted: boolean;
   text_version: string;
   changed_at: string;
@@ -289,6 +289,16 @@ export const removeMember = (league: string, user: string) =>
 export const deleteLeague = (league: string) => rpc<void>("delete_league", { p_league: league });
 export const updateProfile = (name: string, locale?: "en" | "ar") =>
   rpc<void>("update_profile", { p_display_name: name, p_locale: locale ?? null });
+/** Night reminder emails on or off (0022: the "reminders" consent, text version reminders-1). */
+export const setReminderOptin = (on: boolean) => rpc<void>("set_reminder_optin", { p_on: on });
+/** Perfect Night: for each complete night, whether the fan called every winner (0022). */
+export type Badge = { night_no: number; perfect: boolean };
+export const badgesQuery = (uid: string) =>
+  queryOptions({
+    queryKey: ["badges", uid],
+    queryFn: () => rpc<Badge[]>("get_my_badges"),
+    refetchInterval: 60_000,
+  });
 export const updateConsents = (organiser: boolean, gsgm: boolean, version: string) =>
   rpc<void>("update_consents", { p_organiser: organiser, p_gsgm: gsgm, p_text_version: version });
 export const deleteAccount = () => rpc<void>("delete_account");

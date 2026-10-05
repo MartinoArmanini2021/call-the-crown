@@ -1,0 +1,11 @@
+Subject: تُغلق التوقعات بعد ساعتين
+List-Unsubscribe: <https://project.example.test/functions/v1/reminder-unsubscribe?u=00000000-0000-0000-0000-00000000f001&t=rQjb0V99OdFN9Bk2y0z6RfhDNqy06HXH3E5r1PYU2Ws>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+
+تبدأ الليلة 2 الساعة 19:30 بتوقيت الرياض.
+لم تتوقع بعد 1 من مباريات الليلة الـ2.
+أنت في المركز 3 من 8 في Office Crew.
+
+سجّل توقعاتي: https://callthecrown.example/picks
+
+تصلك هذه الرسالة لأنك طلبت التذكير. لإيقافه: https://callthecrown.example/unsubscribe?u=00000000-0000-0000-0000-00000000f001&t=rQjb0V99OdFN9Bk2y0z6RfhDNqy06HXH3E5r1PYU2Ws

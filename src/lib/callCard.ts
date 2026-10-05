@@ -39,6 +39,8 @@ export type CardSpec = {
   code: string | null;
   host: string;
   fine: string;
+  /** "PERFECT NIGHT" on an I-called-it card whose night the fan called perfectly (0022) */
+  ribbon: string | null;
 };
 
 /** "7%", whole number rounded down; below 1%, the pct_under_1 words. */
@@ -89,6 +91,8 @@ export function cardSpec(input: {
   timezone: string;
   brand: string[];
   stats: CallStats | null;
+  /** the match's night is one of the fan's Perfect Nights (get_my_badges) */
+  perfect?: boolean;
   code: string | null;
   host: string;
 }): CardSpec {
@@ -126,6 +130,7 @@ export function cardSpec(input: {
       ...base,
       variant: "my_call",
       chip: t("card_my_call"),
+      ribbon: null,
       winner: side(pick.winner_id),
       sets: pick.set_scores,
       ticks: [],
@@ -176,6 +181,7 @@ export function cardSpec(input: {
     ...base,
     variant,
     chip: null,
+    ribbon: input.perfect ? t("card_perfect_ribbon") : null,
     winner: side(m.winner_id),
     sets,
     ticks,
@@ -355,6 +361,22 @@ export function drawCard(canvas: HTMLCanvasElement, s: CardSpec): void {
         ? (topW - ctx.measureText(letters.at(-1)!).width) / (letters.length - 1)
         : 0;
     letters.forEach((ch, i) => text(ch, nameX + i * step, 166, c.gold, "left"));
+  }
+
+  // Perfect Night: a gold ribbon at the other end of the top row from the name.
+  if (s.ribbon) {
+    font(f.headW, rtl ? 32 : 36, f.head);
+    const label = upper(s.ribbon);
+    ctx.letterSpacing = rtl ? "0px" : "4px";
+    const w = ctx.measureText(label).width + 56;
+    const rx = rtl ? PAD : W - PAD - w;
+    roundRect(rx, 86, w, 64, 32);
+    ctx.fillStyle = c.gold;
+    ctx.fill();
+    ctx.direction = "ltr";
+    text(label, rx + w / 2 + (rtl ? 0 : 2), 131, c.bg, "center");
+    ctx.direction = rtl ? "rtl" : "ltr";
+    ctx.letterSpacing = "0px";
   }
 
   // Chip, round line, headline.

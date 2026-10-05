@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
+import { PerfectNightBadges } from "@/components/PerfectNight";
 import { QueryGate } from "@/components/QueryGate";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +12,7 @@ import {
   inLocale,
   deleteAccount,
   profileQuery,
+  setReminderOptin,
   updateConsents,
   updateProfile,
 } from "@/lib/api";
@@ -30,6 +32,7 @@ function Profile() {
 
   const [name, setName] = useState("");
   const [gsgm, setGsgm] = useState(false);
+  const [reminders, setReminders] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [confirm, setConfirm] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -39,6 +42,7 @@ function Profile() {
     const latest = (party: string) =>
       [...(consents.data ?? [])].reverse().find((c) => c.party === party)?.granted ?? false;
     setGsgm(latest("gsgm"));
+    setReminders(latest("reminders"));
   }, [consents.data]);
 
   if (!loading && !user) {
@@ -81,6 +85,7 @@ function Profile() {
         </p>
       )}
 
+      {user && <PerfectNightBadges uid={user.id} className="mb-3" />}
       <QueryGate queries={[profile, consents]} label={t("profile_title").toLowerCase()}>
         <section className="card mb-3 p-4">
           <label className="block text-sm font-semibold">
@@ -100,6 +105,25 @@ function Profile() {
           >
             {t("save")}
           </button>
+        </section>
+
+        {/* Night reminders (brief "bragging rights", Phase 5): its own consent, saved as it is switched */}
+        <section className="card mb-3 p-4">
+          <label className="flex cursor-pointer items-center justify-between gap-3 text-sm">
+            <span>{t("reminder_optin")}</span>
+            <input
+              type="checkbox"
+              role="switch"
+              aria-checked={reminders}
+              checked={reminders}
+              onChange={(e) => {
+                const on = e.target.checked;
+                setReminders(on);
+                void act(() => setReminderOptin(on), t("consents_saved"));
+              }}
+              className="focus-ring h-5 w-5 shrink-0 accent-[var(--gold)]"
+            />
+          </label>
         </section>
 
         <section className="card mb-3 space-y-3 p-4">
