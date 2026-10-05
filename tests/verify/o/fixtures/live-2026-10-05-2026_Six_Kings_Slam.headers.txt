@@ -1,0 +1,5 @@
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 20:45:51 GMT
+server: mw-api-ext.eqiad.main-85d9ff5c84-lhvj7
+content-type: application/json; charset=utf-8
+content-length: 96

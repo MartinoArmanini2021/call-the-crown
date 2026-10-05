@@ -1,0 +1,27 @@
+diff --git a/supabase/config.toml b/supabase/config.toml
+index de7c6c5..6138a8e 100644
+--- a/supabase/config.toml
++++ b/supabase/config.toml
+@@ -83,5 +83,22 @@ site_url = "https://preview.six-kings-game.pages.dev"
+ [remotes.staging.auth.rate_limit]
+ email_sent = 2
+ 
++# Server-side captcha (audit 5 Oct 2026, L2): without it the Turnstile widget is UI-only and the public
++# /signup, /otp, /token?grant_type=password and /recover endpoints accept requests with no token. The
++# secret comes from the environment at `config push` time, never from this file. Production: the same
++# setting (dashboard -> Authentication -> Attack protection -> Captcha: Turnstile + secret) and
++# VITE_TURNSTILE_SITE_KEY set in that build. Local stays off (no key; tests post without a token).
++[remotes.staging.auth.captcha]
++enabled = true
++provider = "turnstile"
++secret = "env(SUPABASE_AUTH_CAPTCHA_SECRET)"
++
++# Pin the resend interval and the code life instead of inheriting hosted defaults (60 s / 3600 s):
++# the email says "It expires in 10 minutes".
++[remotes.staging.auth.email]
++max_frequency = "60s"
++otp_expiry = 600
++otp_length = 6
++
+ [remotes.staging.db.seed]
+ enabled = false

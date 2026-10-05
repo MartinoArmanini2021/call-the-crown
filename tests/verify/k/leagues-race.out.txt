@@ -1,0 +1,57 @@
+{
+  "F-11 parallel creates, memberships after (cap 10)": [
+    10,
+    10,
+    10,
+    10,
+    10
+  ],
+  "F-11 parallel joins + creates, memberships after (cap 10)": [
+    10,
+    10,
+    10
+  ],
+  "F-10 remove error": null,
+  "F-10 rejoin answer": {
+    "ok": false,
+    "error": "removed_from_league"
+  },
+  "F-10 removed member visible to owner afterwards": 1,
+  "S-20 account 1, 11 wrong codes": [
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "too_many_attempts"
+  ],
+  "S-20 account 2, first wrong code": "league_not_found",
+  "S-20 account 1 right code while throttled": {
+    "ok": false,
+    "error": "too_many_attempts"
+  },
+  "S-20 15 parallel wrong codes: answers": [
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "league_not_found",
+    "too_many_attempts",
+    "too_many_attempts",
+    "league_not_found",
+    "too_many_attempts",
+    "league_not_found",
+    "too_many_attempts",
+    "league_not_found",
+    "too_many_attempts"
+  ],
+  "S-20 15 parallel wrong codes: stored fail count": 10,
+  "cleanup: accounts left": 0
+}

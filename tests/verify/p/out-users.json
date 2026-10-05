@@ -1,0 +1,20 @@
+{
+  "users": {
+    "a": {
+      "id": "70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "email": "p-a11225@example.test",
+      "name": "Pia Audit"
+    },
+    "b": {
+      "id": "d886c3ec-99cd-44db-a3f5-55b7c642c7be",
+      "email": "p-b12387@example.test",
+      "name": "Bo Audit"
+    }
+  },
+  "password": "audit-P-section-7731",
+  "league": {
+    "id": "b5e17689-bb1c-4ef0-9580-a4671b23980e",
+    "code": "E7AF5F",
+    "name": "P audit league"
+  }
+}

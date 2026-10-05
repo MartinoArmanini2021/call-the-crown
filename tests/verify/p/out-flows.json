@@ -1,0 +1,315 @@
+{
+  "P3": {
+    "out /leagues?code=e7af5f": {
+      "first": {
+        "url": "/standings?join=E7AF5F",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/standings?join=E7AF5F",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "out /picks": {
+      "first": {
+        "url": "/picks",
+        "h1": "YOUR PICKS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/picks",
+        "h1": "YOUR PICKS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "out /results": {
+      "first": {
+        "url": "/results",
+        "h1": "RESULTS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/results",
+        "h1": "RESULTS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "out /picks?match=1": {
+      "first": {
+        "url": "/picks?match=1",
+        "h1": "YOUR PICKS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/picks?match=1",
+        "h1": "YOUR PICKS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "out /standings?join=ABC234": {
+      "first": {
+        "url": "/standings?join=ABC234",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/standings?join=ABC234",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "out /leaderboard?page=2&view=me": {
+      "first": {
+        "url": "/standings?page=2&view=me",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/standings?page=2&view=me",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "out invite → sign-in link": "/sign-in?code=E7AF5F",
+    "in /leagues?code=e7af5f": {
+      "first": {
+        "url": "/standings?join=E7AF5F",
+        "h1": "STANDINGS",
+        "dialog": 1,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/standings?join=E7AF5F",
+        "h1": "STANDINGS",
+        "dialog": 1,
+        "code": null
+      }
+    },
+    "in /picks": {
+      "first": {
+        "url": "/picks",
+        "h1": "YOUR PICKS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/picks",
+        "h1": "YOUR PICKS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "in /results": {
+      "first": {
+        "url": "/results",
+        "h1": "RESULTS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/results",
+        "h1": "RESULTS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "in /picks?match=1": {
+      "first": {
+        "url": "/picks?match=1",
+        "h1": "YOUR PICKS",
+        "dialog": 1,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/picks?match=1",
+        "h1": "YOUR PICKS",
+        "dialog": 1,
+        "code": null
+      }
+    },
+    "in /standings?join=ABC234": {
+      "first": {
+        "url": "/standings?join=ABC234",
+        "h1": "STANDINGS",
+        "dialog": 1,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/standings?join=ABC234",
+        "h1": "STANDINGS",
+        "dialog": 1,
+        "code": null
+      }
+    },
+    "in /leaderboard?page=2&view=me": {
+      "first": {
+        "url": "/standings?page=2&view=me",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      },
+      "afterRefresh": {
+        "url": "/standings?page=2&view=me",
+        "h1": "STANDINGS",
+        "dialog": 0,
+        "code": null
+      }
+    },
+    "F-15 sheet on full load": {
+      "pressed": 5,
+      "button": "✓ Saved"
+    }
+  },
+  "P4": {
+    "Europe/Madrid": {
+      "resultsTimes": [
+        "Wed 21 Oct, 19:30",
+        "Wed 21 Oct, 20:40",
+        "Thu 22 Oct, 19:30",
+        "Thu 22 Oct, 21:20",
+        "Sat 24 Oct, 21:40",
+        "Sat 24 Oct, 19:30"
+      ],
+      "picksTimes": ["Wed 21 Oct, 19:30", "Wed 21 Oct, 20:40"],
+      "allAreRiyadhTimes": true,
+      "deviceLocalWouldBe": ["Wed 21 Oct, 18:30", "Wed 21 Oct, 19:40"],
+      "anyTimezoneLabelOnScreen": false
+    },
+    "Asia/Riyadh": {
+      "resultsTimes": [
+        "Wed 21 Oct, 19:30",
+        "Wed 21 Oct, 20:40",
+        "Thu 22 Oct, 19:30",
+        "Thu 22 Oct, 21:20",
+        "Sat 24 Oct, 21:40",
+        "Sat 24 Oct, 19:30"
+      ],
+      "picksTimes": ["Wed 21 Oct, 19:30", "Wed 21 Oct, 20:40"],
+      "allAreRiyadhTimes": true,
+      "deviceLocalWouldBe": ["Wed 21 Oct, 19:30", "Wed 21 Oct, 20:40"],
+      "anyTimezoneLabelOnScreen": false
+    },
+    "America/New_York": {
+      "resultsTimes": [
+        "Wed 21 Oct, 19:30",
+        "Wed 21 Oct, 20:40",
+        "Thu 22 Oct, 19:30",
+        "Thu 22 Oct, 21:20",
+        "Sat 24 Oct, 21:40",
+        "Sat 24 Oct, 19:30"
+      ],
+      "picksTimes": ["Wed 21 Oct, 19:30", "Wed 21 Oct, 20:40"],
+      "allAreRiyadhTimes": true,
+      "deviceLocalWouldBe": ["Wed 21 Oct, 12:30", "Wed 21 Oct, 13:40"],
+      "anyTimezoneLabelOnScreen": false
+    },
+    "expected Riyadh": [
+      "Wed 21 Oct, 19:30",
+      "Wed 21 Oct, 20:40",
+      "Thu 22 Oct, 19:30",
+      "Thu 22 Oct, 21:20",
+      "Sat 24 Oct, 19:30",
+      "Sat 24 Oct, 21:40"
+    ]
+  },
+  "L6": {
+    "tab2 signed in": "?\nB",
+    "tab1 after sign-out elsewhere": {
+      "header": "?\nSign in",
+      "dialog": 0,
+      "storage": ["locale", "ph_phc_audit_fake_key_posthog"]
+    },
+    "tab1 after reload": "?\nSign in",
+    "switch account in other tab": {
+      "tabA_avatar": "P",
+      "tabA_rows_me": []
+    }
+  },
+  "invite clipboard": "http://127.0.0.1:5182/standings?join=E7AF5F",
+  "join own league again": ["✓ You joined P audit league"],
+  "P5 click-through": [
+    {
+      "event": "$identify",
+      "$pathname": "/",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "landing",
+      "$pathname": "/",
+      "custom": {
+        "name": "landing"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "picks",
+      "$pathname": "/",
+      "custom": {
+        "name": "picks"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "results",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "results"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "standings",
+      "$pathname": "/results",
+      "custom": {
+        "name": "standings"
+      }
+    },
+    {
+      "event": "$identify",
+      "$pathname": "/sign-in",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "standings",
+      "$pathname": "/standings",
+      "custom": {
+        "name": "standings"
+      }
+    },
+    {
+      "event": "league_joined",
+      "$pathname": "/standings",
+      "custom": {}
+    }
+  ],
+  "P5 personal-data scan": {
+    "emails": 0,
+    "leagueCodeInUrls": true,
+    "joinParamInUrls": ["join=E7AF5F", "join=E7AF5F", "join=E7AF5F"],
+    "displayNames": false
+  },
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "url": "http://127.0.0.1:5182/profile"
+    }
+  ],
+  "blocked": []
+}

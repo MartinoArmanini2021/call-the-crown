@@ -2,3 +2,9 @@
 saveTextLockfile = true
 # 24h supply-chain guard: skip package versions published less than a day ago.
 minimumReleaseAge = 86400
+
+[test]
+# tests/verify holds the 5-6 Oct 2026 audit's reproductions, failing on purpose until each finding is
+# decided (docs/briefs/full-debug). The gate leaves them out; run a section by name, e.g.
+# `bun test --path-ignore-patterns='' tests/verify/k`.
+pathIgnorePatterns = ["tests/verify/**"]

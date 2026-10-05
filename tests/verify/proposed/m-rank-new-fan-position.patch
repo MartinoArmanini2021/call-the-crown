@@ -1,0 +1,46 @@
+-- =====================================================================================================
+-- PROPOSED, OPTIONAL (audit M7 SMELL, Rule 4: ranks/tiebreak order, not applied). rank_new_fan (0017)
+-- puts a fan who signs up after a result LAST. The rules' order (0006: points, exact sets, final gap,
+-- final pick time, then the published draw) would put a 0-point fan with no picks among the other 0-point,
+-- no-pick fans by their draw number. The next settlement corrects it, but after the final there is none,
+-- so the board stays out of the rules' order for good (test: rank shown 11, rank by the rules 2).
+-- Only 0-point fans are affected (no prize position), hence SMELL.
+-- Failing test: tests/verify/m/m7-ranks.test.ts
+--   "SMELL (fails today): a fan who joins after the last result is ranked last, not where the published
+--    tiebreak order puts them"
+-- Trade-off: placing the fan mid-table shifts every row below by one; during a sign-up rush after the first
+-- result that is many row updates per sign-up (vs one today). The alternative is to keep "last" and say so
+-- in the copy ("new fans join at the bottom until the next result").
+-- Verify: M_APPLY_PROPOSED=1 bun test tests/verify/m
+-- =====================================================================================================
+create or replace function public.rank_new_fan() returns trigger
+language plpgsql security definer
+set search_path = public
+as $$
+declare
+  v_prev text := coalesce(current_setting('skg.settling', true), '');
+  v_seed text;
+  v_me   text;
+  v_pos  int;
+begin
+  if not exists (select 1 from public.standings where rank is not null) then return new; end if;
+  perform pg_advisory_xact_lock(hashtext('skg.rank_new_fan'));
+  select tiebreak_seed into v_seed from public.event_config;
+  v_me := md5(v_seed || ':' || new.user_id::text);
+  -- 0 points, 0 exact sets, no final pick: everyone with anything is ahead; among the rest the draw decides.
+  select count(*)::int + 1 into v_pos
+    from public.standings s
+   where s.rank is not null and s.user_id <> new.user_id
+     and (s.points > 0 or s.exact_sets > 0 or s.final_games_gap is not null or s.final_pick_at is not null
+          or md5(v_seed || ':' || s.user_id::text) < v_me
+          or (md5(v_seed || ':' || s.user_id::text) = v_me and s.user_id < new.user_id));
+  perform set_config('skg.settling', '1', true);
+  update public.standings set rank = rank + 1, updated_at = clock_timestamp()
+   where rank >= v_pos and user_id <> new.user_id;
+  update public.standings set rank = v_pos, updated_at = clock_timestamp()
+   where user_id = new.user_id and rank is null;
+  perform set_config('skg.settling', v_prev, true);
+  return new;
+end;
+$$;
+revoke all on function public.rank_new_fan() from public, anon, authenticated;

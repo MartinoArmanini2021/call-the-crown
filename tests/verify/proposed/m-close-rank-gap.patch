@@ -1,0 +1,39 @@
+-- =====================================================================================================
+-- PROPOSED (audit M7, Rule 4: ranks/tiebreak order, not applied). close_rank_gap (0015) is a FOR EACH ROW
+-- trigger that moves everyone below old.rank up one place. When one statement deletes several standings
+-- rows, the row triggers fire after all the deletions (a cascade from auth.users fires them at the end of
+-- the outer statement too) with the ranks as they were, so the result depends on the order they fire in:
+-- deleting ranks 4 and 17 together gave …, 15, 17, 17, 18 (a duplicate 17, no 16).
+-- Failing tests: tests/verify/m/m7-ranks.test.ts
+--   "BUG (fails today): deleting several accounts in ONE statement (auth.users, …) leaves duplicate and
+--    missing ranks"
+--   "BUG (fails today, same root cause): several standings rows deleted in ONE statement leave duplicate
+--    ranks (close_rank_gap is order-dependent)"
+-- Fix: one statement-level trigger that renumbers the remaining ranked rows 1..n in their current order.
+-- Order-independent and idempotent (later firings in the same statement change nothing). Cost: one sort of
+-- the ranked rows per deleting statement (account deletions are rare).
+-- Verify: M_APPLY_PROPOSED=1 bun test tests/verify/m
+-- =====================================================================================================
+create or replace function public.close_rank_gap() returns trigger
+language plpgsql security definer
+set search_path = public
+as $$
+declare v_prev text := coalesce(current_setting('skg.settling', true), '');
+begin
+  if not exists (select 1 from gone where rank is not null) then return null; end if;
+  perform set_config('skg.settling', '1', true);
+  update public.standings s
+     set rank = x.rn, updated_at = clock_timestamp()
+    from (select user_id, (row_number() over (order by rank, user_id))::int as rn
+            from public.standings where rank is not null) x
+   where s.user_id = x.user_id and s.rank is distinct from x.rn;
+  perform set_config('skg.settling', v_prev, true);
+  return null;
+end;
+$$;
+revoke all on function public.close_rank_gap() from public, anon, authenticated;
+
+drop trigger standings_close_rank_gap on public.standings;
+create trigger standings_close_rank_gap after delete on public.standings
+  referencing old table as gone
+  for each statement execute function public.close_rank_gap();

@@ -1,0 +1,1466 @@
+{
+  "generated": "2026-10-05T20:45:07.708Z",
+  "setup": {
+    "A pick QF1": "ok",
+    "A pick QF2": "ok",
+    "B pick QF1": "ok",
+    "A create league": "ok",
+    "B join league": "{\"ok\":true,\"name\":\"K audit league\",\"league_id\":\"dec6df8e-1b97-4083-80c0-a485910ce8d1\"}",
+    "app_now": "2026-10-20T12:16:32.026574+00:00"
+  },
+  "matrix": {
+    "activity_days": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table activity_days"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table activity_days"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table activity_days"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table activity_days"
+        }
+      }
+    },
+    "billing_snapshots": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table billing_snapshots"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table billing_snapshots"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table billing_snapshots"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table billing_snapshots"
+        }
+      }
+    },
+    "consents": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table consents"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "2 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table consents"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "2 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table consents"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table consents"
+        }
+      }
+    },
+    "dev_clock": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table dev_clock"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table dev_clock"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table dev_clock"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table dev_clock"
+        }
+      }
+    },
+    "event_config": {
+      "anon": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table event_config"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table event_config"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table event_config"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table event_config"
+        }
+      }
+    },
+    "league_members": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table league_members"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "2 rows, 1 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table league_members"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "2 rows, 1 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_members"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table league_members"
+        }
+      }
+    },
+    "league_removals": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table league_removals"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table league_removals"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table league_removals"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table league_removals"
+        }
+      }
+    },
+    "leagues": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table leagues"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table leagues"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows, 1 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table leagues"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table leagues"
+        }
+      }
+    },
+    "match_crowd": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table match_crowd"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table match_crowd"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table match_crowd"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table match_crowd"
+        }
+      }
+    },
+    "matches": {
+      "anon": {
+        "select": {
+          "allowed": true,
+          "detail": "6 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table matches"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "6 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table matches"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "6 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table matches"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table matches"
+        }
+      }
+    },
+    "ops_alerts": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table ops_alerts"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table ops_alerts"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_alerts"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table ops_alerts"
+        }
+      }
+    },
+    "ops_health": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table ops_health"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table ops_health"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table ops_health"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table ops_health"
+        }
+      }
+    },
+    "picks": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table picks"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "2 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table picks"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table picks"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table picks"
+        }
+      }
+    },
+    "players": {
+      "anon": {
+        "select": {
+          "allowed": true,
+          "detail": "6 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table players"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "6 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table players"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "6 rows"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table players"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table players"
+        }
+      }
+    },
+    "profiles": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table profiles"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table profiles"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": true,
+          "detail": "1 rows, 0 of another account"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table profiles"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table profiles"
+        }
+      }
+    },
+    "provider_map": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table provider_map"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table provider_map"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table provider_map"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table provider_map"
+        }
+      }
+    },
+    "result_log": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table result_log"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table result_log"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table result_log"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table result_log"
+        }
+      }
+    },
+    "standings": {
+      "anon": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table standings"
+        }
+      },
+      "A": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table standings"
+        }
+      },
+      "B": {
+        "select": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "insert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "update": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "delete": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "upsert": {
+          "allowed": false,
+          "detail": "42501 permission denied for table standings"
+        },
+        "truncate": {
+          "allowed": false,
+          "detail": "permission denied for table standings"
+        }
+      }
+    }
+  },
+  "k7": {
+    "app_now": "2026-10-20T12:16:32.026574+00:00",
+    "b_reads_a_picks_before_start": 0,
+    "b_count_on_match1_before_start": 1
+  },
+  "storage": {
+    "anon": "refused: new row violates row-level security policy",
+    "A": "refused: new row violates row-level security policy",
+    "B": "refused: new row violates row-level security policy"
+  },
+  "graphql_anon": {
+    "mutation": []
+  }
+}

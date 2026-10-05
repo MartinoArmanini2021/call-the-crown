@@ -1,0 +1,82 @@
+| table | caller | select | insert | update | delete | upsert | truncate |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| activity_days | anon | denied | denied | denied | denied | denied | denied |
+| activity_days | A | denied | denied | denied | denied | denied | denied |
+| activity_days | B | denied | denied | denied | denied | denied | denied |
+| billing_snapshots | anon | denied | denied | denied | denied | denied | denied |
+| billing_snapshots | A | denied | denied | denied | denied | denied | denied |
+| billing_snapshots | B | denied | denied | denied | denied | denied | denied |
+| consents | anon | denied | denied | denied | denied | denied | denied |
+| consents | A | **ALLOWED** 2 rows, 0 of another account | denied | denied | denied | denied | denied |
+| consents | B | **ALLOWED** 2 rows, 0 of another account | denied | denied | denied | denied | denied |
+| dev_clock | anon | denied | denied | denied | denied | denied | denied |
+| dev_clock | A | denied | denied | denied | denied | denied | denied |
+| dev_clock | B | denied | denied | denied | denied | denied | denied |
+| event_config | anon | **ALLOWED** 1 rows | denied | denied | denied | denied | denied |
+| event_config | A | **ALLOWED** 1 rows | denied | denied | denied | denied | denied |
+| event_config | B | **ALLOWED** 1 rows | denied | denied | denied | denied | denied |
+| league_members | anon | denied | denied | denied | denied | denied | denied |
+| league_members | A | **ALLOWED** 2 rows, 1 of another account | denied | denied | denied | denied | denied |
+| league_members | B | **ALLOWED** 2 rows, 1 of another account | denied | denied | denied | denied | denied |
+| league_removals | anon | denied | denied | denied | denied | denied | denied |
+| league_removals | A | denied | denied | denied | denied | denied | denied |
+| league_removals | B | denied | denied | denied | denied | denied | denied |
+| leagues | anon | denied | denied | denied | denied | denied | denied |
+| leagues | A | **ALLOWED** 1 rows, 0 of another account | denied | denied | denied | denied | denied |
+| leagues | B | **ALLOWED** 1 rows, 1 of another account | denied | denied | denied | denied | denied |
+| match_crowd | anon | denied | denied | denied | denied | denied | denied |
+| match_crowd | A | denied | denied | denied | denied | denied | denied |
+| match_crowd | B | denied | denied | denied | denied | denied | denied |
+| matches | anon | **ALLOWED** 6 rows | denied | denied | denied | denied | denied |
+| matches | A | **ALLOWED** 6 rows | denied | denied | denied | denied | denied |
+| matches | B | **ALLOWED** 6 rows | denied | denied | denied | denied | denied |
+| ops_alerts | anon | denied | denied | denied | denied | denied | denied |
+| ops_alerts | A | denied | denied | denied | denied | denied | denied |
+| ops_alerts | B | denied | denied | denied | denied | denied | denied |
+| ops_health | anon | denied | denied | denied | denied | denied | denied |
+| ops_health | A | denied | denied | denied | denied | denied | denied |
+| ops_health | B | denied | denied | denied | denied | denied | denied |
+| picks | anon | denied | denied | denied | denied | denied | denied |
+| picks | A | **ALLOWED** 2 rows, 0 of another account | denied | denied | denied | denied | denied |
+| picks | B | **ALLOWED** 1 rows, 0 of another account | denied | denied | denied | denied | denied |
+| players | anon | **ALLOWED** 6 rows | denied | denied | denied | denied | denied |
+| players | A | **ALLOWED** 6 rows | denied | denied | denied | denied | denied |
+| players | B | **ALLOWED** 6 rows | denied | denied | denied | denied | denied |
+| profiles | anon | denied | denied | denied | denied | denied | denied |
+| profiles | A | **ALLOWED** 1 rows, 0 of another account | denied | denied | denied | denied | denied |
+| profiles | B | **ALLOWED** 1 rows, 0 of another account | denied | denied | denied | denied | denied |
+| provider_map | anon | denied | denied | denied | denied | denied | denied |
+| provider_map | A | denied | denied | denied | denied | denied | denied |
+| provider_map | B | denied | denied | denied | denied | denied | denied |
+| result_log | anon | denied | denied | denied | denied | denied | denied |
+| result_log | A | denied | denied | denied | denied | denied | denied |
+| result_log | B | denied | denied | denied | denied | denied | denied |
+| standings | anon | denied | denied | denied | denied | denied | denied |
+| standings | A | denied | denied | denied | denied | denied | denied |
+| standings | B | denied | denied | denied | denied | denied | denied |
+{
+  "setup": {
+    "A pick QF1": "ok",
+    "A pick QF2": "ok",
+    "B pick QF1": "ok",
+    "A create league": "ok",
+    "B join league": "{\"ok\":true,\"name\":\"K audit league\",\"league_id\":\"dec6df8e-1b97-4083-80c0-a485910ce8d1\"}",
+    "app_now": "2026-10-20T12:16:32.026574+00:00"
+  },
+  "k7": {
+    "app_now": "2026-10-20T12:16:32.026574+00:00",
+    "b_reads_a_picks_before_start": 0,
+    "b_count_on_match1_before_start": 1
+  },
+  "storage": {
+    "anon": "refused: new row violates row-level security policy",
+    "A": "refused: new row violates row-level security policy",
+    "B": "refused: new row violates row-level security policy"
+  },
+  "graphql_anon": {
+    "mutation": []
+  }
+}
+42501 permission denied for table <table>
+permission denied for table <table>
+cleanup: 0 k- test accounts left

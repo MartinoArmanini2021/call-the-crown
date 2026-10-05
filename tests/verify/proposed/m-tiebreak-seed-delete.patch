@@ -1,0 +1,30 @@
+-- =====================================================================================================
+-- PROPOSED (audit M4, Rule 4: not applied). guard_tiebreak_seed (0007) only fires BEFORE UPDATE, but
+-- service_role holds DELETE and INSERT on event_config (0003 line 72). After play starts the operator role
+-- can delete the row and insert it again with any seed: the draw is no longer "fixed before the first
+-- match" ([HTP htp_ties_4]; README "locked once the first match starts, so nobody can influence the draw").
+-- Failing test: tests/verify/m/m4-tiebreak.test.ts
+--   "BUG (fails today): after play starts the service role can still replace the seed by DELETE + INSERT
+--    of event_config"
+-- Smallest fix: the same guard also refuses a DELETE of the event row once play has started (the row is
+-- single by its primary key, so no second row can be inserted beside it).
+-- Verify: M_APPLY_PROPOSED=1 bun test tests/verify/m
+-- =====================================================================================================
+create or replace function public.guard_tiebreak_seed() returns trigger
+language plpgsql
+set search_path = public
+as $$
+begin
+  if exists (
+    select 1 from public.matches
+     where status <> 'scheduled' or (starts_at is not null and starts_at <= public.app_now())
+  ) then
+    if tg_op = 'DELETE' then raise exception 'tiebreak_seed_locked'; end if;
+    if new.tiebreak_seed is distinct from old.tiebreak_seed then raise exception 'tiebreak_seed_locked'; end if;
+  end if;
+  return coalesce(new, old);
+end;
+$$;
+create trigger event_config_seed_guard_delete before delete on public.event_config
+  for each row execute function public.guard_tiebreak_seed();
+revoke all on function public.guard_tiebreak_seed() from public, anon, authenticated, service_role;

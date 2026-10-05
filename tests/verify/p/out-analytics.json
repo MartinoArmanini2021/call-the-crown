@@ -1,0 +1,364 @@
+{
+  "steps": [
+    "2 bottom tabs + header links",
+    "8 league tab + invite",
+    "9 create league",
+    "10 join league (already a member)",
+    "11 sign out",
+    "14 sign in with password",
+    "18 sign out, then forgot password (code)",
+    "25 join with failing details (join_details_failed)"
+  ],
+  "sent": [
+    {
+      "event": "$identify",
+      "$pathname": "/",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "landing",
+      "$pathname": "/",
+      "custom": {
+        "name": "landing"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "picks",
+      "$pathname": "/",
+      "custom": {
+        "name": "picks"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "results",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "results"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "standings",
+      "$pathname": "/results",
+      "custom": {
+        "name": "standings"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "$pathname": "/standings",
+      "custom": {
+        "name": "how-to-play"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/how-to-play",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "standings",
+      "$pathname": "/profile",
+      "custom": {
+        "name": "standings"
+      }
+    },
+    {
+      "event": "invite_shared",
+      "$pathname": "/standings",
+      "custom": {}
+    },
+    {
+      "event": "league_created",
+      "$pathname": "/standings",
+      "custom": {}
+    },
+    {
+      "event": "league_joined",
+      "$pathname": "/standings",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/standings",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "signed_out",
+      "$pathname": "/profile",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "landing",
+      "$pathname": "/",
+      "custom": {
+        "name": "landing"
+      }
+    },
+    {
+      "event": "$identify",
+      "$pathname": "/sign-in",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "sign-in",
+      "$pathname": "/",
+      "custom": {
+        "name": "sign-in"
+      }
+    },
+    {
+      "event": "signed_in",
+      "$pathname": "/sign-in",
+      "custom": {
+        "method": "password"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "picks",
+      "$pathname": "/sign-in",
+      "custom": {
+        "name": "picks"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "signed_out",
+      "$pathname": "/profile",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "landing",
+      "$pathname": "/",
+      "custom": {
+        "name": "landing"
+      }
+    },
+    {
+      "event": "$identify",
+      "$pathname": "/sign-in",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "sign-in",
+      "$pathname": "/",
+      "custom": {
+        "name": "sign-in"
+      }
+    },
+    {
+      "event": "signed_in",
+      "$pathname": "/sign-in",
+      "custom": {
+        "method": "code"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "picks",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "picks"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "signed_out",
+      "$pathname": "/profile",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "landing",
+      "$pathname": "/",
+      "custom": {
+        "name": "landing"
+      }
+    },
+    {
+      "event": "$identify",
+      "$pathname": "/sign-in",
+      "custom": {}
+    },
+    {
+      "event": "screen_view",
+      "name": "sign-in",
+      "$pathname": "/",
+      "custom": {
+        "name": "sign-in"
+      }
+    },
+    {
+      "event": "join_details_failed",
+      "$pathname": "/sign-in",
+      "custom": {}
+    },
+    {
+      "event": "signed_up",
+      "$pathname": "/sign-in",
+      "custom": {
+        "method": "code"
+      }
+    }
+  ],
+  "clipboard": "http://127.0.0.1:5182/standings?join=E7AF5F",
+  "joinedAgain": ["✓ You joined P audit league"],
+  "screenViewPathMismatch": [
+    {
+      "event": "screen_view",
+      "name": "picks",
+      "$pathname": "/",
+      "custom": {
+        "name": "picks"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "results",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "results"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "standings",
+      "$pathname": "/results",
+      "custom": {
+        "name": "standings"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "$pathname": "/standings",
+      "custom": {
+        "name": "how-to-play"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/how-to-play",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "standings",
+      "$pathname": "/profile",
+      "custom": {
+        "name": "standings"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/standings",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "sign-in",
+      "$pathname": "/",
+      "custom": {
+        "name": "sign-in"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "picks",
+      "$pathname": "/sign-in",
+      "custom": {
+        "name": "picks"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "sign-in",
+      "$pathname": "/",
+      "custom": {
+        "name": "sign-in"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "profile",
+      "$pathname": "/picks",
+      "custom": {
+        "name": "profile"
+      }
+    },
+    {
+      "event": "screen_view",
+      "name": "sign-in",
+      "$pathname": "/",
+      "custom": {
+        "name": "sign-in"
+      }
+    }
+  ],
+  "personal": {
+    "emails": 0,
+    "leagueCode": false,
+    "displayName": false,
+    "ipOrUa": [
+      "$current_url",
+      "$raw_user_agent",
+      "$referrer",
+      "$referring_domain",
+      "$session_entry_referrer",
+      "$session_entry_referring_domain",
+      "$session_entry_url"
+    ]
+  },
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/sign-in"
+    }
+  ],
+  "blocked": []
+}

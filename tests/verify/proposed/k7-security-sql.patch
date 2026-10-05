@@ -1,0 +1,13 @@
+--- a/supabase/tests/security.sql
++++ b/supabase/tests/security.sql
+@@ -111,8 +111,8 @@
+ select t.as_owner();
+ select public.dev_set_now('2026-10-21 16:31+00');
+ select t.as_user(t.uid(2));
+-select t.check('another fan''s pick is visible once the match has started',
+-  (select count(*) from public.picks where user_id = t.uid(1) and match_no = 1) = 1);
++select t.check('another fan''s pick stays invisible after the match has started (K7: own rows only)',
++  (select count(*) from public.picks where user_id = t.uid(1) and match_no = 1) = 0);
+ select t.as_owner();
+ select public.dev_set_now('2026-10-20 12:00+00');
+ 

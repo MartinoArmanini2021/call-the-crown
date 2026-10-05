@@ -1,0 +1,327 @@
+{
+  "notes": {
+    "error-picks-en": "YOUR PICKS\nHow to play\n\nCould not load your picks\n\nNothing below is real data. Try again.\n\nRetry",
+    "error-results-en": "RESULTS\n\nCould not load results\n\nNothing below is real data. Try again.\n\nRetry",
+    "error-standings-en": "STANDINGS\nGlobal\nP audit league\n+ League\nTop\nMy rank\n\nCould not load standings\n\nNothing below is real data. Try again.\n\nRetry",
+    "error-boot-en": "UNAVAILABLE\n\nThe game could not be loaded. Please try again shortly.\n\nRetry",
+    "results-stats-en": "YOUR POINTS 22 YOUR RANK 64 of 137 MATCHES PLAYED 2 of 6",
+    "result-sheet-1-en": "Close QUARTER-FINAL 1 C BEAT F +14 pts Result RESULT S1 S2 C ● 6 7 F 4 5 Your pick YOUR PICK S1 ✓ S2 C ● 6 6 F 4 1 HOW FANS PICKED 1,234 PICKS C 64.8% · you F 35.2% Most picked score: C · 6-4 6-3 (8.0%) Winner 8 · Sets 4 · Exact sets 2",
+    "result-sheet-2-en": "Close QUARTER-FINAL 2 D BEAT E +8 pts Result RESULT S1 S2 D ● 6 2 E 3 1 Your pick YOUR PICK S1 S2 D ● 6 6 E 3 2 HOW FANS PICKED 1,234 PICKS D 64.8% · you E 35.2% Most picked score: D · 6-4 6-3 (8.0%) After a retirement, sets and set scores don't count: only the winner does. Winner 8 · Sets 0 · Exact sets 0",
+    "F-19-en": {
+      "afterFirstTap": {
+        "sel": 1,
+        "x": 333
+      },
+      "afterSecondTap": {
+        "sel": 1,
+        "x": 333
+      }
+    },
+    "empty-picks-en": "YOUR PICKS How to play Nothing to pick right now. The next matches open when their players are known. See the whole draw →",
+    "error-picks-ar": "توقعاتي\nطريقة اللعب\n\nتعذّر تحميل توقعاتي\n\nلا شيء أدناه بيانات حقيقية. حاول مرة أخرى.\n\nإعادة المحاولة",
+    "error-results-ar": "النتائج\n\nتعذّر تحميل النتائج\n\nلا شيء أدناه بيانات حقيقية. حاول مرة أخرى.\n\nإعادة المحاولة",
+    "error-standings-ar": "الترتيب\nالعام\nP audit league\n+ دوري\nالأوائل\nمركزي\n\nتعذّر تحميل الترتيب\n\nلا شيء أدناه بيانات حقيقية. حاول مرة أخرى.\n\nإعادة المحاولة",
+    "error-boot-ar": "UNAVAILABLE\n\nThe game could not be loaded. Please try again shortly.\n\nRetry",
+    "results-stats-ar": "نقاطك 22 ترتيبك 64 من 137 المباريات المنتهية 2 من 6",
+    "result-sheet-1-ar": "إغلاق ربع النهائي 1 C فاز على F +14 نقطة النتيجة النتيجة S1 S2 C ● 6 7 F 4 5 توقعك توقعك S1 ✓ S2 C ● 6 6 F 4 1 توقعات الجماهير 1,234 توقع C 64.8% · أنت F 35.2% النتيجة الأكثر توقعاً: C · 6-4 6-3 (8.0%) الفائز 8 · المجموعات 4 · المجموعات الصحيحة تماماً 2",
+    "result-sheet-2-ar": "إغلاق ربع النهائي 2 D فاز على E +8 نقطة النتيجة النتيجة S1 S2 D ● 6 2 E 3 1 توقعك توقعك S1 S2 D ● 6 6 E 3 2 توقعات الجماهير 1,234 توقع D 64.8% · أنت E 35.2% النتيجة الأكثر توقعاً: D · 6-4 6-3 (8.0%) بعد الانسحاب تُلغى المجموعات ونتائجها: يُحتسب الفائز فقط. الفائز 8 · المجموعات 0 · المجموعات الصحيحة تماماً 0",
+    "F-19-ar": {
+      "afterFirstTap": {
+        "sel": 1,
+        "x": -333
+      },
+      "afterSecondTap": {
+        "sel": 1,
+        "x": -333
+      }
+    },
+    "empty-picks-ar": "توقعاتي طريقة اللعب لا شيء للتوقع الآن. تُفتح المباريات التالية عند معرفة لاعبيها. شاهد جدول البطولة كاملاً →",
+    "F-13": {
+      "requests": [
+        {
+          "p_league": "b5e17689-bb1c-4ef0-9580-a4671b23980e",
+          "p_offset": 0,
+          "p_limit": 100
+        },
+        {
+          "p_league": "b5e17689-bb1c-4ef0-9580-a4671b23980e",
+          "p_offset": 100,
+          "p_limit": 100
+        }
+      ],
+      "membersListed": 150
+    },
+    "offline-en": [
+      "1s Saving",
+      "2s Saving",
+      "3s Saving",
+      "4s Saving",
+      "5s Saving",
+      "6s Saving",
+      "7s Saving",
+      "8s Saving",
+      "10s Saving",
+      "11s Saving",
+      "12s Saving",
+      "13s Saving",
+      "14s Saving",
+      "15s Saving",
+      "16s Saving",
+      "17s Saving",
+      "18s Saving",
+      "19s Saving",
+      "20s Saving",
+      "21s Saving",
+      "22s Saving",
+      "23s Saving",
+      "24s Saving",
+      "25s Saving",
+      "26s Saving",
+      "online+1s <closed> status=✓ Saved · C wins 6-4, 6-0\n\nYou can change it until Wed 21 Oc"
+    ],
+    "expired-en": {
+      "dialogBefore": 1,
+      "saveRequestSent": true,
+      "saveAuth": "Bearer eyJhbGciOiJIU",
+      "dialogAfter": 0,
+      "alerts": [],
+      "url": "http://127.0.0.1:5182/picks?match=1",
+      "header": "?\nSign in"
+    },
+    "offline-ar": [
+      "1s جارٍ الحفظ",
+      "2s جارٍ الحفظ",
+      "3s جارٍ الحفظ",
+      "4s جارٍ الحفظ",
+      "5s جارٍ الحفظ",
+      "6s جارٍ الحفظ",
+      "7s جارٍ الحفظ",
+      "8s جارٍ الحفظ",
+      "9s جارٍ الحفظ",
+      "10s جارٍ الحفظ",
+      "11s جارٍ الحفظ",
+      "13s جارٍ الحفظ",
+      "14s جارٍ الحفظ",
+      "15s جارٍ الحفظ",
+      "16s جارٍ الحفظ",
+      "17s جارٍ الحفظ",
+      "18s جارٍ الحفظ",
+      "19s جارٍ الحفظ",
+      "20s جارٍ الحفظ",
+      "21s جارٍ الحفظ",
+      "22s جارٍ الحفظ",
+      "23s جارٍ الحفظ",
+      "24s جارٍ الحفظ",
+      "25s جارٍ الحفظ",
+      "26s جارٍ الحفظ",
+      "online+1s <closed> status=✓ تم الحفظ · C يفوز 6-4, 6-1\n\nيمكنك تغييره حتى الأربعاء، 21 "
+    ],
+    "expired-ar": {
+      "dialogBefore": 1,
+      "saveRequestSent": true,
+      "saveAuth": "Bearer eyJhbGciOiJIU",
+      "dialogAfter": 0,
+      "alerts": [],
+      "url": "http://127.0.0.1:5182/picks?match=1",
+      "header": "?\nدخول"
+    }
+  },
+  "console": [
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/standings"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/standings"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/results"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/standings"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/standings"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "url": "http://127.0.0.1:5182/picks"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+      "url": "http://127.0.0.1:5182/picks?match=1"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "url": "http://127.0.0.1:5182/picks?match=1"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+      "url": "http://127.0.0.1:5182/picks?match=1"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "url": "http://127.0.0.1:5182/picks?match=1"
+    }
+  ],
+  "blocked": []
+}
