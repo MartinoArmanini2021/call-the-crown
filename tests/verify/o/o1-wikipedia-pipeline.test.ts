@@ -262,14 +262,14 @@ describe("O1 player name spelled differently on the page (QF2 de Minaur v Sinner
     }
   }, 60_000);
 
-  it("SMELL: MediaWiki-equivalent spellings of the same title ([[Alex_de_Minaur]], [[alex de Minaur]], a doubled space) are not normalised, so the match never settles", async () => {
+  it("Fixed by the adapter: MediaWiki-equivalent spellings of the same title ([[Alex_de_Minaur]], [[alex de Minaur]], a doubled space) are normalised and the match settles", async () => {
     for (const name of ["[[Alex_de_Minaur]]", "[[alex de Minaur]]", "[[Alex  de Minaur]]"]) {
       const r = await run(name);
       expect({ name, status: r.m.status }).toEqual({ name, status: "completed" });
     }
   }, 60_000);
 
-  it("Fixed by poll.ts: a name written with a template ({{sortname|Alex|de Minaur}}) reads as 'not started' for ever, and the poller reports healthy", async () => {
+  it("Fixed by poll.ts: a name written with a template ({{sortname|Alex|de Minaur}}) makes the run unhealthy once the match has started", async () => {
     const r = await run("{{sortname|Alex|de Minaur}}");
     expect(r.m.status).toBe("scheduled"); // fail safe on settlement …
     // … but the brief requires an alert, and the heartbeat says all is well
@@ -343,7 +343,7 @@ describe("O1 HTTP and page failures", () => {
       () => apiPage(wikitext(qf1Final()).replace(/\n\| RD1-(team|score)/g, " | RD1-$1")),
     ],
   ] as const) {
-    it(`BUG (silent feed): ${name}: no settlement, but the poller reports healthy and nothing alerts`, async () => {
+    it(`Silent feed (fixed by poll.ts): ${name}: no settlement, and the run is unhealthy so the watchdog alerts`, async () => {
       const r = await failSafe(answer);
       expect(r.settled).toBe(false);
       expect({ healthy: r.healthy, alerted: r.alerted }).toEqual({ healthy: false, alerted: true });
@@ -367,7 +367,7 @@ describe("O1 HTTP and page failures", () => {
     }).toEqual({ healthy: false, alerted: true });
   }, 60_000);
 
-  it("SMELL S-08: a Wikipedia request that never answers hangs the whole poll run (no fetch timeout)", async () => {
+  it("S-08 (fixed by the adapter): a Wikipedia request that never answers is abandoned after 10 s", async () => {
     const ev = await freshEvent();
     ev.wiki.set(() => "hang");
     await ev.at("2026-10-21T18:00:00Z");
@@ -436,7 +436,7 @@ describe("O1 HTTP and page failures", () => {
 });
 
 describe("O1 pre-start junk read as 'live' voids honest picks (0018 real_start)", () => {
-  it("BUG: '&nbsp;' left in QF1's score cells makes every reading from the window's opening 'live', so a pick saved 30 minutes BEFORE the scheduled start scores 0", async () => {
+  it("Fixed by the adapter: '&nbsp;' left in QF1's score cells is not read as 'live', so a pick saved 30 minutes before the scheduled start counts", async () => {
     const ev = await freshEvent();
     await ev.db.query("select t.new_user(1)");
     const placeholder = baseSlots();
