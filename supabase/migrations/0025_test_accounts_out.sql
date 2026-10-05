@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- 0024 — test accounts are left out of every ranking and every share (Tino, 5 Oct 2026: "Leave them out")
+-- 0025 — test accounts are left out of every ranking and every share (Tino, 5 Oct 2026: "Leave them out")
 -- An account marked profiles.is_test (by the operator, service role: 0003) keeps its picks and points,
 -- but:
 --   - gets no rank: recompute_standings ranks the other accounts only (exactly as before among them),
@@ -182,7 +182,7 @@ end;
 $$;
 
 -- ---------------------------------------------------------------------------------------------------
--- The share card (0023): percentages over non-test accounts' picks. Same output, same grants.
+-- The share card (0024): percentages over non-test accounts' picks. Same output, same grants.
 -- ---------------------------------------------------------------------------------------------------
 create or replace function public.get_my_call_stats(p_match int)
 returns table (threshold_met boolean, winner_pct int, exact_pct int, winner_rare boolean, exact_rare boolean)

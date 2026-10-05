@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- Test accounts are left out of rankings, boards, Crews, how fans picked and the share card (0024,
+-- Test accounts are left out of rankings, boards, Crews, how fans picked and the share card (0025,
 -- Tino 5 Oct 2026). Their own picks and points are kept. Among everyone else nothing changes.
 -- Runs inside begin … rollback (bun run test:sql test_accounts).
 -- =====================================================================================================

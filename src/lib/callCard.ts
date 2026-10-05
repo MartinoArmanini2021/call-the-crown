@@ -4,7 +4,7 @@
 //     when picks close, in Riyadh time.
 //   - "I called it": a finished match where the fan picked the winner. Exact (every played set called
 //     exactly), winner only (ticks under the exact sets), or void (retirement or walkover: winner only,
-//     no ticks, and the void line). A rarity line only from get_my_call_stats (0020, 0023), only above the
+//     no ticks, and the void line). A rarity line only from get_my_call_stats (0020, 0024), only above the
 //     minimum, and never for a majority pick: exact at 20% or less, winner at 40% or less.
 // cardSpec() turns the game's data into the words and numbers on the card (pure, unit-tested);
 // drawCard() paints it; cardPng() waits for the fonts and returns the PNG.
@@ -159,7 +159,7 @@ export function cardSpec(input: {
       : sets.map((_, i) => variant === "exact" || pick.exact_flags?.[i] === true);
   const lines: CardSpec["lines"] = [];
   if (variant === "void") lines.push({ text: t("card_void"), tone: "plain" });
-  // The server decides what is rare (0023: exact score 20% or fewer, winner 40% or fewer, on exact
+  // The server decides what is rare (0024: exact score 20% or fewer, winner 40% or fewer, on exact
   // fractions) and sends whole percentages only.
   if (stats?.threshold_met) {
     const winnerName = names[side(m.winner_id) - 1] ?? "";

@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- How rare my call was (0020, 0023): only my own pick, only after the start, nothing below
+-- How rare my call was (0020, 0024): only my own pick, only after the start, nothing below
 -- flags.rarity_min_picks (50), and never a count: whole percentages (rounded down) and the two
 -- "rare enough to show" answers (winner 40% or fewer, exact score 20% or fewer).
 -- Runs inside begin … rollback (bun run test:sql call_stats).

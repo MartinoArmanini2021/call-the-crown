@@ -238,7 +238,7 @@ export const rankWindowQuery = (league: string | null) =>
  * How fans picked a match, as shares (one decimal), never counts: nothing until it starts, and nothing
  * at all below flags.rarity_min_picks picks (0012, 0019). Final at the first ball.
  */
-/** The share card's rarity (0023): percentages only, rounded down; never a count. */
+/** The share card's rarity (0024): percentages only, rounded down; never a count. */
 export type CallStats = {
   threshold_met: boolean;
   winner_pct: number | null;

@@ -1,5 +1,5 @@
 -- =====================================================================================================
--- 0023 — the share card's rarity in percentages only, never counts (Tino, 5 Oct 2026: "Send % only")
+-- 0024 — the share card's rarity in percentages only, never counts (Tino, 5 Oct 2026: "Send % only")
 -- get_my_call_stats (0020) returned picks_total, same_winner and same_exact. From 50 picks up, those let
 -- anyone read how many fans picked a match. It now returns only what the card shows:
 --   winner_pct, exact_pct   whole percentages, rounded down (0 = "under 1%" on the card);
