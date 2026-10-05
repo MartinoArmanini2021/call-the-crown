@@ -1,5 +1,5 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
@@ -54,6 +54,18 @@ function Picks() {
     .sort((a, b) => Date.parse(a.starts_at!) - Date.parse(b.starts_at!));
   const step = nextStep(all, new Set(pickByMatch.keys()), now);
   const sheetMatch = all.find((m) => m.match_no === sheet && matchState(m, now) === "open");
+  // The sheet needs a signed-in fan. If the session ends while it is open (it expired, or the fan
+  // signed out in another tab), say the pick was not saved and offer the way back (audit 6 Oct 2026),
+  // instead of the sheet vanishing with no word.
+  const sheetOpen = Boolean(sheetMatch && user);
+  const openWithUser = useRef(false);
+  const [sessionEnded, setSessionEnded] = useState(false);
+  useEffect(() => {
+    if (sheetOpen) openWithUser.current = true;
+    else if (!user && openWithUser.current) setSessionEnded(true);
+    if (!sheetOpen) openWithUser.current = false;
+    if (user) setSessionEnded(false);
+  }, [sheetOpen, user]);
   // which match the pager shows: a deep link, else the first one still without a pick
   const [focus, setFocus] = useState<number | undefined>(search.match);
   const firstTodo = open.find((m) => !pickByMatch.has(m.match_no))?.match_no;
@@ -153,6 +165,22 @@ function Picks() {
           onClose={close}
           onSaved={(s) => onSaved(s, sheetMatch.match_no)}
         />
+      )}
+
+      {sessionEnded && (
+        <div
+          role="alert"
+          className="fixed inset-x-0 bottom-20 z-30 mx-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-accent/45 bg-card px-4 py-3 text-sm shadow-lg"
+        >
+          <p className="font-bold text-accent-text">{t("session_ended")}</p>
+          <Link
+            to="/sign-in"
+            search={{ redirect: "/picks" }}
+            className="focus-ring mt-2 inline-block rounded-full bg-accent px-4 py-1.5 text-sm font-bold"
+          >
+            {t("sign_in")}
+          </Link>
+        </div>
       )}
 
       {saved && (

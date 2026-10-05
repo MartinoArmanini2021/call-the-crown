@@ -322,6 +322,7 @@ export const ar: Record<StringKey, string> = {
 
   // errors from the server
   err_not_signed_in: "يرجى تسجيل الدخول أولاً.",
+  session_ended: "انتهت جلستك، لذلك لم يُحفظ هذا التوقع. سجّل الدخول مجدداً لإجرائه.",
   err_locked: "بدأت هذه المباراة: التوقعات مغلقة.",
   err_players_unknown: "لم يُعرف لاعبا هذه المباراة بعد.",
   err_already_settled: "انتهت هذه المباراة.",
