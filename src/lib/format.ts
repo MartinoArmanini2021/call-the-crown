@@ -63,3 +63,11 @@ export function matchState(m: Match, nowMs: number): MatchState {
   if (!m.p1_id || !m.p2_id || !m.starts_at) return "waiting";
   return Date.parse(m.starts_at) <= nowMs ? "locked" : "open";
 }
+
+/**
+ * A name typed by a fan, isolated for the text around it (U+2068 FIRST STRONG ISOLATE … U+2069 POP
+ * DIRECTIONAL ISOLATE): an Arabic name inside an English sentence, or a name holding a bidi control
+ * such as U+202E, can no longer reorder the rest of the line (full-debug E8). For names placed in
+ * translated strings; a name on its own in JSX uses <bdi>.
+ */
+export const isolate = (name: string) => `⁨${name}⁩`;

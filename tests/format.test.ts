@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { initials, surname } from "../src/lib/format";
+import { initials, isolate, surname } from "../src/lib/format";
 
 // Invented players (AGENTS.md).
 describe("player names", () => {
@@ -11,5 +11,14 @@ describe("player names", () => {
   test("initials are first and last word", () => {
     expect(initials("Ana de Vries")).toBe("AV");
     expect(initials("Tom Field")).toBe("TF");
+  });
+});
+
+describe("isolate (full-debug E8)", () => {
+  test("a fan's name is wrapped in FSI … PDI, so a bidi control inside cannot leak", () => {
+    const hostile = "‮sec crew";
+    const line = `${isolate(hostile)} needs 4 more members to enter.`;
+    expect(line.startsWith("⁨‮sec crew⁩")).toBe(true);
+    expect(isolate("دوري")).toBe("⁨دوري⁩");
   });
 });

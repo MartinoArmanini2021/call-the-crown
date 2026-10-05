@@ -48,11 +48,16 @@ export function shareText(pct: number, t: Tr): string {
   return pct < 1 ? t("pct_under_1") : `${pct}%`;
 }
 
-/** Night 1, 2, 3: the event-local days that have matches, in order. */
+/**
+ * Night 1, 2, 3: the event-local "session days" that have matches, in order. A night runs from 06:00
+ * to 05:59 the next morning, event time, so a match that starts after midnight (00:30 Riyadh) belongs to
+ * the evening it closes, as it does in public.match_nights() (0023).
+ */
+export const NIGHT_CUTOFF_HOURS = 6;
 export function nightOf(m: Match, matches: Match[], timezone: string): number {
   const day = (iso: string) =>
     new Intl.DateTimeFormat("en-CA", { timeZone: timezone, dateStyle: "short" }).format(
-      new Date(iso),
+      new Date(Date.parse(iso) - NIGHT_CUTOFF_HOURS * 3_600_000),
     );
   const days = [
     ...new Set(matches.filter((x) => x.starts_at).map((x) => day(x.starts_at!))),
@@ -488,14 +493,30 @@ export function drawCard(canvas: HTMLCanvasElement, s: CardSpec): void {
     y += 14;
   }
 
-  // Footer: the league to join (or "Play free"), the address, the fine print.
-  const footY = H - 210;
+  // Footer: the league to join (or "Play free"), the address, the fine print. The address goes at
+  // the far end of the CTA line, smaller if it has to; when even that would run into the league
+  // code, it gets a line of its own and the footer moves up (full-debug G1).
+  font(700, 40, f.body);
+  const ctaW = ctx.measureText(s.footerCta).width;
+  let codeW = 0;
+  if (s.code) {
+    font(f.numW, 40, f.num);
+    ctx.letterSpacing = "6px";
+    codeW = ctx.measureText(s.code).width;
+    ctx.letterSpacing = "0px";
+  }
+  const room = W - 2 * PAD - ctaW - (s.code ? 26 + codeW : 0) - 32;
+  ctx.direction = "ltr";
+  let hostPx = fit(s.host, 500, 32, f.body, room);
+  const ownLine = ctx.measureText(s.host).width > room;
+  if (ownLine) hostPx = fit(s.host, 500, 32, f.body, W - 2 * PAD);
+  ctx.direction = rtl ? "rtl" : "ltr";
+  const footY = H - (ownLine ? 260 : 210);
   ctx.fillStyle = c.line;
   ctx.fillRect(PAD, footY, W - 2 * PAD, 2);
   font(700, 40, f.body);
   text(s.footerCta, X(PAD), footY + 82, c.text);
   if (s.code) {
-    const ctaW = ctx.measureText(s.footerCta).width;
     font(f.numW, 40, f.num);
     ctx.direction = "ltr";
     ctx.letterSpacing = "6px";
@@ -503,12 +524,13 @@ export function drawCard(canvas: HTMLCanvasElement, s: CardSpec): void {
     ctx.letterSpacing = "0px";
     ctx.direction = rtl ? "rtl" : "ltr";
   }
-  font(500, 32, f.body);
+  font(500, hostPx, f.body);
   ctx.direction = "ltr";
-  text(s.host, X(W - PAD), footY + 82, c.text2, rtl ? "left" : "right");
+  if (ownLine) text(s.host, X(PAD), footY + 140, c.text2, rtl ? "right" : "left");
+  else text(s.host, X(W - PAD), footY + 82, c.text2, rtl ? "left" : "right");
   ctx.direction = rtl ? "rtl" : "ltr";
   font(500, 28, f.body);
-  text(s.fine, X(PAD), footY + 150, c.text3);
+  text(s.fine, X(PAD), footY + (ownLine ? 200 : 150), c.text3);
 }
 
 /** The PNG, once the fonts are in. */

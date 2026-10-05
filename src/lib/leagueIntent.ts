@@ -28,9 +28,13 @@ const write = (store: () => Storage, key: string, value: string | null) => {
 const session = () => sessionStorage;
 const local = () => localStorage;
 
-/** An invite code to use once the visitor is signed in (A-Z/0-9, 6 characters). */
-export const setPendingJoin = (code: string) => {
-  const clean = code
+/**
+ * An invite code to use once the visitor is signed in (A-Z/0-9, 6 characters). The router can hand an
+ * all-digit code over as a number (full-debug F5), so anything that is not text or a number is ignored.
+ */
+export const setPendingJoin = (code: unknown) => {
+  if (typeof code !== "string" && !(typeof code === "number" && Number.isFinite(code))) return;
+  const clean = String(code)
     .toUpperCase()
     .replace(/[^A-Z0-9]/g, "")
     .slice(0, 6);

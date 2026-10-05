@@ -14,6 +14,7 @@ import {
   type League,
   type Match,
 } from "@/lib/api";
+import { isolate } from "@/lib/format";
 import {
   getActiveLeague,
   markOnboardSeen,
@@ -58,10 +59,10 @@ export function LeagueRankLine({ uid, matches }: { uid: string; matches: Match[]
         className="focus-ring block rounded font-semibold"
       >
         {started && me && n !== undefined ? (
-          t("league_rank_line", { rank: me.pos, n, league: league.name })
+          t("league_rank_line", { rank: me.pos, n, league: isolate(league.name) })
         ) : (
           <>
-            <span className="text-ink">{league.name}</span>
+            <bdi className="text-ink">{league.name}</bdi>
             {!started && <span className="font-normal text-ink-3"> · {t("board_empty")}</span>}
           </>
         )}
