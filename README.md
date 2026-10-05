@@ -414,6 +414,8 @@ The approved plan lists the open questions in full.
   - The seed is random when the event is created, public (shown on How to play), and locked once the first match starts, so nobody can influence the draw and an audit can re-run it.
   - Publish the seed before the event: it is in `event_config.tiebreak_seed`.
 - **A corrected result that changes a later match** (question 5): refill it and drop the picks naming the removed player if it has not started; pause it and alert if it has.
+- **Withdrawals and substitutions** (Tino, 5 Oct 2026: "no withdrawals conceived"): no procedure is built. Once picks exist the players are frozen, so if a player were replaced anyway, the provider's result would name someone not in our match: it is refused, that match does not score, and `result_overdue` alerts the operator 4 hours after its start. A walkover announced before the start is handled by the early-start alert and `lock_match_now` (runbook).
+- **Picks saved after a match really started** (Tino, 4 Oct 2026): void (migration 0018; runbook, "A match starts early").
 - **League owner deletes their account** (question 10): the longest-standing member becomes owner; an empty league is deleted.
 - **Not yet decided: account deletion vs billing** (question 9). Deleting an account deletes its activity days, so a deleted fan no longer counts. A no-personal-data tombstone is ready to add if legal agrees.
 - **Arabic:** wired (right-to-left layout, the switch, the flag) with no texts yet. They come with the reviewed translation in Phase 3.
