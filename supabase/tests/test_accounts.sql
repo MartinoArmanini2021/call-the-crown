@@ -124,6 +124,25 @@ select t.check('join limit still counts the test account (5 seats taken → leag
 select t.as_owner();
 update public.event_config set league_limits = league_limits || '{"max_members": 200}'::jsonb;
 
+-- One UPDATE flipping several accounts re-ranks once, correctly (statement-level trigger, 0026).
+create temp table before_many on commit drop as
+  select user_id, rank from public.standings where rank is not null;
+select t.as_service();
+update public.profiles set is_test = true where user_id in (select t.uid(n) from generate_series(30, 35) n);
+select t.as_owner();
+select t.check('flipping 6 accounts in one UPDATE: they have no rank, everyone else ranked 1..N with no gap',
+  (select count(*) = 0 from public.standings where user_id in (select t.uid(n) from generate_series(30, 35) n) and rank is not null)
+  and (select array_agg(rank order by rank) = (select array_agg(g) from generate_series(1, (select count(*)::int from public.standings where rank is not null)) g)
+         from public.standings where rank is not null));
+select t.check('… in the same order as before',
+  (select bool_and(a.ord = b.ord) from
+     (select user_id, row_number() over (order by rank) ord from public.standings where rank is not null) a
+     join (select user_id, row_number() over (order by rank) ord from before_many
+            where user_id not in (select t.uid(n) from generate_series(30, 35) n)) b using (user_id)));
+select t.check('the re-rank trigger runs once per statement, not once per row',
+  (select pg_get_triggerdef(oid) like '%FOR EACH STATEMENT%' from pg_trigger
+    where tgname = 'profiles_rerank_on_test_flag'));
+
 select t.as_owner();
 select t.check('the re-rank trigger: no client can call its function',
   not has_function_privilege('authenticated', 'public.rerank_on_test_flag()', 'execute')
