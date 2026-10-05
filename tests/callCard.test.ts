@@ -57,7 +57,7 @@ const pick = (over: Partial<Pick>): Pick => ({
   exact_flags: null,
   ...over,
 });
-// What get_my_call_stats (0023) returns: whole percentages and the server's "rare" answers.
+// What get_my_call_stats (0024) returns: whole percentages and the server's "rare" answers.
 const stats = (
   winnerPct: number,
   exactPct: number,

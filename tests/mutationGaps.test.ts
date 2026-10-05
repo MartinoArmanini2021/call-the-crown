@@ -64,11 +64,18 @@ const scored = (over: Partial<Pick> = {}): Pick => ({
   exact_flags: [true, true, null],
   ...over,
 });
-const stats = (total: number, winner: number, exact: number): CallStats => ({
+// get_my_call_stats (0024) sends whole percentages and the server's "rare" answers, never counts.
+const stats = (
+  winnerPct: number,
+  exactPct: number,
+  winnerRare: boolean,
+  exactRare: boolean,
+): CallStats => ({
   threshold_met: true,
-  picks_total: total,
-  same_winner: winner,
-  same_exact: exact,
+  winner_pct: winnerPct,
+  exact_pct: exactPct,
+  winner_rare: winnerRare,
+  exact_rare: exactRare,
 });
 const spec = (m: Match, p: Pick, s: CallStats | null, perfect?: boolean) =>
   cardSpec({
@@ -87,12 +94,13 @@ const spec = (m: Match, p: Pick, s: CallStats | null, perfect?: boolean) =>
     host: "example.test",
   });
 
-// Mutants: `pct < 1` → `pct < 0.5`, and `pct < 1` → `pct <= 1` (brief: "Below 1%, use pct_under_1").
+// Mutant: `pct < 1` → `pct <= 1` (brief: "Below 1%, use pct_under_1"). The server rounds down, so
+// 0.5% and 0.9% arrive as 0 and exactly 1% as 1 (the rounding itself: call_stats.sql, 1 of 150 → 0,
+// 1 of 51 → 1).
 describe("pct_under_1 boundary", () => {
-  test("0.5% and 0.9% are under 1%; exactly 1% is 1%", () => {
-    expect(shareText(5, 1000, tEn)).toBe("under 1%");
-    expect(shareText(9, 1000, tEn)).toBe("under 1%");
-    expect(shareText(10, 1000, tEn)).toBe("1%");
+  test("0.5% and 0.9% (sent as 0) are under 1%; exactly 1% is 1%", () => {
+    expect(shareText(0, tEn)).toBe("under 1%");
+    expect(shareText(1, tEn)).toBe("1%");
   });
 });
 
@@ -101,9 +109,9 @@ describe("pct_under_1 boundary", () => {
 describe("rarity line by variant", () => {
   test("an exact card never carries the winner-only line", () => {
     // exact 25% (> 20%: no exact line); winner 30% (≤ 40%, but this is not a winner-only card)
-    expect(spec(match({}), scored(), stats(100, 30, 25)).lines).toEqual([]);
+    expect(spec(match({}), scored(), stats(30, 25, true, false)).lines).toEqual([]);
     // exact 10%: only the exact line, even though the winner share (30%) is also rare
-    expect(spec(match({}), scored(), stats(100, 30, 10)).lines.map((l) => l.text)).toEqual([
+    expect(spec(match({}), scored(), stats(30, 10, true, true)).lines.map((l) => l.text)).toEqual([
       "Only 10% of fans called this exact score.",
     ]);
   });

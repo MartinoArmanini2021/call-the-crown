@@ -41,8 +41,8 @@ update public.picks
    set set_scores = '[{"p1_games": "6", "p2_games": "4"}, {"p1_games": 6, "p2_games": "4"}]'::jsonb
  where user_id = t.uid(2) and match_no = 1;
 select t.as_user(t.uid(1));
-select t.check('M-canonical: "6" and 6 are the same score for same_exact (30 of 52)',
-  (select (picks_total, same_exact) = (52, 30) from public.get_my_call_stats(1)));
+select t.check('M-canonical: "6" and 6 are the same score for the exact share (30 of 52 = 57%, not 29 of 52 = 55%)',
+  (select exact_pct = 57 from public.get_my_call_stats(1)));
 select t.as_owner();
 update public.picks set set_scores = t.ss('6-4 6-4') where user_id = t.uid(2) and match_no = 1;
 
