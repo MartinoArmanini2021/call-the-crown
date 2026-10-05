@@ -24,7 +24,6 @@ export const en = {
 
   // landing
   landing_title: "Call every match",
-  landing_cta: "Play free",
   landing_players: "The six players",
   first_lock_in: "Next picks close in",
   landing_sentence:
@@ -250,6 +249,14 @@ export const en = {
   joined: "You joined {name}",
   invite: "Invite",
   invite_copied: "Invite link copied",
+  // leagues first (brief "bragging rights", Phase 2)
+  cta_start_league: "Start a league",
+  cta_join_code: "Join with a code",
+  cta_solo: "Or play on your own",
+  onboard_title: "Who are you playing against?",
+  onboard_sub: "Make a league for your group, or join one with a code. You can do it later too.",
+  league_rank_line: "#{rank} of {n} in {league}",
+  league_alone_nudge: "Your league is just you. Send the invite: no rivals, no bragging.",
   code: "Code",
   members: "{n} members",
   member_one: "1 member",

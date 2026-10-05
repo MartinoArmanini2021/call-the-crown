@@ -6,7 +6,14 @@ import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
-import { inLocale, matchesQuery, playersQuery, publicImage, type Player } from "@/lib/api";
+import {
+  inLocale,
+  matchesQuery,
+  myLeaguesQuery,
+  playersQuery,
+  publicImage,
+  type Player,
+} from "@/lib/api";
 import { shortTimeLeft, surname } from "@/lib/format";
 
 export const Route = createFileRoute("/")({ component: Landing });
@@ -21,6 +28,8 @@ function Landing() {
   const now = useServerNow();
   const players = useQuery(playersQuery);
   const matches = useQuery(matchesQuery);
+  const leagues = useQuery({ ...myLeaguesQuery(user?.id ?? ""), enabled: !!user });
+  const noLeague = !!user && leagues.isSuccess && leagues.data.length === 0;
 
   const firstLock = (matches.data ?? [])
     .filter((m) => m.status === "scheduled" && m.p1_id && m.p2_id && m.starts_at)
@@ -32,6 +41,11 @@ function Landing() {
   // the example is a quarter-final pick, so it names a quarter-final player
   const qf = (matches.data ?? []).find((m) => m.round === "QF" && m.p1_id);
   const top = (players.data ?? []).find((p) => p.id === qf?.p1_id);
+
+  const primary =
+    "focus-ring inline-flex h-12 items-center rounded-full bg-accent px-7 text-sm font-bold shadow-[0_8px_30px_-8px_var(--accent)]";
+  const secondary =
+    "focus-ring inline-flex h-12 items-center rounded-full border border-line bg-raised/70 px-6 text-sm font-semibold";
 
   return (
     <AppShell>
@@ -68,12 +82,44 @@ function Landing() {
           </p>
         )}
 
-        <Link
-          to={user ? "/picks" : "/sign-in"}
-          className="focus-ring mt-5 inline-flex h-12 items-center rounded-full bg-accent px-7 text-sm font-bold shadow-[0_8px_30px_-8px_var(--accent)]"
-        >
-          {user ? t("landing_cta_signed_in") : t("landing_cta")}
-        </Link>
+        {/* Leagues first (brief "bragging rights", Phase 2): the game is beating your friends. */}
+        {user ? (
+          <div className="mt-5 flex flex-wrap gap-2">
+            <Link to="/picks" className={primary}>
+              {t("landing_cta_signed_in")}
+            </Link>
+            {noLeague && (
+              <Link to="/standings" search={{ add: "create" }} className={secondary}>
+                {t("cta_start_league")}
+              </Link>
+            )}
+          </div>
+        ) : (
+          <>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link
+                to="/sign-in"
+                search={{ redirect: "/standings?add=create" }}
+                className={primary}
+              >
+                {t("cta_start_league")}
+              </Link>
+              <Link
+                to="/sign-in"
+                search={{ redirect: "/standings?add=join" }}
+                className={secondary}
+              >
+                {t("cta_join_code")}
+              </Link>
+            </div>
+            <Link
+              to="/sign-in"
+              className="focus-ring mt-3 inline-block rounded text-sm text-ink-2 underline underline-offset-4"
+            >
+              {t("cta_solo")}
+            </Link>
+          </>
+        )}
       </section>
 
       <ScoringExample name={top ? surname(playerName(top, locale)) : t("example_player")} />

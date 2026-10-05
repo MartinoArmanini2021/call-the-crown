@@ -6,13 +6,14 @@
 // by the proven owner (update_profile, update_consents), each consent with the version of the text
 // shown. Before that, a new account has both consents not granted (audit 3 Oct 2026, F-02, 0013).
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { Turnstile, turnstileEnabled } from "@/components/Turnstile";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
 import { inLocale, updateConsents, updateProfile } from "@/lib/api";
+import { setPendingJoin } from "@/lib/leagueIntent";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
@@ -81,12 +82,13 @@ function SignIn() {
     setStep("code");
   }
 
-  const done = () => {
-    const to = search.code
-      ? `/standings?join=${encodeURIComponent(search.code)}`
-      : safeRedirect(search.redirect);
-    void navigate({ to });
-  };
+  // An invite code rides along in sessionStorage; PendingJoin (__root) joins once the fan is in.
+  useEffect(() => {
+    if (search.code) setPendingJoin(search.code);
+  }, [search.code]);
+  // href, not to: a redirect can carry its own search ("/standings?add=create" from the landing).
+  const done = () =>
+    void navigate({ href: search.code ? "/standings" : safeRedirect(search.redirect) });
 
   async function signInWithPassword(e: FormEvent) {
     e.preventDefault();

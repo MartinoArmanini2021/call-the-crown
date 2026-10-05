@@ -12,10 +12,10 @@ import { useCallback, useEffect, useRef, useState, type FormEvent } from "react"
 import { AppShell, PageTitle } from "@/components/AppShell";
 import { MEDAL, SponsorSlot } from "@/components/Brand";
 import { QueryGate } from "@/components/QueryGate";
-import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { errorText, useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
+import { setActiveLeague, setPendingJoin, shareInvite } from "@/lib/leagueIntent";
 import {
   ApiError,
   createLeague,
@@ -32,7 +32,16 @@ import {
 } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
-type Search = { league?: string; view?: "top" | "me"; page?: number; join?: string };
+type Search = {
+  league?: string;
+  view?: "top" | "me";
+  page?: number;
+  join?: string;
+  /** open the league sheet ready to create or to join (landing buttons, the one-time step) */
+  add?: "create" | "join";
+  /** the league just joined from an invite (the "joined" message) */
+  joined?: string;
+};
 const PAGE = 50;
 
 export const Route = createFileRoute("/standings")({
@@ -48,14 +57,13 @@ export const Route = createFileRoute("/standings")({
             .slice(0, 6),
         }
       : {}),
+    ...(s["add"] === "create" || s["add"] === "join" ? { add: s["add"] } : {}),
+    ...(typeof s["joined"] === "string" ? { joined: s["joined"] } : {}),
   }),
   component: Standings,
 });
 
-const inviteLink = (code: string) => `${window.location.origin}/standings?join=${code}`;
-
 function Standings() {
-  const event = useEvent();
   const { t } = useT();
   const { user, loading } = useAuth();
   const navigate = useNavigate({ from: "/standings" });
@@ -64,7 +72,7 @@ function Standings() {
   const league = search.league ?? null;
   const view = search.view ?? "top";
   const page = search.page ?? 1;
-  const [sheet, setSheet] = useState(!!search.join);
+  const [sheet, setSheet] = useState(!!search.join || !!search.add);
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -89,8 +97,28 @@ function Standings() {
   };
   const closeSheet = useCallback(() => {
     setSheet(false);
-    if (search.join) void navigate({ search: ({ join: _join, ...rest }) => rest, replace: true });
-  }, [navigate, search.join]);
+    if (search.join || search.add)
+      void navigate({ search: ({ join: _join, add: _add, ...rest }) => rest, replace: true });
+  }, [navigate, search.join, search.add]);
+  // The page can already be on screen when these arrive (an invite joined after sign-up, PendingJoin
+  // in __root), so they are effects, not initial state. The "joined" message shows once: the marker
+  // leaves the address.
+  useEffect(() => {
+    if (search.joined === undefined) return;
+    setNotice(t("joined", { name: search.joined }));
+    void navigate({ search: ({ joined: _joined, ...rest }) => rest, replace: true });
+  }, [navigate, search.joined, t]);
+  useEffect(() => {
+    if (search.join || search.add) setSheet(true);
+  }, [search.join, search.add]);
+  // An invite opened signed out: keep the code through sign-up (used once by PendingJoin, __root).
+  useEffect(() => {
+    if (!loading && !user && search.join) setPendingJoin(search.join);
+  }, [loading, user, search.join]);
+  // The league on screen is the fan's active league (shown on Picks).
+  useEffect(() => {
+    if (user && league) setActiveLeague(user.id, league);
+  }, [user, league]);
 
   if (!loading && !user) {
     return (
@@ -244,8 +272,15 @@ function Standings() {
       {sheet && (
         <LeagueSheet
           initialCode={search.join ?? ""}
+          focus={search.add === "join" || search.join ? "join" : "create"}
           onClose={closeSheet}
+          onCreated={(id) => {
+            if (user) setActiveLeague(user.id, id);
+            refresh();
+            void navigate({ search: { league: id, view } });
+          }}
           onDone={(id, message) => {
+            if (user) setActiveLeague(user.id, id);
             setError(null);
             setNotice(message);
             refresh();
@@ -280,17 +315,9 @@ function LeagueBar({
   });
 
   async function share() {
-    const url = inviteLink(league.code);
-    try {
-      if (navigator.share) await navigator.share({ title: league.name, url });
-      else {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      }
-      track("invite_shared");
-    } catch {
-      /* the fan closed the share sheet */
+    if ((await shareInvite(league)) === "copied") {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   }
 
@@ -374,14 +401,22 @@ function LeagueBar({
   );
 }
 
-/** "+ League": join with a code (an invite link fills it in) or create one. A bottom sheet. */
+/**
+ * "+ League": join with a code (an invite link fills it in) or create one. A bottom sheet.
+ * After a create it stays open on the invite step: the new league is useless until a friend is in it.
+ */
 function LeagueSheet({
   initialCode,
+  focus,
   onClose,
+  onCreated,
   onDone,
 }: {
   initialCode: string;
+  /** which form comes first and takes the cursor */
+  focus: "join" | "create";
   onClose: () => void;
+  onCreated: (leagueId: string) => void;
   onDone: (leagueId: string, message: string) => void;
 }) {
   const { t } = useT();
@@ -389,12 +424,14 @@ function LeagueSheet({
   const [code, setCode] = useState(initialCode);
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [created, setCreated] = useState<{ name: string; code: string } | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null;
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    panel.current?.querySelector<HTMLElement>("input")?.focus();
+    panel.current?.querySelector<HTMLElement>("[data-autofocus]")?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") return onClose();
       if (e.key !== "Tab" || !panel.current) return;
@@ -439,7 +476,8 @@ function LeagueSheet({
     mutationFn: () => createLeague(name.trim()),
     onSuccess: (l) => {
       track("league_created");
-      onDone(l.id, `${l.name} · ${t("code")} ${l.code}`);
+      setCreated({ name: l.name, code: l.code });
+      onCreated(l.id);
     },
     onError: (e) => setError(errorText(t, e)),
   });
@@ -453,6 +491,63 @@ function LeagueSheet({
     setError(null);
     fn();
   };
+  // The invite step takes the cursor when it appears.
+  useEffect(() => {
+    if (created) panel.current?.querySelector<HTMLElement>("[data-autofocus]")?.focus();
+  }, [created]);
+  async function invite() {
+    if (created && (await shareInvite(created)) === "copied") {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
+  const joinSection = (
+    <section key="join">
+      <h3 className="headline text-lg">{t("join_league")}</h3>
+      {initialCode && <p className="mt-1 text-xs text-ink-2">{t("join_prompt")}</p>}
+      <form onSubmit={submit(() => join.mutate())} className="mt-2 flex gap-2">
+        <input
+          className={`${input} num uppercase tracking-[0.3em]`}
+          value={code}
+          onChange={(e) =>
+            setCode(
+              e.target.value
+                .toUpperCase()
+                .replace(/[^A-Z0-9]/g, "")
+                .slice(0, 6),
+            )
+          }
+          placeholder="ABC234"
+          aria-label={t("league_code")}
+          autoCapitalize="characters"
+          data-autofocus={focus === "join" ? "" : undefined}
+        />
+        <button className={btn} disabled={code.length !== 6 || join.isPending}>
+          {t("join")}
+        </button>
+      </form>
+    </section>
+  );
+  const createSection = (
+    <section key="create">
+      <h3 className="headline text-lg">{t("create_league")}</h3>
+      <form onSubmit={submit(() => create.mutate())} className="mt-2 flex gap-2">
+        <input
+          className={input}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          maxLength={40}
+          placeholder={t("league_name")}
+          aria-label={t("league_name")}
+          data-autofocus={focus === "create" ? "" : undefined}
+        />
+        <button className={btn} disabled={!name.trim() || create.isPending}>
+          {t("create")}
+        </button>
+      </form>
+    </section>
+  );
 
   return (
     <div className="fixed inset-0 z-40 flex items-end justify-center" role="presentation">
@@ -486,46 +581,37 @@ function LeagueSheet({
             {error}
           </p>
         )}
-        <section>
-          <h3 className="headline text-lg">{t("join_league")}</h3>
-          {initialCode && <p className="mt-1 text-xs text-ink-2">{t("join_prompt")}</p>}
-          <form onSubmit={submit(() => join.mutate())} className="mt-2 flex gap-2">
-            <input
-              className={`${input} num uppercase tracking-[0.3em]`}
-              value={code}
-              onChange={(e) =>
-                setCode(
-                  e.target.value
-                    .toUpperCase()
-                    .replace(/[^A-Z0-9]/g, "")
-                    .slice(0, 6),
-                )
-              }
-              placeholder="ABC234"
-              aria-label={t("league_code")}
-              autoCapitalize="characters"
-            />
-            <button className={btn} disabled={code.length !== 6 || join.isPending}>
-              {t("join")}
-            </button>
-          </form>
-        </section>
-        <section>
-          <h3 className="headline text-lg">{t("create_league")}</h3>
-          <form onSubmit={submit(() => create.mutate())} className="mt-2 flex gap-2">
-            <input
-              className={input}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              maxLength={40}
-              placeholder={t("league_name")}
-              aria-label={t("league_name")}
-            />
-            <button className={btn} disabled={!name.trim() || create.isPending}>
-              {t("create")}
-            </button>
-          </form>
-        </section>
+        {created ? (
+          <section className="space-y-3">
+            <h3 className="headline text-xl">{created.name}</h3>
+            <p className="text-sm text-ink-2">{t("league_alone_nudge")}</p>
+            <p className="text-xs text-ink-3">
+              {t("code")}{" "}
+              <span className="num text-base tracking-[0.3em] text-ink">{created.code}</span>
+            </p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={invite}
+                data-autofocus=""
+                className={cn(btn, "flex-1")}
+              >
+                {copied ? t("invite_copied") : t("invite")}
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="focus-ring h-11 shrink-0 rounded-full bg-raised px-5 text-sm font-semibold"
+              >
+                {t("close")}
+              </button>
+            </div>
+          </section>
+        ) : focus === "create" ? (
+          [createSection, joinSection]
+        ) : (
+          [joinSection, createSection]
+        )}
       </div>
     </div>
   );

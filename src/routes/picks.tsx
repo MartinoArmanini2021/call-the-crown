@@ -1,6 +1,7 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppShell } from "@/components/AppShell";
+import { LeagueRankLine, OnboardSheet } from "@/components/LeagueNudge";
 import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
@@ -90,6 +91,8 @@ function Picks() {
         </Link>
       </div>
 
+      {user && <LeagueRankLine uid={user.id} matches={all} />}
+
       <QueryGate queries={queries} label={t("picks_title").toLowerCase()}>
         {open.length === 0 ? (
           user && step.kind !== "none" ? (
@@ -154,6 +157,8 @@ function Picks() {
           onSaved={(s) => onSaved(s, sheetMatch.match_no)}
         />
       )}
+
+      {user && !sheetMatch && <OnboardSheet uid={user.id} />}
 
       {saved && (
         <div

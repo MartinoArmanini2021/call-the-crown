@@ -23,7 +23,6 @@ export const ar: Record<StringKey, string> = {
 
   // landing
   landing_title: "توقّع كل مباراة",
-  landing_cta: "العب مجاناً",
   landing_players: "اللاعبون الستة",
   first_lock_in: "تُغلق التوقعات التالية بعد",
   landing_sentence:
@@ -245,6 +244,13 @@ export const ar: Record<StringKey, string> = {
   joined: "انضممت إلى {name}",
   invite: "دعوة",
   invite_copied: "تم نسخ رابط الدعوة",
+  cta_start_league: "أنشئ دورياً",
+  cta_join_code: "انضم برمز",
+  cta_solo: "أو العب بمفردك",
+  onboard_title: "ضد من ستلعب؟",
+  onboard_sub: "أنشئ دورياً لمجموعتك أو انضم إلى دوري برمز. يمكنك فعل ذلك لاحقاً أيضاً.",
+  league_rank_line: "المركز {rank} من {n} في {league}",
+  league_alone_nudge: "دوريك فيه أنت فقط. أرسل الدعوة: لا تفاخر بلا منافسين.",
   code: "الرمز",
   members: "{n} أعضاء",
   member_one: "عضو واحد",
