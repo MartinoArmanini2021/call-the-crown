@@ -36,7 +36,7 @@ describe("O6 alert delivery", () => {
     await ev.db.close();
   }, 60_000);
 
-  it("BUG: without ops_webhook, the same alert goes nowhere, and nothing anywhere records that alerts cannot be delivered", async () => {
+  it("O6 (fixed by 0042): without ops_webhook, the watchdog records that alerts cannot be delivered", async () => {
     const ev = await night1NoPage();
     await ev.db.query("select public.watchdog()");
     const p = await posts(ev);
@@ -59,7 +59,7 @@ describe("O6 alert delivery", () => {
     });
   }, 60_000);
 
-  it("BUG (S-09 + Discord rate limit): a burst of alerts is posted as one request per alert in the same instant, each marked sent before any answer", async () => {
+  it("S-09 (fixed by 0042): a burst of alerts goes out as one message, not one request per alert in the same instant", async () => {
     const ev = await freshEvent();
     await ev.db.query(
       "insert into vault.decrypted_secrets values ('ops_webhook', 'https://discord.example.test/api/webhooks/1/x')",
@@ -80,7 +80,7 @@ describe("O6 alert delivery", () => {
     expect({ marked, posts: p.length }).toEqual({ marked: 8, posts: 1 });
   }, 60_000);
 
-  it("BUG S-09: an alert whose post the webhook refused (HTTP 429) is never sent again", async () => {
+  it("S-09 (fixed by 0042): an alert whose post the webhook refused (HTTP 429) is sent again", async () => {
     const ev = await freshEvent();
     // pg_net records each answer in net._http_response (id = the request id); the PGlite shim does not
     await ev.db.exec(

@@ -319,6 +319,12 @@ The watchdog checks every 5 minutes and posts to the ops webhook (Vault secret `
 - a match the provider shows under way, or decided, before its scheduled start (`started_before_schedule`);
 - a poller that is down or failing during a match window. Health is written once per poller run, healthy only if every match it visited was mapped and answered, so one failing match is never hidden by another.
 
+Delivery (0042): one message per run with every unsent alert. An alert counts as sent only once the webhook answered 2xx; a refused or timed-out post goes out again on the next run. With no `ops_webhook` the watchdog records itself unhealthy (`select * from ops_health where key = 'watchdog'`) instead of staying quiet. Recommended, once per instance: a dead-man's switch that alarms when the pings stop (database, pg_cron or the watchdog down), e.g. a healthchecks.io check:
+
+```sql
+select vault.create_secret('https://hc-ping.com/<uuid>', 'ops_deadman');   -- pinged every 5 minutes; /fail when alerts cannot be delivered
+```
+
 ### Pull the billing report
 
 ```sql
