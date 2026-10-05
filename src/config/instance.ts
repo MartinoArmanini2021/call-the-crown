@@ -1,5 +1,5 @@
 // Per-instance settings, from the build environment (.env, see .env.example). Everything else about
-// the event (brand, rules, prizes, texts) comes from the database at boot (src/config/eventConfig.tsx).
+// the event (brand, rules, texts) comes from the database at boot (src/config/eventConfig.tsx).
 // Grand Slam GM hard-codes these; a template cannot.
 
 function required(name: string, value: string | undefined): string {

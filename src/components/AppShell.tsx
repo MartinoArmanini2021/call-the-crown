@@ -116,8 +116,8 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
 /**
  * The game's name as a logo (Tino, 4 Oct 2026: "a bigger game name logo at the top"; then "go with the
  * crowned ball"): the mark, a red tennis ball wearing a gold crown (also public/favicon.svg), then two
- * stacked lines, all but the last word in white on top ("SIX KINGS SLAM") and the last word in gold
- * underneath ("PREDICTOR"), its letters spread to the same width so the two lines read as one block.
+ * stacked lines, all but the last word in white on top ("CALL THE") and the last word in gold
+ * underneath ("CROWN"), its letters spread to the same width so the two lines read as one block.
  * Arabic letters join, so they are never spread apart: centred instead.
  */
 function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {

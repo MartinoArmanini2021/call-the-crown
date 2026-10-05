@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, type ReactNode } from "react";
 import { eventConfigQuery, type EventConfig } from "@/lib/api";
 import { LocaleProvider } from "@/i18n/useT";
 
-// The event's brand, rules, prizes and texts, loaded once at boot from event_config. Brand colours
+// The event's brand, rules and texts, loaded once at boot from event_config. Brand colours
 // are written onto the CSS variables in src/styles.css, so every component re-skins with no code.
 const EventContext = createContext<EventConfig | null>(null);
 

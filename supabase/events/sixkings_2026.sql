@@ -5,8 +5,8 @@
 -- The app's own name, "Call the Crown" (Tino, 4 Oct 2026: the organiser is not licensing it, so the app
 -- runs standalone under its own name and logo; the event is described, never used as the brand).
 --
--- STILL PLACEHOLDERS (see README, "Open questions"): launch_at, the rank snapshot date, the prize text
--- and terms URL, the privacy and consent texts (legal review), the sponsor slots, the deciding-set mode.
+-- STILL PLACEHOLDERS (see README, "Open questions"): launch_at, the rank snapshot date, the
+-- privacy and consent texts (legal review), the sponsor slots, the deciding-set mode. No prizes (0019).
 -- Players, byes and start times are NOT here: they go in through set_players and set_match_start once
 -- the organiser confirms them (README, "Enter the players and the schedule").
 -- =====================================================================================================
@@ -43,11 +43,7 @@ insert into public.event_config (
                 "text_secondary": "#c9c9c9", "text_muted": "#9c9c9c"},
      "fonts": {"headline": "Barlow Condensed", "display": "Urbanist", "body": "Plus Jakarta Sans"}
    }',
-  '[
-     {"place": 1, "title": "First prize (text to come from the organiser)",  "image_path": null},
-     {"place": 2, "title": "Second prize (text to come from the organiser)", "image_path": null},
-     {"place": 3, "title": "Third prize (text to come from the organiser)",  "image_path": null}
-   ]',
+  '[]',                                        -- no prizes: bragging rights only (0019)
   null,
   '{
      "version": "draft-2",
@@ -55,7 +51,7 @@ insert into public.event_config (
      "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM."
    }',
   '[]',
-  '{"arabic": false}'
+  '{"arabic": false, "rarity_min_picks": 50}'  -- shares of how fans picked only from 50 picks (0019)
 )
 on conflict (id) do update set
   name = excluded.name, timezone = excluded.timezone, launch_at = excluded.launch_at,

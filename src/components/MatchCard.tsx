@@ -23,9 +23,9 @@ export function useMatchLabel() {
  * An open match on Picks (Tino, 3 Oct 2026: "sell the idea of picking, without being pushy"). The
  * match name leads, big. The two players are the way in: "Who wins?" with each player as a tile
  * (world ranking, the points a right call is worth, the upset bonus when there is one); tapping a
- * player opens the pick sheet with that player already chosen. The footer shows the stake and the
+ * player opens the pick sheet with that player already chosen. The footer shows the most points and the
  * lock; once picked, the tile is marked and the button says "Edit pick". Points are the stored
- * potential winner points; the stake is a ceiling from them and the configured set points.
+ * potential winner points; the most points is a ceiling from them and the configured set points.
  */
 export function MatchCard({
   match,
@@ -50,7 +50,7 @@ export function MatchCard({
   const base = event.rules.winner_points[match.round];
   const points = { 1: match.p1_win_points, 2: match.p2_win_points } as const;
   const best = Math.max(points[1] ?? 0, points[2] ?? 0);
-  const stake = best + event.rules.sets_points[match.round] + 3 * event.rules.per_set_exact;
+  const most = best + event.rules.sets_points[match.round] + 3 * event.rules.per_set_exact;
   const left = match.starts_at ? Date.parse(match.starts_at) - now : null;
 
   const tile = (side: 1 | 2) => {
@@ -132,7 +132,7 @@ export function MatchCard({
               })}
             </b>
           ) : (
-            <>{t("card_stake", { points: stake })}</>
+            <>{t("card_most", { points: most })}</>
           )}
           {left !== null && (
             <span className={cn("block", left < 3_600_000 ? "text-accent-text" : "text-ink-3")}>

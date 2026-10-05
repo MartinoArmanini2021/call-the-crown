@@ -1,7 +1,7 @@
 // Standings: the global table and your friends leagues on one page (Tino, 4 Oct 2026: "build the
 // merged Standings page"; it replaces Leaderboard and Leagues). Tabs on top: Global, one per league,
 // and "+ League" (join with a code or create one, in a sheet). The table is the same for all of them:
-// the global table filtered to the members, a podium with the prizes on Global only, "My rank ± 5",
+// the global table filtered to the members, a podium for the top 3, "My rank ± 5",
 // and your own row pinned while you scroll. A league tab adds its bar: who is in it, Invite, and
 // Manage (the owner removes members or deletes the league) or Leave.
 // Invite links are /standings?join=XXXXXX (the old /leagues?code= still works: it redirects here), and
@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { AppShell, PageTitle } from "@/components/AppShell";
-import { MEDAL, PrizeStrip, SponsorSlot } from "@/components/Brand";
+import { MEDAL, SponsorSlot } from "@/components/Brand";
 import { QueryGate } from "@/components/QueryGate";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
@@ -96,7 +96,6 @@ function Standings() {
     return (
       <AppShell>
         <PageTitle title={t("board_title")} {...(search.join ? { sub: t("join_prompt") } : {})} />
-        <PrizeStrip />
         <Link
           to="/sign-in"
           search={search.join ? { code: search.join } : { redirect: "/standings" }}
@@ -201,18 +200,8 @@ function Standings() {
           <p className="card px-4 py-6 text-center text-sm text-ink-3">{t("board_empty")}</p>
         ) : (
           <>
-            {podium.length > 0 && <Podium rows={podium} withPrizes={league === null} />}
-            {league === null && podium.length > 0 && event.prize_terms_url && (
-              <a
-                href={event.prize_terms_url}
-                target="_blank"
-                rel="noopener"
-                className="focus-ring mt-2 inline-block text-xs text-ink-3 underline underline-offset-2"
-              >
-                {t("prize_terms")}
-              </a>
-            )}
-            {league !== null && <p className="mt-2 text-xs text-ink-3">{t("friends_no_prizes")}</p>}
+            {podium.length > 0 && <Podium rows={podium} />}
+            <p className="mt-2 text-xs text-ink-3">{t("leagues_bragging")}</p>
             {table.length > 0 && <BoardTable rows={table} />}
             <p className="mt-2 text-2xs text-ink-3">{t("exact_key")}</p>
           </>
@@ -542,14 +531,12 @@ function LeagueSheet({
   );
 }
 
-function Podium({ rows, withPrizes }: { rows: BoardRow[]; withPrizes: boolean }) {
-  const event = useEvent();
+function Podium({ rows }: { rows: BoardRow[] }) {
   const { t } = useT();
-  const prize = (pos: number) => event.prizes.find((p) => p.place === pos)?.title;
   // 2nd, 1st, 3rd: the winner in the middle, a step higher.
   const order = [rows[1], rows[0], rows[2]];
   return (
-    <ol className="grid grid-cols-3 items-end gap-2" aria-label={t("landing_prizes")}>
+    <ol className="grid grid-cols-3 items-end gap-2" aria-label={t("top")}>
       {order.map((r, i) =>
         r ? (
           <li
@@ -572,9 +559,6 @@ function Podium({ rows, withPrizes }: { rows: BoardRow[]; withPrizes: boolean })
               {r.is_me ? t("you_cap") : (r.display_name ?? "—")}
             </span>
             <span className={cn("num", i === 1 ? "text-2xl" : "text-xl")}>{r.points}</span>
-            {withPrizes && prize(r.pos) && (
-              <span className="text-2xs leading-tight text-ink-3">{prize(r.pos)}</span>
-            )}
           </li>
         ) : (
           <li key={i} />

@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell, PageTitle } from "@/components/AppShell";
-import { PrizeStrip } from "@/components/Brand";
 import { playerName } from "@/components/Brand";
 import { useEvent } from "@/config/eventConfig";
 import { useGame } from "@/hooks/useGame";
@@ -184,10 +183,6 @@ function HowToPlay() {
           <code className="break-all font-mono text-xs text-ink-3">{tiebreak_seed}</code>
         </li>
       </ol>
-
-      <div className="mt-8">
-        <PrizeStrip />
-      </div>
     </AppShell>
   );
 }

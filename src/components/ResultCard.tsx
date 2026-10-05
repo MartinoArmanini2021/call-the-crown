@@ -124,7 +124,7 @@ export function ResultCard({
   );
 }
 
-const pct = (n: number, of: number) => `${((n / of) * 100).toFixed(1)}%`;
+const pct = (share: number) => `${Number(share).toFixed(1)}%`;
 
 /** How fans picked this match: share per player and the most picked score (totals, never names). */
 function CrowdBlock({
@@ -138,40 +138,32 @@ function CrowdBlock({
 }) {
   const { t } = useT();
   const crowd = useQuery(crowdQuery(match.match_no)).data;
-  if (!crowd || crowd.picks === 0) return null;
-  const share = crowd.p1_picks / crowd.picks;
+  if (!crowd) return null; // not started yet, or fewer picks than the minimum: no panel at all
   const top = crowd.top_score ?? [];
   const topWinner =
     top.filter((s) => s.p1_games > s.p2_games).length > top.length / 2 ? match.p1_id : match.p2_id;
-  const side = (id: string | null, n: number) => (
+  const side = (id: string | null, share: number) => (
     <span>
-      <b>{short(id)}</b> {pct(n, crowd.picks)}
+      <b>{short(id)}</b> {pct(share)}
       {pick?.winner_id === id && <span className="text-ink-3"> · {t("crowd_you")}</span>}
     </span>
   );
   return (
     <section className="space-y-1.5 border-t border-line pt-3" aria-label={t("crowd_title")}>
-      <p className="flex justify-between text-2xs font-bold uppercase tracking-wider text-ink-3">
-        <span>{t("crowd_title")}</span>
-        <span className="num">
-          {crowd.picks === 1
-            ? t("crowd_pick_one")
-            : t("crowd_picks", { n: crowd.picks.toLocaleString("en-GB") })}
-        </span>
-      </p>
+      <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">{t("crowd_title")}</p>
       <div className="flex justify-between text-xs">
-        {side(match.p1_id, crowd.p1_picks)}
-        {side(match.p2_id, crowd.p2_picks)}
+        {side(match.p1_id, crowd.p1_share)}
+        {side(match.p2_id, crowd.p2_share)}
       </div>
       <div className="flex h-2 overflow-hidden rounded-full bg-raised" aria-hidden>
-        <span className="bg-accent" style={{ width: `${share * 100}%` }} />
+        <span className="bg-accent" style={{ width: `${crowd.p1_share}%` }} />
         <span className="flex-1 bg-ink-3/50" />
       </div>
-      {top.length > 0 && crowd.top_count >= 2 && (
+      {top.length > 0 && (
         <p className="text-xs text-ink-2">
           {t("crowd_top", {
             pick: `${short(topWinner)} · ${scoreLine(top)}`,
-            share: pct(crowd.top_count, crowd.picks),
+            share: pct(crowd.top_share),
           })}
         </p>
       )}

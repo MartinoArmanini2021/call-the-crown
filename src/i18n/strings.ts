@@ -28,7 +28,8 @@ export const en = {
   landing_players: "The six players",
   first_lock_in: "Next picks close in",
   landing_sentence:
-    "Predict the winner and the score of all {n} matches. Every call you get right scores points; the top 3 win prizes.",
+    "Predict the winner and the score of all {n} matches. Every call you get right scores points. Top the table and take the crown.",
+  landing_league_line: "Make a league for your group. Settle who knows tennis.",
   example_title: "How a pick scores",
   example_player: "Your player",
   example_you_pick: "You pick",
@@ -39,8 +40,6 @@ export const en = {
   example_total: "Total (more for an upset)",
   example_miss: "Set 2: you said 6-3, it was 7-5",
   landing_cta_signed_in: "Make your picks",
-  landing_prizes: "Prizes for the top 3",
-  prize_terms: "Prize terms",
 
   // sign-in
   join_tab: "Join",
@@ -128,7 +127,7 @@ export const en = {
   make_pick: "Make pick",
   edit_pick: "Edit pick",
   card_who_wins: "Who wins?",
-  card_stake: "Up to {points} pts on this match",
+  card_most: "Up to {points} pts on this match",
   pick_summary: "{name} in {n} sets",
   world_rank: "World no. {rank}",
   set_score_aria: "Set {n}: {score}",
@@ -190,8 +189,6 @@ export const en = {
 
   // results
   crowd_title: "How fans picked",
-  crowd_picks: "{n} picks",
-  crowd_pick_one: "1 pick",
   crowd_you: "you",
   crowd_top: "Most picked score: {pick} ({share})",
   results_title: "Results",
@@ -222,6 +219,7 @@ export const en = {
 
   // leaderboard
   board_title: "Standings",
+  leagues_bragging: "No prizes, just bragging rights.",
   add_league: "League",
   league_sheet_title: "Join or create a league",
   manage: "Manage",
@@ -239,7 +237,6 @@ export const en = {
   next: "Next",
   board_empty: "The table fills after the first result.",
   page_of: "{from}–{to} of {total}",
-  friends_no_prizes: "Friends leagues are for bragging rights: prizes are for the global top 3.",
 
   // leagues
   leagues_intro:
@@ -295,7 +292,7 @@ export const en = {
   htp_exact_row: "Each set exactly right (same player, same score)",
   htp_upset_title: "Upset bonus",
   htp_upset:
-    "Back the lower-ranked player and win more. The bigger the gap in the world ranking, the bigger the bonus.",
+    "Pick the lower-ranked player and score more if they win. The bigger the gap in the world ranking, the bigger the bonus.",
   htp_upset_example:
     "Example: world no. {low} beats world no. {high} in a quarter-final: {points} points for the winner instead of {base}.",
   htp_upset_real:

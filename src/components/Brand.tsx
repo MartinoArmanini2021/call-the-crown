@@ -71,50 +71,5 @@ export function SponsorSlot({ slot, className }: { slot: Slot["slot"]; className
   );
 }
 
-/** The top-3 prizes, from event_config, with the link to the organiser's prize terms. */
+/** Medal colours for the podium's places 1-3. */
 export const MEDAL = ["bg-gold", "bg-silver", "bg-bronze"] as const;
-
-export function PrizeStrip({ compact = false }: { compact?: boolean }) {
-  const event = useEvent();
-  const { t, locale } = useT();
-  if (event.prizes.length === 0) return null;
-  // Always one prize per line: three boxes side by side clip the text at phone width.
-  return (
-    <section className={cn("card", compact ? "p-3" : "p-4")}>
-      <h2 className={cn("headline", compact ? "text-base" : "text-xl")}>{t("landing_prizes")}</h2>
-      <ol className={cn("grid", compact ? "mt-2 gap-1.5" : "mt-3 gap-2")}>
-        {[...event.prizes]
-          .sort((a, b) => a.place - b.place)
-          .map((p) => {
-            const img = publicImage(p.image_path);
-            return (
-              <li key={p.place} className="flex items-center gap-3">
-                <span
-                  className={cn(
-                    "num flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs text-bg",
-                    MEDAL[p.place - 1] ?? "bg-raised",
-                  )}
-                >
-                  {p.place}
-                </span>
-                {img && <img src={img} alt="" className="h-9 w-9 rounded object-cover" />}
-                <span className="min-w-0 text-sm leading-snug text-ink-2">
-                  {inLocale(p, "title", locale)}
-                </span>
-              </li>
-            );
-          })}
-      </ol>
-      {event.prize_terms_url && (
-        <a
-          href={event.prize_terms_url}
-          target="_blank"
-          rel="noopener"
-          className="focus-ring mt-3 inline-block text-xs text-ink-3 underline underline-offset-2"
-        >
-          {t("prize_terms")}
-        </a>
-      )}
-    </section>
-  );
-}

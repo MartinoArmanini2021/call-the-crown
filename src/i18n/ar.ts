@@ -27,7 +27,8 @@ export const ar: Record<StringKey, string> = {
   landing_players: "اللاعبون الستة",
   first_lock_in: "تُغلق التوقعات التالية بعد",
   landing_sentence:
-    "توقّع الفائز ونتيجة المباريات الـ{n} كلها. كل توقع صحيح يمنحك نقاطاً، وأصحاب المراكز الثلاثة الأولى يفوزون بالجوائز.",
+    "توقّع الفائز ونتيجة المباريات الـ{n} كلها. كل توقع صحيح يمنحك نقاطاً. تصدّر الترتيب وانتزع التاج.",
+  landing_league_line: "أنشئ دورياً لمجموعتك، وأثبتوا من يفهم في التنس.",
   example_title: "كيف يُحتسب التوقع",
   example_player: "لاعبك",
   example_you_pick: "توقعك",
@@ -38,8 +39,6 @@ export const ar: Record<StringKey, string> = {
   example_total: "المجموع (أكثر عند المفاجأة)",
   example_miss: "المجموعة 2: توقعت 6-3 وكانت 7-5",
   landing_cta_signed_in: "سجّل توقعاتك",
-  landing_prizes: "جوائز المراكز الثلاثة الأولى",
-  prize_terms: "شروط الجوائز",
 
   // sign-in
   join_tab: "انضم",
@@ -125,7 +124,7 @@ export const ar: Record<StringKey, string> = {
   make_pick: "توقّع",
   edit_pick: "عدّل التوقع",
   card_who_wins: "من سيفوز؟",
-  card_stake: "حتى {points} نقطة في هذه المباراة",
+  card_most: "حتى {points} نقطة في هذه المباراة",
   pick_summary: "{name} في {n} مجموعات",
   world_rank: "المصنف {rank} عالمياً",
   set_score_aria: "المجموعة {n}: {score}",
@@ -185,8 +184,6 @@ export const ar: Record<StringKey, string> = {
 
   // results
   crowd_title: "توقعات الجماهير",
-  crowd_picks: "{n} توقع",
-  crowd_pick_one: "توقع واحد",
   crowd_you: "أنت",
   crowd_top: "النتيجة الأكثر توقعاً: {pick} ({share})",
   results_title: "النتائج",
@@ -217,6 +214,7 @@ export const ar: Record<StringKey, string> = {
 
   // leaderboard
   board_title: "الترتيب",
+  leagues_bragging: "لا جوائز، فقط حق التفاخر.",
   add_league: "دوري",
   league_sheet_title: "انضم إلى دوري أو أنشئ واحداً",
   manage: "إدارة",
@@ -234,8 +232,6 @@ export const ar: Record<StringKey, string> = {
   next: "التالي",
   board_empty: "يمتلئ الجدول بعد أول نتيجة.",
   page_of: "{from}–{to} من {total}",
-  friends_no_prizes:
-    "دوريات الأصدقاء للتحدي فقط: الجوائز لأصحاب المراكز الثلاثة الأولى في الترتيب العام.",
 
   // leagues
   leagues_intro:
@@ -291,7 +287,7 @@ export const ar: Record<StringKey, string> = {
   htp_exact_row: "كل مجموعة صحيحة تماماً (اللاعب نفسه والنتيجة نفسها)",
   htp_upset_title: "مكافأة المفاجأة",
   htp_upset:
-    "راهن على اللاعب الأقل تصنيفاً واربح أكثر. كلما كان الفارق في التصنيف العالمي أكبر، كانت المكافأة أكبر.",
+    "اختر اللاعب الأقل تصنيفاً واحصل على نقاط أكثر إذا فاز. كلما كان الفارق في التصنيف العالمي أكبر، كانت المكافأة أكبر.",
   htp_upset_example:
     "مثال: المصنف {low} عالمياً يفوز على المصنف {high} في ربع النهائي: {points} نقاط للفائز بدلاً من {base}.",
   htp_upset_real:

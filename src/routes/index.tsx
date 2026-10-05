@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { PrizeStrip, SponsorSlot, playerName } from "@/components/Brand";
+import { SponsorSlot, playerName } from "@/components/Brand";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerNow } from "@/hooks/useNow";
@@ -42,6 +42,7 @@ function Landing() {
           </p>
         )}
         <h1 className="headline mt-3 text-6xl sm:text-7xl">{t("landing_title")}</h1>
+        <p className="mt-2 text-base font-semibold text-ink">{t("landing_league_line")}</p>
         <p className="mt-2 max-w-md text-sm text-ink-2">
           {t("landing_sentence", { n: count || 6 })}
         </p>
@@ -74,10 +75,6 @@ function Landing() {
           {user ? t("landing_cta_signed_in") : t("landing_cta")}
         </Link>
       </section>
-
-      <div className="mt-4">
-        <PrizeStrip />
-      </div>
 
       <ScoringExample name={top ? surname(playerName(top, locale)) : t("example_player")} />
 

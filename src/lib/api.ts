@@ -15,7 +15,6 @@ export type Rules = {
   allowed_set_scores: [number, number][];
   deciding_set: string;
 };
-export type Prize = { place: number; title: string; title_ar?: string; image_path: string | null };
 export type SponsorSlot = {
   slot: "landing_strip" | "leaderboard_header" | "picks_footer" | "results_card";
   image_path: string | null;
@@ -37,8 +36,6 @@ export type EventConfig = {
     logo_path?: string | null;
     colors?: Partial<Record<string, string>>;
   };
-  prizes: Prize[];
-  prize_terms_url: string | null;
   // Each text may have an Arabic twin (notice_ar …); one version covers both languages.
   privacy: {
     version?: string;
@@ -223,13 +220,15 @@ export const rankWindowQuery = (league: string | null) =>
     refetchInterval: 60_000,
   });
 
-/** How fans picked a match, as totals; none until it starts (0012). Final at the first ball. */
+/**
+ * How fans picked a match, as shares (one decimal), never counts: nothing until it starts, and nothing
+ * at all below flags.rarity_min_picks picks (0012, 0019). Final at the first ball.
+ */
 export type Crowd = {
-  picks: number;
-  p1_picks: number;
-  p2_picks: number;
+  p1_share: number;
+  p2_share: number;
   top_score: SetScore[] | null;
-  top_count: number;
+  top_share: number;
 };
 export const crowdQuery = (match: number) =>
   queryOptions({

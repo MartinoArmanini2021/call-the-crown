@@ -2,7 +2,7 @@
 // the local walkthrough (the browser half: README, "Run it locally").
 //   operator enters players + schedule → QF picks open → a fan signs up with both consents and picks
 //   on two Riyadh days → the poller (same window logic, fixture adapter) delivers the QF results → the
-//   SFs open → the board shows the breakdown and the prizes → the fan counts as qualified.
+//   SFs open → the board shows the breakdown (no prizes) → the fan counts as qualified.
 // Every step asserts what it claims; the script exits 1 on the first broken claim.
 //   bun run simulate
 import type { PGlite, Transaction } from "@electric-sql/pglite";
@@ -238,7 +238,7 @@ claim(
   "the fan picks SF1",
 );
 
-section("7. The board: per-component breakdown and the top-3 prizes");
+section("7. The board: per-component breakdown, no prizes");
 const breakdown = (
   await as(db, { uid: FAN }, (tx) =>
     tx.query<{
@@ -276,10 +276,7 @@ const prizes = (
     "select prizes from public.event_config",
   )
 ).rows[0]!.prizes;
-claim(
-  prizes.length === 3,
-  `prizes for the top 3 come from config: ${prizes.map((p) => p.title).join(" · ")}`,
-);
+claim(prizes.length === 0, "no prizes: bragging rights only (0019)", prizes);
 
 section("8. Billing: who is a qualified fan (picks made or changed on 2+ Riyadh days)");
 const perFan = (

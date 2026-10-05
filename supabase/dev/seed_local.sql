@@ -40,8 +40,6 @@ select 'fixture', 'player', 'fx-' || p, p from unnest(array['a','b','c','d','e',
 on conflict do nothing;
 
 update public.event_config set launch_at = '2026-10-15 09:00+03',
-  prizes = '[{"place":1,"title":"Two tickets to the final (example)","image_path":null},
-             {"place":2,"title":"Signed racket (example)","image_path":null},
-             {"place":3,"title":"Official tournament towel (example)","image_path":null}]',
-  prize_terms_url = 'https://example.com/prize-terms',
+  prizes = '[]',   -- no prizes: bragging rights only (0019)
+  prize_terms_url = null,
   sponsor_slots = '[{"slot":"landing_strip","image_path":null,"href":"https://example.com","alt":{"en":"Example sponsor"}}]';

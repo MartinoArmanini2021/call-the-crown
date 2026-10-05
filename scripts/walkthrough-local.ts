@@ -288,7 +288,7 @@ claim(
   sf,
 );
 
-section("6. Results and leaderboard: the stored breakdown, the prizes");
+section("6. Results and leaderboard: the stored breakdown, no prizes");
 const mine = must(
   await fan
     .from("picks")
@@ -317,7 +317,7 @@ claim(
 const cfg = must(await anon.from("event_config").select("prizes"), "config")[0] as {
   prizes: unknown[];
 };
-claim(cfg.prizes.length === 3, "the top-3 prizes come from event_config");
+claim(cfg.prizes.length === 0, "no prizes: bragging rights only (0019)", cfg.prizes);
 
 section("7. Billing: the fan is a qualified fan (service role only)");
 claim((await fan.rpc("billing_report")).error !== null, "billing_report is refused to the fan");
