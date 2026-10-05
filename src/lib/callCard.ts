@@ -49,11 +49,16 @@ export function shareText(n: number, total: number, t: Tr): string {
   return pct < 1 ? t("pct_under_1") : `${Math.floor(pct)}%`;
 }
 
-/** Night 1, 2, 3: the event-local days that have matches, in order. */
+/**
+ * Night 1, 2, 3: the event-local "session days" that have matches, in order. A night runs from 06:00
+ * to 05:59 the next morning, event time, so a match that starts after midnight (00:30 Riyadh) belongs to
+ * the evening it closes, as it does in public.match_nights() (0023).
+ */
+export const NIGHT_CUTOFF_HOURS = 6;
 export function nightOf(m: Match, matches: Match[], timezone: string): number {
   const day = (iso: string) =>
     new Intl.DateTimeFormat("en-CA", { timeZone: timezone, dateStyle: "short" }).format(
-      new Date(iso),
+      new Date(Date.parse(iso) - NIGHT_CUTOFF_HOURS * 3_600_000),
     );
   const days = [
     ...new Set(matches.filter((x) => x.starts_at).map((x) => day(x.starts_at!))),

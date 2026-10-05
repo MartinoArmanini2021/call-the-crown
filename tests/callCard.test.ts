@@ -221,3 +221,23 @@ describe("I called it", () => {
     expect(spec("called_it", done(), scored(), null).lines).toEqual([]);
   });
 });
+
+// full-debug F1 (0023, Tino 5 Oct 2026): a night runs 06:00 → 05:59 Riyadh time, as match_nights().
+describe("nights across midnight in Riyadh", () => {
+  const at = (n: number, iso: string) => (d: Match[]) =>
+    d.map((m) => (m.match_no === n ? { ...m, starts_at: iso } : m));
+  test("QF2 at 00:30 Riyadh (21:30 UTC) stays on night 1", () => {
+    const d = at(2, "2026-10-21T21:30:00Z")(draw());
+    expect(d.map((m) => nightOf(m, d, "Asia/Riyadh"))).toEqual([1, 1, 2, 2, 3, 3]);
+  });
+  test("the final at 00:30 Riyadh is still night 3", () => {
+    const d = at(6, "2026-10-24T21:30:00Z")(draw());
+    expect(d.map((m) => nightOf(m, d, "Asia/Riyadh"))).toEqual([1, 1, 2, 2, 3, 3]);
+  });
+  test("05:59 Riyadh belongs to the night before; 06:00 starts the next", () => {
+    const early = at(2, "2026-10-22T02:59:00Z")(draw());
+    expect(nightOf(early[1]!, early, "Asia/Riyadh")).toBe(1);
+    const late = at(2, "2026-10-22T03:00:00Z")(draw());
+    expect(nightOf(late[1]!, late, "Asia/Riyadh")).toBe(2);
+  });
+});
