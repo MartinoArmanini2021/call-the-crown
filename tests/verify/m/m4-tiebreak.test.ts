@@ -345,7 +345,7 @@ describe("M4 tiebreak chain", () => {
     expect(after).toBe(before);
   }, 120_000);
 
-  it("BUG (fails today): a final pick saved after the final really started is void for points but still wins tiebreaker 2", async () => {
+  it("M4 (fixed by 0044): a final pick saved after the final really started is void for points and counts in no tiebreaker", async () => {
     const db = await boot();
     dbs.push(db);
     await db.query("select t.setup_event()");
