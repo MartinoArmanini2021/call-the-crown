@@ -102,6 +102,28 @@ select t.check('Crews: 4 fans + 1 test account is not a crew',
 select t.check('… 5 fans is', exists (select 1 from public.get_crew_board(50)
                                        where league_id = '00000000-0000-0000-0000-00000000aa06'));
 
+-- Displayed member counts leave test accounts out too (0026); seats in a league still count everyone.
+select t.as_user(t.uid(10));
+select t.check('league table total: 4 fans + 1 test account → 4',
+  (select total = 4 from public.get_leaderboard('00000000-0000-0000-0000-00000000aa05', 0, 1)));
+select t.check('my_leagues member_count: 4 (so Crews says "needs 1 more")',
+  (select member_count = 4 from public.my_leagues() where id = '00000000-0000-0000-0000-00000000aa05'));
+-- The reminder's league line: night 2 (SF1 at 16:30) is 1.5 hours away; fan 10 has no SF2 pick.
+select t.as_owner();
+select public.dev_set_now('2026-10-22 15:00+00');
+select t.as_user(t.uid(10));
+select public.set_reminder_optin(true);
+select t.as_owner();
+select t.check('reminder league line: "of 4" (the test account is not counted)',
+  (select league_size = 4 from public.reminder_candidates() where user_id = t.uid(10)));
+-- A full league still counts every seat: with room for 5, a 5th member (the test account) fills it.
+update public.event_config set league_limits = league_limits || '{"max_members": 5}'::jsonb;
+select t.as_user(t.uid(14));
+select t.check('join limit still counts the test account (5 seats taken → league_full)',
+  (select public.join_league('TST005')->>'error') = 'league_full');
+select t.as_owner();
+update public.event_config set league_limits = league_limits || '{"max_members": 200}'::jsonb;
+
 select t.as_owner();
 select t.check('the re-rank trigger: no client can call its function',
   not has_function_privilege('authenticated', 'public.rerank_on_test_flag()', 'execute')
