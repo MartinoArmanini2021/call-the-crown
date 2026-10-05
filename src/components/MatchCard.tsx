@@ -4,6 +4,7 @@ import type { Match, Pick, Player } from "@/lib/api";
 import { localTime, shortTimeLeft, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { PlayerPhoto, playerName } from "./Brand";
+import { ShareCallButton } from "./CallCard";
 import { useMatchNames } from "./matchNames";
 import { SIDE_COLOR } from "./sides";
 
@@ -151,6 +152,11 @@ export function MatchCard({
           {pick ? t("edit_pick") : t("make_pick")}
         </button>
       </footer>
+      {pick && (
+        <div className="mt-3 flex justify-end">
+          <ShareCallButton kind="my_call" matchNo={match.match_no} />
+        </div>
+      )}
     </article>
   );
 }

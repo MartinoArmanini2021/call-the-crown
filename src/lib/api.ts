@@ -224,6 +224,12 @@ export const rankWindowQuery = (league: string | null) =>
  * How fans picked a match, as shares (one decimal), never counts: nothing until it starts, and nothing
  * at all below flags.rarity_min_picks picks (0012, 0019). Final at the first ball.
  */
+export type CallStats = {
+  threshold_met: boolean;
+  picks_total: number | null;
+  same_winner: number | null;
+  same_exact: number | null;
+};
 export type Crowd = {
   p1_share: number;
   p2_share: number;
@@ -237,6 +243,16 @@ export const crowdQuery = (match: number) =>
     // fixed once there; until then (a clock a few seconds ahead of the server) ask again
     staleTime: (q) => (q.state.data ? Infinity : 0),
     refetchInterval: (q) => (q.state.data ? false : 60_000),
+  });
+/**
+ * How rare the fan's own call was, for the share card (0020): counts only from flags.rarity_min_picks
+ * picks up (below it, threshold_met false and no counts); no row before the start or without a pick.
+ */
+export const myCallStatsQuery = (match: number) =>
+  queryOptions({
+    queryKey: ["call_stats", match],
+    queryFn: () =>
+      rpc<CallStats[]>("get_my_call_stats", { p_match: match }).then((r) => r[0] ?? null),
   });
 
 // Writes

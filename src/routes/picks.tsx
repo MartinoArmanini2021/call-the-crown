@@ -1,6 +1,7 @@
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AppShell } from "@/components/AppShell";
+import { CallCardSheet } from "@/components/CallCard";
 import { LeagueRankLine, OnboardSheet } from "@/components/LeagueNudge";
 import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
@@ -43,7 +44,9 @@ function Picks() {
     setSheet(null);
     if (search.match) void navigate({ to: "/picks", search: {}, replace: true });
   }, [navigate, search.match]);
-  const [saved, setSaved] = useState<{ pick: string; until: string } | null>(null);
+  const [saved, setSaved] = useState<{ pick: string; until: string; match?: number } | null>(null);
+  // the My Call card opened from the saved toast (the toast itself goes after a few seconds)
+  const [shareMatch, setShareMatch] = useState<number | null>(null);
   useEffect(() => {
     if (!saved) return;
     const timer = setTimeout(() => setSaved(null), 6000);
@@ -61,7 +64,7 @@ function Picks() {
   const pickedOpen = open.filter((m) => pickByMatch.has(m.match_no)).length;
   const shown = focus ?? firstTodo;
   const onSaved = (s: { pick: string; until: string }, savedMatch?: number) => {
-    setSaved(s);
+    setSaved({ ...s, ...(savedMatch !== undefined ? { match: savedMatch } : {}) });
     const after = open.find((m) => m.match_no !== savedMatch && !pickByMatch.has(m.match_no));
     if (after) setFocus(after.match_no);
   };
@@ -167,7 +170,22 @@ function Picks() {
         >
           <p className="font-bold text-good">✓ {t("saved_toast", { pick: saved.pick })}</p>
           <p className="mt-0.5 text-xs text-ink-2">{t("saved_toast_sub", { time: saved.until })}</p>
+          {saved.match !== undefined && (
+            <button
+              type="button"
+              onClick={() => {
+                setShareMatch(saved.match!);
+                setSaved(null);
+              }}
+              className="focus-ring mt-2 rounded-full border border-gold/50 px-4 py-1.5 text-xs font-bold text-gold"
+            >
+              {t("share_my_call")}
+            </button>
+          )}
         </div>
+      )}
+      {shareMatch !== null && (
+        <CallCardSheet kind="my_call" matchNo={shareMatch} onClose={() => setShareMatch(null)} />
       )}
     </AppShell>
   );

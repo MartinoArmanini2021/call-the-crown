@@ -5,9 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
 import { crowdQuery, type Match, type Pick, type Player } from "@/lib/api";
+import { calledIt } from "@/lib/callCard";
 import { localTime, scoreLine, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
+import { ShareCallButton } from "./CallCard";
 import { useMatchLabel } from "./MatchCard";
 import { Scoreboard } from "./Scoreboard";
 
@@ -119,6 +121,11 @@ export function ResultCard({
                   e: pick.pts_exact ?? 0,
                 })}
         </p>
+      )}
+      {settled && signedIn && calledIt(match, pick) && (
+        <div className="flex justify-end">
+          <ShareCallButton kind="called_it" matchNo={match.match_no} />
+        </div>
       )}
     </article>
   );
