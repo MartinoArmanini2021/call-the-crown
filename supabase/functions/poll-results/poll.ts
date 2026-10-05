@@ -38,8 +38,15 @@ export async function pollOnce(db: PollDb, adapter: ResultsAdapter): Promise<Pol
       const fetched = await adapter.fetchMatch(ref, { nowMs, startsAt: m.starts_at });
       const r = await db.ingest(adapter.provider, fetched.normalised, fetched.raw, fetched.http_status);
       out.push({ match_no: m.match_no, outcome: r.outcome });
+      const why = (fetched.raw as { error?: unknown } | null)?.error;
       if (fetched.http_status >= 400) {
-        problems.push(`${adapter.provider} answered ${fetched.http_status} for match ${m.match_no}`);
+        problems.push(`${adapter.provider} answered ${fetched.http_status} for match ${m.match_no}${why ? ` (${why})` : ""}`);
+      } else if (fetched.normalised.status === "unknown") {
+        // audit O1 (5 Oct 2026): an answer with no usable reading (blanked page, a redirect, no bracket,
+        // the slot missing, both names in bold) is a broken feed, not a healthy one
+        problems.push(`${adapter.provider} has no reading for match ${m.match_no}${why ? `: ${why}` : ""}`);
+      } else if (fetched.normalised.players.length === 0 && m.starts_at && nowMs >= Date.parse(m.starts_at)) {
+        problems.push(`${adapter.provider} does not name the players of match ${m.match_no}, which has started`);
       }
     } catch (e) {
       problems.push(`match ${m.match_no}: ${e instanceof Error ? e.message : String(e)}`);

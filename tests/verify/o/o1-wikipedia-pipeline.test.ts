@@ -269,7 +269,7 @@ describe("O1 player name spelled differently on the page (QF2 de Minaur v Sinner
     }
   }, 60_000);
 
-  it("BUG: a name written with a template ({{sortname|Alex|de Minaur}}) reads as 'not started' for ever, and the poller reports healthy", async () => {
+  it("Fixed by poll.ts: a name written with a template ({{sortname|Alex|de Minaur}}) reads as 'not started' for ever, and the poller reports healthy", async () => {
     const r = await run("{{sortname|Alex|de Minaur}}");
     expect(r.m.status).toBe("scheduled"); // fail safe on settlement …
     // … but the brief requires an alert, and the heartbeat says all is well
@@ -350,7 +350,7 @@ describe("O1 HTTP and page failures", () => {
     }, 60_000);
   }
 
-  it("BUG S-10: a settled result that disappears from the page (blanked) raises no alert", async () => {
+  it("S-10 (fixed by 0043): a settled result that disappears from the page (blanked) raises an alert", async () => {
     const ev = await freshEvent();
     ev.wiki.set(apiPage(wikitext(qf1Final())));
     await ev.everyMinute("2026-10-21T18:00:00Z", "2026-10-21T18:11:00Z");
