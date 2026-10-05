@@ -83,13 +83,15 @@ function Standings() {
 
   const leagues = useQuery({ ...myLeaguesQuery(user?.id ?? ""), enabled: !!user });
   const top = useQuery({
-    ...leaderboardQuery(league, (page - 1) * PAGE, PAGE),
+    // one row more than a page: it only tells whether there is a next page (no fan total is shown)
+    ...leaderboardQuery(league, (page - 1) * PAGE, PAGE + 1),
     enabled: !!user && view === "top",
   });
   const mine = useQuery({ ...rankWindowQuery(league), enabled: !!user });
   const active = view === "top" ? top : mine;
-  const rows = active.data ?? [];
-  const total = top.data?.[0]?.total ?? 0;
+  const rows = view === "top" ? (top.data ?? []).slice(0, PAGE) : (mine.data ?? []);
+  const hasNext = (top.data ?? []).length > PAGE;
+  const paged = view === "top" && (page > 1 || hasNext);
   const me = mine.data?.find((r) => r.is_me);
   const podium = view === "top" && page === 1 ? rows.slice(0, 3) : [];
   const table = view === "top" && page === 1 ? rows.slice(3) : rows;
@@ -238,15 +240,6 @@ function Standings() {
                 </button>
               ))}
             </div>
-            {view === "top" && total > PAGE && (
-              <span className="text-xs text-ink-3">
-                {t("page_of", {
-                  from: (page - 1) * PAGE + 1,
-                  to: Math.min(page * PAGE, total),
-                  total,
-                })}
-              </span>
-            )}
           </div>
 
           <QueryGate queries={[active]} label={t("board_title").toLowerCase()}>
@@ -260,7 +253,7 @@ function Standings() {
                 <p className="mt-2 text-2xs text-ink-3">{t("exact_key")}</p>
               </>
             )}
-            {view === "top" && total > PAGE && (
+            {paged && (
               <div className="mt-3 flex justify-between">
                 <button
                   type="button"
@@ -272,7 +265,7 @@ function Standings() {
                 </button>
                 <button
                   type="button"
-                  disabled={page * PAGE >= total}
+                  disabled={!hasNext}
                   onClick={() => go({ page: page + 1 })}
                   className="focus-ring rounded-full bg-card px-4 py-2 text-xs font-semibold disabled:opacity-30"
                 >

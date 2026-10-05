@@ -11,7 +11,7 @@ import { ResultSheet } from "@/components/ResultSheet";
 import { useGame } from "@/hooks/useGame";
 import { useServerNow } from "@/hooks/useNow";
 import { useT } from "@/i18n/useT";
-import { leaderboardQuery, rankWindowQuery, type Match } from "@/lib/api";
+import { rankWindowQuery, type Match } from "@/lib/api";
 import { matchState } from "@/lib/format";
 import { nextStep } from "@/lib/nextStep";
 
@@ -42,9 +42,7 @@ function Results() {
   const settledCount = all.filter((m) => m.status !== "scheduled").length;
 
   const rankWindow = useQuery({ ...rankWindowQuery(null), enabled: !!user });
-  const head = useQuery({ ...leaderboardQuery(null, 0, 1), enabled: !!user });
   const me = rankWindow.data?.find((r) => r.is_me);
-  const ranked = head.data?.[0]?.total ?? null;
   const points = [...pickByMatch.values()].reduce((sum, p) => sum + (p.pts_total ?? 0), 0);
 
   return (
@@ -55,11 +53,8 @@ function Results() {
         {user && settledCount > 0 && (
           <div className="mb-5 grid grid-cols-3 gap-2">
             <Stat label={t("stat_points")} value={String(points)} accent />
-            <Stat
-              label={t("stat_rank")}
-              value={me?.global_rank ? String(me.global_rank) : "–"}
-              of={me?.global_rank && ranked ? ranked.toLocaleString("en-GB") : null}
-            />
+            {/* the rank alone: never the number of fans (brief "bragging rights": no absolute user counts) */}
+            <Stat label={t("stat_rank")} value={me?.global_rank ? String(me.global_rank) : "–"} />
             <Stat label={t("stat_scored")} value={String(settledCount)} of={String(all.length)} />
           </div>
         )}

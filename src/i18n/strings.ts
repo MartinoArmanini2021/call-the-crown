@@ -235,7 +235,6 @@ export const en = {
   prev: "Previous",
   next: "Next",
   board_empty: "The table fills after the first result.",
-  page_of: "{from}–{to} of {total}",
 
   // leagues
   leagues_intro:

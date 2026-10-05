@@ -230,7 +230,6 @@ export const ar: Record<StringKey, string> = {
   prev: "السابق",
   next: "التالي",
   board_empty: "يمتلئ الجدول بعد أول نتيجة.",
-  page_of: "{from}–{to} من {total}",
 
   // leagues
   leagues_intro:
