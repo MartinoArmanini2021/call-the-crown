@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useT } from "@/i18n/useT";
 import { crewBoardQuery, matchesQuery, type CrewRow, type League } from "@/lib/api";
+import { isolate } from "@/lib/format";
 import { shareInvite } from "@/lib/leagueIntent";
 import { cn } from "@/lib/utils";
 import { MEDAL } from "./Brand";
@@ -38,7 +39,7 @@ export function CrewsBoard({ leagues }: { leagues: League[] }) {
         <ul className="mt-3 space-y-1 text-sm">
           {mine.map((r) => (
             <li key={r.league_id} className="font-semibold">
-              <span className="text-ink">{r.name}</span>
+              <bdi className="text-ink">{r.name}</bdi>
               <span className="text-gold"> · {t("crews_yours", { rank: r.rank })}</span>
             </li>
           ))}
@@ -97,7 +98,7 @@ function CrewList({ rows, crowned }: { rows: CrewRow[]; crowned: boolean }) {
             {r.rank}
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block truncate font-semibold">{r.name}</span>
+            <bdi className="block truncate font-semibold">{r.name}</bdi>
             {crowned && r.rank === 1 && (
               <span className="mt-0.5 inline-block rounded-full bg-gold/15 px-2 py-0.5 text-2xs font-bold text-gold">
                 ♛ {t("crew_crowned")}
@@ -117,10 +118,10 @@ function NeedsMore({ league }: { league: League }) {
   const n = MIN - league.member_count;
   const text =
     n === 1
-      ? t("crews_needs_1", { league: league.name })
+      ? t("crews_needs_1", { league: isolate(league.name) })
       : n === 2
-        ? t("crews_needs_2", { league: league.name })
-        : t("crews_needs", { league: league.name, n });
+        ? t("crews_needs_2", { league: isolate(league.name) })
+        : t("crews_needs", { league: isolate(league.name), n });
   return (
     <li className="card flex items-center justify-between gap-3 px-4 py-3">
       <p className="text-xs text-ink-2">{text}</p>
