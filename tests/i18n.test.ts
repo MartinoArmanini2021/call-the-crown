@@ -18,16 +18,23 @@ describe("Arabic texts", () => {
 });
 
 // A free game, not a bet: no betting words in either language (audit 5 Oct 2026, How to play upset
-// bonus). Prize words are not checked here: whether the copy keeps prizes is Tino's decision.
+// bonus). The only allowed hit is the "no betting" fine print itself (brief H4). Prize words are not
+// checked here.
+const NO_BETTING_FINE_PRINT: StringKey[] = ["card_fine"];
 describe("no betting words", () => {
   test("English copy", () => {
     for (const key of Object.keys(en) as StringKey[]) {
+      if (NO_BETTING_FINE_PRINT.includes(key)) continue;
       expect(en[key], key).not.toMatch(/wager|\bodds\b|\bstake\b|gambl|\bbets?\b|win more/i);
     }
   });
   test("Arabic copy", () => {
     for (const key of Object.keys(en) as StringKey[]) {
+      if (NO_BETTING_FINE_PRINT.includes(key)) continue;
       expect(ar[key], key).not.toMatch(/راهن|رهان|مراهن|اربح/);
     }
+  });
+  test("the fine print still says there is no betting", () => {
+    expect(en.card_fine).toMatch(/no betting/i);
   });
 });
