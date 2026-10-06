@@ -116,7 +116,7 @@ The same app against a real local Supabase. Docker Desktop must be running. The 
 bun scripts/walkthrough-local.ts
 ```
 
-**save_pick under real concurrency** (PGlite has one connection, so the SQL tests cannot race): an operator holding a match row (lock now, an earlier start, a corrected result refilling the bracket) while fans save, and fifty fans across the lock second. It runs in a private throwaway database on the same Postgres server and drops it afterwards; the seed database and its clock are untouched. 20 claims.
+**save_pick under real concurrency** (PGlite has one connection, so the SQL tests cannot race): an operator holding a match row (lock now, an earlier start, a corrected result refilling the bracket) while fans save, and fifty fans across the lock second. It runs in a private throwaway database on the same Postgres server and drops it afterwards; the seed database and its clock are untouched. 24 claims (a deletion racing a sign-up included).
 
 ```bash
 bun scripts/race-local.ts
@@ -238,6 +238,9 @@ select public.set_match_start(1, '2026-10-21 19:30+03');
 ```
 
 **A match starts early, or a walkover is announced before the start.** The poller reads each match from 60 minutes before its start, and a live or final reading before the scheduled start raises a `started_before_schedule` alert at once. Close the picks immediately:
+
+- **The rule for a walkover (Tino, 6 Oct 2026):** lock the match the moment a withdrawal is announced. Picks saved before the lock count (winner points only, as for any walkover); after it nobody can pick, so nobody scores off the news. Every minute between the news and the lock is a minute in which a fan can pick the walkover winner for free.
+- **The news can come before the alert.** A withdrawal announced by the event or a player (social media, the broadcaster) shows on Wikipedia only when someone edits the page, and the poller looks only from 60 minutes before the start. Lock on the news itself; do not wait for the alert.
 
 ```sql
 select public.lock_match_now(1);   -- its start becomes this moment: picks for match 1 close now
@@ -443,7 +446,7 @@ The approved plan lists the open questions in full.
   - The seed is random when the event is created, public (shown on How to play), and locked once the first match starts, so nobody can influence the draw and an audit can re-run it.
   - Publish the seed before the event: it is in `event_config.tiebreak_seed`.
 - **A corrected result that changes a later match** (question 5): refill it and drop the picks naming the removed player if it has not started; pause it and alert if it has.
-- **Withdrawals and substitutions** (Tino, 5 Oct 2026: "no withdrawals conceived"): no procedure is built. Once picks exist the players are frozen, so if a player were replaced anyway, the provider's result would name someone not in our match: it is refused, that match does not score, and `result_overdue` alerts the operator 4 hours after its start. A walkover announced before the start is handled by the early-start alert and `lock_match_now` (runbook).
+- **Withdrawals and substitutions** (Tino, 5 Oct 2026: "no withdrawals conceived"): no procedure is built. Once picks exist the players are frozen, so if a player were replaced anyway, the provider's result would name someone not in our match: it is refused, that match does not score, and `result_overdue` alerts the operator 4 hours after its start. A walkover announced before the start: the operator locks the match at once with `lock_match_now` (Tino, 6 Oct 2026; runbook), on the news or on the early-start alert, whichever comes first; picks saved before the lock count.
 - **Picks saved after a match really started** (Tino, 4 Oct 2026): void (migration 0018; runbook, "A match starts early").
 - **League owner deletes their account** (question 10): the longest-standing member becomes owner; an empty league is deleted.
 - **Not yet decided: account deletion vs billing** (question 9). Deleting an account deletes its activity days, so a deleted fan no longer counts. A no-personal-data tombstone is ready to add if legal agrees.

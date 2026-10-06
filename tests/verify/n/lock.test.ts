@@ -198,9 +198,11 @@ describe("F-06 walkover announced before the start", () => {
         ),
       ).toBe(1);
     }));
-  // 0018: "A walkover has no in-play reading: nothing is void." Between the announcement and the
-  // operator's lock_match_now, a fan who reads the news gets the winner points for free.
-  test("BUG F-06 (rule pending, Tino): a pick saved after the walkover was announced still earns the winner points", () =>
+  // 0018: "A walkover has no in-play reading: nothing is void." Decision 7a (Tino, 6 Oct 2026): the
+  // operator locks the match as soon as the walkover is announced (runbook); picks saved before the
+  // lock count. This test keeps the old timing (the lock an hour after the news) to show what an operator
+  // delay costs: the pick made in that hour scores. supabase/tests/walkover_announced.sql is the rule.
+  test("F-06, decision 7a: a pick saved in the hour before the operator's lock still scores (so lock at once)", () =>
     inTx(db, async () => {
       await db.exec("select t.new_user(1)");
       await at(db, "2026-10-21 12:00+00");
@@ -213,12 +215,14 @@ describe("F-06 walkover announced before the start", () => {
       expect(
         (await one<{ outcome: string }>(db, "select t.feed(1, 'walkover', 'f', '')")).outcome,
       ).toBe("settled");
-      expect(await pts(db, 1, 1)).toBe("0/0/0/0"); // today: "10/0/0/10" (winner points with the upset bonus)
+      expect(await pts(db, 1, 1)).toBe("10/0/0/10"); // counts: the lock came an hour after the news
     }));
 });
 
 describe("F-04 substituting a withdrawn player once picks exist", () => {
-  test("BUG F-04: no operator path replaces a player in a slot once any pick exists", () =>
+  // Tino, 5 Oct 2026: "no withdrawals conceived", so no substitution procedure is built (README,
+  // decisions). This pins today's behaviour: once picks exist the players are frozen.
+  test("F-04, decided won't-build: once any pick exists the players are frozen", () =>
     inTx(db, async () => {
       await db.exec("select t.new_user(1)");
       await at(db, "2026-10-20 12:00+00");
@@ -241,6 +245,6 @@ describe("F-04 substituting a withdrawn player once picks exist", () => {
       const r = await one<string | null>(db, "select t.err('select reseat_paused_match(1)')");
       await db.exec("select t.as_owner()");
       expect(r).toBe("not_paused");
-      expect(e).toBeNull(); // today: picks_exist_bracket_frozen
+      expect(e).toMatch(/picks_exist_(bracket|players)_frozen/);
     }));
 });
