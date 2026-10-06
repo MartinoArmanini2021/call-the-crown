@@ -50,7 +50,11 @@ try {
     return r.fulfill({
       status: 400,
       contentType: "application/json",
-      body: JSON.stringify({ code: 400, error_code: "invalid_credentials", msg: "Invalid login credentials" }),
+      body: JSON.stringify({
+        code: 400,
+        error_code: "invalid_credentials",
+        msg: "Invalid login credentials",
+      }),
     });
   });
   const p = await c.newPage();
@@ -66,10 +70,14 @@ try {
   await p.getByRole("button", { name: "Send a new code" }).click();
   await sleep(800);
   const alerts1 = await p.locator('[role="alert"]').allInnerTexts();
-  check(seen.length === 2 && refused.length === 0, "both requests carried a fresh token and were accepted", {
-    seen,
-    refused,
-  });
+  check(
+    seen.length === 2 && refused.length === 0,
+    "both requests carried a fresh token and were accepted",
+    {
+      seen,
+      refused,
+    },
+  );
   check(alerts1.length === 0, "no error on the screen after 'Send a new code'", alerts1);
 
   console.log("\nSign in with a password: a wrong password, then a second try");
@@ -86,9 +94,13 @@ try {
   await verifyBtn.click();
   await sleep(800);
   const alerts2 = await p.locator('[role="alert"]').allInnerTexts();
-  check(seen.length === 4 && refused.length === 0, "each attempt carried a fresh token", { seen, refused });
+  check(seen.length === 4 && refused.length === 0, "each attempt carried a fresh token", {
+    seen,
+    refused,
+  });
   check(
-    alerts2.some((a) => /password/i.test(a)) && !alerts2.some((a) => /check above|went wrong/i.test(a)),
+    alerts2.some((a) => /password/i.test(a)) &&
+      !alerts2.some((a) => /check above|went wrong/i.test(a)),
     "the second attempt is judged on the password, not refused for the captcha",
     alerts2,
   );

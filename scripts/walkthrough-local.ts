@@ -156,13 +156,16 @@ const consents = must(
 );
 const [organiser, gsgm] = ["organiser", "gsgm"].map((p) => consents.find((c) => c.party === p));
 claim(
-  organiser?.granted === false && !!gsgm?.granted && gsgm.text_version === "draft-1" && consents.length === 3,
+  organiser?.granted === false &&
+    !!gsgm?.granted &&
+    gsgm.text_version === "draft-1" &&
+    consents.length === 3,
   "the opt-in stored server-side with the text version (history: not granted, then granted); the organiser list stays closed",
   consents,
 );
 claim(
-  (await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" })).error?.message ===
-    "organiser_list_closed",
+  (await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" }))
+    .error?.message === "organiser_list_closed",
   "a raw call cannot opt in to the closed organiser list",
 );
 
