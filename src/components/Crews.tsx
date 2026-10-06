@@ -6,6 +6,7 @@
 // leader is the "Crowned crew".
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { useT } from "@/i18n/useT";
 import { crewBoardQuery, matchesQuery, type CrewRow, type League } from "@/lib/api";
 import { isolate } from "@/lib/format";
@@ -19,7 +20,9 @@ const MIN = 5;
 
 export function CrewsBoard({ leagues }: { leagues: League[] }) {
   const { t } = useT();
-  const board = useQuery(crewBoardQuery());
+  const { user } = useAuth();
+  // Signed-in fans only (get_crew_board refuses anon): not while the session is still being read.
+  const board = useQuery({ ...crewBoardQuery(), enabled: !!user });
   const matches = useQuery(matchesQuery);
   const rows = board.data ?? [];
   const finalDone = (matches.data ?? []).some((m) => m.round === "F" && m.status !== "scheduled");
