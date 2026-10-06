@@ -117,12 +117,15 @@ must(
   }),
   "signInWithOtp",
 );
-const [before] = await db`select u.email_confirmed_at, array_agg(c.granted) as granted
-                            from auth.users u join public.consents c on c.user_id = u.id
-                           where u.email = ${EMAIL} group by u.email_confirmed_at`;
+// 0050 (Tino, 6 Oct 2026): nothing about an address exists in the game until it is proven.
+const [before] = await db`select u.email_confirmed_at,
+                                 (select count(*) from public.profiles p where p.user_id = u.id)::int as profiles,
+                                 (select count(*) from public.standings s where s.user_id = u.id)::int as standings,
+                                 (select count(*) from public.consents c where c.user_id = u.id)::int as consents
+                            from auth.users u where u.email = ${EMAIL}`;
 claim(
-  before.email_confirmed_at === null && before.granted.every((g: boolean) => !g),
-  "before the code: the address is not verified and both consents start not granted",
+  before?.email_confirmed_at === null && before.profiles + before.standings + before.consents === 0,
+  "before the code: the address is not verified and has no profile, rank or consents yet",
   before,
 );
 const mail = await latestMail(EMAIL);

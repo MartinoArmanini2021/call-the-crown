@@ -110,7 +110,7 @@ The same app against a real local Supabase. Docker Desktop must be running. The 
    select public.dev_set_now('2026-10-21 20:00+00');
    ```
 
-**The whole walkthrough as a script**, against this real stack (real Auth emails, RLS, pg_cron → edge function → settlement). It checks 28 claims. Afterwards, `bunx supabase db reset` puts the database back to the seed (redo step 4: the reset clears Vault).
+**The whole walkthrough as a script**, against this real stack (real Auth emails, RLS, pg_cron → edge function → settlement). It checks 29 claims. Afterwards, `bunx supabase db reset` puts the database back to the seed (redo step 4: the reset clears Vault).
 
 ```bash
 bun scripts/walkthrough-local.ts
