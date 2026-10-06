@@ -356,8 +356,9 @@ select t.as_service();
 update public.profiles set is_staff = true where user_id = t.uid(2);
 create temp table br as select public.billing_report() as r;
 select t.as_owner();
-select t.check('billing: registered excludes staff (3), verified 2, qualified 2',
-  (select (r->>'registered')::int = 3 and (r->>'verified')::int = 2 and (r->>'qualified')::int = 2 from br),
+-- 0050: an unproven address (fan 4) has no profile, so it is not "registered" either.
+select t.check('billing: registered excludes staff and unproven (2), verified 2, qualified 2',
+  (select (r->>'registered')::int = 2 and (r->>'verified')::int = 2 and (r->>'qualified')::int = 2 from br),
   (select r::text from br));
 update public.event_config set billing_close_at = '2026-10-20 23:59:59+03';
 select t.check('billing: days after the close do not count (close moved to 20 Oct → nobody qualifies)',
@@ -419,14 +420,19 @@ select t.as_owner();
 insert into auth.users (id, email, encrypted_password, confirmation_sent_at, raw_user_meta_data) values
   (t.uid(91), 'squat91@example.test', 'bcrypt-hash-from-a-stranger', now(),
    '{"display_name": "Planted Name", "consent_organiser": true, "consent_gsgm": true, "consent_text_version": "forged"}');
-select t.check('a new account starts with both consents NOT granted, whatever the sign-up request said',
-  (select bool_and(not granted) and count(*) = 2 and bool_and(text_version <> 'forged')
-     from public.consents where user_id = t.uid(91)));
+select t.check('an unproven sign-up creates no profile, standings row or consents (0050)',
+  not exists (select 1 from public.profiles where user_id = t.uid(91))
+  and not exists (select 1 from public.standings where user_id = t.uid(91))
+  and not exists (select 1 from public.consents where user_id = t.uid(91)));
 select t.check('the unproven address is not exported, and not counted as verified',
   not exists (select 1 from public.export_optins('organiser') where email = 'squat91@example.test')
   and not exists (select 1 from public.export_optins('gsgm') where email = 'squat91@example.test'));
 -- The real owner enters the emailed code.
 update auth.users set email_confirmed_at = now() where id = t.uid(91);
+select t.check('at the proof: both consents NOT granted, whatever the sign-up request said; no planted name',
+  (select bool_and(not granted) and count(*) = 2 and bool_and(text_version <> 'forged')
+     from public.consents where user_id = t.uid(91))
+  and (select display_name is null from public.profiles where user_id = t.uid(91)));
 select t.check('the stranger''s password does not survive the owner''s proof',
   (select encrypted_password = '' from auth.users where id = t.uid(91)));
 select t.as_user(t.uid(91));

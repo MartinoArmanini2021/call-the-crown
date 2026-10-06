@@ -295,7 +295,7 @@ describe("L5 delete_account", () => {
 // Unproven accounts on the board (follows from L1/L2: no server captcha + metadata name)
 // ---------------------------------------------------------------------------------------------------
 describe("unproven accounts", () => {
-  test("[SECURITY] an account whose address was never proven is not listed or ranked on the board", async () => {
+  test("[SECURITY, fixed by 0050] an account whose address was never proven is not listed or ranked on the board", async () => {
     await inTx(async () => {
       await rankedEvent();
       // A raw signUp after the first result: unconfirmed, confirmation mailed, name from the request.
@@ -314,7 +314,7 @@ describe("unproven accounts", () => {
     });
   });
 
-  test("[info] unproven accounts count in billing_report().registered", async () => {
+  test("[fixed by 0050] an unproven sign-up is not counted in billing_report().registered", async () => {
     await inTx(async () => {
       await db.exec(
         `insert into auth.users (id, email, confirmation_sent_at) values (t.uid(98), 'squat98@example.test', now())`,
@@ -326,7 +326,7 @@ describe("unproven accounts", () => {
         registered: r["registered"],
         verified: r["verified"],
       });
-      expect(r["registered"]).toBeGreaterThan(r["verified"]!);
+      expect(r["registered"]).toBe(r["verified"]!);
     });
   });
 });
