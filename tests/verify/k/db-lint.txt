@@ -1,0 +1,7 @@
+Connecting to local database...
+Linting schema: extensions
+Linting schema: public
+{"results":[{"function":"public.validate_set_scores","issues":[{"level":"warning","message":"target type is different type than source type","statement":{"lineNumber":"10","text":"statement block"},"hint":"The input expression type does not have an assignment cast to the target type.","detail":"cast \"text\" value to \"integer[]\" type","context":"during statement block local variable \"v_slots\" initialization on line 8","sqlState":"42804"}]},{"function":"public.orient_set_scores","issues":[{"level":"warning","message":"routine is marked as IMMUTABLE, but expression is STABLE","statement":{"lineNumber":"21","text":"assignment"},"hint":"When you fix this issue, please, recheck other functions that uses this function.","detail":"there is a risk of unwanted behave","context":"at assignment to variable \"v_out\" declared on line 4","sqlState":"00000"}]},{"function":"public.billing_report","issues":[{"level":"warning","message":"routine is marked as STABLE, but expression is VOLATILE","statement":{"lineNumber":"12","text":"SQL statement"},"hint":"When you fix this issue, please, recheck other functions that uses this function.","detail":"there is a risk of unwanted behave","sqlState":"00000"}]}],"message":"db lint"}
+A new version of Supabase CLI is available: v2.119.0 (currently installed v2.118.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli
+EXIT 0

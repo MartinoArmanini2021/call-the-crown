@@ -111,8 +111,8 @@ select t.check('my own pick is visible to me', (select count(*) from public.pick
 select t.as_owner();
 select public.dev_set_now('2026-10-21 16:31+00');
 select t.as_user(t.uid(2));
-select t.check('another fan''s pick is visible once the match has started',
-  (select count(*) from public.picks where user_id = t.uid(1) and match_no = 1) = 1);
+select t.check('another fan''s pick stays invisible after the match has started (K7: own rows only)',
+  (select count(*) from public.picks where user_id = t.uid(1) and match_no = 1) = 0);
 select t.as_owner();
 select public.dev_set_now('2026-10-20 12:00+00');
 
@@ -487,6 +487,14 @@ select t.check('a fan who joins after a result is on the board at once, in last 
   (select rank from public.standings where user_id = t.uid(84)) = 3
   and (select array_agg(rank order by rank) from public.standings where rank is not null) = array[1, 2, 3],
   (select array_agg(rank order by rank)::text from public.standings where rank is not null));
+
+-- save_pick must wait for an operator who holds the match row (lock_match_now, set_match_start, a
+-- correction refilling the bracket) and judge the pick on the committed row (0045). PGlite cannot race two
+-- transactions; the races themselves run in scripts/race-local.ts. This keeps the row lock from being
+-- dropped by a later rewrite of save_pick.
+select t.check('save_pick reads the match row FOR SHARE (races: scripts/race-local.ts)',
+  pg_get_functiondef('public.save_pick(int, text, int, jsonb)'::regprocedure)
+    ~* 'from public.matches where match_no = p_match for share');
 
 select * from t.report();
 rollback;

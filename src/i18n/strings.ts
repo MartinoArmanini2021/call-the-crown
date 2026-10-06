@@ -370,6 +370,7 @@ export const en = {
 
   // errors from the server (codes in supabase/migrations)
   err_not_signed_in: "Please sign in first.",
+  session_ended: "Your session ended, so this pick was not saved. Sign in again to make it.",
   err_locked: "This match has started: picks are closed.",
   err_players_unknown: "The players for this match are not known yet.",
   err_already_settled: "This match is over.",

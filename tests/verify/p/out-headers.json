@@ -1,0 +1,34 @@
+{
+  "_headers present": false,
+  "missing": [
+    "Content-Security-Policy",
+    "Strict-Transport-Security",
+    "frame-ancestors or X-Frame-Options",
+    "Referrer-Policy (explicit)",
+    "X-Content-Type-Options",
+    "index.html no-cache rule",
+    "Permissions-Policy"
+  ],
+  "source maps in dist": 0,
+  "meta CSP in index.html": false,
+  "stale deploy: tap Results": {
+    "url": "/results",
+    "body": "SOMETHING WENT WRONG Try again",
+    "console": [
+      "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "Failed to load module script: Expected a JavaScript-or-Wasm module script but the server responded with a MIME type of \"text/html\". Strict MIME type checking is",
+      "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5182/assets/results-CFRXfGnh.js",
+      "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5182/assets/results-CFRXfGnh.js",
+      "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5182/assets/results-CFRXfGnh.js"
+    ]
+  },
+  "proposed CSP": "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://ph.audit.invalid; connect-src 'self' http://127.0.0.1:55321 ws://127.0.0.1:55321 https://ph.audit.invalid; img-src 'self' data: blob: http://127.0.0.1:55321 https://www.atptour.com; style-src 'self'; font-src 'self' data:; frame-src https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+  "proposed CSP violations": []
+}

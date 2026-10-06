@@ -1,0 +1,219 @@
+# PROPOSED (Rule 4: touches recompute_standings, a scoring function; NOT applied). Section Q4.
+# Adds supabase/migrations/0020_hide_test_and_staff.sql (renumber if K7's 0019 lands first).
+# Fails today / passes with it: tests/verify/q/q4-test-staff-accounts.test.ts (10 of 11; the 11th,
+# the raw picks table, needs tests/verify/proposed/k7-picks-own-rows.sql too: 11/11 with both).
+# Existing supabase/tests/*.sql with this applied on PGlite: 250 PASS, 0 FAIL.
+# Check by hand: Q_EXTRA_SQL=<path to the .sql inside this patch> bun test tests/verify/q/q4-test-staff-accounts.test.ts
+diff --git a/supabase/migrations/0020_hide_test_and_staff.sql b/supabase/migrations/0020_hide_test_and_staff.sql
+new file mode 100644
+index 0000000..81aa7b3
+--- /dev/null
++++ b/supabase/migrations/0020_hide_test_and_staff.sql
+@@ -0,0 +1,207 @@
++-- =====================================================================================================
++-- 0020 — test and staff accounts stay off every public number (full-debug audit 5 Oct 2026, Q4)
++-- profiles.is_test / is_staff were read only by the billing report. They were ranked, shown on the
++-- global and league tables, counted in the leaderboard's total and in "How fans picked", and took rank
++-- numbers from real fans. Now:
++--   · recompute_standings ranks real fans only (1..n); a test or staff account keeps its points but has
++--     no rank, so it is off the global board, its total and "my rank ± 5";
++--   · rank_new_fan gives no rank to a hidden account;
++--   · flagging or unflagging an account re-ranks at once (once ranks exist), so no gap is left;
++--   · a league table and its total leave hidden members out;
++--   · get_match_crowd counts real fans' picks only.
++-- Scoring itself (score_match, the points of each pick) is unchanged.
++-- =====================================================================================================
++
++create or replace function public.is_hidden(p_user uuid) returns boolean
++language sql stable
++set search_path = public
++as $$ select coalesce((select is_test or is_staff from public.profiles where user_id = p_user), false) $$;
++revoke all on function public.is_hidden(uuid) from public, anon, authenticated, service_role;
++
++-- recompute_standings as in 0006; the only change is the rank: real fans only, hidden accounts null.
++create or replace function public.recompute_standings() returns void
++language plpgsql
++set search_path = public
++as $$
++declare
++  f             public.matches%rowtype;
++  v_final_games int;
++  v_seed        text := (select tiebreak_seed from public.event_config);
++begin
++  select * into f from public.matches where round = 'F' order by match_no limit 1;
++  if f.status = 'completed' then
++    select sum((e->>'p1_games')::int + (e->>'p2_games')::int)::int into v_final_games
++      from jsonb_array_elements(f.set_scores) e;
++  end if;
++
++  insert into public.standings (user_id)
++  select pr.user_id from public.profiles pr
++   where not exists (select 1 from public.standings s where s.user_id = pr.user_id)
++  on conflict (user_id) do nothing;
++
++  update public.standings s
++     set points = t.points, exact_sets = t.exact_sets, final_games_gap = t.gap,
++         final_pick_at = t.final_pick_at, rank = t.rank, updated_at = clock_timestamp()
++    from (
++  select t.user_id, t.points, t.exact_sets, t.gap, t.final_pick_at,
++         case when t.hidden then null else
++         (row_number() over (partition by t.hidden
++                             order by t.points desc, t.exact_sets desc, t.gap asc nulls last,
++                                      t.final_pick_at asc nulls last,
++                                      md5(v_seed || ':' || t.user_id::text) asc, t.user_id asc))::int end as rank
++    from (
++      select pr.user_id,
++             (pr.is_test or pr.is_staff) as hidden,
++             coalesce(a.points, 0)     as points,
++             coalesce(a.exact_sets, 0) as exact_sets,
++             case when v_final_games is not null and fp.user_id is not null
++                  then abs(fp.games - v_final_games) end as gap,
++             fp.updated_at as final_pick_at
++        from public.profiles pr
++        left join (select k.user_id, sum(k.pts_total)::int as points, sum(k.exact_sets)::int as exact_sets
++                     from public.picks k where k.pts_total is not null group by k.user_id) a
++               on a.user_id = pr.user_id
++        left join (select k.user_id, k.updated_at,
++                          (select sum((e->>'p1_games')::int + (e->>'p2_games')::int)::int
++                             from jsonb_array_elements(k.set_scores) e) as games
++                     from public.picks k where k.match_no = f.match_no) fp
++               on fp.user_id = pr.user_id
++    ) t
++    ) t
++   where s.user_id = t.user_id
++     and (s.points, s.exact_sets, s.final_games_gap, s.final_pick_at, s.rank)
++         is distinct from (t.points, t.exact_sets, t.gap, t.final_pick_at, t.rank);
++end;
++$$;
++revoke all on function public.recompute_standings() from public, anon, authenticated, service_role;
++
++-- rank_new_fan as in 0017, but a hidden account gets no number.
++create or replace function public.rank_new_fan() returns trigger
++language plpgsql security definer
++set search_path = public
++as $$
++declare v_prev text := coalesce(current_setting('skg.settling', true), '');
++begin
++  if not exists (select 1 from public.standings where rank is not null) then return new; end if;
++  if public.is_hidden(new.user_id) then return new; end if;
++  perform pg_advisory_xact_lock(hashtext('skg.rank_new_fan'));
++  perform set_config('skg.settling', '1', true);
++  update public.standings
++     set rank = (select coalesce(max(rank), 0) + 1 from public.standings), updated_at = clock_timestamp()
++   where user_id = new.user_id and rank is null;
++  perform set_config('skg.settling', v_prev, true);
++  return new;
++end;
++$$;
++revoke all on function public.rank_new_fan() from public, anon, authenticated;
++
++-- The operator flags an account (README: update profiles set is_test/is_staff): re-rank at once, but
++-- only once ranks exist (before the first result nobody has a rank, 0017).
++create function public.rerank_on_flag() returns trigger
++language plpgsql security definer
++set search_path = public
++as $$
++declare v_prev text := coalesce(current_setting('skg.settling', true), '');
++begin
++  if not exists (select 1 from public.standings where rank is not null) then return null; end if;
++  perform set_config('skg.settling', '1', true);
++  perform public.recompute_standings();
++  perform set_config('skg.settling', v_prev, true);
++  return null;
++end;
++$$;
++revoke all on function public.rerank_on_flag() from public, anon, authenticated;
++create trigger profiles_rerank_on_flag after update of is_test, is_staff on public.profiles
++  for each statement execute function public.rerank_on_flag();
++
++-- League tables: hidden members are left out of the rows and of the total.
++create or replace function public.board_rows(p_league uuid)
++returns table (pos int, global_rank int, user_id uuid, display_name text, points int, exact_sets int)
++language sql stable security definer
++set search_path = public
++as $$
++  select case when p_league is null then s.rank
++              else (row_number() over (order by s.rank nulls last, pr.created_at, s.user_id))::int end,
++         s.rank, s.user_id, pr.display_name, s.points, s.exact_sets
++    from public.standings s
++    join public.profiles pr on pr.user_id = s.user_id
++   where not pr.is_test and not pr.is_staff
++     and (p_league is null
++          or s.user_id in (select lm.user_id from public.league_members lm where lm.league_id = p_league))
++$$;
++revoke all on function public.board_rows(uuid) from public, anon, authenticated;
++
++create or replace function public.get_leaderboard(p_league uuid default null, p_offset int default 0, p_limit int default 50)
++returns table (pos int, global_rank int, user_id uuid, display_name text, points int, exact_sets int,
++               is_me boolean, total int)
++language plpgsql stable security definer
++set search_path = public
++as $$
++begin
++  perform public.assert_board_access(p_league);
++  if p_league is null then
++    return query
++      select s.rank, s.rank, s.user_id, pr.display_name, s.points, s.exact_sets, s.user_id = auth.uid(),
++             (select count(*)::int from public.standings x where x.rank is not null)
++        from public.standings s join public.profiles pr on pr.user_id = s.user_id
++       where s.rank is not null
++       order by s.rank
++       offset greatest(coalesce(p_offset, 0), 0)
++       limit least(greatest(coalesce(p_limit, 50), 1), 100);
++  else
++    return query
++      select b.pos, b.global_rank, b.user_id, b.display_name, b.points, b.exact_sets,
++             b.user_id = auth.uid(),
++             (select count(*)::int from public.league_members lm
++                join public.profiles p on p.user_id = lm.user_id
++               where lm.league_id = p_league and not p.is_test and not p.is_staff)
++        from public.board_rows(p_league) b
++       order by b.pos, b.user_id
++       offset greatest(coalesce(p_offset, 0), 0)
++       limit least(greatest(coalesce(p_limit, 50), 1), 100);
++  end if;
++end;
++$$;
++revoke all on function public.get_leaderboard(uuid, int, int) from public, anon;
++grant execute on function public.get_leaderboard(uuid, int, int) to authenticated;
++
++-- How fans picked: real fans only (0012 otherwise unchanged).
++create or replace function public.get_match_crowd(p_match int)
++returns table (picks int, p1_picks int, p2_picks int, top_score jsonb, top_count int)
++language plpgsql security definer
++set search_path = public
++as $$
++declare m public.matches%rowtype;
++begin
++  select * into m from public.matches where match_no = p_match;
++  if not found or m.starts_at is null or m.starts_at > public.app_now() then
++    return;
++  end if;
++
++  if not exists (select 1 from public.match_crowd c where c.match_no = p_match) then
++    insert into public.match_crowd (match_no, picks, p1_picks, p2_picks, top_score, top_count)
++    select p_match,
++           count(*)::int,
++           (count(*) filter (where k.winner_id = m.p1_id))::int,
++           (count(*) filter (where k.winner_id = m.p2_id))::int,
++           (select k2.set_scores from public.picks k2
++              join public.profiles p2 on p2.user_id = k2.user_id and not p2.is_test and not p2.is_staff
++             where k2.match_no = p_match
++             group by k2.set_scores order by count(*) desc, k2.set_scores::text limit 1),
++           coalesce((select count(*) from public.picks k2
++                       join public.profiles p2 on p2.user_id = k2.user_id and not p2.is_test and not p2.is_staff
++                      where k2.match_no = p_match
++                      group by k2.set_scores order by count(*) desc, k2.set_scores::text limit 1), 0)::int
++      from public.picks k
++      join public.profiles p on p.user_id = k.user_id and not p.is_test and not p.is_staff
++     where k.match_no = p_match
++    on conflict (match_no) do nothing;
++  end if;
++
++  return query
++    select c.picks, c.p1_picks, c.p2_picks, c.top_score, c.top_count
++      from public.match_crowd c where c.match_no = p_match;
++end;
++$$;
++revoke all on function public.get_match_crowd(int) from public, anon;
++grant execute on function public.get_match_crowd(int) to authenticated;

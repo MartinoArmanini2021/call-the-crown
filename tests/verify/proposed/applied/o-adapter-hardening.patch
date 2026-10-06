@@ -1,0 +1,63 @@
+diff --git a/supabase/functions/poll-results/adapters/wikipedia.ts b/supabase/functions/poll-results/adapters/wikipedia.ts
+index 6ccc578..e961cda 100644
+--- a/supabase/functions/poll-results/adapters/wikipedia.ts
++++ b/supabase/functions/poll-results/adapters/wikipedia.ts
+@@ -41,10 +41,17 @@ function games(cell: Cell | undefined): number | null {
+   return /^\d{1,2}$/.test(s) ? Number(s) : null;
+ }
+ 
++// MediaWiki treats these spellings of a link as the same article: underscores for spaces, repeated
++// spaces, a lower-case first letter, a #section (audit O1, 5 Oct 2026). provider_map holds the canonical form.
++export function canonicalTitle(t: string): string {
++  const s = t.split("#")[0]!.replace(/_/g, " ").replace(/\s+/g, " ").trim();
++  return s.charAt(0).toUpperCase() + s.slice(1);
++}
++
+ function team(cell: Cell | undefined): { ref: string | null; bold: boolean } {
+   if (!cell) return { ref: null, bold: false };
+   const link = LINK.exec(cell.raw);
+-  const ref = link ? link[1]!.trim() : stripMarkup(cell.raw) || null;
++  const ref = link ? canonicalTitle(link[1]!) : stripMarkup(cell.raw) || null;
+   return { ref: ref && !/^(tbd|tba|bye)$/i.test(ref) ? ref : null, bold: cell.raw.includes("'''") };
+ }
+ 
+@@ -84,7 +91,10 @@ export function parseBracket(wikitext: string): Map<string, ParsedMatch> {
+         const c2 = cells.get(`${round}|score|${b}|${n}`);
+         for (const c of [c1, c2]) {
+           if (!c) continue;
+-          if (stripMarkup(c.raw) !== "" || /<sup>/i.test(c.raw)) anyScore = true;
++          // only a game count or a retirement/walkover marker means play has begun: placeholder text
++          // ("&nbsp;", "–") in an empty cell would otherwise read as live from the window's opening and,
++          // through 0018 real_start, void every pick saved in the hour before the start (audit O1)
++          if (games(c) !== null || RETIRED.test(c.raw) || WALKOVER.test(c.raw)) anyScore = true;
+           if (RETIRED.test(c.raw)) retired = true;
+           if (WALKOVER.test(c.raw)) walkover = true;
+         }
+@@ -137,9 +147,13 @@ export class WikipediaAdapter implements ResultsAdapter {
+     this.page ??= (async (): Promise<Page> => {
+       const url =
+         `${this.host}/w/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main` +
+-        `&format=json&formatversion=2&maxlag=5&titles=${encodeURIComponent(this.title)}`;
++        `&format=json&formatversion=2&maxlag=5&redirects=1&titles=${encodeURIComponent(this.title)}`;
+       try {
+-        const res = await this.fetcher(url, { headers: { "User-Agent": this.userAgent, "Api-User-Agent": this.userAgent } });
++        // a hung request would hold the whole run (and pile runs up, one a minute): give up after 10 s (S-08)
++        const res = await this.fetcher(url, {
++          headers: { "User-Agent": this.userAgent, "Api-User-Agent": this.userAgent },
++          signal: AbortSignal.timeout(10_000),
++        });
+         if (!res.ok) return { http_status: res.status, title: this.title, error: `HTTP ${res.status}` };
+         const body = (await res.json()) as {
+           error?: { code?: string; info?: string };
+@@ -149,7 +163,10 @@ export class WikipediaAdapter implements ResultsAdapter {
+         const p = body.query?.pages?.[0];
+         const rev = p?.revisions?.[0];
+         if (!p || p.missing || !rev) return { http_status: 404, title: this.title, error: "page does not exist yet" };
+-        return { http_status: 200, title: this.title, revid: rev.revid, timestamp: rev.timestamp, content: rev.slots.main.content };
++        const content = rev.slots.main.content;
++        if (/^\s*#REDIRECT/i.test(content)) return { http_status: 200, title: this.title, revid: rev.revid, error: "the page is a redirect" };
++        if (!content.trim()) return { http_status: 200, title: this.title, revid: rev.revid, error: "the page is empty" };
++        return { http_status: 200, title: this.title, revid: rev.revid, timestamp: rev.timestamp, content };
+       } catch (e) {
+         return { http_status: 599, title: this.title, error: e instanceof Error ? e.message : String(e) };
+       }

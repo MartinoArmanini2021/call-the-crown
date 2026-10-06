@@ -1,0 +1,206 @@
+{
+  "en in /": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /picks": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /picks?match=1": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /results": {
+    "issues": [],
+    "tablists": ["3 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /standings": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /standings?league=b5e17689-bb1c-4ef0-9580-a4671b23980e": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /standings?join=E7AF5F": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /profile": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en in /how-to-play": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /sign-in": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /picks": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /results": {
+    "issues": [],
+    "tablists": ["3 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /standings": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /profile": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /how-to-play": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "en"
+  },
+  "en out /nope": {
+    "issues": [],
+    "tablists": [],
+    "h1": 0,
+    "lang": "en"
+  },
+  "ar in /": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /picks": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /picks?match=1": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /results": {
+    "issues": [],
+    "tablists": ["3 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /standings": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /standings?league=b5e17689-bb1c-4ef0-9580-a4671b23980e": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /standings?join=E7AF5F": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /profile": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar in /how-to-play": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /sign-in": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /picks": {
+    "issues": [],
+    "tablists": ["2 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /results": {
+    "issues": [],
+    "tablists": ["3 tabs, 0 with aria-controls, panels: 0"],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /standings": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /profile": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /how-to-play": {
+    "issues": [],
+    "tablists": [],
+    "h1": 1,
+    "lang": "ar"
+  },
+  "ar out /nope": {
+    "issues": [],
+    "tablists": [],
+    "h1": 0,
+    "lang": "ar"
+  }
+}

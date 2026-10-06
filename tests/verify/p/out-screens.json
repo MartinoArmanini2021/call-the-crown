@@ -1,0 +1,1929 @@
+{
+  "results": [
+    {
+      "shot": "landing-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "sign-in-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Stay in touch (optional)\" (1/172px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "leagues-invite-en-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "not-found-en-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-sheet-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Your pick as a scoreboard, set by set\" (1/239px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-league-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "sign-in-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Stay in touch (optional)\" (1/172px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "leagues-invite-en-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "not-found-en-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-sheet-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Your pick as a scoreboard, set by set\" (1/239px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-league-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "sign-in-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Stay in touch (optional)\" (1/172px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "leagues-invite-en-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "not-found-en-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-sheet-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Your pick as a scoreboard, set by set\" (1/239px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-league-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "sign-in-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Stay in touch (optional)\" (1/172px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "leagues-invite-en-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "not-found-en-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "picks-sheet-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"Your pick as a scoreboard, set by set\" (1/239px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "results-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)", "\"→\" (1/14px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "standings-league-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "profile-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "how-to-play-en-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"Crown\" (1/43px)"],
+      "lang": "en",
+      "dir": "en/ltr"
+    },
+    {
+      "shot": "landing-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "sign-in-ar-360-signedout.png",
+      "issues": [],
+      "clipped": ["\"ابقَ على تواصل (اختياري)\" (1/157px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (274/547px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "leagues-invite-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "not-found-ar-360-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-sheet-ar-360-signedin.png",
+      "issues": [],
+      "clipped": ["\"توقعك على لوحة النتائج، مجموعة بمجموعة\" (1/238px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (274/547px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-league-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-360-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "sign-in-ar-390-signedout.png",
+      "issues": [],
+      "clipped": ["\"ابقَ على تواصل (اختياري)\" (1/157px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (299/597px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "leagues-invite-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "not-found-ar-390-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-sheet-ar-390-signedin.png",
+      "issues": [],
+      "clipped": ["\"توقعك على لوحة النتائج، مجموعة بمجموعة\" (1/238px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (299/597px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-league-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-390-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "sign-in-ar-768-signedout.png",
+      "issues": [],
+      "clipped": ["\"ابقَ على تواصل (اختياري)\" (1/157px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (222/444px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "leagues-invite-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "not-found-ar-768-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-sheet-ar-768-signedin.png",
+      "issues": [],
+      "clipped": ["\"توقعك على لوحة النتائج، مجموعة بمجموعة\" (1/238px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (222/444px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-league-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-768-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "sign-in-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": ["\"ابقَ على تواصل (اختياري)\" (1/157px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (222/444px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "leagues-invite-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "not-found-ar-1280-signedout.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "landing-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "picks-sheet-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": ["\"توقعك على لوحة النتائج، مجموعة بمجموعة\" (1/238px)"],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "results-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [
+        "\"→\" (1/14px)",
+        "\"النهائيالسبت، 24 أكتوبر، 09:40 مالفائز في نصف النه\" (222/444px)"
+      ],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "standings-league-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "profile-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    },
+    {
+      "shot": "how-to-play-ar-1280-signedin.png",
+      "issues": [],
+      "clipped": [],
+      "lang": "ar",
+      "dir": "ar/rtl"
+    }
+  ],
+  "console": [
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    },
+    {
+      "type": "pageerror",
+      "text": "SecurityError: Failed to read the 'sessionStorage' property from 'Window': Access is denied for this document.",
+      "url": "about:blank"
+    }
+  ],
+  "blocked": [],
+  "posthog": [
+    {
+      "event": "screen_view",
+      "name": "no-such-page",
+      "path": "/no-such-page",
+      "url": "http://127.0.0.1:5182/no-such-page"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "screen_view",
+      "name": "no-such-page",
+      "path": "/no-such-page",
+      "url": "http://127.0.0.1:5182/no-such-page"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "screen_view",
+      "name": "no-such-page",
+      "path": "/no-such-page",
+      "url": "http://127.0.0.1:5182/no-such-page"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    },
+    {
+      "event": "$identify",
+      "path": "/",
+      "url": "http://127.0.0.1:5182/"
+    },
+    {
+      "event": "screen_view",
+      "name": "how-to-play",
+      "path": "/how-to-play",
+      "url": "http://127.0.0.1:5182/how-to-play"
+    }
+  ],
+  "rest": [
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:25.051817+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:32.208349+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:34.491439+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:48.467824+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:51.638841+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:53.527982+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:32:55.632082+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_leaderboard",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_rank_window",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_rank_window",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_leaderboard",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/my_leagues",
+      "status": 200,
+      "body": "[{\"id\":\"b5e17689-bb1c-4ef0-9580-a4671b23980e\",\"name\":\"P audit league\",\"code\":\"E7AF5F\",\"is_owner\":true,\"member_count\":2}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_rank_window",
+      "status": 200,
+      "body": "[{\"pos\":1,\"global_rank\":null,\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":true}, \n {\"pos\":2,\"global_rank\":null,\"user_id\":\"d886c3ec-99cd-44db-a3f5-55b7c642c7be\",\"display_name\":\"Bo Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":false}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_leaderboard",
+      "status": 200,
+      "body": "[{\"pos\":1,\"global_rank\":null,\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":true,\"total\":2}, \n {\"pos\":2,\"global_rank\":null,\"user_id\":\"d886c3ec-99cd-44db-a3f5-55b7c642c7be\",\"display_name\":\"Bo Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":false,\"total\":2}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/my_leagues",
+      "status": 200,
+      "body": "[{\"id\":\"b5e17689-bb1c-4ef0-9580-a4671b23980e\",\"name\":\"P audit league\",\"code\":\"E7AF5F\",\"is_owner\":true,\"member_count\":2}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/consents?select=party%2Cgranted%2Ctext_version%2Cchanged_at&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62&order=changed_at.asc",
+      "status": 200,
+      "body": "[{\"party\":\"organiser\",\"granted\":false,\"text_version\":\"draft-2\",\"changed_at\":\"2026-10-05T20:58:32.27931+00:00\"}, \n {\"party\":\"gsgm\",\"granted\":false,\"text_version\":\"draft-2\",\"changed_at\":\"2026-10-05T20:58:32.280165+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\": {\"F\": 10, \"3P\": 4, \"QF\": 4, \"SF\": 6}, \"deciding_set\": \"full\", \"per_set_exact\": 2, \"winner_points\": {\"F\": 20, \"3P\": 8, \"QF\": 8, \"SF\": 13}, \"upset_constant\": 30, \"allowed_set_scores\": [[6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [7, 5], [7, 6]]},\"league_limits\":{\"max_members\": 200, \"max_leagues_per_user\": 10},\"branding\":{\"fonts\": {\"body\": \"Plus Jakarta Sans\", \"display\": \"Urbanist\", \"headline\": \"Barlow Condensed\"}, \"colors\": {\"bg\": \"#0b0b0b\", \"card\": \"#181818\", \"text\": \"#ffffff\", \"accent\": \"#e50914\", \"raised\": \"#242424\", \"text_muted\": \"#9c9c9c\", \"accent_deep\": \"#b20710\", \"accent_text\": \"#ff4f57\", \"text_secondary\": \"#c9c9c9\"}, \"app_name\": \"Call the Crown\", \"logo_path\": null, \"event_line\": \"Six players · Riyadh · 21, 22 & 24 October\", \"short_name\": \"Call the Crown\", \"app_name_ar\": \"توقّع التاج\", \"event_line_ar\": \"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\", \"short_name_ar\": \"توقّع التاج\"},\"prizes\":[{\"place\": 1, \"title\": \"Two tickets to the final (example)\", \"image_path\": null}, {\"place\": 2, \"title\": \"Signed racket (example)\", \"image_path\": null}, {\"place\": 3, \"title\": \"Official tournament towel (example)\", \"image_path\": null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\": \"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\", \"version\": \"draft-2\", \"consent_gsgm\": \"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\": {\"en\": \"Example sponsor\"}, \"href\": \"https://example.com\", \"slot\": \"landing_strip\", \"image_path\": null}],\"flags\":{\"arabic\": false},\"results_policy\":{\"stable_minutes\": {\"wikipedia\": 10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:06.262227+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:11.613759+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:13.159964+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:22.763187+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:24.713017+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:26.251628+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/app_now",
+      "status": 200,
+      "body": "\"2026-10-20T12:35:27.902657+00:00\""
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_leaderboard",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_rank_window",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_rank_window",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_leaderboard",
+      "status": 200,
+      "body": "[]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/my_leagues",
+      "status": 200,
+      "body": "[{\"id\":\"b5e17689-bb1c-4ef0-9580-a4671b23980e\",\"name\":\"P audit league\",\"code\":\"E7AF5F\",\"is_owner\":true,\"member_count\":2}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/my_leagues",
+      "status": 200,
+      "body": "[{\"id\":\"b5e17689-bb1c-4ef0-9580-a4671b23980e\",\"name\":\"P audit league\",\"code\":\"E7AF5F\",\"is_owner\":true,\"member_count\":2}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_rank_window",
+      "status": 200,
+      "body": "[{\"pos\":1,\"global_rank\":null,\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":true}, \n {\"pos\":2,\"global_rank\":null,\"user_id\":\"d886c3ec-99cd-44db-a3f5-55b7c642c7be\",\"display_name\":\"Bo Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":false}]"
+    },
+    {
+      "method": "POST",
+      "url": "/rest/v1/rpc/get_leaderboard",
+      "status": 200,
+      "body": "[{\"pos\":1,\"global_rank\":null,\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":true,\"total\":2}, \n {\"pos\":2,\"global_rank\":null,\"user_id\":\"d886c3ec-99cd-44db-a3f5-55b7c642c7be\",\"display_name\":\"Bo Audit\",\"points\":0,\"exact_sets\":0,\"is_me\":false,\"total\":2}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/consents?select=party%2Cgranted%2Ctext_version%2Cchanged_at&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62&order=changed_at.asc",
+      "status": 200,
+      "body": "[{\"party\":\"organiser\",\"granted\":false,\"text_version\":\"draft-2\",\"changed_at\":\"2026-10-05T20:58:32.27931+00:00\"}, \n {\"party\":\"gsgm\",\"granted\":false,\"text_version\":\"draft-2\",\"changed_at\":\"2026-10-05T20:58:32.280165+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/event_config?select=*",
+      "status": 200,
+      "body": "[{\"id\":true,\"name\":\"Call the Crown · Riyadh 2026\",\"timezone\":\"Asia/Riyadh\",\"launch_at\":\"2026-10-15T06:00:00+00:00\",\"billing_close_at\":\"2026-10-24T20:59:59+00:00\",\"rank_snapshot_date\":null,\"rules\":{\"sets_points\":{\"F\":10,\"3P\":4,\"QF\":4,\"SF\":6},\"deciding_set\":\"full\",\"per_set_exact\":2,\"winner_points\":{\"F\":20,\"3P\":8,\"QF\":8,\"SF\":13},\"upset_constant\":30,\"allowed_set_scores\":[[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]]},\"league_limits\":{\"max_members\":200,\"max_leagues_per_user\":10},\"branding\":{\"fonts\":{\"body\":\"Plus Jakarta Sans\",\"display\":\"Urbanist\",\"headline\":\"Barlow Condensed\"},\"colors\":{\"bg\":\"#0b0b0b\",\"card\":\"#181818\",\"text\":\"#ffffff\",\"accent\":\"#e50914\",\"raised\":\"#242424\",\"text_muted\":\"#9c9c9c\",\"accent_deep\":\"#b20710\",\"accent_text\":\"#ff4f57\",\"text_secondary\":\"#c9c9c9\"},\"app_name\":\"Call the Crown\",\"logo_path\":null,\"event_line\":\"Six players · Riyadh · 21, 22 & 24 October\",\"short_name\":\"Call the Crown\",\"app_name_ar\":\"توقّع التاج\",\"event_line_ar\":\"ستة لاعبين · الرياض · 21 و22 و24 أكتوبر\",\"short_name_ar\":\"توقّع التاج\"},\"prizes\":[{\"place\":1,\"title\":\"Two tickets to the final (example)\",\"image_path\":null},{\"place\":2,\"title\":\"Signed racket (example)\",\"image_path\":null},{\"place\":3,\"title\":\"Official tournament towel (example)\",\"image_path\":null}],\"prize_terms_url\":\"https://example.com/prize-terms\",\"privacy\":{\"notice\":\"Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.\",\"version\":\"draft-2\",\"consent_gsgm\":\"Placeholder: I would like to receive news from Grand Slam GM.\"},\"sponsor_slots\":[{\"alt\":{\"en\":\"Example sponsor\"},\"href\":\"https://example.com\",\"slot\":\"landing_strip\",\"image_path\":null}],\"flags\":{\"arabic\":true},\"results_policy\":{\"stable_minutes\":{\"wikipedia\":10}},\"tiebreak_seed\":\"6404bca81bd6b63ba828a6750531ede138e28175dba2636736b3d368884c04ba\",\"updated_at\":\"2026-10-05T20:28:07.118353+00:00\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/matches?select=*&order=match_no.asc",
+      "status": 200,
+      "body": "[{\"match_no\":1,\"round\":\"QF\",\"p1_source\":{\"id\": \"c\", \"type\": \"player\"},\"p2_source\":{\"id\": \"f\", \"type\": \"player\"},\"p1_id\":\"c\",\"p2_id\":\"f\",\"starts_at\":\"2026-10-21T16:30:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":10,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":2,\"round\":\"QF\",\"p1_source\":{\"id\": \"d\", \"type\": \"player\"},\"p2_source\":{\"id\": \"e\", \"type\": \"player\"},\"p1_id\":\"d\",\"p2_id\":\"e\",\"starts_at\":\"2026-10-21T17:40:00+00:00\",\"p1_win_points\":8,\"p2_win_points\":9,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":3,\"round\":\"SF\",\"p1_source\":{\"id\": \"a\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 1},\"p1_id\":\"a\",\"p2_id\":null,\"starts_at\":\"2026-10-22T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":4,\"round\":\"SF\",\"p1_source\":{\"id\": \"b\", \"type\": \"player\"},\"p2_source\":{\"type\": \"winner\", \"match\": 2},\"p1_id\":\"b\",\"p2_id\":null,\"starts_at\":\"2026-10-22T18:20:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":5,\"round\":\"3P\",\"p1_source\":{\"type\": \"loser\", \"match\": 3},\"p2_source\":{\"type\": \"loser\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T16:30:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}, \n {\"match_no\":6,\"round\":\"F\",\"p1_source\":{\"type\": \"winner\", \"match\": 3},\"p2_source\":{\"type\": \"winner\", \"match\": 4},\"p1_id\":null,\"p2_id\":null,\"starts_at\":\"2026-10-24T18:40:00+00:00\",\"p1_win_points\":null,\"p2_win_points\":null,\"status\":\"scheduled\",\"winner_id\":null,\"set_scores\":null,\"settled_at\":null,\"result_rev\":0,\"settlement_paused\":false,\"refetch_requested_at\":null,\"started_at\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/players?select=*&order=seed.asc",
+      "status": 200,
+      "body": "[{\"id\":\"a\",\"name\":\"Player A\",\"name_ar\":null,\"country\":\"AAA\",\"seed\":1,\"rank_snapshot\":1,\"image_path\":null}, \n {\"id\":\"b\",\"name\":\"Player B\",\"name_ar\":null,\"country\":\"BBB\",\"seed\":2,\"rank_snapshot\":2,\"image_path\":null}, \n {\"id\":\"c\",\"name\":\"Player C\",\"name_ar\":null,\"country\":\"CCC\",\"seed\":3,\"rank_snapshot\":3,\"image_path\":null}, \n {\"id\":\"d\",\"name\":\"Player D\",\"name_ar\":null,\"country\":\"DDD\",\"seed\":4,\"rank_snapshot\":5,\"image_path\":null}, \n {\"id\":\"e\",\"name\":\"Player E\",\"name_ar\":null,\"country\":\"EEE\",\"seed\":5,\"rank_snapshot\":7,\"image_path\":null}, \n {\"id\":\"f\",\"name\":\"Player F\",\"name_ar\":null,\"country\":\"FFF\",\"seed\":6,\"rank_snapshot\":10,\"image_path\":null}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/profiles?select=user_id%2Cdisplay_name%2Clocale&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"display_name\":\"Pia Audit\",\"locale\":\"en\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "/rest/v1/picks?select=*&user_id=eq.70c0881a-d151-47d0-9d79-b81e5eee7c62",
+      "status": 200,
+      "body": "[{\"user_id\":\"70c0881a-d151-47d0-9d79-b81e5eee7c62\",\"match_no\":1,\"winner_id\":\"c\",\"sets\":2,\"set_scores\":[{\"p1_games\": 6, \"p2_games\": 4}, {\"p1_games\": 6, \"p2_games\": 3}],\"created_at\":\"2026-10-20T12:30:29.653634+00:00\",\"updated_at\":\"2026-10-20T12:30:29.653634+00:00\",\"pts_winner\":null,\"pts_sets\":null,\"pts_exact\":null,\"exact_sets\":null,\"pts_total\":null,\"scored_rev\":null,\"exact_flags\":null}]"
+    }
+  ]
+}

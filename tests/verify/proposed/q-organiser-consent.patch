@@ -1,0 +1,105 @@
+# PROPOSED (Rule 4: update_consents / consents; NOT applied). Section Q3.
+# update_consents refuses p_organiser = true ('organiser_list_closed'); the two local scripts that still
+# send organiser = true send false and check the refusal. Nothing is removed. Migration number: next free one.
+# Fails today / passes with it: tests/verify/q/q3-organiser-leftovers.test.ts (SMELL test);
+# supabase/tests/*.sql on PGlite with it: 250 PASS, 0 FAIL. walkthrough-local / simulate-event: not run.
+diff --git a/scripts/walkthrough-local.ts b/scripts/walkthrough-local.ts
+index cc0bb69..54d9901 100644
+--- a/scripts/walkthrough-local.ts
++++ b/scripts/walkthrough-local.ts
+@@ -144,7 +144,7 @@ must(
+   "update_profile",
+ );
+ must(
+-  await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" }),
++  await fan.rpc("update_consents", { p_organiser: false, p_gsgm: true, p_text_version: "draft-1" }),
+   "update_consents",
+ );
+ const consents = must(
+@@ -154,12 +154,17 @@ const consents = must(
+     .order("changed_at", { ascending: false }),
+   "consents",
+ );
+-const latest = ["organiser", "gsgm"].map((p) => consents.find((c) => c.party === p));
++const [organiser, gsgm] = ["organiser", "gsgm"].map((p) => consents.find((c) => c.party === p));
+ claim(
+-  latest.every((c) => c?.granted && c.text_version === "draft-1") && consents.length === 4,
+-  "both consents stored server-side with the text version (history: not granted, then granted)",
++  organiser?.granted === false && !!gsgm?.granted && gsgm.text_version === "draft-1" && consents.length === 3,
++  "the opt-in stored server-side with the text version (history: not granted, then granted); the organiser list stays closed",
+   consents,
+ );
++claim(
++  (await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" })).error?.message ===
++    "organiser_list_closed",
++  "a raw call cannot opt in to the closed organiser list",
++);
+ 
+ // Tino, 3 Oct 2026: the code proves the email once; every later sign-in is email + password.
+ // Invented local test credential (this script and the local stack only).
+diff --git a/scripts/simulate-event.ts b/scripts/simulate-event.ts
+index cdf695e..fe0d80f 100644
+--- a/scripts/simulate-event.ts
++++ b/scripts/simulate-event.ts
+@@ -95,7 +95,7 @@ await db.query(
+ );
+ // New accounts start with both consents not granted (0013); the verified fan's own answers follow.
+ await as(db, { uid: FAN }, (tx) =>
+-  tx.query("select public.update_consents(true, true, 'draft-1')"),
++  tx.query("select public.update_consents(false, true, 'draft-1')"),
+ );
+ const consents = (
+   await db.query<{ party: string; granted: boolean; text_version: string }>(
+@@ -105,8 +105,10 @@ const consents = (
+   )
+ ).rows;
+ claim(
+-  consents.length === 2 && consents.every((c) => c.granted && c.text_version === "draft-1"),
+-  "both consents stored, each with its timestamp and the text version shown",
++  consents.length === 2 &&
++    consents.some((c) => c.party === "gsgm" && c.granted && c.text_version === "draft-1") &&
++    consents.some((c) => c.party === "organiser" && !c.granted),
++  "the opt-in stored with its timestamp and the text version shown; the organiser list stays closed",
+   consents,
+ );
+ 
+diff --git a/supabase/migrations/0021_organiser_list_closed.sql b/supabase/migrations/0021_organiser_list_closed.sql
+new file mode 100644
+index 0000000..f80c229
+--- /dev/null
++++ b/supabase/migrations/0021_organiser_list_closed.sql
+@@ -0,0 +1,34 @@
++-- =====================================================================================================
++-- 0021 — the organiser opt-in is closed (full-debug audit 5 Oct 2026, Q3; Tino 4 Oct 2026: the app runs
++-- standalone, there is no organiser list). The app already sends organiser = false on every save
++-- (profile.tsx, sign-in.tsx); a raw RPC call could still record a new "yes" to that list. Now refused.
++-- Earlier answers, the 'organiser' party and export_optins stay as they are (no deletion; Tino decides).
++-- =====================================================================================================
++
++create or replace function public.update_consents(p_organiser boolean, p_gsgm boolean, p_text_version text)
++returns void
++language plpgsql security definer
++set search_path = public
++as $$
++declare
++  v_uid uuid := auth.uid();
++  r     record;
++begin
++  if v_uid is null then raise exception 'not_signed_in'; end if;
++  if p_organiser is null or p_gsgm is null or coalesce(btrim(p_text_version), '') = '' then
++    raise exception 'consent_incomplete';
++  end if;
++  if p_organiser then raise exception 'organiser_list_closed'; end if;
++  for r in select * from (values ('organiser', p_organiser), ('gsgm', p_gsgm)) as v(party, granted) loop
++    if r.granted is distinct from (
++      select c.granted from public.consents c
++       where c.user_id = v_uid and c.party = r.party order by c.changed_at desc limit 1
++    ) then
++      insert into public.consents (user_id, party, granted, text_version)
++      values (v_uid, r.party, r.granted, btrim(p_text_version));
++    end if;
++  end loop;
++end;
++$$;
++revoke all on function public.update_consents(boolean, boolean, text) from public, anon;
++grant execute on function public.update_consents(boolean, boolean, text) to authenticated;

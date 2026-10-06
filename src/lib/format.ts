@@ -30,7 +30,7 @@ export function localDay(iso: string, timezone: string, locale: string): string 
   }).format(new Date(iso));
 }
 
-/** The event's local time, e.g. "Wed 21 Oct, 19:30". */
+/** The event's local time with its zone, e.g. "Wed 21 Oct, 19:30 GMT+3": fans watch from anywhere. */
 export function localTime(iso: string, timezone: string, locale: string): string {
   return new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en-GB", {
     timeZone: timezone,
@@ -39,6 +39,7 @@ export function localTime(iso: string, timezone: string, locale: string): string
     month: "short",
     hour: "2-digit",
     minute: "2-digit",
+    timeZoneName: "short",
   }).format(new Date(iso));
 }
 
