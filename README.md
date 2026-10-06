@@ -411,8 +411,9 @@ Set these in each Supabase project's dashboard; locally they are in `supabase/co
 
 - Custom SMTP through Resend on the sending domain.
 - Raise the Auth email rate limit for launch week.
-- Captcha protection set to Turnstile, with the secret key in the dashboard.
+- Captcha protection set to Turnstile, with the secret key in the dashboard. Staging: `[remotes.staging.auth.captcha]` in `config.toml`, the secret from `SUPABASE_AUTH_CAPTCHA_SECRET` at `config push`.
 - The site key goes in `VITE_TURNSTILE_SITE_KEY`.
+- **Order matters:** deploy the app built with the site key first, then turn captcha on in Auth. The other way round, the server demands a token the app cannot send and nobody can sign in. Check afterwards: a bare `signUp` with no token is refused, and Join → "Send a new code" works (each request uses a fresh token: `tests/verify/p/captcha-tokens.ts`).
 
 ## Repository map
 

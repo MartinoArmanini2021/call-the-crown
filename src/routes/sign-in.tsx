@@ -54,6 +54,15 @@ function SignIn() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const onToken = useCallback((tok: string | null) => setCaptcha(tok), []);
+  // A Turnstile token is single-use on the server (decision 1, 6 Oct 2026): after every request that
+  // spends it, drop it and remount the widget for a fresh one, so "Send a new code" and a second password
+  // attempt never re-send a spent token.
+  const [captchaRound, setCaptchaRound] = useState(0);
+  const spendCaptcha = () => {
+    if (!turnstileEnabled()) return;
+    setCaptcha(null);
+    setCaptchaRound((r) => r + 1);
+  };
 
   const authError = (msg: string) => t(authErrorKey(msg));
 
@@ -70,6 +79,7 @@ function SignIn() {
         ...(mode === "join" ? { data: { display_name: name.trim(), locale } } : {}),
       },
     });
+    spendCaptcha();
     setBusy(false);
     if (err) return setError(authError(err.message));
     setStep("code");
@@ -93,6 +103,7 @@ function SignIn() {
       password,
       ...(captcha ? { options: { captchaToken: captcha } } : {}),
     });
+    spendCaptcha();
     setBusy(false);
     if (err) return setError(authError(err.message));
     track("signed_in", { method: "password" });
@@ -264,7 +275,7 @@ function SignIn() {
 
             {withPassword && passwordInput("current")}
 
-            <Turnstile onToken={onToken} />
+            <Turnstile key={captchaRound} onToken={onToken} />
             {error && (
               <p className="text-sm text-accent-text" role="alert">
                 {error}
@@ -341,6 +352,8 @@ function SignIn() {
               autoFocus
             />
           </label>
+          {/* a fresh token for "Send a new code" (the one used to send the first code is spent) */}
+          <Turnstile key={captchaRound} onToken={onToken} />
           {error && (
             <p className="text-sm text-accent-text" role="alert">
               {error}

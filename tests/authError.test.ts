@@ -14,6 +14,13 @@ describe("sign-in error sentences", () => {
     expect(authErrorKey("Request rate limit reached")).toBe("too_many_requests");
     expect(authErrorKey("Too many requests")).toBe("too_many_requests");
   });
+  test("a refused captcha asks for the check again, not 'something went wrong'", () => {
+    // server-side captcha (decision 1, 6 Oct 2026): a missing, expired or reused Turnstile token
+    expect(authErrorKey("captcha protection: request disallowed (timeout-or-duplicate)")).toBe(
+      "captcha_needed",
+    );
+    expect(authErrorKey("captcha verification process failed")).toBe("captcha_needed");
+  });
   test("each known answer maps to its sentence", () => {
     expect(authErrorKey("Signups not allowed for otp")).toBe("no_account");
     expect(authErrorKey("Invalid login credentials")).toBe("wrong_password");
