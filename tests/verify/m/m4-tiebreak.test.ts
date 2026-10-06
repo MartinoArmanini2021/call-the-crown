@@ -324,7 +324,7 @@ describe("M4 tiebreak chain", () => {
     ).toBeNull();
   }, 120_000);
 
-  it("BUG (fails today): after play starts the service role can still replace the seed by DELETE + INSERT of event_config", async () => {
+  it("M4 (fixed by 0046): after play starts the service role cannot replace the seed by DELETE + INSERT of event_config", async () => {
     const db = await boot();
     dbs.push(db);
     await db.query("select t.setup_event()");

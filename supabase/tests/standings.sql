@@ -92,6 +92,8 @@ select t.check('last resort with no picks at all: the draw decides',
   (select rank from public.standings where user_id = t.uid(10)) < (select rank from public.standings where user_id = t.uid(9)));
 select t.check('the draw seed cannot change once play has started',
   t.err($$ update public.event_config set tiebreak_seed = 'another' $$) = 'tiebreak_seed_locked');
+select t.check('the event row cannot be deleted (to re-insert another seed) once play has started',
+  t.err($$ delete from public.event_config $$) = 'tiebreak_seed_locked');
 select t.check('the draw seed is public (anon can read it)',
   has_column_privilege('anon', 'public.event_config', 'tiebreak_seed', 'SELECT'));
 
