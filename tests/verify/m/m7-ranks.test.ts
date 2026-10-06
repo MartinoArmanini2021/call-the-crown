@@ -136,7 +136,7 @@ describe("M7 mid-event ranks", () => {
     expect(dense(r1)).toBe(true);
   }, 120_000);
 
-  it("SMELL (fails today): a fan who joins after the last result is ranked last, not where the published tiebreak order puts them", async () => {
+  it("Decision 5: a fan who joins after the last result is listed last (How to play says so)", async () => {
     const db = await boot();
     dbs.push(db);
     await db.query("select t.setup_event()");
@@ -174,7 +174,9 @@ describe("M7 mid-event ranks", () => {
     console.log(
       JSON.stringify({ section: "M7.3", seed, rankShown: shown, rankByTheRules: byRule }),
     );
-    expect(shown).toBe(byRule);
+    // Decision 5 (Tino, 6 Oct 2026): a late joiner is listed last, and How to play says so (htp_ties_late).
+    const total = (await ranks(db)).filter((x) => x.rank !== null).length;
+    expect(shown).toBe(total);
   }, 120_000);
 });
 

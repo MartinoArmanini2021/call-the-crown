@@ -183,6 +183,7 @@ function HowToPlay() {
           <code className="break-all font-mono text-xs text-ink-3">{tiebreak_seed}</code>
         </li>
       </ol>
+      <p className="mt-2 px-1 text-xs text-ink-3">{t("htp_ties_late")}</p>
     </AppShell>
   );
 }

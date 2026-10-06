@@ -38,3 +38,13 @@ describe("no betting words", () => {
     expect(en.card_fine).toMatch(/no betting/i);
   });
 });
+
+// Decision 5 (Tino, 6 Oct 2026): a fan who joins after a result is listed last, and How to play says so.
+describe("How to play: where a late joiner is listed", () => {
+  test("the line exists in both languages and the page shows it", async () => {
+    expect(en.htp_ties_late).toMatch(/bottom/i);
+    expect(ar.htp_ties_late.trim().length).toBeGreaterThan(0);
+    const page = await Bun.file(new URL("../src/routes/how-to-play.tsx", import.meta.url)).text();
+    expect(page).toContain('t("htp_ties_late")');
+  });
+});

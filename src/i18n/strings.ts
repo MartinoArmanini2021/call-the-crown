@@ -367,6 +367,8 @@ export const en = {
   htp_ties_2: "In the final: your total games closest to the real total.",
   htp_ties_3: "Whoever made their final pick earlier (their last change counts).",
   htp_ties_4: "A computer draw, fixed before the first match. Its code:",
+  htp_ties_late:
+    "Joined after a result? You start at the bottom of the table with 0 points. The next result places you by the rules above; after the final, you stay at the bottom.",
 
   // errors from the server (codes in supabase/migrations)
   err_not_signed_in: "Please sign in first.",
