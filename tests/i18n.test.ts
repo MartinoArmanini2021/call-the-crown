@@ -48,3 +48,14 @@ describe("How to play: where a late joiner is listed", () => {
     expect(page).toContain('t("htp_ties_late")');
   });
 });
+
+// A 2-set pick on a match that went to 3: sets 1 and 2 were split, so at most ONE of them can be exactly
+// right (audit N5, verified on every legal pick). The copy used to promise both.
+describe("How to play: a 2-set pick on a 3-set match", () => {
+  test("says set 1 OR set 2, not both", () => {
+    expect(en.htp_two_on_three).toMatch(/set 1 or set 2/i);
+    expect(en.htp_two_on_three).not.toMatch(/sets 1 and 2/i);
+    expect(ar.htp_two_on_three).toContain("أو");
+    expect(ar.htp_two_on_three).not.toMatch(/1 و ?2/);
+  });
+});

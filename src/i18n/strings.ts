@@ -350,7 +350,7 @@ export const en = {
   htp_small_print: "Good to know",
   htp_7_6: "A 7-6 set counts as 7-6, whatever the tiebreak score.",
   htp_two_on_three:
-    "If you said 2 sets and the match goes to 3, sets 1 and 2 can still be exactly right.",
+    "If you said 2 sets and the match goes to 3, set 1 or set 2 can still be exactly right (not both: in a three-set match each player won one of the first two).",
   htp_void:
     "If a player retires or doesn't start, only the winner counts: no points for sets or set scores, for anyone.",
   htp_example_title: "Example (semi-final)",
