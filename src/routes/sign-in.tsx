@@ -14,6 +14,7 @@ import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
 import { inLocale, setReminderOptin, updateConsents, updateProfile } from "@/lib/api";
 import { authErrorKey } from "@/lib/authError";
+import { reservedName } from "@/lib/displayName";
 import { setPendingJoin } from "@/lib/leagueIntent";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
@@ -153,7 +154,10 @@ function SignIn() {
 
   const input =
     "focus-ring mt-1.5 h-12 w-full rounded-xl border border-line bg-raised px-4 text-base text-ink placeholder:text-ink-3";
-  const nameOk = name.trim().length >= 2 && name.trim().length <= 24;
+  // a name that could be taken for the game's own team is refused by the server (0051): say so here,
+  // before the code is sent, instead of the name silently not being saved after it
+  const nameReserved = reservedName(name);
+  const nameOk = name.trim().length >= 2 && name.trim().length <= 24 && !nameReserved;
   const withPassword = mode === "signin" && !useCode;
 
   const passwordInput = (purpose: "current" | "new") => (
@@ -229,9 +233,15 @@ function SignIn() {
                   autoComplete="nickname"
                   required
                 />
-                <span className="mt-1 block text-xs font-normal text-ink-3">
-                  {t("display_name_hint")}
-                </span>
+                {nameReserved ? (
+                  <span className="mt-1 block text-xs font-normal text-accent-text" role="alert">
+                    {t("err_display_name_reserved")}
+                  </span>
+                ) : (
+                  <span className="mt-1 block text-xs font-normal text-ink-3">
+                    {t("display_name_hint")}
+                  </span>
+                )}
               </label>
             )}
             <label className="block text-sm font-semibold">

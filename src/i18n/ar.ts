@@ -381,6 +381,7 @@ export const ar: Record<StringKey, string> = {
   err_not_league_owner: "مالك الدوري وحده يمكنه ذلك.",
   err_owner_cannot_leave: "بصفتك المالك، احذف الدوري بدلاً من مغادرته.",
   err_display_name_length: "يتكون الاسم الظاهر من 2 إلى 24 حرفاً.",
+  err_display_name_reserved: "قد يُظن أن هذا الاسم يخص فريق اللعبة. يُرجى اختيار اسم آخر.",
   err_league_name_length: "يتكون اسم الدوري من 1 إلى 40 حرفاً.",
   err_generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
 };

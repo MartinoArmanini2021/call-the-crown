@@ -394,6 +394,8 @@ export const en = {
   err_not_league_owner: "Only the league owner can do that.",
   err_owner_cannot_leave: "As the owner, delete the league instead.",
   err_display_name_length: "Display names are 2 to 24 characters.",
+  err_display_name_reserved:
+    "That name could be taken for the game's own team. Please choose another.",
   err_league_name_length: "League names are 1 to 40 characters.",
   err_generic: "Something went wrong. Please try again.",
 };

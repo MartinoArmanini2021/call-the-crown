@@ -44,12 +44,37 @@ select t.check('next-line (U+0085) is only a space', pg_temp.c('Fan' || chr(133)
 select t.check('Zalgo refused',              pg_temp.c('Z' || repeat(chr(822) || chr(851) || chr(769) || chr(860), 5) || 'a') is null);
 select t.check('marks only refused',         pg_temp.c(chr(769) || chr(769) || chr(769)) is null);
 
+-- names that imitate the game's own staff (decision 6 Oct 2026, 0051): compared by what they look like
+select t.check('Admin refused',                pg_temp.c('Admin') is null and pg_temp.c('ADMIN') is null);
+select t.check('Admin with spaces/dots refused', pg_temp.c('A d m i n') is null and pg_temp.c('admin.') is null);
+select t.check('Admin + a name refused',       pg_temp.c('Admin Tino') is null and pg_temp.c('Tino Admin') is null);
+select t.check('digit look-alikes refused',    pg_temp.c('4dm1n') is null);
+select t.check('fullwidth ADMIN refused',
+  pg_temp.c(chr(65313) || chr(65316) || chr(65325) || chr(65321) || chr(65326)) is null);
+select t.check('Cyrillic look-alike Call the Crown refused',
+  pg_temp.c('C' || chr(1072) || 'll the Cr' || chr(1086) || 'wn') is null);
+select t.check('the app name in any case or spacing refused',
+  pg_temp.c('Call the Crown') is null and pg_temp.c('callthecrown') is null and pg_temp.c('Call The Crown HQ') is null);
+select t.check('staff words refused',
+  pg_temp.c('Staff') is null and pg_temp.c('Moderator') is null and pg_temp.c('Support') is null
+  and pg_temp.c('Official') is null and pg_temp.c('Official Tips') is null and pg_temp.c('Organiser') is null);
+select t.check('the operator name refused',    pg_temp.c('Grand Slam GM') is null);
+select t.check('the Arabic app name refused',  pg_temp.c('توقّع التاج') is null and pg_temp.c('توقع التاج') is null);
+select t.check('Arabic staff words refused',   pg_temp.c('مشرف') is null and pg_temp.c('الإدارة') is null);
+select t.check('real names that merely contain the letters pass',
+  pg_temp.c('Badminton Bob') = 'Badminton Bob' and pg_temp.c('Staffan') = 'Staffan'
+  and pg_temp.c('Crown Prince') = 'Crown Prince' and pg_temp.c('Supporter 7') = 'Supporter 7'
+  and pg_temp.c('Mod Squad') = 'Mod Squad' and pg_temp.c('Teamwork') = 'Teamwork');
+select t.check('Arabic names pass',            pg_temp.c('مدير الكرة') = 'مدير الكرة' and pg_temp.c('تاج') = 'تاج');
+
 -- the same rule reaches a sign-up and a profile change
 select t.setup_event();
 select t.new_user(1, 'Fan One', true, true);
 select t.as_user(t.uid(1));
 select t.check('update_profile refuses an override name',
                t.err($$select public.update_profile(chr(8238) || 'nimda')$$) = 'display_name_length');
+select t.check('update_profile says why a staff name is refused',
+  t.err($$select public.update_profile('Call the Crown')$$) = 'display_name_reserved');
 select t.as_service();
 
 select * from t.report();
