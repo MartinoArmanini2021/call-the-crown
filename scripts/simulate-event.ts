@@ -95,7 +95,7 @@ await db.query(
 );
 // New accounts start with both consents not granted (0013); the verified fan's own answers follow.
 await as(db, { uid: FAN }, (tx) =>
-  tx.query("select public.update_consents(true, true, 'draft-1')"),
+  tx.query("select public.update_consents(false, true, 'draft-1')"),
 );
 const consents = (
   await db.query<{ party: string; granted: boolean; text_version: string }>(
@@ -105,8 +105,10 @@ const consents = (
   )
 ).rows;
 claim(
-  consents.length === 2 && consents.every((c) => c.granted && c.text_version === "draft-1"),
-  "both consents stored, each with its timestamp and the text version shown",
+  consents.length === 2 &&
+    consents.some((c) => c.party === "gsgm" && c.granted && c.text_version === "draft-1") &&
+    consents.some((c) => c.party === "organiser" && !c.granted),
+  "the opt-in stored with its timestamp and the text version shown; the organiser list stays closed",
   consents,
 );
 

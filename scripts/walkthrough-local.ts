@@ -144,7 +144,7 @@ must(
   "update_profile",
 );
 must(
-  await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" }),
+  await fan.rpc("update_consents", { p_organiser: false, p_gsgm: true, p_text_version: "draft-1" }),
   "update_consents",
 );
 const consents = must(
@@ -154,11 +154,16 @@ const consents = must(
     .order("changed_at", { ascending: false }),
   "consents",
 );
-const latest = ["organiser", "gsgm"].map((p) => consents.find((c) => c.party === p));
+const [organiser, gsgm] = ["organiser", "gsgm"].map((p) => consents.find((c) => c.party === p));
 claim(
-  latest.every((c) => c?.granted && c.text_version === "draft-1") && consents.length === 4,
-  "both consents stored server-side with the text version (history: not granted, then granted)",
+  organiser?.granted === false && !!gsgm?.granted && gsgm.text_version === "draft-1" && consents.length === 3,
+  "the opt-in stored server-side with the text version (history: not granted, then granted); the organiser list stays closed",
   consents,
+);
+claim(
+  (await fan.rpc("update_consents", { p_organiser: true, p_gsgm: true, p_text_version: "draft-1" })).error?.message ===
+    "organiser_list_closed",
+  "a raw call cannot opt in to the closed organiser list",
 );
 
 // Tino, 3 Oct 2026: the code proves the email once; every later sign-in is email + password.

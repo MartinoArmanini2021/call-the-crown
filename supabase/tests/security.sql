@@ -382,6 +382,13 @@ select t.check('a withdrawn consent leaves the list; a new one joins it, with th
   and exists (select 1 from public.export_optins('gsgm') where email = 'fan1@example.test' and text_version = 'test-2'));
 select t.as_owner();
 select t.check('consent history is kept (fan 1: 4 rows)', (select count(*) from public.consents where user_id = t.uid(1)) = 4);
+-- The organiser list is closed (Tino, 6 Oct 2026): a raw call cannot record a new yes to it.
+select t.as_user(t.uid(2));
+select t.check('a fan cannot opt in to the closed organiser list',
+  t.err($$ select public.update_consents(true, true, 'test-3') $$) = 'organiser_list_closed');
+select t.check('the refused call stores nothing',
+  not exists (select 1 from public.consents where user_id = t.uid(2) and text_version = 'test-3'));
+select t.as_owner();
 
 -- ---------------------------------------------------------------------------------------------------
 -- 10. account deletion
