@@ -156,7 +156,7 @@ describe("F-03 early real start: 0018 voids picks saved after the provider's fir
   // ("final result before the scheduled start") and real_start() ignores refused readings, so after
   // lock_match_now the first accepted reading is the settling one: nothing is void, and a fan who picked
   // at 15:35 with the final score already public scores full points.
-  test("BUG F-03 residue: a pick saved after the result was already read (refused as 'final before the scheduled start') still scores", () =>
+  test("F-03 residue (fixed by 0048): a pick saved after the result was already read scores nothing once the operator locked early", () =>
     inTx(db, async () => {
       await db.exec("select t.new_user(1); select t.new_user(2)");
       await at(db, "2026-10-21 15:30+00");
