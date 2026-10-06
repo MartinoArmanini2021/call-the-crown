@@ -299,6 +299,47 @@ try {
     );
   }
 
+  // ---------------------------------------------------------------------------------------------------
+  console.log("\n5. An account is deleted while a new fan signs up (ranks exist)");
+  {
+    const ranked = Number(
+      (await sql`select count(*) as n from standings where rank is not null`)[0].n,
+    );
+    claim(ranked > 0, `ranks exist (${ranked} ranked fans, from QF1's settlement)`);
+    const op = await sql.reserve();
+    let joined: unknown = null;
+    try {
+      await op`begin`;
+      await op`delete from auth.users where id = ${uid(10)}::uuid`; // closes the gap, lock held
+      await sleep(150);
+      const pending = sql`select t.new_user(61)`.then(
+        () => (joined = "ok"),
+        (e: Error) => (joined = e.message),
+      ); // rank_new_fan takes "the next place"
+      await sleep(150);
+      await op`commit`;
+      await pending;
+    } finally {
+      op.release();
+    }
+    const [r] =
+      await sql`select count(*)::int as n, max(rank) as max, count(distinct rank)::int as d,
+                                  bool_and(rank = rn) as dense
+                             from (select rank, row_number() over (order by rank) as rn
+                                     from standings where rank is not null) x`;
+    const [me] = await sql`select rank from standings where user_id = ${uid(61)}::uuid`;
+    claim(joined === "ok", "the new fan's sign-up goes through", joined);
+    claim(r.n === ranked && r.dense === true, "ranks stay 1..n with no gap or repeat", r);
+    claim(
+      Number(me?.rank) === r.n,
+      "the new fan takes the last place, right after the deletion closed its gap",
+      {
+        newFan: me?.rank,
+        ranked: r.n,
+      },
+    );
+  }
+
   if (failures) throw new Error("claim failed");
   console.log(`\n${step} claims, all true, on the local Postgres server.`);
 } catch (e) {

@@ -116,5 +116,15 @@ select t.check('my rank ± 2 shows 5 rows centred on me',
 select t.check('a page is capped at 100 rows', (select count(*) <= 100 from public.get_leaderboard(null, 0, 1000)));
 select t.as_owner();
 
+-- Deleting several accounts in ONE statement (e.g. clearing test accounts before launch) closes every
+-- gap at once and keeps the order (audit M7, decided by Tino on 6 Oct 2026; 0049).
+delete from auth.users where id in (t.uid(3), t.uid(7));
+select t.check('two accounts deleted in one statement: the rest keep their order',
+  (select array_agg(right(user_id::text, 2) order by rank) from public.standings)
+  = array['01','02','08','05','06','04','10','09'],
+  (select array_to_string(array_agg(right(user_id::text, 2) || '@' || rank order by rank), ' ') from public.standings));
+select t.check('two accounts deleted in one statement: ranks are 1..n with no gap or repeat',
+  (select bool_and(rank = rn) from (select rank, row_number() over (order by rank) as rn from public.standings) x));
+
 select * from t.report();
 rollback;

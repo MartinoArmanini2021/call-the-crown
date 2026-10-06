@@ -87,7 +87,7 @@ describe("M7 mid-event ranks", () => {
     // for fans who joined after the result (see the SMELL test below)
   }, 120_000);
 
-  it("BUG (fails today): deleting several accounts in ONE statement (auth.users, e.g. an operator purging test accounts) leaves duplicate and missing ranks", async () => {
+  it("M7 (fixed by 0049): deleting several accounts in ONE statement (auth.users, e.g. an operator purging test accounts) keeps ranks 1..n", async () => {
     const db = await boot();
     dbs.push(db);
     await eventWithFirstResult(db, 20);
@@ -112,7 +112,7 @@ describe("M7 mid-event ranks", () => {
     expect(dense(r2)).toBe(true);
   }, 120_000);
 
-  it("BUG (fails today, same root cause): several standings rows deleted in ONE statement leave duplicate ranks (close_rank_gap is order-dependent)", async () => {
+  it("M7 (fixed by 0049): several standings rows deleted in ONE statement keep ranks 1..n", async () => {
     const db = await boot();
     dbs.push(db);
     await eventWithFirstResult(db, 10);
