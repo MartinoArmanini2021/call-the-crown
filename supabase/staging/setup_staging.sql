@@ -13,7 +13,7 @@ select 'fixture', 'match', 'fx-m' || n, n::text from generate_series(1, 6) n
 union all
 select 'fixture', 'player', ref, id
   from (values ('fx-a', 'alcaraz'), ('fx-b', 'djokovic'), ('fx-c', 'fritz'),
-               ('fx-f', 'zverev'), ('fx-d', 'deminaur'), ('fx-e', 'sinner')) v(ref, id)
+               ('fx-f', 'zverev'), ('fx-d', 'deminaur'), ('fx-e', 'tien')) v(ref, id)
 on conflict (provider, kind, provider_ref) do update set our_ref = excluded.our_ref;
 
 -- Example prizes and terms link so the review shows the layout; replaced with the organiser's text.
