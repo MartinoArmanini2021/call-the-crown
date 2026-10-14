@@ -1,8 +1,8 @@
 -- =====================================================================================================
 -- Six Kings Slam 2026: the players and the draw (Tino, 2 Oct 2026; field updated 12 Oct 2026). Operator
--- file: run on an instance after the event file, as postgres (SQL editor or
--- `bunx supabase db query --linked -f`). On an instance that already has picks, use the one-time script
--- supabase/ops/2026-10-12_tien_replaces_sinner.sql instead (set_players freezes the draw once picks exist).
+-- file: run on an instance after the event file, as postgres: paste the whole file into the Supabase SQL
+-- editor and Run. (`supabase db query -f` cannot run it: it refuses a file with several statements.) On an instance that already has picks, set_players refuses: the draw and
+-- the ranks are frozen once any pick exists.
 --   QF1  Fritz v Zverev        → SF1 against Alcaraz (bye, seed 1)
 --   QF2  de Minaur v Tien      → SF2 against Djokovic (bye, seed 2)
 --   Third place: the two semi-final losers. Final: the two semi-final winners.
