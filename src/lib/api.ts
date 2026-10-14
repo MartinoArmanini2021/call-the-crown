@@ -303,6 +303,16 @@ export const badgesQuery = (uid: string) =>
     queryFn: () => rpc<Badge[]>("get_my_badges"),
     refetchInterval: 60_000,
   });
+/** The quick vote (0052): one tap, no sign-up. Shares only, and only from 50 votes. */
+export type VoteShare = { player_id: string; share: number };
+export const castQuickVote = (device: string, player: string) =>
+  rpc<VoteShare[]>("cast_quick_vote", { p_device: device, p_player: player });
+export const quickVoteSharesQuery = () =>
+  queryOptions({
+    queryKey: ["quick_vote"],
+    queryFn: () => rpc<VoteShare[]>("get_quick_vote_shares"),
+    refetchInterval: 30_000,
+  });
 export const updateConsents = (organiser: boolean, gsgm: boolean, version: string) =>
   rpc<void>("update_consents", { p_organiser: organiser, p_gsgm: gsgm, p_text_version: version });
 export const deleteAccount = () => rpc<void>("delete_account");

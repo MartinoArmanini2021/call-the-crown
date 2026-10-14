@@ -398,6 +398,24 @@ export const en = {
     "That name could be taken for the game's own team. Please choose another.",
   err_league_name_length: "League names are 1 to 40 characters.",
   err_generic: "Something went wrong. Please try again.",
+
+  // the quick vote (/vote, 15 Oct 2026)
+  vote_eyebrow: "Riyadh · 21, 22 & 24 October",
+  vote_title: "Who takes the crown?",
+  vote_sub: "One tap. No sign-up. Results show once 50 fans have voted.",
+  vote_you_backed: "You backed {name}.",
+  vote_change: "Tap another player to change your vote, any time before the first match.",
+  vote_results_after: "Results appear after the first 50 votes.",
+  vote_results_title: "How fans voted",
+  vote_share: "Share the vote",
+  vote_copied: "Link copied",
+  vote_share_text: "Who takes the crown in Riyadh? I backed {name}. Vote in one tap:",
+  vote_share_text_plain: "Who takes the crown in Riyadh? Vote in one tap:",
+  vote_cta: "Now call every match and beat your friends",
+  vote_closed: "Voting closed when the first match started.",
+  vote_too_many: "Too many votes from this connection. Try again later.",
+  vote_failed: "Your vote didn't go through. Try again.",
+  landing_vote_link: "Quick vote: who takes the crown?",
 };
 
 export type StringKey = keyof typeof en;

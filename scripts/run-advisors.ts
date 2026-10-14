@@ -88,7 +88,8 @@ add(
   "anon_can_execute_function",
   await q(`
   select p.proname as object from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-   where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'EXECUTE') and p.proname <> 'app_now'`),
+   where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'EXECUTE')
+     and p.proname not in ('app_now', 'cast_quick_vote', 'get_quick_vote_shares')`), // 0052: the quick vote is public on purpose
 );
 
 const errors = findings.filter((f) => f.level === "ERROR");

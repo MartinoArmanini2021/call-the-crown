@@ -57,6 +57,12 @@ function Landing() {
         )}
         <h1 className="headline mt-3 text-6xl sm:text-7xl">{t("landing_title")}</h1>
         <p className="mt-2 text-base font-semibold text-ink">{t("landing_league_line")}</p>
+        <Link
+          to="/vote"
+          className="focus-ring mt-3 inline-flex items-center gap-2 rounded-full border border-gold/60 bg-gold/10 px-4 py-2 text-sm font-semibold text-gold"
+        >
+          ♛ {t("landing_vote_link")} <span aria-hidden>{locale === "ar" ? "←" : "→"}</span>
+        </Link>
         <p className="mt-2 max-w-md text-sm text-ink-2">
           {t("landing_sentence", { n: count || 6 })}
         </p>

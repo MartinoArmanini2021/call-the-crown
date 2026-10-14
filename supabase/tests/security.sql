@@ -49,10 +49,12 @@ select t.check('anon: insert, update, delete and truncate refused on every table
   pg_temp.direct_writes_refused('anon') is null, pg_temp.direct_writes_refused('anon'));
 select t.check('signed-in fan: insert, update, delete and truncate refused on every table',
   pg_temp.direct_writes_refused('authenticated') is null, pg_temp.direct_writes_refused('authenticated'));
-select t.check('anon can execute no function except the clock',
+-- 0052: the quick vote is the one deliberate public write (one tap, no sign-up), plus its shares.
+select t.check('anon can execute no function except the clock and the quick vote',
   (select coalesce(array_agg(p.proname::text order by p.proname), '{}') from pg_proc p
      join pg_namespace n on n.oid = p.pronamespace
-    where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'EXECUTE')) = array['app_now']);
+    where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'EXECUTE'))
+    = array['app_now', 'cast_quick_vote', 'get_quick_vote_shares']);
 select t.as_anon();
 select t.check('anon cannot save a pick',
   t.err($$ select public.save_pick(1, 'c', 2, '[{"p1_games":6,"p2_games":4},{"p1_games":6,"p2_games":4}]') $$)
