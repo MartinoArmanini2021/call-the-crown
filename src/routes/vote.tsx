@@ -1,4 +1,5 @@
-// The quick vote (Tino, 15 Oct 2026: get Call the Crown out there today). "Who takes the crown?" One tap
+// The quick vote (Tino, 15 Oct 2026: get Call the Crown out there today). "Who will win the Six Kings
+// Slam?" (plain wording, 16 Oct; a line under it says the vote is independent of the event). One tap
 // on one of the six players, no sign-up: a random id kept in this browser stands for the device
 // (cast_quick_vote, 0052). After the tap: who you backed, how fans voted (percentages, only from 50
 // votes), a Share button, and the way into the full game. Players are fixed here, as in 0052: the field
@@ -211,6 +212,8 @@ function Vote() {
           </div>
         </section>
       )}
+
+      <p className="mt-6 text-2xs text-ink-3">{t("vote_independent")}</p>
     </AppShell>
   );
 }

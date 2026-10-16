@@ -23,11 +23,11 @@ export const en = {
   something_wrong: "Something went wrong",
 
   // landing
-  landing_title: "Call every match",
+  landing_title: "Guess every match",
   landing_players: "The six players",
   first_lock_in: "Next picks close in",
   landing_sentence:
-    "Predict the winner and the score of all {n} matches. Every call you get right scores points. Top the table and take the crown.",
+    "Guess who wins each of the {n} matches, and the score. Every right guess earns points. The fan with the most points wins.",
   landing_league_line: "Make a league for your group. Settle who knows tennis.",
   example_title: "How a pick scores",
   example_player: "Your player",
@@ -81,7 +81,7 @@ export const en = {
   // picks
   picks_title: "Your picks",
   picks_intro:
-    "Pick who wins each match and the score. You can change a pick until the match starts.",
+    "For each match, guess who wins and the score. You can change your guess until the match starts.",
   locks_in: "Locks in {time}",
   locked: "Locked",
   live_now: "In play",
@@ -91,7 +91,7 @@ export const en = {
   vs_title: "{a} v {b}",
   vs_short: "v",
   to_be_decided: "To be decided",
-  pick_winner: "1 · Who wins?",
+  pick_winner: "1 · Who will win this match?",
   set_n: "Set {n}",
   plus_pts: "+{points} pts",
   upset_bonus: "upset bonus",
@@ -125,14 +125,14 @@ export const en = {
   close: "Close",
   make_pick: "Make pick",
   edit_pick: "Edit pick",
-  card_who_wins: "Who wins?",
+  card_who_wins: "Who will win?",
   card_most: "Up to {points} pts on this match",
   pick_summary: "{name} in {n} sets",
   world_rank: "World no. {rank}",
   set_score_aria: "Set {n}: {score}",
   // entering the score (first-time-fan test, 2 Oct 2026)
   pts_if_right: "{points} pts if right",
-  pick_sets: "2 · Each set: who wins it, then the score",
+  pick_sets: "2 · Guess the score: for each set, tap who wins it, then the score",
   set_decider: "the decider",
   set_who_aria: "Who wins set {n}",
   save_up_to: "Save · up to {points} pts",
@@ -141,7 +141,7 @@ export const en = {
   draw_next: "Next up:",
   draw_live: "Live",
   draw_champion: "Champion",
-  draw_who: "Who will be crowned?",
+  draw_who: "Who will win the title?",
   draw_mine: "your pick",
   draw_called: "You called it",
   draw_missed: "Not this time",
@@ -149,7 +149,7 @@ export const en = {
   draw_pick_now: "Pick now · {time}",
   draw_hint: "Tap a match to see its result, or to make your pick while it's open.",
   pager_swipe: "Next match",
-  court_hint: "Tap a side of the court to pick the winner",
+  court_hint: "Tap the player you think will win",
   pager_count: "Match {n} of {total}",
   picks_status: "{n} of {total} picked",
   see_draw: "See the whole draw",
@@ -163,13 +163,13 @@ export const en = {
 
   // first visit to Picks (first-time-fan test, 2 Oct 2026)
   intro_title: "How it works",
-  intro_1: "Pick a winner",
-  intro_1_sub: "Tap a match, then the player you think wins.",
-  intro_2: "Call the score",
+  intro_1: "Guess the winner",
+  intro_1_sub: "Tap a match, then tap the player you think will win.",
+  intro_2: "Guess the score",
   intro_2_sub:
-    "For each set, tap who wins it, then the score. Each part you get right earns points.",
-  intro_3: "Change it until the first ball",
-  intro_3_sub: "A pick locks when its match starts. Your points arrive after the match.",
+    "A match is the best of 3 sets. For each set, tap who wins it, then the score. Every part you get right earns points.",
+  intro_3: "Change your mind any time before the match",
+  intro_3_sub: "Your guess locks when the match starts. Your points appear after the match ends.",
   intro_ok: "Got it",
 
   // after picking (first-time-fan test, 2 Oct 2026)
@@ -324,7 +324,7 @@ export const en = {
   // how to play
   htp_title: "How to play",
   htp_enter: "Make a pick",
-  htp_enter_1: "Pick who wins the match.",
+  htp_enter_1: "Pick who will win the match.",
   htp_enter_2:
     "For each set, tap who wins it, then the score ({scores}). If the other player takes set 1 or 2, a third set appears: the winner of the match takes it.",
   htp_enter_3: "Change it as often as you like until the match starts.",
@@ -400,22 +400,25 @@ export const en = {
   err_generic: "Something went wrong. Please try again.",
 
   // the quick vote (/vote, 15 Oct 2026)
-  vote_eyebrow: "Riyadh · 21, 22 & 24 October",
-  vote_title: "Who takes the crown?",
-  vote_sub: "One tap. No sign-up. Results show once 50 fans have voted.",
-  vote_you_backed: "You backed {name}.",
-  vote_change: "Tap another player to change your vote, any time before the first match.",
-  vote_results_after: "Results appear after the first 50 votes.",
-  vote_results_title: "How fans voted",
-  vote_share: "Share the vote",
+  vote_eyebrow: "Six Kings Slam · Riyadh · 21–24 October",
+  vote_title: "Who will win the Six Kings Slam?",
+  vote_sub:
+    "Tap a player to vote. It's free and you don't need an account. You'll see how everyone voted once 50 people have voted.",
+  vote_you_backed: "Your vote: {name}.",
+  vote_change:
+    "Changed your mind? Tap another player. You can change your vote until the first match starts.",
+  vote_results_after: "You'll see how everyone voted once 50 people have voted.",
+  vote_results_title: "How everyone voted",
+  vote_share: "Share with a friend",
   vote_copied: "Link copied",
-  vote_share_text: "Who takes the crown in Riyadh? I backed {name}. Vote in one tap:",
-  vote_share_text_plain: "Who takes the crown in Riyadh? Vote in one tap:",
-  vote_cta: "Now call every match and beat your friends",
-  vote_closed: "Voting closed when the first match started.",
-  vote_too_many: "Too many votes from this connection. Try again later.",
+  vote_share_text: "Who will win the Six Kings Slam in Riyadh? I voted {name}. Vote in one tap:",
+  vote_share_text_plain: "Who will win the Six Kings Slam in Riyadh? Vote in one tap:",
+  vote_cta: "Play the full game: guess every match",
+  vote_closed: "Voting is closed: the first match has started.",
+  vote_too_many: "Too many votes from this internet connection. Please try again later.",
   vote_failed: "Your vote didn't go through. Try again.",
-  landing_vote_link: "Quick vote: who takes the crown?",
+  landing_vote_link: "Quick vote: who will win the Six Kings Slam?",
+  vote_independent: "An independent fan vote. Not connected to the Six Kings Slam or the ATP.",
 };
 
 export type StringKey = keyof typeof en;
