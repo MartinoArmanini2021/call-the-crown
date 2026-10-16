@@ -56,6 +56,9 @@ function Vote() {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  // Players whose ATP photo did not load (ATP refuses its headshots to other sites from mid-October):
+  // their tile shrinks to a name card instead of a big empty frame.
+  const [noPhoto, setNoPhoto] = useState<ReadonlySet<string>>(new Set());
   const nameOf = (id: string) => {
     const p = PLAYERS.find((x) => x.id === id);
     return p ? (locale === "ar" ? p.ar : p.name) : "";
@@ -126,19 +129,24 @@ function Vote() {
                 disabled={busy !== null}
                 aria-pressed={mine}
                 className={cn(
-                  "focus-ring relative flex aspect-[4/5] w-full flex-col justify-end overflow-hidden rounded-2xl border bg-gradient-to-b from-raised to-card p-3 text-start transition",
+                  "focus-ring relative flex w-full flex-col justify-end overflow-hidden rounded-2xl border bg-gradient-to-b from-raised to-card p-3 text-start transition",
+                  noPhoto.has(p.id) ? "min-h-20" : "aspect-[4/5]",
                   mine ? "border-gold ring-2 ring-gold" : "border-line hover:border-ink-3",
                   busy === p.id && "opacity-60",
                 )}
               >
-                <img
-                  src={HEADSHOT + p.atp}
-                  alt=""
-                  referrerPolicy="no-referrer"
-                  onError={(e) => (e.currentTarget.hidden = true)}
-                  className="absolute inset-0 h-full w-full object-cover object-top"
-                />
-                <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                {!noPhoto.has(p.id) && (
+                  <>
+                    <img
+                      src={HEADSHOT + p.atp}
+                      alt=""
+                      referrerPolicy="no-referrer"
+                      onError={() => setNoPhoto((s) => new Set(s).add(p.id))}
+                      className="absolute inset-0 h-full w-full object-cover object-top"
+                    />
+                    <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                  </>
+                )}
                 {mine && (
                   <span className="absolute end-2 top-2 rounded-full bg-gold px-2 py-0.5 text-2xs font-bold text-bg">
                     ♛
