@@ -1,8 +1,9 @@
 # Cloudflare Pages response headers (audit 5 Oct 2026, P8). The content policy names hosts by pattern
 # so one file serves every instance: Supabase (any project), PostHog's own cloud (a custom
-# VITE_POSTHOG_HOST must be added here), Turnstile, and the hotlinked ATP headshots.
+# VITE_POSTHOG_HOST must be added here), Turnstile, the hotlinked ATP headshots and the
+# Wikimedia Commons player photos on the vote page (17 Oct 2026).
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://*.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://www.atptour.com; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.posthog.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://*.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://www.atptour.com https://thumb.wikimedia.org https://upload.wikimedia.org; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.posthog.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

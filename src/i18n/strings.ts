@@ -418,6 +418,8 @@ export const en = {
   vote_too_many: "Too many votes from this internet connection. Please try again later.",
   vote_failed: "Your vote didn't go through. Try again.",
   landing_vote_link: "Quick vote: who will win the Six Kings Slam?",
+  vote_photo_credits: "Photo credits",
+  vote_photo_licence: "Photos from Wikimedia Commons, by the photographers below, licensed",
   vote_independent: "An independent fan vote. Not connected to the Six Kings Slam or the ATP.",
 };
 

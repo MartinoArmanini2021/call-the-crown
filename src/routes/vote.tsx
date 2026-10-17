@@ -15,15 +15,76 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/vote")({ component: Vote });
 
-const HEADSHOT = "https://www.atptour.com/-/media/alias/player-headshot/";
+// Photos: Wikimedia Commons, CC BY-SA 4.0, credited under the vote (Tino, 17 Oct 2026, "wikimedia yes").
+// ATP stopped serving its headshots to other sites in mid-October. 500 px thumbnails, about 60-100 KB.
+const W = "https://thumb.wikimedia.org/wikipedia/commons/thumb/";
+const FILE = "https://commons.wikimedia.org/wiki/File:";
 // ATP ranking of 5 Oct 2026 (the one in force until the Shanghai Masters ends), as in the draw file.
 const PLAYERS = [
-  { id: "alcaraz", name: "Carlos Alcaraz", ar: "كارلوس ألكاراز", rank: 3, atp: "A0E2" },
-  { id: "zverev", name: "Alexander Zverev", ar: "ألكسندر زفيريف", rank: 2, atp: "Z355" },
-  { id: "djokovic", name: "Novak Djokovic", ar: "نوفاك ديوكوفيتش", rank: 8, atp: "D643" },
-  { id: "deminaur", name: "Alex de Minaur", ar: "أليكس دي مينور", rank: 9, atp: "DH58" },
-  { id: "fritz", name: "Taylor Fritz", ar: "تايلور فريتز", rank: 12, atp: "FB98" },
-  { id: "tien", name: "Learner Tien", ar: "ليرنر تيين", rank: 17, atp: "T0HA" },
+  {
+    id: "alcaraz",
+    name: "Carlos Alcaraz",
+    ar: "كارلوس ألكاراز",
+    rank: 3,
+    photo:
+      W +
+      "d/d4/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg/500px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg",
+    by: "Barcex",
+    file:
+      FILE +
+      "25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_(cropped).jpg",
+  },
+  {
+    id: "zverev",
+    name: "Alexander Zverev",
+    ar: "ألكسندر زفيريف",
+    rank: 2,
+    photo: W + "1/1d/Alexander_Zverev_%28cropped%29.jpg/500px-Alexander_Zverev_%28cropped%29.jpg",
+    by: "Rick Munroe",
+    file: FILE + "Alexander_Zverev_(cropped).jpg",
+  },
+  {
+    id: "djokovic",
+    name: "Novak Djokovic",
+    ar: "نوفاك ديوكوفيتش",
+    rank: 8,
+    photo:
+      W +
+      "d/d1/Novak_Djokovic_Paris_2024_Olympic_Games_%28cropped%29.jpg/500px-Novak_Djokovic_Paris_2024_Olympic_Games_%28cropped%29.jpg",
+    by: "Andymiah",
+    file: FILE + "Novak_Djokovic_Paris_2024_Olympic_Games_(cropped).jpg",
+  },
+  {
+    id: "deminaur",
+    name: "Alex de Minaur",
+    ar: "أليكس دي مينور",
+    rank: 9,
+    photo: W + "1/13/Alex_de_Minaur_2024.jpg/500px-Alex_de_Minaur_2024.jpg",
+    by: "Barcex",
+    file: FILE + "Alex_de_Minaur_2024.jpg",
+  },
+  {
+    id: "fritz",
+    name: "Taylor Fritz",
+    ar: "تايلور فريتز",
+    rank: 12,
+    photo:
+      W +
+      "6/61/Taylor_Fritz_-_Delray_Beach_Open_Final_Round_%28cropped%29.jpg/500px-Taylor_Fritz_-_Delray_Beach_Open_Final_Round_%28cropped%29.jpg",
+    by: "Rickmunroe01",
+    file: FILE + "Taylor_Fritz_-_Delray_Beach_Open_Final_Round_(cropped).jpg",
+  },
+  {
+    id: "tien",
+    name: "Learner Tien",
+    ar: "ليرنر تيين",
+    rank: 17,
+    photo:
+      W +
+      "c/c8/Learner_Tien_%282024_US_Open%29_04.jpg/500px-Learner_Tien_%282024_US_Open%29_04.jpg",
+    by: "Hameltion",
+    file: FILE + "Learner_Tien_(2024_US_Open)_04.jpg",
+  },
 ] as const;
 
 const read = (key: string) => {
@@ -56,8 +117,7 @@ function Vote() {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  // Players whose ATP photo did not load (ATP refuses its headshots to other sites from mid-October):
-  // their tile shrinks to a name card instead of a big empty frame.
+  // Players whose photo did not load: their tile shrinks to a name card instead of a big empty frame.
   const [noPhoto, setNoPhoto] = useState<ReadonlySet<string>>(new Set());
   const nameOf = (id: string) => {
     const p = PLAYERS.find((x) => x.id === id);
@@ -138,7 +198,7 @@ function Vote() {
                 {!noPhoto.has(p.id) && (
                   <>
                     <img
-                      src={HEADSHOT + p.atp}
+                      src={p.photo}
                       alt=""
                       referrerPolicy="no-referrer"
                       onError={() => setNoPhoto((s) => new Set(s).add(p.id))}
@@ -222,6 +282,30 @@ function Vote() {
       )}
 
       <p className="mt-6 text-2xs text-ink-3">{t("vote_independent")}</p>
+      <details className="mt-2 text-2xs text-ink-3">
+        <summary className="cursor-pointer">{t("vote_photo_credits")}</summary>
+        <p className="mt-1">
+          {t("vote_photo_licence")}{" "}
+          <a
+            className="underline"
+            href="https://creativecommons.org/licenses/by-sa/4.0/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            CC BY-SA 4.0
+          </a>
+        </p>
+        <ul className="mt-1 space-y-0.5">
+          {PLAYERS.map((p) => (
+            <li key={p.id}>
+              <a className="underline" href={p.file} rel="noopener noreferrer" target="_blank">
+                {locale === "ar" ? p.ar : p.name}
+              </a>
+              : {p.by}
+            </li>
+          ))}
+        </ul>
+      </details>
     </AppShell>
   );
 }
