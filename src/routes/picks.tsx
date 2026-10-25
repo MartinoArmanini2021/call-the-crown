@@ -113,7 +113,10 @@ function Picks() {
           user && step.kind !== "none" ? (
             <NextStepBanner step={step} matches={all} players={byPlayer} onPick={select} />
           ) : (
-            <p className="card px-4 py-5 text-center text-sm text-ink-3">{t("nothing_open")}</p>
+            <p className="card px-4 py-5 text-center text-sm text-ink-3">
+              {/* no start time anywhere: the schedule is not out yet (postponed event, Oct 2026) */}
+              {t(all.some((m) => m.starts_at) ? "nothing_open" : "picks_wait_schedule")}
+            </p>
           )
         ) : (
           <PickPager

@@ -176,6 +176,7 @@ function Vote() {
         </p>
         <h1 className="headline text-5xl sm:text-6xl">{t("vote_title")}</h1>
         <p className="text-sm text-ink-2">{t("vote_sub")}</p>
+        <p className="text-xs text-ink-3">{t("vote_postponed")}</p>
       </section>
 
       <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("vote_title")}>

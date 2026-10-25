@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { SponsorSlot, playerName } from "@/components/Brand";
@@ -153,7 +154,10 @@ function Landing() {
 
 /** A player as a tile with their name: the organiser's photo behind it once photos arrive. */
 function Portrait({ player, name }: { player: Player; name: string }) {
-  const img = publicImage(player.image_path);
+  // A photo that will not load (ATP stopped serving its headshots to other sites, Oct 2026) leaves the
+  // name alone in the tile, never a broken-image icon.
+  const [failed, setFailed] = useState(false);
+  const img = failed ? undefined : publicImage(player.image_path);
   const last = surname(name);
   const first = name.slice(0, name.length - last.length).trim();
   return (
@@ -163,7 +167,12 @@ function Portrait({ player, name }: { player: Player; name: string }) {
     >
       {img && (
         <>
-          <img src={img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src={img}
+            alt=""
+            onError={() => setFailed(true)}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
           <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
         </>
       )}

@@ -13,6 +13,7 @@
 -- Mon 12 Oct (Tino's chosen date: no new list is published during the two-week Shanghai Masters).
 -- Zverev 2, Alcaraz 3, Djokovic 8, de Minaur 9, Fritz 12, Tien 17 (atptour.com, read 12 Oct 2026).
 -- Once any pick exists, ranks are frozen by design.
+-- POSTPONED on 14 Oct 2026 to 27-30 Dec: see the start-time note below.
 -- STILL PROVISIONAL (README, "Enter the players and the schedule"):
 --   · the start times (19:30 / ~20:40 Riyadh, the 2024–25 pattern): Riyadh Season gives 19:30 for the
 --     first match each night but not the order of the two matches; start times stay editable until each
@@ -41,16 +42,20 @@ select public.set_players(
     {"match_no":5,"round":"3P","p1":{"type":"loser","match":3},       "p2":{"type":"loser","match":4}},
     {"match_no":6,"round":"F", "p1":{"type":"winner","match":3},      "p2":{"type":"winner","match":4}}]');
 
-select public.set_match_start(1, '2026-10-21 19:30+03');
-select public.set_match_start(2, '2026-10-21 20:40+03');
-select public.set_match_start(3, '2026-10-22 19:30+03');
-select public.set_match_start(4, '2026-10-22 21:20+03');
-select public.set_match_start(5, '2026-10-24 19:30+03');
-select public.set_match_start(6, '2026-10-24 21:40+03');
+-- Start times: none for now. Riyadh Season postponed the event on 14 Oct 2026 from 21-24 Oct to
+-- 27-30 Dec 2026; the December players and daily schedule are not confirmed. Without start times picks
+-- stay closed, so the field and ranks can still change (both freeze at the first pick). When the
+-- schedule is out, as service_role (19:30 Riyadh each night was the 2024-25 pattern):
+--   select public.set_match_start(1, '2026-12-27 19:30+03');   -- one line per match, 1 to 6
 
 reset role;
 
-update public.event_config set rank_snapshot_date = '2026-10-05';
+update public.event_config
+   set rank_snapshot_date = '2026-10-05',
+       billing_close_at   = '2026-12-30 23:59:59+03',
+       branding = branding || jsonb_build_object(
+         'event_line',    'Six players · Riyadh · moved to 27–30 December',
+         'event_line_ar', 'ستة لاعبين · الرياض · أُجّلت إلى 27–30 ديسمبر');
 
 -- Results from the 2026 Wikipedia article (provider "wikipedia"): bracket slots and article titles.
 insert into public.provider_map (provider, kind, provider_ref, our_ref) values

@@ -159,6 +159,7 @@ export const en = {
   tile_live: "● In play",
   tile_no_pick: "No pick",
   open_now: "Open now",
+  picks_wait_schedule: "Nothing to pick yet. Picks open once the match times are announced.",
   nothing_open: "Nothing to pick right now. The next matches open when their players are known.",
 
   // first visit to Picks (first-time-fan test, 2 Oct 2026)
@@ -400,7 +401,9 @@ export const en = {
   err_generic: "Something went wrong. Please try again.",
 
   // the quick vote (/vote, 15 Oct 2026)
-  vote_eyebrow: "Six Kings Slam · Riyadh · 21–24 October",
+  vote_eyebrow: "Six Kings Slam · Riyadh · 27–30 December",
+  vote_postponed:
+    "The event moved from October to 27–30 December. The players for December are not confirmed yet.",
   vote_title: "Who will win the Six Kings Slam?",
   vote_sub:
     "Tap a player to vote. It's free and you don't need an account. You'll see how everyone voted once 50 people have voted.",
