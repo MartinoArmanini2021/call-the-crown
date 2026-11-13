@@ -16,10 +16,19 @@ import type { CallStats, Match, Pick } from "../src/lib/api";
 import { cardSpec, shareText } from "../src/lib/callCard";
 import type { SetScore } from "../src/lib/validation";
 
-const tEn = (key: string, vars?: Record<string, string | number>) =>
-  ((en as Record<string, string>)[key] ?? key).replace(/\{(\w+)\}/g, (m, k: string) =>
-    vars && k in vars ? String(vars[k]) : m,
+// event-wide placeholders as the app fills them from event_config.branding (Riyadh here)
+const RIYADH: Record<string, string> = {
+  city: "Riyadh",
+  session: "Night",
+  session_lower: "night",
+  SESSION: "NIGHT",
+};
+const tEn = (key: string, vars?: Record<string, string | number>) => {
+  const all: Record<string, string | number> = { ...RIYADH, ...vars };
+  return ((en as Record<string, string>)[key] ?? key).replace(/\{(\w+)\}/g, (m, k: string) =>
+    k in all ? String(all[k]) : m,
   );
+};
 const ss = (s: string): SetScore[] =>
   s.split(" ").map((x) => {
     const [a, b] = x.split("-").map(Number);

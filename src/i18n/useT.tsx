@@ -37,11 +37,17 @@ function stored(): Locale {
 }
 
 // arabicEnabled comes from event_config.flags.arabic: when it is off, the app is English only.
+/** Event-wide placeholders, per language, filled into every text unless the caller passes its own. */
+export type EventVars = Partial<Record<Locale, Vars>>;
+const NO_VARS: EventVars = {};
+
 export function LocaleProvider({
   arabicEnabled,
+  eventVars = NO_VARS,
   children,
 }: {
   arabicEnabled: boolean;
+  eventVars?: EventVars;
   children: ReactNode;
 }) {
   const [chosen, setChosen] = useState<Locale>(stored);
@@ -61,7 +67,10 @@ export function LocaleProvider({
     }
   }, []);
 
-  const t = useCallback<T>((key, vars) => fill(strings[locale][key] ?? en[key], vars), [locale]);
+  const t = useCallback<T>(
+    (key, vars) => fill(strings[locale][key] ?? en[key], { ...eventVars[locale], ...vars }),
+    [locale, eventVars],
+  );
   const value = useMemo(() => ({ locale, setLocale, t }), [locale, setLocale, t]);
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }

@@ -8,10 +8,11 @@ import { ShareCallButton } from "./CallCard";
 import { useMatchNames } from "./matchNames";
 import { SIDE_COLOR } from "./sides";
 
-/** "Quarter-final 1", "Semi-final 2", "Third place", "Final". */
+/** "Quarter-final 1", "Semi-final 2", "Third place", "Final", "McEnroe Group". */
 export function useMatchLabel() {
   const { t } = useT();
   return (m: Match, matches: Match[]) => {
+    if (m.round === "RR" && m.grp) return t("group_name", { group: m.grp });
     const same = matches.filter((x) => x.round === m.round);
     const n = same.findIndex((x) => x.match_no === m.match_no) + 1;
     return same.length > 1

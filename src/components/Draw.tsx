@@ -7,6 +7,8 @@
 // their ranking, set scores once played, the winner with a small crown, a live pulse, where the
 // winner goes next, and your pick with ✓ +points / ✗. The final has its own card (4 Oct 2026: "the
 // final should look special"); the 3rd-place match sits under it, quieter.
+// Round robin (ATP Finals, 13 Nov 2026): one column per group first, each with its win–loss table and
+// its six matches in playing order, then the semi-finals and the final.
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
@@ -25,7 +27,8 @@ type Props = {
   onSelect: (m: Match) => void;
 };
 
-const STAGES = [
+type Stage = { key: string; label: string; rounds: readonly string[]; grp?: string };
+const KNOCKOUT = [
   { key: "bracket_qf", rounds: ["QF"] },
   { key: "bracket_sf", rounds: ["SF"] },
   { key: "bracket_last", rounds: ["F", "3P"] },
@@ -38,13 +41,27 @@ export function Draw(props: Props) {
   const { title } = useMatchNames(players);
   const scroller = useRef<HTMLDivElement>(null);
 
-  const stages = STAGES.map((st) => {
+  // The event's stages: a column per group (in draw order) when there is a round robin, then the
+  // knockout stages the event actually has.
+  const groups = [...new Set(matches.filter((m) => m.round === "RR" && m.grp).map((m) => m.grp!))];
+  const plan: Stage[] = [
+    ...groups.map((g) => ({
+      key: `group:${g}`,
+      label: t("group_name", { group: g }),
+      rounds: ["RR"],
+      grp: g,
+    })),
+    ...KNOCKOUT.filter((k) =>
+      matches.some((m) => (k.rounds as readonly string[]).includes(m.round)),
+    ).map((k) => ({ key: k.key, label: t(k.key), rounds: k.rounds })),
+  ];
+  const stages = plan.map((st) => {
     const ms = matches
-      .filter((m) => (st.rounds as readonly string[]).includes(m.round))
-      .sort(
-        (a, b) =>
-          st.rounds.indexOf(a.round as never) - st.rounds.indexOf(b.round as never) ||
-          a.match_no - b.match_no,
+      .filter((m) => st.rounds.includes(m.round) && (!st.grp || m.grp === st.grp))
+      .sort((a, b) =>
+        st.grp
+          ? (a.starts_at ?? "9").localeCompare(b.starts_at ?? "9") || a.match_no - b.match_no
+          : st.rounds.indexOf(a.round) - st.rounds.indexOf(b.round) || a.match_no - b.match_no,
       );
     const first = ms
       .map((m) => m.starts_at)
@@ -53,9 +70,18 @@ export function Draw(props: Props) {
     const done = ms.length > 0 && ms.every((m) => m.status !== "scheduled");
     return { ...st, ms, first, done };
   });
-  // The stage still to be played; once everything is played, the final day (the champion).
+  const next = matches
+    .filter((m) => m.status === "scheduled" && m.starts_at && Date.parse(m.starts_at) > now)
+    .sort((a, b) => Date.parse(a.starts_at!) - Date.parse(b.starts_at!))[0];
+  const live = matches.find((m) => matchState(m, now) === "locked");
+  // The stage of the match being played or coming next; otherwise the first stage still to be played;
+  // once everything is played, the final day (the champion).
+  const focus = live ?? next;
+  const focusStage = focus
+    ? stages.findIndex((s) => s.ms.some((m) => m.match_no === focus.match_no))
+    : -1;
   const firstOpen = stages.findIndex((s) => !s.done);
-  const current = firstOpen === -1 ? stages.length - 1 : firstOpen;
+  const current = focusStage !== -1 ? focusStage : firstOpen === -1 ? stages.length - 1 : firstOpen;
   const [active, setActive] = useState(current);
 
   // Which column is in view (phone carousel); every column is in view when they sit side by side.
@@ -95,14 +121,14 @@ export function Draw(props: Props) {
     setActive(best);
   };
 
-  const next = matches
-    .filter((m) => m.status === "scheduled" && m.starts_at && Date.parse(m.starts_at) > now)
-    .sort((a, b) => Date.parse(a.starts_at!) - Date.parse(b.starts_at!))[0];
-  const live = matches.find((m) => matchState(m, now) === "locked");
-
   return (
     <div>
-      <div className="grid grid-cols-3 gap-1.5" role="tablist" aria-label={t("draw_title")}>
+      <div
+        className="grid gap-1.5"
+        style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}
+        role="tablist"
+        aria-label={t("draw_title")}
+      >
         {stages.map((s, i) => {
           const last = s.key === "bracket_last";
           return (
@@ -135,7 +161,7 @@ export function Draw(props: Props) {
               >
                 {s.done && <span className="text-good">✓</span>}
                 {last && !s.done && <Crown className="h-3.5 w-3.5 shrink-0" />}
-                {t(s.key)}
+                <span className="truncate">{s.label}</span>
               </span>
               <span className="block text-2xs text-ink-3">
                 {s.first ? localDay(s.first, event.timezone, locale) : ""}
@@ -168,20 +194,32 @@ export function Draw(props: Props) {
       <div
         ref={scroller}
         onScroll={onScroll}
-        className="relative -mx-4 mt-3 flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-px-4 px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+        className={cn(
+          "relative -mx-4 mt-3 flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-px-4 px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden",
+          stages.length >= 4 ? "sm:grid-cols-4 sm:gap-4" : "sm:grid-cols-3",
+        )}
       >
         <StageLines scroller={scroller} matches={matches} />
         {stages.map((s, i) => (
           <section
             key={s.key}
-            aria-label={t(s.key)}
-            className="relative z-10 flex w-[84%] shrink-0 snap-start flex-col justify-around gap-3 sm:w-auto"
+            aria-label={s.label}
+            className={cn(
+              "relative z-10 flex w-[84%] shrink-0 snap-start flex-col gap-3 sm:w-auto",
+              s.grp ? "justify-start" : "justify-around",
+            )}
           >
+            {s.grp && <GroupTable grp={s.grp} {...props} />}
             {s.ms.map((m) =>
               m.round === "F" ? (
                 <FinalCard key={m.match_no} m={m} {...props} />
               ) : (
-                <DrawCard key={m.match_no} m={m} compact={m.round === "3P"} {...props} />
+                <DrawCard
+                  key={m.match_no}
+                  m={m}
+                  compact={m.round === "3P" || m.round === "RR"}
+                  {...props}
+                />
               ),
             )}
             {i < stages.length - 1 && <span className="sr-only">→</span>}
@@ -412,10 +450,93 @@ function Status({ m, now }: { m: Match; now: number }) {
   ) : null;
 }
 
-/** A quarter-final, a semi-final, or (compact) the 3rd-place match. */
+/**
+ * A group's win–loss table: each player's wins and losses from the settled group matches, best first
+ * (wins, then sets won minus lost, then games, then ranking). Display only: the semi-finalists are the
+ * ones the database places in the semi-finals (official tiebreak rules, 0053), marked once known.
+ */
+function GroupTable({ grp, matches, players }: Props & { grp: string }) {
+  const { t, locale } = useT();
+  const ms = matches.filter((m) => m.round === "RR" && m.grp === grp);
+  const ids = [...new Set(ms.flatMap((m) => [m.p1_id, m.p2_id]).filter((x): x is string => !!x))];
+  const through = new Set(
+    matches
+      .filter((m) => m.round !== "RR")
+      .flatMap((m) =>
+        ([1, 2] as const).flatMap((side) => {
+          const src = side === 1 ? m.p1_source : m.p2_source;
+          const id = side === 1 ? m.p1_id : m.p2_id;
+          return src.type === "group" && src.group === grp && id ? [id] : [];
+        }),
+      ),
+  );
+  const rows = ids
+    .map((id) => {
+      let w = 0;
+      let l = 0;
+      let sets = 0;
+      let games = 0;
+      for (const m of ms) {
+        if (m.status === "scheduled" || (m.p1_id !== id && m.p2_id !== id)) continue;
+        if (m.winner_id === id) w++;
+        else l++;
+        for (const s of m.set_scores ?? []) {
+          const [mine, theirs] =
+            m.p1_id === id ? [s.p1_games, s.p2_games] : [s.p2_games, s.p1_games];
+          games += mine - theirs;
+          sets += mine > theirs ? 1 : mine < theirs ? -1 : 0;
+        }
+      }
+      return { id, w, l, sets, games, rank: players.get(id)?.rank_snapshot ?? 999 };
+    })
+    .sort(
+      (a, b) =>
+        Number(through.has(b.id)) - Number(through.has(a.id)) ||
+        b.w - a.w ||
+        b.sets - a.sets ||
+        b.games - a.games ||
+        a.rank - b.rank,
+    );
+  return (
+    <div className="rounded-2xl border border-line bg-card/60 p-2.5">
+      <div className="mb-1.5 flex justify-between px-1 text-2xs font-bold uppercase tracking-wider text-ink-3">
+        <span>{t("group_name", { group: grp })}</span>
+        <span>{t("group_table")}</span>
+      </div>
+      <ol className="space-y-1">
+        {rows.map((r) => (
+          <li key={r.id} className="flex items-center gap-2 px-1 text-sm">
+            <PlayerPhoto player={players.get(r.id)} size={22} />
+            <span
+              className={cn(
+                "min-w-0 flex-1 truncate",
+                through.has(r.id) ? "font-semibold text-ink" : "text-ink-2",
+              )}
+            >
+              {surname(playerName(players.get(r.id), locale))}
+              {through.has(r.id) && (
+                <span className="ms-1.5 text-2xs font-bold text-good" title={t("group_qualified")}>
+                  ✓ SF
+                </span>
+              )}
+            </span>
+            <span className="num shrink-0 text-ink">
+              {r.w}–{r.l}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+/** A quarter-final, a semi-final, a group match, or (compact) the 3rd-place match. */
 function DrawCard(props: CardProps & { compact?: boolean }) {
   const { m, matches, players, pickByMatch, now, onSelect, compact = false } = props;
-  const label = useMatchLabel();
+  const { t } = useT();
+  const matchLabel = useMatchLabel();
+  const label = (x: Match, all: Match[]) =>
+    x.round === "RR" && x.matchday ? t("night_n", { n: x.matchday }) : matchLabel(x, all);
   const { slot } = useMatchNames(players);
   const state = matchState(m, now);
   const todo = state === "open" && !pickByMatch.get(m.match_no);

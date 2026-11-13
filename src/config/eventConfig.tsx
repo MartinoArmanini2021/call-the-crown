@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
 import { eventConfigQuery, type EventConfig } from "@/lib/api";
-import { LocaleProvider } from "@/i18n/useT";
+import { LocaleProvider, type EventVars } from "@/i18n/useT";
 
 // The event's brand, rules and texts, loaded once at boot from event_config. Brand colours
 // are written onto the CSS variables in src/styles.css, so every component re-skins with no code.
@@ -25,6 +25,26 @@ const SAFE_COLOR = /^#[0-9a-f]{3,8}$/i;
 export function EventProvider({ children }: { children: ReactNode }) {
   const q = useQuery(eventConfigQuery);
   const config = q.data ?? null;
+  // {event}, {city}, {session} … in the texts come from the event's branding (Turin: "ATP Finals",
+  // "Turin", "Day"; Riyadh: "Six Kings Slam", "Riyadh", "Night"), each with its Arabic twin.
+  const eventVars = useMemo<EventVars>(() => {
+    const b = (config?.branding ?? {}) as Record<string, unknown>;
+    const pick = (k: string, ar: boolean, fallback: string) =>
+      String((ar ? b[k + "_ar"] : undefined) ?? b[k] ?? fallback);
+    const vars = (ar: boolean) => {
+      const session = pick("session", ar, ar ? "اليوم" : "Day");
+      return {
+        event: pick("event_name", ar, config?.name ?? ""),
+        city: pick("city", ar, ""),
+        session,
+        session_lower: ar ? session : session.toLowerCase(),
+        SESSION: ar ? session : session.toUpperCase(),
+        vote_eyebrow: pick("vote_eyebrow", ar, ""),
+        vote_note: pick("vote_note", ar, ""),
+      };
+    };
+    return { en: vars(false), ar: vars(true) };
+  }, [config]);
 
   useEffect(() => {
     if (!config) return;
@@ -62,7 +82,9 @@ export function EventProvider({ children }: { children: ReactNode }) {
 
   return (
     <EventContext.Provider value={config}>
-      <LocaleProvider arabicEnabled={config.flags.arabic === true}>{children}</LocaleProvider>
+      <LocaleProvider arabicEnabled={config.flags.arabic === true} eventVars={eventVars}>
+        {children}
+      </LocaleProvider>
     </EventContext.Provider>
   );
 }

@@ -5,10 +5,10 @@ import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "./supabase";
 import type { SetScore } from "./validation";
 
-export type Round = "QF" | "SF" | "3P" | "F";
+export type Round = "RR" | "QF" | "SF" | "3P" | "F";
 
 export type Rules = {
-  winner_points: Record<Round, number>;
+  winner_points: Record<Round, number>; // only the rounds the event has are present
   sets_points: Record<Round, number>;
   per_set_exact: number;
   upset_constant: number;
@@ -33,6 +33,18 @@ export type EventConfig = {
     short_name_ar?: string;
     event_line?: string; // the landing page's line about the event: venue, dates, broadcaster
     event_line_ar?: string;
+    // the event in running text (0053, ATP Finals): "ATP Finals" / "Six Kings Slam", the city, and the
+    // word for one playing day ("Day" in Turin, "Night" in Riyadh); each may have an _ar twin
+    event_name?: string;
+    event_name_ar?: string;
+    city?: string;
+    city_ar?: string;
+    session?: string;
+    session_ar?: string;
+    vote_eyebrow?: string;
+    vote_eyebrow_ar?: string;
+    vote_note?: string;
+    vote_note_ar?: string;
     logo_path?: string | null;
     colors?: Partial<Record<string, string>>;
   };
@@ -58,7 +70,9 @@ export type Player = {
   image_path: string | null;
 };
 export type SlotSource =
-  { type: "player"; id: string } | { type: "winner" | "loser"; match: number };
+  | { type: "player"; id: string }
+  | { type: "winner" | "loser"; match: number }
+  | { type: "group"; group: string; place: 1 | 2 };
 export type Match = {
   match_no: number;
   round: Round;
@@ -67,6 +81,9 @@ export type Match = {
   p1_id: string | null;
   p2_id: string | null;
   starts_at: string | null;
+  /** round robin (0053): the group name ("McEnroe"), and the group day (1-3) once known */
+  grp: string | null;
+  matchday: number | null;
   p1_win_points: number | null;
   p2_win_points: number | null;
   status: "scheduled" | "completed" | "retired" | "walkover";

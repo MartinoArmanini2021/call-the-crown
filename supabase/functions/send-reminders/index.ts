@@ -41,6 +41,19 @@ Deno.serve(async (req) => {
     candidates: async () => must(await client.rpc("reminder_candidates")) as Candidate[],
     timezone: async () =>
       (must(await client.from("event_config").select("timezone").single()) as { timezone: string }).timezone,
+    place: async () => {
+      const b = (
+        must(await client.from("event_config").select("branding").single()) as {
+          branding: Record<string, string | undefined>;
+        }
+      ).branding;
+      return {
+        city: b.city ?? "Riyadh",
+        city_ar: b.city_ar ?? b.city ?? "الرياض",
+        session: b.session ?? "Night",
+        session_ar: b.session_ar ?? "الليلة",
+      };
+    },
     claim: async (u, n, dry) =>
       must(await client.rpc("claim_reminder", { p_user: u, p_night: n, p_dry_run: dry })) as boolean,
     failed: async (u, n, detail) => {

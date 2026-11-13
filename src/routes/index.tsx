@@ -16,6 +16,7 @@ import {
   type Player,
 } from "@/lib/api";
 import { shortTimeLeft, surname } from "@/lib/format";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({ component: Landing });
 
@@ -39,8 +40,8 @@ function Landing() {
     .sort((a, b) => a - b)[0];
 
   const count = (matches.data ?? []).length;
-  // the example is a quarter-final pick, so it names a quarter-final player
-  const qf = (matches.data ?? []).find((m) => m.round === "QF" && m.p1_id);
+  // the example is a pick in the event's first round, so it names a player from it
+  const qf = [...(matches.data ?? [])].sort((a, b) => a.match_no - b.match_no).find((m) => m.p1_id);
   const top = (players.data ?? []).find((p) => p.id === qf?.p1_id);
 
   const primary =
@@ -69,7 +70,13 @@ function Landing() {
         </p>
 
         {(players.data ?? []).length > 0 && (
-          <ul className="mt-5 grid grid-cols-3 gap-2" aria-label={t("landing_players")}>
+          <ul
+            className={cn(
+              "mt-5 grid gap-2",
+              (players.data ?? []).length % 4 === 0 ? "grid-cols-4" : "grid-cols-3",
+            )}
+            aria-label={t("landing_players")}
+          >
             {[...(players.data ?? [])]
               .sort((a, b) => (a.seed ?? 99) - (b.seed ?? 99))
               .map((p) => (
@@ -192,9 +199,11 @@ function ScoringExample({ name }: { name: string }) {
   const event = useEvent();
   const { t } = useT();
   const { winner_points: wp, sets_points: sp, per_set_exact: pe } = event.rules;
+  // the event's first round (Riyadh: quarter-final; Turin: a group match)
+  const first = (["RR", "QF", "SF", "3P", "F"] as const).find((r) => wp[r] != null) ?? "SF";
   const lines: [string, number][] = [
-    [t("example_winner"), wp.QF],
-    [t("example_sets", { n: 2 }), sp.QF],
+    [t("example_winner"), wp[first]],
+    [t("example_sets", { n: 2 }), sp[first]],
     [t("example_exact", { n: 1 }), pe],
   ];
   return (

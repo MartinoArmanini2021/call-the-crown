@@ -24,7 +24,7 @@ export const en = {
 
   // landing
   landing_title: "Guess every match",
-  landing_players: "The six players",
+  landing_players: "The players",
   first_lock_in: "Next picks close in",
   landing_sentence:
     "Guess who wins each of the {n} matches, and the score. Every right guess earns points. The fan with the most points wins.",
@@ -104,21 +104,28 @@ export const en = {
   next_lock: "Next lock",
 
   // rounds and matches
+  round_RR: "Group match",
   round_QF: "Quarter-final",
   round_SF: "Semi-final",
   round_3P: "Third place",
   round_F: "Final",
   match_label: "{round} {n}",
   match_short: "{round}{n}",
+  short_RR: "Group",
   short_QF: "QF",
   short_SF: "SF",
   short_3P: "3rd place",
   short_F: "Final",
   slot_winner: "Winner {match}",
   slot_loser: "Loser {match}",
-  night_1: "Night 1",
-  night_2: "Night 2",
-  night_3: "Night 3",
+  // round robin (0053): the group's name, its winner and runner-up before they are known
+  group_name: "{group} Group",
+  slot_group_1: "Winner {group}",
+  slot_group_2: "Runner-up {group}",
+  group_table: "W–L",
+  group_qualified: "Into the semi-finals",
+  // one playing day: "Day 2" in Turin, "Night 2" in Riyadh ({session} comes from the event)
+  night_n: "{session} {n}",
   vs: "v",
 
   // pick sheet + bracket (UX review, 2 Oct 2026)
@@ -154,6 +161,7 @@ export const en = {
   picks_status: "{n} of {total} picked",
   see_draw: "See the whole draw",
   bracket_qf: "Quarter-finals",
+  bracket_groups: "Groups",
   bracket_sf: "Semi-finals",
   bracket_last: "Final day",
   tile_live: "● In play",
@@ -261,7 +269,7 @@ export const en = {
   // share cards (brief "bragging rights", Phase 3)
   card_my_call: "MY CALL",
   card_whats_yours: "What's your call?",
-  card_closes: "Picks close {day} · {time} Riyadh time",
+  card_closes: "Picks close {day} · {time} {city} time",
   card_called_it: "I called it.",
   card_called_winner: "Called the winner.",
   card_exact: "EXACT",
@@ -291,10 +299,10 @@ export const en = {
   crew_crowned: "Crowned crew",
 
   // Perfect Night and reminders (brief "bragging rights", Phase 5)
-  reminder_optin: "Email me 2 hours before picks close each night",
-  perfect_night: "Perfect Night {n}",
-  perfect_night_sub: "Every winner right on night {n}.",
-  card_perfect_ribbon: "PERFECT NIGHT",
+  reminder_optin: "Email me 2 hours before picks close each {session_lower}",
+  perfect_night: "Perfect {session} {n}",
+  perfect_night_sub: "Every winner right on {session_lower} {n}.",
+  card_perfect_ribbon: "PERFECT {SESSION}",
   unsub_title: "Stop reminder emails?",
   unsub_button: "Turn off reminders",
   unsub_done: "Reminders are off.",
@@ -342,9 +350,9 @@ export const en = {
   htp_upset:
     "Pick the lower-ranked player and score more if they win. The bigger the gap in the world ranking, the bigger the bonus.",
   htp_upset_example:
-    "Example: world no. {low} beats world no. {high} in a quarter-final: {points} points for the winner instead of {base}.",
+    "Example: world no. {low} beats world no. {high} in a {round}: {points} points for the winner instead of {base}.",
   htp_upset_real:
-    "Example: if {low} (world no. {lowRank}) beats {high} (world no. {highRank}) in their quarter-final, the winner scores {points} points instead of {base}.",
+    "Example: if {low} (world no. {lowRank}) beats {high} (world no. {highRank}) in their {round}, the winner scores {points} points instead of {base}.",
   htp_upset_maths_title: "The exact maths",
   htp_upset_maths:
     "Winner points × (1 + gap ÷ (gap + {k})), where gap is the difference in ranking places, rounded to a whole point (halves round up). Rankings are fixed before the first match.",
@@ -401,10 +409,9 @@ export const en = {
   err_generic: "Something went wrong. Please try again.",
 
   // the quick vote (/vote, 15 Oct 2026)
-  vote_eyebrow: "Six Kings Slam · Riyadh · 27–30 December",
-  vote_postponed:
-    "The event moved from October to 27–30 December. The players for December are not confirmed yet.",
-  vote_title: "Who will win the Six Kings Slam?",
+  vote_eyebrow: "{vote_eyebrow}",
+  vote_postponed: "{vote_note}",
+  vote_title: "Who will win the {event}?",
   vote_sub:
     "Tap a player to vote. It's free and you don't need an account. You'll see how everyone voted once 50 people have voted.",
   vote_you_backed: "Your vote: {name}.",
@@ -414,16 +421,17 @@ export const en = {
   vote_results_title: "How everyone voted",
   vote_share: "Share with a friend",
   vote_copied: "Link copied",
-  vote_share_text: "Who will win the Six Kings Slam in Riyadh? I voted {name}. Vote in one tap:",
-  vote_share_text_plain: "Who will win the Six Kings Slam in Riyadh? Vote in one tap:",
+  vote_share_text: "Who will win the {event} in {city}? I voted {name}. Vote in one tap:",
+  vote_share_text_plain: "Who will win the {event} in {city}? Vote in one tap:",
   vote_cta: "Play the full game: guess every match",
   vote_closed: "Voting is closed: the first match has started.",
   vote_too_many: "Too many votes from this internet connection. Please try again later.",
   vote_failed: "Your vote didn't go through. Try again.",
-  landing_vote_link: "Quick vote: who will win the Six Kings Slam?",
+  landing_vote_link: "Quick vote: who will win the {event}?",
   vote_photo_credits: "Photo credits",
-  vote_photo_licence: "Photos from Wikimedia Commons, by the photographers below, licensed",
-  vote_independent: "An independent fan vote. Not connected to the Six Kings Slam or the ATP.",
+  vote_photo_licence:
+    "Photos from Wikimedia Commons, by the photographers below, under the licence shown",
+  vote_independent: "An independent fan vote. Not connected to the {event} or the ATP.",
 };
 
 export type StringKey = keyof typeof en;

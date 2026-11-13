@@ -23,7 +23,7 @@ export const ar: Record<StringKey, string> = {
 
   // landing
   landing_title: "خمّن كل مباراة",
-  landing_players: "اللاعبون الستة",
+  landing_players: "اللاعبون",
   first_lock_in: "تُغلق التوقعات التالية بعد",
   landing_sentence:
     "خمّن الفائز في كل مباراة من المباريات الـ{n} ونتيجتها. كل تخمين صحيح يمنحك نقاطاً. المشجع صاحب أكثر النقاط هو الفائز.",
@@ -101,21 +101,26 @@ export const ar: Record<StringKey, string> = {
   next_lock: "الإغلاق التالي",
 
   // rounds and matches
+  round_RR: "مباراة المجموعات",
   round_QF: "ربع النهائي",
   round_SF: "نصف النهائي",
   round_3P: "المركز الثالث",
   round_F: "النهائي",
   match_label: "{round} {n}",
   match_short: "{round} {n}",
+  short_RR: "المجموعات",
   short_QF: "ربع النهائي",
   short_SF: "نصف النهائي",
   short_3P: "المركز الثالث",
   short_F: "النهائي",
   slot_winner: "الفائز في {match}",
   slot_loser: "الخاسر في {match}",
-  night_1: "الليلة 1",
-  night_2: "الليلة 2",
-  night_3: "الليلة 3",
+  group_name: "مجموعة {group}",
+  slot_group_1: "متصدّر {group}",
+  slot_group_2: "وصيف {group}",
+  group_table: "فوز–خسارة",
+  group_qualified: "إلى نصف النهائي",
+  night_n: "{session} {n}",
   vs: "ضد",
 
   // pick sheet + bracket
@@ -150,6 +155,7 @@ export const ar: Record<StringKey, string> = {
   picks_status: "{n} من {total} مختارة",
   see_draw: "شاهد جدول البطولة كاملاً",
   bracket_qf: "ربع النهائي",
+  bracket_groups: "المجموعات",
   bracket_sf: "نصف النهائي",
   bracket_last: "اليوم الختامي",
   tile_live: "● جارية الآن",
@@ -254,7 +260,7 @@ export const ar: Record<StringKey, string> = {
   league_alone_nudge: "دوريك فيه أنت فقط. أرسل الدعوة: لا تفاخر بلا منافسين.",
   card_my_call: "توقعي",
   card_whats_yours: "وما توقعك أنت؟",
-  card_closes: "تُغلق التوقعات {day} · {time} بتوقيت الرياض",
+  card_closes: "تُغلق التوقعات {day} · {time} بتوقيت {city}",
   card_called_it: "توقعتها.",
   card_called_winner: "توقعت الفائز.",
   card_exact: "صحيحة",
@@ -279,10 +285,10 @@ export const ar: Record<StringKey, string> = {
   crews_yours: "دوريك: المركز {rank}",
   crews_empty: "لا يوجد دوري فيه 5 أعضاء بعد. قد يكون دوريك الأول.",
   crew_crowned: "الدوري المتوَّج",
-  reminder_optin: "أرسل لي بريداً قبل إغلاق التوقعات بساعتين كل ليلة",
-  perfect_night: "ليلة مثالية {n}",
-  perfect_night_sub: "كل الفائزين صحيحون في الليلة {n}.",
-  card_perfect_ribbon: "ليلة مثالية",
+  reminder_optin: "أرسل لي بريداً قبل إغلاق التوقعات بساعتين كل {session_lower}",
+  perfect_night: "{session} مثالي {n}",
+  perfect_night_sub: "كل الفائزين صحيحون في {session_lower} {n}.",
+  card_perfect_ribbon: "{SESSION} مثالي",
   unsub_title: "إيقاف رسائل التذكير؟",
   unsub_button: "أوقف التذكيرات",
   unsub_done: "تم إيقاف التذكيرات.",
@@ -330,9 +336,9 @@ export const ar: Record<StringKey, string> = {
   htp_upset:
     "اختر اللاعب الأقل تصنيفاً واحصل على نقاط أكثر إذا فاز. كلما كان الفارق في التصنيف العالمي أكبر، كانت المكافأة أكبر.",
   htp_upset_example:
-    "مثال: المصنف {low} عالمياً يفوز على المصنف {high} في ربع النهائي: {points} نقاط للفائز بدلاً من {base}.",
+    "مثال: المصنف {low} عالمياً يفوز على المصنف {high} في {round}: {points} نقاط للفائز بدلاً من {base}.",
   htp_upset_real:
-    "مثال: إذا فاز {low} (المصنف {lowRank} عالمياً) على {high} (المصنف {highRank} عالمياً) في ربع النهائي، يحصل الفائز على {points} نقاط بدلاً من {base}.",
+    "مثال: إذا فاز {low} (المصنف {lowRank} عالمياً) على {high} (المصنف {highRank} عالمياً) في {round}، يحصل الفائز على {points} نقاط بدلاً من {base}.",
   htp_upset_maths_title: "الحساب الدقيق",
   htp_upset_maths:
     "نقاط الفائز × (1 + الفارق ÷ (الفارق + {k}))، حيث الفارق هو عدد المراكز بين التصنيفين، مقرّباً إلى أقرب نقطة كاملة (يُقرَّب النصف إلى الأعلى). تُثبَّت التصنيفات قبل المباراة الأولى.",
@@ -387,10 +393,9 @@ export const ar: Record<StringKey, string> = {
   err_league_name_length: "يتكون اسم الدوري من 1 إلى 40 حرفاً.",
   err_generic: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
 
-  vote_eyebrow: "بطولة الملوك الستة · الرياض · 27–30 ديسمبر",
-  vote_postponed:
-    "أُجّلت البطولة من أكتوبر إلى 27–30 ديسمبر. لم يُؤكَّد بعد اللاعبون المشاركون في ديسمبر.",
-  vote_title: "من سيفوز ببطولة الملوك الستة؟",
+  vote_eyebrow: "{vote_eyebrow}",
+  vote_postponed: "{vote_note}",
+  vote_title: "من سيفوز بـ{event}؟",
   vote_sub: "اضغط على لاعب للتصويت. مجاناً ودون حساب. سترى كيف صوّت الجميع بعد أن يصوّت 50 شخصاً.",
   vote_you_backed: "صوتك: {name}.",
   vote_change: "غيّرت رأيك؟ اضغط على لاعب آخر. يمكنك تغيير صوتك حتى تبدأ أول مباراة.",
@@ -398,15 +403,14 @@ export const ar: Record<StringKey, string> = {
   vote_results_title: "كيف صوّت الجميع",
   vote_share: "شاركه مع صديق",
   vote_copied: "تم نسخ الرابط",
-  vote_share_text: "من سيفوز ببطولة الملوك الستة في الرياض؟ صوّتُّ لـ{name}. صوّت بنقرة واحدة:",
-  vote_share_text_plain: "من سيفوز ببطولة الملوك الستة في الرياض؟ صوّت بنقرة واحدة:",
+  vote_share_text: "من سيفوز بـ{event} في {city}؟ صوّتُّ لـ{name}. صوّت بنقرة واحدة:",
+  vote_share_text_plain: "من سيفوز بـ{event} في {city}؟ صوّت بنقرة واحدة:",
   vote_cta: "العب اللعبة كاملة: خمّن كل مباراة",
   vote_closed: "انتهى التصويت: بدأت أول مباراة.",
   vote_too_many: "أصوات كثيرة من هذا الاتصال بالإنترنت. حاول مرة أخرى لاحقاً.",
   vote_failed: "لم يُسجَّل صوتك. حاول مرة أخرى.",
-  landing_vote_link: "تصويت سريع: من سيفوز ببطولة الملوك الستة؟",
+  landing_vote_link: "تصويت سريع: من سيفوز بـ{event}؟",
   vote_photo_credits: "مصادر الصور",
-  vote_photo_licence: "الصور من ويكيميديا كومنز، للمصوّرين أدناه، بترخيص",
-  vote_independent:
-    "تصويت مستقل من المشجعين. لا علاقة له ببطولة الملوك الستة أو برابطة محترفي التنس (ATP).",
+  vote_photo_licence: "الصور من ويكيميديا كومنز، للمصوّرين أدناه، بالترخيص المذكور",
+  vote_independent: "تصويت مستقل من المشجعين. لا علاقة له بـ{event} أو برابطة محترفي التنس (ATP).",
 };

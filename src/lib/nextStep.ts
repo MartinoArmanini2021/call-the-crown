@@ -30,7 +30,13 @@ export function nextStep(matches: Match[], picked: Set<number>, now: number): Ne
   // Nothing open: the next match still missing a player, and the unfinished match it waits for.
   for (const m of matches.filter((x) => matchState(x, now) === "waiting").sort(byStart)) {
     const sources = [m.p1_source, m.p2_source]
-      .flatMap((s) => (s.type === "player" ? [] : matches.filter((x) => x.match_no === s.match)))
+      .flatMap((s) =>
+        s.type === "player"
+          ? []
+          : s.type === "group"
+            ? matches.filter((x) => x.round === "RR" && x.grp === s.group)
+            : matches.filter((x) => x.match_no === s.match),
+      )
       .filter((x) => x.status === "scheduled")
       .sort(byStart);
     const after = sources[sources.length - 1];

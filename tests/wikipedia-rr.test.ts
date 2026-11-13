@@ -10,7 +10,10 @@ import {
   WikipediaAdapter,
 } from "../supabase/functions/poll-results/adapters/wikipedia.ts";
 
-const page = readFileSync(join(import.meta.dir, "fixtures", "wikipedia", "2025_ATP_Finals_Singles.wikitext"), "utf8");
+const page = readFileSync(
+  join(import.meta.dir, "fixtures", "wikipedia", "2025_ATP_Finals_Singles.wikitext"),
+  "utf8",
+);
 const s = (...sets: [number, number][]) => sets.map(([a, b]) => ({ p1_games: a, p2_games: b }));
 
 describe("2025 ATP Finals: the two groups", () => {
@@ -50,7 +53,8 @@ describe("2025 ATP Finals: the two groups", () => {
     for (const [, m] of rr) {
       expect(m.result.status).toBe("completed");
       const won = m.result.set_scores.filter((x) =>
-        m.result.winner === m.result.players[0] ? x.p1_games > x.p2_games : x.p2_games > x.p1_games).length;
+        m.result.winner === m.result.players[0] ? x.p1_games > x.p2_games : x.p2_games > x.p1_games,
+      ).length;
       expect(won).toBe(2);
     }
   });
@@ -98,7 +102,13 @@ const blank = `===[[John McEnroe]] Group===
 |color-row-4= |4v1=CELL41 |4v2= |4v3=
 }}`;
 const group = (c14: string, c41: string, c23 = "", c32 = "") =>
-  parseRoundRobin(blank.replace("CELL14", c14).replace("CELL41", c41).replace("CELL23", c23).replace("CELL32", c32));
+  parseRoundRobin(
+    blank
+      .replace("CELL14", c14)
+      .replace("CELL41", c41)
+      .replace("CELL23", c23)
+      .replace("CELL32", c32),
+  );
 
 describe("a live group table", () => {
   it("empty cells: scheduled, players known", () => {
@@ -113,7 +123,9 @@ describe("a live group table", () => {
     expect(group("6–4, 2–3", "").get("John McEnroe Group:1v4")!.result.status).toBe("live");
   });
   it("bold in the lower row's cell: that player won, sets turned to the upper row's view", () => {
-    expect(group("", "'''6–4, 7–6<sup>(7–3)</sup>'''").get("John McEnroe Group:1v4")!.result).toEqual({
+    expect(
+      group("", "'''6–4, 7–6<sup>(7–3)</sup>'''").get("John McEnroe Group:1v4")!.result,
+    ).toEqual({
       status: "completed",
       players: ["Alexander Zverev", "Rafael Jódar"],
       winner: "Rafael Jódar",
@@ -121,10 +133,14 @@ describe("a live group table", () => {
     });
   });
   it("both cells bold: unknown, never final", () => {
-    expect(group("'''6–4, 6–4'''", "'''4–6, 4–6'''").get("John McEnroe Group:1v4")!.result.status).toBe("unknown");
+    expect(
+      group("'''6–4, 6–4'''", "'''4–6, 4–6'''").get("John McEnroe Group:1v4")!.result.status,
+    ).toBe("unknown");
   });
   it("the two cells disagree: unknown, never final", () => {
-    expect(group("'''6–4, 6–4'''", "4–6, 3–6").get("John McEnroe Group:1v4")!.result.status).toBe("unknown");
+    expect(group("'''6–4, 6–4'''", "4–6, 3–6").get("John McEnroe Group:1v4")!.result.status).toBe(
+      "unknown",
+    );
   });
   it("a retirement", () => {
     const r = group("'''6–4, 2–1 ret.'''", "4–6, 1–2").get("John McEnroe Group:1v4")!.result;
@@ -146,8 +162,22 @@ describe("a live group table", () => {
 
 describe("the adapter serves group refs from the same page request", () => {
   it("fetchMatch finds a group match", async () => {
-    const body = { query: { pages: [{ revisions: [{ revid: 7, timestamp: "2025-12-04T06:20:28Z", slots: { main: { content: page } } }] }] } };
-    const a = new WikipediaAdapter("2025 ATP Finals – Singles", "test-agent", (async () => new Response(JSON.stringify(body))) as unknown as typeof fetch);
+    const body = {
+      query: {
+        pages: [
+          {
+            revisions: [
+              { revid: 7, timestamp: "2025-12-04T06:20:28Z", slots: { main: { content: page } } },
+            ],
+          },
+        ],
+      },
+    };
+    const a = new WikipediaAdapter(
+      "2025 ATP Finals – Singles",
+      "test-agent",
+      (async () => new Response(JSON.stringify(body))) as unknown as typeof fetch,
+    );
     const r = await a.fetchMatch("Björn Borg Group:1v2", { now: new Date() } as never);
     expect(r.normalised.status).toBe("completed");
     expect(r.normalised.winner).toBe("Jannik Sinner");

@@ -14,6 +14,16 @@ export function slotCandidates(m: Match, side: 1 | 2, matches: Match[], depth = 
   if (id) return [id];
   const src = side === 1 ? m.p1_source : m.p2_source;
   if (src.type === "player") return [src.id];
+  // a group's winner or runner-up (0053): anyone in that group until the database fills the slot
+  if (src.type === "group")
+    return [
+      ...new Set(
+        matches
+          .filter((x) => x.round === "RR" && x.grp === src.group)
+          .flatMap((x) => [x.p1_id, x.p2_id])
+          .filter((id): id is string => !!id),
+      ),
+    ];
   const from = matches.find((x) => x.match_no === src.match);
   if (!from || depth > 4) return [];
   if (from.status !== "scheduled" && from.winner_id) {
@@ -36,11 +46,16 @@ export function useMatchNames(players: Map<string, Player>) {
     const n = same.length > 1 ? same.findIndex((x) => x.match_no === m.match_no) + 1 : "";
     return t("match_short", { round: t(`short_${m.round}`), n });
   };
-  /** "Fritz", or where the player comes from: "Winner QF1", "Loser SF2". */
+  /** "Fritz", or where the player comes from: "Winner QF1", "Loser SF2", "Runner-up Lendl". */
   const slot = (m: Match, side: 1 | 2, matches: Match[]) => {
+    const src = side === 1 ? m.p1_source : m.p2_source;
+    const id = side === 1 ? m.p1_id : m.p2_id;
+    if (src.type === "group")
+      return id
+        ? nameOf(id)
+        : t(src.place === 1 ? "slot_group_1" : "slot_group_2", { group: src.group });
     const known = slotCandidates(m, side, matches);
     if (known.length === 1) return nameOf(known[0]!);
-    const src = side === 1 ? m.p1_source : m.p2_source;
     const from = src.type !== "player" ? matches.find((x) => x.match_no === src.match) : undefined;
     if (!from) return t("to_be_decided");
     return t(src.type === "winner" ? "slot_winner" : "slot_loser", { match: short(from, matches) });

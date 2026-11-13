@@ -23,6 +23,8 @@ export type Candidate = {
 export type RemindersDb = {
   candidates: () => Promise<Candidate[]>;
   timezone: () => Promise<string>;
+  /** the event's city and day word (optional: Riyadh and "Night" when absent) */
+  place?: () => Promise<Place>;
   claim: (userId: string, night: number, dryRun: boolean) => Promise<boolean>;
   failed: (userId: string, night: number, detail: string) => Promise<void>;
   heartbeat: (ok: boolean, detail: string) => Promise<void>;
@@ -51,16 +53,16 @@ export type Config = {
 const COPY = {
   en: {
     subject: "Picks close in 2 hours",
-    line1: "Night {night} starts at {time} Riyadh time.",
-    line2: "You haven't called {open} of tonight's {total} matches yet.",
+    line1: "{session} {night} starts at {time} {city} time.",
+    line2: "You haven't called {open} of the {total} matches yet.",
     button: "Make my picks",
     league: "You're #{rank} of {n} in {league}.",
     footer: "You're getting this because you asked for reminders. Turn them off: {unsub}",
   },
   ar: {
     subject: "تُغلق التوقعات بعد ساعتين",
-    line1: "تبدأ الليلة {night} الساعة {time} بتوقيت الرياض.",
-    line2: "لم تتوقع بعد {open} من مباريات الليلة الـ{total}.",
+    line1: "{session} {night}: أول مباراة الساعة {time} بتوقيت {city}.",
+    line2: "لم تتوقع بعد {open} من المباريات الـ{total}.",
     button: "سجّل توقعاتي",
     league: "أنت في المركز {rank} من {n} في {league}.",
     footer: "تصلك هذه الرسالة لأنك طلبت التذكير. لإيقافه: {unsub}",
@@ -73,7 +75,16 @@ const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 /** The email for one fan and one night. */
-export async function renderEmail(c: Candidate, cfg: Config, timezone: string): Promise<Email> {
+/** Where and what a playing day is called (event_config.branding; Riyadh by default, as before). */
+export type Place = { city: string; city_ar: string; session: string; session_ar: string };
+const RIYADH: Place = { city: "Riyadh", city_ar: "الرياض", session: "Night", session_ar: "الليلة" };
+
+export async function renderEmail(
+  c: Candidate,
+  cfg: Config,
+  timezone: string,
+  place: Place = RIYADH,
+): Promise<Email> {
   const ar = c.locale === "ar";
   const copy = COPY[ar ? "ar" : "en"];
   const time = new Intl.DateTimeFormat("en-GB", {
@@ -88,7 +99,12 @@ export async function renderEmail(c: Candidate, cfg: Config, timezone: string): 
   const unsubPage = `${app}/unsubscribe?${q}`;
   const oneClick = `${cfg.functionsUrl.replace(/\/+$/, "")}/reminder-unsubscribe?${q}`;
   const picks = `${app}/picks`;
-  const line1 = fill(copy.line1, { night: c.night_no, time });
+  const line1 = fill(copy.line1, {
+    night: c.night_no,
+    time,
+    city: ar ? place.city_ar : place.city,
+    session: ar ? place.session_ar : place.session,
+  });
   const line2 = fill(copy.line2, { open: c.open_count, total: c.total_count });
   const league =
     c.league_name && c.league_rank && c.league_size
@@ -149,13 +165,14 @@ export async function runReminders(db: RemindersDb, cfg: Config, send: Send): Pr
   if (!cfg.from || !cfg.appUrl || !cfg.secret)
     throw new Error("REMINDER_FROM, PUBLIC_APP_URL and REMINDER_UNSUB_SECRET must all be set");
   const timezone = await db.timezone();
+  const place = db.place ? await db.place() : RIYADH;
   for (const c of due) {
     if (!(await db.claim(c.user_id, c.night_no, false))) {
       out.skipped++; // another run has it
       continue;
     }
     try {
-      await send(await renderEmail(c, cfg, timezone));
+      await send(await renderEmail(c, cfg, timezone, place));
       out.sent++;
     } catch (e) {
       out.failed++;

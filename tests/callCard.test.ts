@@ -6,13 +6,19 @@ import { calledIt, cardSpec, isExact, nightOf, shareText } from "../src/lib/call
 import type { SetScore } from "../src/lib/validation";
 
 // Invented players and fans (AGENTS.md). Nights as in the event file: 21, 22 and 24 Oct, Riyadh.
+// The app fills the event-wide placeholders from event_config.branding (EventProvider); here Riyadh's.
+const RIYADH_EN = { city: "Riyadh", session: "Night", session_lower: "night", SESSION: "NIGHT" };
+const RIYADH_AR = { city: "الرياض", session: "الليلة", session_lower: "الليلة", SESSION: "الليلة" };
 const fill =
-  (dict: Record<string, string>) => (key: string, vars?: Record<string, string | number>) =>
-    (dict[key] ?? key).replace(/\{(\w+)\}/g, (m, k: string) =>
-      vars && k in vars ? String(vars[k]) : m,
+  (dict: Record<string, string>, base: Record<string, string>) =>
+  (key: string, vars?: Record<string, string | number>) => {
+    const all: Record<string, string | number> = { ...base, ...vars };
+    return (dict[key] ?? key).replace(/\{(\w+)\}/g, (m, k: string) =>
+      k in all ? String(all[k]) : m,
     );
-const tEn = fill(en);
-const tAr = fill(ar);
+  };
+const tEn = fill(en, RIYADH_EN);
+const tAr = fill(ar, RIYADH_AR);
 const ss = (s: string): SetScore[] =>
   s.split(" ").map((x) => {
     const [a, b] = x.split("-").map(Number);

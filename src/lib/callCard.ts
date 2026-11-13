@@ -106,8 +106,10 @@ export function cardSpec(input: {
   const n = same.length > 1 ? same.findIndex((x) => x.match_no === m.match_no) + 1 : "";
   const night = nightOf(m, matches, timezone);
   const round = [
-    t("match_label", { round: t(`round_${m.round}`), n }).trim(),
-    night >= 1 && night <= 3 ? t(`night_${night}`) : null,
+    m.round === "RR" && m.grp
+      ? t("group_name", { group: m.grp })
+      : t("match_label", { round: t(`round_${m.round}`), n }).trim(),
+    night >= 1 ? t("night_n", { n: night }) : null,
   ]
     .filter(Boolean)
     .join(" · ");

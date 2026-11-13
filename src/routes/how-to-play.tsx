@@ -6,6 +6,8 @@ import { useGame } from "@/hooks/useGame";
 import { useT } from "@/i18n/useT";
 import type { Round } from "@/lib/api";
 import { surname } from "@/lib/format";
+import { PHOTO_CREDITS } from "@/lib/photoCredits";
+import { PhotoCreditList } from "@/components/PhotoCredits";
 
 export const Route = createFileRoute("/how-to-play")({ component: HowToPlay });
 
@@ -20,15 +22,22 @@ function HowToPlay() {
     const p = id ? byPlayer.get(id) : undefined;
     return p ? surname(playerName(p, locale)) : null;
   };
-  const rounds: Round[] = ["QF", "SF", "3P", "F"];
+  // the event's own rounds, in playing order (Riyadh: QF SF 3P F; Turin: RR SF F)
+  const rounds = (["RR", "QF", "SF", "3P", "F"] as Round[]).filter(
+    (r) => rules.winner_points[r] != null,
+  );
+  const opening = rounds[0] ?? "SF";
+  const all = matches.data ?? [];
   const scores = rules.allowed_set_scores.map(([a, b]) => `${a}-${b}`).join(", ");
   const sf = rules.winner_points.SF;
   const sfSets = rules.sets_points.SF;
   const e = rules.per_set_exact;
-  // Every match: winner + sets + two exact sets (a two-set match); the bracket has two QFs, two SFs,
-  // a third-place match and a final.
+  // Every match: winner + sets + two exact sets (a two-set match), over the event's matches.
   const perfect = (r: Round) => rules.winner_points[r] + rules.sets_points[r] + 2 * e;
-  const max = 2 * perfect("QF") + 2 * perfect("SF") + perfect("3P") + perfect("F");
+  const max = all.reduce(
+    (sum, m) => sum + (rules.winner_points[m.round] != null ? perfect(m.round) : 0),
+    0,
+  );
   // The upset example (world no. 10 beats no. 1 in a quarter-final), worked from the configured
   // constants so the text can never disagree with the rules. Explanatory only: real points are always
   // the server's (halves round up, as in the scoring SQL).
@@ -36,13 +45,16 @@ function HowToPlay() {
   const upsetExample = {
     low: 1 + gap,
     high: 1,
-    base: rules.winner_points.QF,
-    points: Math.floor(rules.winner_points.QF * (1 + gap / (gap + rules.upset_constant)) + 0.5),
+    base: rules.winner_points[opening],
+    points: Math.floor(
+      rules.winner_points[opening] * (1 + gap / (gap + rules.upset_constant)) + 0.5,
+    ),
+    round: t(`round_${opening}`).toLowerCase(),
   };
   // With the draw known, the same idea told with the real players: the quarter-final with the biggest
   // stored upset bonus (its points are the server's p1/p2_win_points, not worked out here).
   const realUpset = (matches.data ?? [])
-    .filter((m) => m.round === "QF" && m.p1_id && m.p2_id)
+    .filter((m) => m.round === opening && m.p1_id && m.p2_id)
     .flatMap((m) => {
       const [lo, hi, pts] =
         (m.p1_win_points ?? 0) >= (m.p2_win_points ?? 0)
@@ -50,7 +62,7 @@ function HowToPlay() {
           : [m.p2_id, m.p1_id, m.p2_win_points];
       const low = byPlayer.get(lo!);
       const high = byPlayer.get(hi!);
-      return low && high && pts !== null && pts > rules.winner_points.QF
+      return low && high && pts !== null && pts > rules.winner_points[opening]
         ? [{ low, high, points: pts }]
         : [];
     })
@@ -72,7 +84,7 @@ function HowToPlay() {
 
   return (
     <AppShell>
-      <PageTitle title={t("htp_title")} sub={t("landing_sentence", { n: 6 })} />
+      <PageTitle title={t("htp_title")} sub={t("landing_sentence", { n: all.length || 6 })} />
 
       <h2 className={h2}>{t("htp_enter")}</h2>
       <ol className="card space-y-3 p-4 text-sm text-ink-2">
@@ -153,7 +165,8 @@ function HowToPlay() {
                 high: surname(playerName(realUpset.high, locale)),
                 highRank: realUpset.high.rank_snapshot ?? "–",
                 points: realUpset.points,
-                base: rules.winner_points.QF,
+                base: rules.winner_points[opening],
+                round: t(`round_${opening}`).toLowerCase(),
               })
             : t("htp_upset_example", upsetExample)}
         </p>
@@ -184,6 +197,17 @@ function HowToPlay() {
         </li>
       </ol>
       <p className="mt-2 px-1 text-xs text-ink-3">{t("htp_ties_late")}</p>
+
+      {[...byPlayer.keys()].some((id) => PHOTO_CREDITS[id]) && (
+        <details className="mt-8 text-2xs text-ink-3">
+          <summary className="cursor-pointer">{t("vote_photo_credits")}</summary>
+          <p className="mt-1">{t("vote_photo_licence")}:</p>
+          <PhotoCreditList
+            ids={[...byPlayer.keys()]}
+            names={new Map([...byPlayer.values()].map((p) => [p.id, playerName(p, locale)]))}
+          />
+        </details>
+      )}
     </AppShell>
   );
 }

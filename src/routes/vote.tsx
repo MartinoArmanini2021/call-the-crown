@@ -1,91 +1,35 @@
-// The quick vote (Tino, 15 Oct 2026: get Call the Crown out there today). "Who will win the Six Kings
-// Slam?" (plain wording, 16 Oct; a line under it says the vote is independent of the event). One tap
-// on one of the six players, no sign-up: a random id kept in this browser stands for the device
+// The quick vote (Tino, 15 Oct 2026: get Call the Crown out there today). "Who will win the {event}?"
+// (plain wording, 16 Oct; a line under it says the vote is independent of the event). One tap
+// on one of the event's players, no sign-up: a random id kept in this browser stands for the device
 // (cast_quick_vote, 0052). After the tap: who you backed, how fans voted (percentages, only from 50
-// votes), a Share button, and the way into the full game. Players are fixed here, as in 0052: the field
-// changed on 6 Oct (Learner Tien replaces Jannik Sinner).
+// votes), a Share button, and the way into the full game.
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
-import { castQuickVote, quickVoteSharesQuery } from "@/lib/api";
+import { castQuickVote, playersQuery, quickVoteSharesQuery } from "@/lib/api";
+import { PHOTO_CREDITS } from "@/lib/photoCredits";
+import { PhotoCreditList } from "@/components/PhotoCredits";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/vote")({ component: Vote });
 
-// Photos: Wikimedia Commons, CC BY-SA 4.0, credited under the vote (Tino, 17 Oct 2026, "wikimedia yes").
-// ATP stopped serving its headshots to other sites in mid-October. 500 px thumbnails, about 60-100 KB.
-const W = "https://thumb.wikimedia.org/wikipedia/commons/thumb/";
-const FILE = "https://commons.wikimedia.org/wiki/File:";
-// ATP ranking of 5 Oct 2026 (the one in force until the Shanghai Masters ends), as in the draw file.
-const PLAYERS = [
-  {
-    id: "alcaraz",
-    name: "Carlos Alcaraz",
-    ar: "كارلوس ألكاراز",
-    rank: 3,
-    photo:
-      W +
-      "d/d4/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg/500px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg",
-    by: "Barcex",
-    file:
-      FILE +
-      "25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_(cropped).jpg",
-  },
-  {
-    id: "zverev",
-    name: "Alexander Zverev",
-    ar: "ألكسندر زفيريف",
-    rank: 2,
-    photo: W + "1/1d/Alexander_Zverev_%28cropped%29.jpg/500px-Alexander_Zverev_%28cropped%29.jpg",
-    by: "Rick Munroe",
-    file: FILE + "Alexander_Zverev_(cropped).jpg",
-  },
-  {
-    id: "djokovic",
-    name: "Novak Djokovic",
-    ar: "نوفاك ديوكوفيتش",
-    rank: 8,
-    photo:
-      W +
-      "d/d1/Novak_Djokovic_Paris_2024_Olympic_Games_%28cropped%29.jpg/500px-Novak_Djokovic_Paris_2024_Olympic_Games_%28cropped%29.jpg",
-    by: "Andymiah",
-    file: FILE + "Novak_Djokovic_Paris_2024_Olympic_Games_(cropped).jpg",
-  },
-  {
-    id: "deminaur",
-    name: "Alex de Minaur",
-    ar: "أليكس دي مينور",
-    rank: 9,
-    photo: W + "1/13/Alex_de_Minaur_2024.jpg/500px-Alex_de_Minaur_2024.jpg",
-    by: "Barcex",
-    file: FILE + "Alex_de_Minaur_2024.jpg",
-  },
-  {
-    id: "fritz",
-    name: "Taylor Fritz",
-    ar: "تايلور فريتز",
-    rank: 12,
-    photo:
-      W +
-      "6/61/Taylor_Fritz_-_Delray_Beach_Open_Final_Round_%28cropped%29.jpg/500px-Taylor_Fritz_-_Delray_Beach_Open_Final_Round_%28cropped%29.jpg",
-    by: "Rickmunroe01",
-    file: FILE + "Taylor_Fritz_-_Delray_Beach_Open_Final_Round_(cropped).jpg",
-  },
-  {
-    id: "tien",
-    name: "Learner Tien",
-    ar: "ليرنر تيين",
-    rank: 17,
-    photo:
-      W +
-      "c/c8/Learner_Tien_%282024_US_Open%29_04.jpg/500px-Learner_Tien_%282024_US_Open%29_04.jpg",
-    by: "Hameltion",
-    file: FILE + "Learner_Tien_(2024_US_Open)_04.jpg",
-  },
-] as const;
+// The players are the event's (public.players, any field since 0053), best seed first; photos and
+// their credits from src/lib/photoCredits.ts (Wikimedia Commons, free licences, credited below).
+function usePlayers(locale: string) {
+  const q = useQuery(playersQuery);
+  return [...(q.data ?? [])]
+    .sort((a, b) => (a.seed ?? 99) - (b.seed ?? 99))
+    .map((p) => ({
+      id: p.id,
+      name: locale === "ar" && p.name_ar ? p.name_ar : p.name,
+      rank: p.rank_snapshot,
+      credit: PHOTO_CREDITS[p.id],
+      photo: p.image_path ?? PHOTO_CREDITS[p.id]?.photo ?? null,
+    }));
+}
 
 const read = (key: string) => {
   try {
@@ -119,10 +63,8 @@ function Vote() {
   const [copied, setCopied] = useState(false);
   // Players whose photo did not load: their tile shrinks to a name card instead of a big empty frame.
   const [noPhoto, setNoPhoto] = useState<ReadonlySet<string>>(new Set());
-  const nameOf = (id: string) => {
-    const p = PLAYERS.find((x) => x.id === id);
-    return p ? (locale === "ar" ? p.ar : p.name) : "";
-  };
+  const PLAYERS = usePlayers(locale);
+  const nameOf = (id: string) => PLAYERS.find((x) => x.id === id)?.name ?? "";
 
   async function vote(id: string) {
     setBusy(id);
@@ -176,10 +118,16 @@ function Vote() {
         </p>
         <h1 className="headline text-5xl sm:text-6xl">{t("vote_title")}</h1>
         <p className="text-sm text-ink-2">{t("vote_sub")}</p>
-        <p className="text-xs text-ink-3">{t("vote_postponed")}</p>
+        {t("vote_postponed") && <p className="text-xs text-ink-3">{t("vote_postponed")}</p>}
       </section>
 
-      <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label={t("vote_title")}>
+      <ul
+        className={cn(
+          "mt-5 grid grid-cols-2 gap-3",
+          PLAYERS.length % 4 === 0 ? "sm:grid-cols-4" : "sm:grid-cols-3",
+        )}
+        aria-label={t("vote_title")}
+      >
         {PLAYERS.map((p) => {
           const mine = choice === p.id;
           return (
@@ -191,15 +139,15 @@ function Vote() {
                 aria-pressed={mine}
                 className={cn(
                   "focus-ring relative flex w-full flex-col justify-end overflow-hidden rounded-2xl border bg-gradient-to-b from-raised to-card p-3 text-start transition",
-                  noPhoto.has(p.id) ? "min-h-20" : "aspect-[4/5]",
+                  !p.photo || noPhoto.has(p.id) ? "min-h-20" : "aspect-[4/5]",
                   mine ? "border-gold ring-2 ring-gold" : "border-line hover:border-ink-3",
                   busy === p.id && "opacity-60",
                 )}
               >
-                {!noPhoto.has(p.id) && (
+                {p.photo && !noPhoto.has(p.id) && (
                   <>
                     <img
-                      src={p.photo}
+                      src={p.photo ?? undefined}
                       alt=""
                       referrerPolicy="no-referrer"
                       onError={() => setNoPhoto((s) => new Set(s).add(p.id))}
@@ -213,9 +161,7 @@ function Vote() {
                     ♛
                   </span>
                 )}
-                <span className="headline relative text-lg leading-tight text-ink">
-                  {locale === "ar" ? p.ar : p.name}
-                </span>
+                <span className="headline relative text-lg leading-tight text-ink">{p.name}</span>
                 <span className="relative text-2xs text-ink-2">
                   {t("world_rank", { rank: p.rank })}
                 </span>
@@ -285,27 +231,11 @@ function Vote() {
       <p className="mt-6 text-2xs text-ink-3">{t("vote_independent")}</p>
       <details className="mt-2 text-2xs text-ink-3">
         <summary className="cursor-pointer">{t("vote_photo_credits")}</summary>
-        <p className="mt-1">
-          {t("vote_photo_licence")}{" "}
-          <a
-            className="underline"
-            href="https://creativecommons.org/licenses/by-sa/4.0/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            CC BY-SA 4.0
-          </a>
-        </p>
-        <ul className="mt-1 space-y-0.5">
-          {PLAYERS.map((p) => (
-            <li key={p.id}>
-              <a className="underline" href={p.file} rel="noopener noreferrer" target="_blank">
-                {locale === "ar" ? p.ar : p.name}
-              </a>
-              : {p.by}
-            </li>
-          ))}
-        </ul>
+        <p className="mt-1">{t("vote_photo_licence")}:</p>
+        <PhotoCreditList
+          ids={PLAYERS.map((p) => p.id)}
+          names={new Map(PLAYERS.map((p) => [p.id, p.name]))}
+        />
       </details>
     </AppShell>
   );

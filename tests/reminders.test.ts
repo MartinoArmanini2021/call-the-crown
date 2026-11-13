@@ -161,7 +161,7 @@ describe("the email", () => {
     );
     expect(e.subject).toBe("Picks close in 2 hours");
     expect(e.text).toContain("Night 2 starts at 19:30 Riyadh time.");
-    expect(e.text).toContain("You haven't called 1 of tonight's 2 matches yet.");
+    expect(e.text).toContain("You haven't called 1 of the 2 matches yet.");
     expect(e.text).toContain("You're #3 of 8 in Office <Crew>.");
     expect(e.html).toContain("Office &lt;Crew&gt;");
     expect(e.html).toContain('dir="ltr"');
@@ -182,6 +182,15 @@ describe("the email", () => {
     expect(e.subject).toBe("تُغلق التوقعات بعد ساعتين");
     expect(e.html).toContain('dir="rtl"');
     expect(e.html).toContain('lang="ar"');
-    expect(e.text).toContain("تبدأ الليلة 2 الساعة 19:30 بتوقيت الرياض.");
+    expect(e.text).toContain("الليلة 2: أول مباراة الساعة 19:30 بتوقيت الرياض.");
+  });
+  test("Turin: the event's city and day word", async () => {
+    const e = await renderEmail(cand(U1), cfg(), "Europe/Rome", {
+      city: "Turin",
+      city_ar: "تورينو",
+      session: "Day",
+      session_ar: "اليوم",
+    });
+    expect(e.text).toMatch(/^Day 2 starts at \d\d:\d\d Turin time\./);
   });
 });
