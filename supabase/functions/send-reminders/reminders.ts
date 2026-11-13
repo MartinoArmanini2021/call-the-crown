@@ -76,7 +76,14 @@ const esc = (s: string) =>
 
 /** The email for one fan and one night. */
 /** Where and what a playing day is called (event_config.branding; Riyadh by default, as before). */
-export type Place = { city: string; city_ar: string; session: string; session_ar: string };
+/** `button`: the event's highlight colour (branding.colors.gold) for the email's one button. */
+export type Place = {
+  city: string;
+  city_ar: string;
+  session: string;
+  session_ar: string;
+  button?: string;
+};
 const RIYADH: Place = { city: "Riyadh", city_ar: "الرياض", session: "Night", session_ar: "الليلة" };
 
 export async function renderEmail(
@@ -131,7 +138,7 @@ export async function renderEmail(
 ${p(esc(line1))}
 ${p(esc(line2))}
 ${league ? p(esc(league)) : ""}
-<p style="margin:20px 0"><a href="${esc(picks)}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#f2c14e;color:#111;font-weight:700;text-decoration:none">${esc(copy.button)}</a></p>
+<p style="margin:20px 0"><a href="${esc(picks)}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:${/^#[0-9a-f]{6}$/i.test(place.button ?? "") ? place.button : "#f2c14e"};color:#111;font-weight:700;text-decoration:none">${esc(copy.button)}</a></p>
 <p style="margin:24px 0 0;font-size:13px;color:#555;overflow-wrap:anywhere;word-break:break-all">${esc(fill(copy.footer, { unsub: "" }))}<a href="${esc(unsubPage)}" style="color:#555">${esc(unsubPage)}</a></p>
 </body>
 </html>

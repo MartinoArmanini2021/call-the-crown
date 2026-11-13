@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
     place: async () => {
       const b = (
         must(await client.from("event_config").select("branding").single()) as {
-          branding: Record<string, string | undefined>;
+          branding: Record<string, string | undefined> & { colors?: Record<string, string> };| undefined>;
         }
       ).branding;
       return {
@@ -52,6 +52,7 @@ Deno.serve(async (req) => {
         city_ar: b.city_ar ?? b.city ?? "الرياض",
         session: b.session ?? "Night",
         session_ar: b.session_ar ?? "الليلة",
+        button: b.colors?.gold,
       };
     },
     claim: async (u, n, dry) =>

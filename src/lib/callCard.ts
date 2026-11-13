@@ -202,7 +202,7 @@ export const CARD_W = 1080;
 export const CARD_H = 1350;
 
 type Tokens = Record<
-  "bg" | "card" | "raised" | "text" | "text2" | "text3" | "gold" | "line" | "accent",
+  "bg" | "card" | "raised" | "text" | "text2" | "text3" | "gold" | "line" | "accent" | "accentDeep",
   string
 >;
 /** Colours come from the app's CSS tokens (styles.css, or the event's overrides). */
@@ -210,15 +210,16 @@ function tokens(): Tokens {
   const css = getComputedStyle(document.documentElement);
   const v = (name: string, fallback: string) => css.getPropertyValue(name).trim() || fallback;
   return {
-    bg: v("--bg", "#0b0b0b"),
-    card: v("--card", "#181818"),
-    raised: v("--raised", "#242424"),
+    bg: v("--bg", "#051224"),
+    card: v("--card", "#0b1e38"),
+    raised: v("--raised", "#14305a"),
     text: v("--text", "#ffffff"),
-    text2: v("--text-2", "#c9c9c9"),
-    text3: v("--text-3", "#9c9c9c"),
-    gold: v("--gold", "#f2c14e"),
+    text2: v("--text-2", "#c5d0e0"),
+    text3: v("--text-3", "#8c9cb8"),
+    gold: v("--gold", "#0ad4be"),
     line: v("--line", "rgb(255 255 255 / 0.08)"),
-    accent: v("--accent", "#b20710"),
+    accent: v("--accent", "#1652f0"),
+    accentDeep: v("--accent-deep", "#171c8f"),
   };
 }
 
@@ -561,9 +562,14 @@ function drawMark(ctx: CanvasRenderingContext2D, x: number, y: number, size: num
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(size / 100, size / 100);
+  // the brand gradient, bottom-left to top-right, as the header's (AppShell Wordmark)
+  const ball = ctx.createLinearGradient(50 - 32 * 0.7, 44 + 32 * 0.9, 50 + 32 * 0.7, 44 - 32 * 0.9);
+  ball.addColorStop(0, c.accentDeep);
+  ball.addColorStop(0.5, c.accent);
+  ball.addColorStop(1, c.gold);
   ctx.beginPath();
   ctx.arc(50, 44, 32, 0, Math.PI * 2);
-  ctx.fillStyle = c.accent;
+  ctx.fillStyle = ball;
   ctx.fill();
   ctx.strokeStyle = "#fff";
   ctx.lineWidth = 4.5;

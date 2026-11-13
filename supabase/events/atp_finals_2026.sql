@@ -49,9 +49,10 @@ insert into public.event_config (
      "session_ar": "اليوم",
      "vote_eyebrow_ar": "بطولة الماسترز الختامية · تورينو · 15–22 نوفمبر",
      "logo_path": null,
-     "colors": {"bg": "#0b0b0b", "card": "#181818", "raised": "#242424", "accent": "#e50914",
-                "accent_deep": "#b20710", "accent_text": "#ff4f57", "text": "#ffffff",
-                "text_secondary": "#c9c9c9", "text_muted": "#9c9c9c"},
+     "colors": {"bg": "#051224", "card": "#0b1e38", "raised": "#14305a", "accent": "#1652f0",
+                "accent_deep": "#171c8f", "accent_text": "#6fa0ff", "text": "#ffffff",
+                "text_secondary": "#c5d0e0", "text_muted": "#8c9cb8",
+                "gold": "#0ad4be", "good": "#a3e635", "medal": "#f2c14e"},
      "fonts": {"headline": "Barlow Condensed", "display": "Urbanist", "body": "Plus Jakarta Sans"}
    }',
   '[]',                                        -- no prizes: bragging rights only (0019)

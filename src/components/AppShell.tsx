@@ -34,6 +34,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
+        <div aria-hidden className="brand-rule absolute inset-x-0 -bottom-px h-0.5" />
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-3 px-4 sm:h-20">
           <Link to="/" className="focus-ring flex min-w-0 items-center gap-2 rounded">
             {logo ? (
@@ -118,8 +119,10 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
  * stacked lines, all but the last word in white on top ("THE FINAL") and the last word in gold
  * underneath ("PREDICTION"), its letters spread to the same width so the two lines read as one block.
  * Arabic letters join, so they are never spread apart: centred instead.
- * The mark (13 Nov 2026, the rename to "The Final Prediction"): a red tennis ball as a crystal ball,
- * on a gold stand, with a gold sparkle (also public/favicon.svg and drawMark in src/lib/callCard.ts).
+ * The mark (13 Nov 2026, the rename to "The Final Prediction"): a tennis ball as a crystal ball, in the
+ * brand gradient (deep accent to accent to highlight: indigo, electric blue, aqua for the ATP Finals),
+ * on a stand with a sparkle in the highlight colour (also public/favicon.svg and drawMark in
+ * src/lib/callCard.ts).
  */
 function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {
   const top = words.slice(0, -1).join(" ");
@@ -127,7 +130,14 @@ function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {
   return (
     <span className="flex items-center gap-2">
       <svg viewBox="0 0 100 100" aria-hidden className="h-10 w-10 shrink-0 sm:h-12 sm:w-12">
-        <circle cx="50" cy="44" r="32" fill="var(--accent)" />
+        <defs>
+          <linearGradient id="brand-ball" x1="0.15" y1="0.95" x2="0.85" y2="0.05">
+            <stop offset="0" stopColor="var(--accent-deep)" />
+            <stop offset="0.5" stopColor="var(--accent)" />
+            <stop offset="1" stopColor="var(--gold)" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="44" r="32" fill="url(#brand-ball)" />
         <path
           d="M26.4 22.4 C42 35.5 42 52.5 26.4 65.6"
           fill="none"

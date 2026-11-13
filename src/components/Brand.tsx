@@ -72,4 +72,4 @@ export function SponsorSlot({ slot, className }: { slot: Slot["slot"]; className
 }
 
 /** Medal colours for the podium's places 1-3. */
-export const MEDAL = ["bg-gold", "bg-silver", "bg-bronze"] as const;
+export const MEDAL = ["bg-medal", "bg-silver", "bg-bronze"] as const;

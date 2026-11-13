@@ -40,7 +40,8 @@ insert into public.event_config (
      "logo_path": null,
      "colors": {"bg": "#0b0b0b", "card": "#181818", "raised": "#242424", "accent": "#e50914",
                 "accent_deep": "#b20710", "accent_text": "#ff4f57", "text": "#ffffff",
-                "text_secondary": "#c9c9c9", "text_muted": "#9c9c9c"},
+                "text_secondary": "#c9c9c9", "text_muted": "#9c9c9c",
+                "gold": "#f2c14e", "good": "#3ccf7a", "medal": "#f2c14e"},
      "fonts": {"headline": "Barlow Condensed", "display": "Urbanist", "body": "Plus Jakarta Sans"}
    }',
   '[]',                                        -- no prizes: bragging rights only (0019)

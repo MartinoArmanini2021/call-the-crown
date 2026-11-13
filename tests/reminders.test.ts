@@ -193,4 +193,17 @@ describe("the email", () => {
     });
     expect(e.text).toMatch(/^Day 2 starts at \d\d:\d\d Turin time\./);
   });
+  test("the button takes the event's highlight colour, and only a plain hex colour", async () => {
+    const turin = { city: "Turin", city_ar: "تورينو", session: "Day", session_ar: "اليوم" };
+    const aqua = await renderEmail(cand(U1), cfg(), "Europe/Rome", { ...turin, button: "#0ad4be" });
+    expect(aqua.html).toContain("background:#0ad4be;");
+    const odd = await renderEmail(cand(U1), cfg(), "Europe/Rome", {
+      ...turin,
+      button: "red;background-image:url(x)",
+    });
+    expect(odd.html).toContain("background:#f2c14e;");
+    expect(odd.html).not.toContain("url(x)");
+    const riyadh = await renderEmail(cand(U1), cfg(), "Asia/Riyadh");
+    expect(riyadh.html).toContain("background:#f2c14e;");
+  });
 });

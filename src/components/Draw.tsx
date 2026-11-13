@@ -327,7 +327,7 @@ function StageLines({
           strokeDasharray={l.tone === "todo" ? "4 4" : undefined}
           stroke={
             l.tone === "final"
-              ? "rgb(242 193 78 / 0.55)"
+              ? "color-mix(in srgb, var(--gold) 55%, transparent)"
               : l.tone === "done"
                 ? "rgb(255 255 255 / 0.35)"
                 : "rgb(255 255 255 / 0.18)"

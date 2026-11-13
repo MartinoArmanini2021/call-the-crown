@@ -6,22 +6,27 @@
  * src/config/eventConfig.tsx overwrites each one from event_config.branding, so a new licensee
  * changes config, not CSS. Components use only these names.
  */
+/* The ATP Finals look (Tino, 13 Nov 2026: "branding similar to the Nitto ATP Finals"): their palette
+   (midnight navy, electric blue, indigo, aqua), none of their marks. --gold is the highlight colour
+   (aqua here, gold for Riyadh); --medal stays a real gold for first place; --good is lime so "correct"
+   never reads as the aqua highlight. The Six Kings look is the colours in sixkings_2026.sql. */
 :root {
-  --bg: #0b0b0b;
-  --card: #181818;
-  --raised: #242424;
-  --accent: #e50914;
-  --accent-deep: #b20710;
-  --accent-text: #ff4f57;
+  --bg: #051224;
+  --card: #0b1e38;
+  --raised: #14305a;
+  --accent: #1652f0;
+  --accent-deep: #171c8f;
+  --accent-text: #6fa0ff;
   --text: #ffffff;
-  --text-2: #c9c9c9;
-  --text-3: #9c9c9c;
+  --text-2: #c5d0e0;
+  --text-3: #8c9cb8;
   --line: rgb(255 255 255 / 0.08);
-  --good: #3ccf7a;
-  --gold: #f2c14e;
+  --good: #a3e635;
+  --gold: #0ad4be;
+  --medal: #f2c14e;
   --silver: #c9c9c9;
   --bronze: #c08457;
-  /* the two players of a match: royal violet and champagne gold, the colours of kings (distinct for colour-blind fans, apart from brand red and the green for "correct") */
+  /* the two players of a match: royal violet and champagne gold, the colours of kings (distinct for colour-blind fans, apart from the brand accent and the colour for "correct") */
   --p1: #b794ff;
   --p2: #ecd9a4;
   --font-headline: "Barlow Condensed", "Arial Narrow", sans-serif;
@@ -43,6 +48,7 @@
   --color-line: var(--line);
   --color-good: var(--good);
   --color-gold: var(--gold);
+  --color-medal: var(--medal);
   --color-silver: var(--silver);
   --color-bronze: var(--bronze);
   --color-p1: var(--p1);
@@ -119,7 +125,7 @@ body {
     50% {
       box-shadow:
         0 0 0 1px var(--accent) inset,
-        0 0 14px rgb(229 9 20 / 0.45);
+        0 0 14px color-mix(in srgb, var(--accent) 45%, transparent);
     }
   }
 }
@@ -155,7 +161,7 @@ body {
   }
   @keyframes skg-crown {
     50% {
-      filter: drop-shadow(0 0 10px rgb(242 193 78 / 0.7));
+      filter: drop-shadow(0 0 10px color-mix(in srgb, var(--gold) 70%, transparent));
     }
   }
 }
@@ -166,15 +172,20 @@ body {
 .skg-final {
   background: linear-gradient(
     135deg,
-    rgb(242 193 78 / 0.95),
-    rgb(242 193 78 / 0.25) 35%,
-    rgb(242 193 78 / 0.25) 65%,
-    rgb(242 193 78 / 0.95)
+    color-mix(in srgb, var(--gold) 95%, transparent),
+    color-mix(in srgb, var(--gold) 25%, transparent) 35%,
+    color-mix(in srgb, var(--gold) 25%, transparent) 65%,
+    color-mix(in srgb, var(--gold) 95%, transparent)
   );
 }
 .skg-final-inner {
   background:
-    radial-gradient(120% 75% at 50% 0%, rgb(242 193 78 / 0.13), transparent 62%), var(--card);
+    radial-gradient(
+      120% 75% at 50% 0%,
+      color-mix(in srgb, var(--gold) 13%, transparent),
+      transparent 62%
+    ),
+    var(--card);
 }
 @media (prefers-reduced-motion: no-preference) {
   .skg-final-inner::after {
@@ -185,7 +196,7 @@ body {
     background: linear-gradient(
       105deg,
       transparent 35%,
-      rgb(255 236 170 / 0.07) 50%,
+      rgb(255 255 255 / 0.07) 50%,
       transparent 65%
     );
     transform: translateX(-100%);
@@ -200,4 +211,10 @@ body {
       transform: translateX(100%);
     }
   }
+}
+
+/* The neon line under the header (AppShell, 13 Nov 2026): the brand gradient, deep accent to accent to
+   highlight, as the ATP Finals graphics run indigo to blue to aqua. */
+.brand-rule {
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent) 40%, var(--gold));
 }

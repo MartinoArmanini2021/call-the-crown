@@ -19,6 +19,9 @@ const COLOR_VARS: Record<string, string> = {
   text_muted: "--text-3",
   p1: "--p1",
   p2: "--p2",
+  gold: "--gold", // the highlight colour (aqua for the ATP Finals, gold for Riyadh)
+  good: "--good",
+  medal: "--medal",
 };
 const SAFE_COLOR = /^#[0-9a-f]{3,8}$/i;
 

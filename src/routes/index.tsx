@@ -51,7 +51,7 @@ function Landing() {
 
   return (
     <AppShell>
-      <section className="relative overflow-hidden rounded-3xl border border-line bg-[radial-gradient(120%_80%_at_100%_0%,rgb(229_9_20/0.45),transparent_60%),linear-gradient(160deg,#1d0a0b,var(--bg)_70%)] px-5 pb-6 pt-7">
+      <section className="relative overflow-hidden rounded-3xl border border-line bg-[radial-gradient(120%_80%_at_100%_0%,color-mix(in_srgb,var(--accent)_45%,transparent),transparent_60%),linear-gradient(160deg,color-mix(in_srgb,var(--accent-deep)_40%,var(--bg)),var(--bg)_70%)] px-5 pb-6 pt-7">
         {inLocale(event.branding, "event_line", locale) && (
           <p className="text-2xs font-semibold uppercase tracking-[0.16em] text-ink-2">
             {inLocale(event.branding, "event_line", locale)}
