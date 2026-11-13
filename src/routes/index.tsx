@@ -81,7 +81,11 @@ function Landing() {
               .sort((a, b) => (a.seed ?? 99) - (b.seed ?? 99))
               .map((p) => (
                 <li key={p.id}>
-                  <Portrait player={p} name={playerName(p, locale)} />
+                  <Portrait
+                    player={p}
+                    name={playerName(p, locale)}
+                    dense={(players.data ?? []).length % 4 === 0}
+                  />
                 </li>
               ))}
           </ul>
@@ -160,7 +164,16 @@ function Landing() {
 }
 
 /** A player as a tile with their name: the organiser's photo behind it once photos arrive. */
-function Portrait({ player, name }: { player: Player; name: string }) {
+/** dense: eight players, four to a row (ATP Finals): a taller tile, the surname only. */
+function Portrait({
+  player,
+  name,
+  dense = false,
+}: {
+  player: Player;
+  name: string;
+  dense?: boolean;
+}) {
   // A photo that will not load (ATP stopped serving its headshots to other sites, Oct 2026) leaves the
   // name alone in the tile, never a broken-image icon.
   const [failed, setFailed] = useState(false);
@@ -169,7 +182,10 @@ function Portrait({ player, name }: { player: Player; name: string }) {
   const first = name.slice(0, name.length - last.length).trim();
   return (
     <div
-      className="relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-lg border border-line bg-gradient-to-b from-raised to-card px-2 pb-1.5"
+      className={cn(
+        "relative flex flex-col justify-end overflow-hidden rounded-lg border border-line bg-gradient-to-b from-raised to-card pb-1.5",
+        dense ? "aspect-[3/4] px-1.5" : "aspect-[4/3] px-2",
+      )}
       title={name}
     >
       {img && (
@@ -178,13 +194,18 @@ function Portrait({ player, name }: { player: Player; name: string }) {
             src={img}
             alt=""
             onError={() => setFailed(true)}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-top"
           />
           <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
         </>
       )}
-      {first && <span className="relative truncate text-2xs text-ink-2">{first}</span>}
-      <span className="headline relative line-clamp-2 break-words pb-0.5 text-base leading-snug text-ink sm:text-lg">
+      {first && !dense && <span className="relative truncate text-2xs text-ink-2">{first}</span>}
+      <span
+        className={cn(
+          "headline relative pb-0.5 leading-snug text-ink",
+          dense ? "truncate text-sm sm:text-base" : "line-clamp-2 break-words text-base sm:text-lg",
+        )}
+      >
         {last}
       </span>
     </div>
@@ -240,7 +261,7 @@ function ScoringExample({ name }: { name: string }) {
         </li>
         <li className="mt-1 flex justify-between gap-3 border-t border-line pt-2 font-semibold">
           <span>{t("example_total")}</span>
-          <b className="num text-accent-text">{wp.QF + sp.QF + pe}</b>
+          <b className="num text-accent-text">{wp[first] + sp[first] + pe}</b>
         </li>
       </ul>
     </section>

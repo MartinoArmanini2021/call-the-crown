@@ -27,7 +27,8 @@ type Props = {
   onSelect: (m: Match) => void;
 };
 
-type Stage = { key: string; label: string; rounds: readonly string[]; grp?: string };
+// tab = the short name on the stage tab (four tabs on a phone: "McEnroe", "Lendl", "Semis", "Final")
+type Stage = { key: string; label: string; tab: string; rounds: readonly string[]; grp?: string };
 const KNOCKOUT = [
   { key: "bracket_qf", rounds: ["QF"] },
   { key: "bracket_sf", rounds: ["SF"] },
@@ -48,12 +49,18 @@ export function Draw(props: Props) {
     ...groups.map((g) => ({
       key: `group:${g}`,
       label: t("group_name", { group: g }),
+      tab: g,
       rounds: ["RR"],
       grp: g,
     })),
     ...KNOCKOUT.filter((k) =>
       matches.some((m) => (k.rounds as readonly string[]).includes(m.round)),
-    ).map((k) => ({ key: k.key, label: t(k.key), rounds: k.rounds })),
+    ).map((k) => ({
+      key: k.key,
+      label: t(k.key),
+      tab: groups.length > 0 ? t(`${k.key}_short` as "bracket_sf_short") : t(k.key),
+      rounds: k.rounds,
+    })),
   ];
   const stages = plan.map((st) => {
     const ms = matches
@@ -161,7 +168,7 @@ export function Draw(props: Props) {
               >
                 {s.done && <span className="text-good">✓</span>}
                 {last && !s.done && <Crown className="h-3.5 w-3.5 shrink-0" />}
-                <span className="truncate">{s.label}</span>
+                <span className="truncate">{s.tab}</span>
               </span>
               <span className="block text-2xs text-ink-3">
                 {s.first ? localDay(s.first, event.timezone, locale) : ""}
@@ -206,7 +213,7 @@ export function Draw(props: Props) {
             aria-label={s.label}
             className={cn(
               "relative z-10 flex w-[84%] shrink-0 snap-start flex-col gap-3 sm:w-auto",
-              s.grp ? "justify-start" : "justify-around",
+              s.grp || groups.length > 0 ? "justify-start" : "justify-around",
             )}
           >
             {s.grp && <GroupTable grp={s.grp} {...props} />}

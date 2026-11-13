@@ -173,6 +173,15 @@ async function pollWindow(from: string) {
     await pollAsService(db, freshAdapter());
   }
 }
+// DUMP=<folder>: write the public tables (event_config, players, matches) at two moments, for screenshots
+async function dump(tag: string) {
+  const dir = process.env.DUMP;
+  if (!dir) return;
+  const { writeFileSync, mkdirSync } = await import("node:fs");
+  mkdirSync(dir, { recursive: true });
+  for (const t of ["event_config", "players", "matches"])
+    writeFileSync(join(dir, `${tag}-${t}.json`), JSON.stringify(await q(`select * from public.${t} order by 1`)));
+}
 const status = async () =>
   Object.fromEntries(
     (
@@ -220,6 +229,7 @@ claim(
   ev,
 );
 
+await dump("start");
 section("2. Fans sign up and pick day 1");
 const fans = [
   "00000000-0000-0000-0000-00000000a001",
@@ -344,6 +354,7 @@ claim(
   lday,
 );
 
+await dump("midweek");
 section("5. Days 2 and 3");
 groupResult("John McEnroe", "zverev", "fils", [
   [6, 3],
@@ -483,6 +494,7 @@ claim(
   f3,
 );
 
+await dump("end");
 section("7. The table");
 const board = await q<{ display_name: string; points: number; rank: number }>(
   "select p.display_name, s.points, s.rank from public.standings s join public.profiles p using (user_id) order by s.rank",
