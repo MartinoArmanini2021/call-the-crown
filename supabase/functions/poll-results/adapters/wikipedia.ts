@@ -127,6 +127,105 @@ export function parseBracket(wikitext: string): Map<string, ParsedMatch> {
   return out;
 }
 
+// ---------------------------------------------------------------------------------------------------
+// Round-robin groups (ATP Finals, {{4TeamRR-TennisWide}}; added 13 Nov 2026). One group per section
+// headed "=== … Group ===". Players come from "| team-N=" lines; a match is the pair of cells "NvM" and
+// "MvN", several to a line: "|color-row-1= |1v2='''6–7<sup>(2–7)</sup>, 7–5, 6–3''' |1v3=…".
+//   the winner's cell is in bold; the cell reads from its row's player (row N's games first)
+//   both cells of a pair must tell the same story (mirrored), or the reading is "unknown"
+//   a cell with games and no bold on either side → live; empty → scheduled
+// Match refs: "<group heading text>:<N>v<M>" with N < M, e.g. "John McEnroe Group:1v4".
+// ---------------------------------------------------------------------------------------------------
+const GROUP_HEADING = /^===\s*(.*?Group)\s*===\s*$/;
+const RR_TEAM = /^\|\s*team-(\d)\s*=(.*)$/;
+const RR_CELL = /\|\s*(\d)v(\d)\s*=/g;
+
+function rrSets(raw: string): { p1_games: number; p2_games: number }[] {
+  const text = stripMarkup(raw).replace(/[–—−]/g, "-");
+  const out: { p1_games: number; p2_games: number }[] = [];
+  for (const m of text.matchAll(/(\d{1,2})\s*-\s*(\d{1,2})/g)) out.push({ p1_games: Number(m[1]), p2_games: Number(m[2]) });
+  return out;
+}
+
+/** Every round-robin match on the page, keyed "<group>:<i>v<j>". Pure: no network. */
+export function parseRoundRobin(wikitext: string): Map<string, ParsedMatch> {
+  const out = new Map<string, ParsedMatch>();
+  let group: string | null = null;
+  let teams = new Map<number, Cell>();
+  let cells = new Map<string, Cell>();
+
+  const flush = () => {
+    if (!group) return;
+    for (let i = 1; i <= 4; i++) {
+      for (let j = i + 1; j <= 4; j++) {
+        const t1 = team(teams.get(i));
+        const t2 = team(teams.get(j));
+        const a = cells.get(`${i}v${j}`);
+        const b = cells.get(`${j}v${i}`);
+        if (!t1.ref || !t2.ref) continue;
+        const ref = `${group}:${i}v${j}`;
+        const lines = [teams.get(i)!.line, teams.get(j)!.line, ...(a ? [a.line] : []), ...(b && b.line !== a?.line ? [b.line] : [])];
+        const aSets = rrSets(a?.raw ?? "");
+        const bSets = rrSets(b?.raw ?? "");
+        const aBold = (a?.raw ?? "").includes("'''");
+        const bBold = (b?.raw ?? "").includes("'''");
+        const anyRaw = `${a?.raw ?? ""} ${b?.raw ?? ""}`;
+        const walkover = WALKOVER.test(anyRaw);
+        const retired = RETIRED.test(anyRaw);
+        // the mirror must agree when both cells carry games
+        const mirrored = bSets.map((s) => ({ p1_games: s.p2_games, p2_games: s.p1_games }));
+        const disagree = aSets.length > 0 && bSets.length > 0 && JSON.stringify(aSets) !== JSON.stringify(mirrored);
+        const sets = aSets.length > 0 ? aSets : mirrored;
+
+        let status: ResultStatus;
+        let winner: string | null = null;
+        if (disagree || (aBold && bBold)) status = "unknown";
+        else if (aBold || bBold) {
+          winner = aBold ? t1.ref : t2.ref;
+          status = walkover ? "walkover" : retired ? "retired" : "completed";
+        } else status = sets.length > 0 || walkover || retired ? "live" : "scheduled";
+
+        out.set(ref, {
+          ref,
+          result: { status, players: [t1.ref, t2.ref], winner, set_scores: status === "walkover" ? [] : sets },
+          lines,
+        });
+      }
+    }
+  };
+
+  for (const rawLine of wikitext.split("\n")) {
+    const line = rawLine.trim();
+    const h = GROUP_HEADING.exec(line);
+    if (h) {
+      flush();
+      group = stripMarkup(h[1]!.replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, "$1")).replace(/\s+/g, " ");
+      teams = new Map();
+      cells = new Map();
+      continue;
+    }
+    if (/^==[^=]/.test(line)) {
+      flush();
+      group = null;
+      continue;
+    }
+    if (!group) continue;
+    const t = RR_TEAM.exec(line);
+    if (t) {
+      teams.set(Number(t[1]), { raw: t[2] ?? "", line });
+      continue;
+    }
+    const marks = [...line.matchAll(RR_CELL)];
+    marks.forEach((m, k) => {
+      const start = m.index! + m[0].length;
+      const end = k + 1 < marks.length ? marks[k + 1]!.index! : line.length;
+      cells.set(`${m[1]}v${m[2]}`, { raw: line.slice(start, end).trim(), line });
+    });
+  }
+  flush();
+  return out;
+}
+
 type Page = { http_status: number; title: string; revid?: number; timestamp?: string; content?: string; error?: string };
 
 export class WikipediaAdapter implements ResultsAdapter {
@@ -185,7 +284,7 @@ export class WikipediaAdapter implements ResultsAdapter {
       url: page.revid ? `${this.host}/w/index.php?oldid=${page.revid}` : null,
     };
     if (!page.content) return { http_status: page.http_status, raw: { ...source, error: page.error }, normalised: unknown };
-    const match = parseBracket(page.content).get(matchRef);
+    const match = parseBracket(page.content).get(matchRef) ?? parseRoundRobin(page.content).get(matchRef);
     if (!match) return { http_status: 200, raw: { ...source, error: `no ${matchRef} in the bracket` }, normalised: unknown };
     // raw = exactly the bracket lines that produced this reading, plus the revision to re-check them
     return { http_status: 200, raw: { ...source, lines: match.lines }, normalised: { match_ref: matchRef, ...match.result } };
