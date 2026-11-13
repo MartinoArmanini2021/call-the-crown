@@ -329,6 +329,28 @@ export const ar: Record<StringKey, string> = {
 
   // how to play
   htp_title: "طريقة اللعب",
+  // the visual How to play (13 Nov 2026)
+  htp_steps_title: "كيف تلعب",
+  htp_example_on: "مثال",
+  htp_step1: "اختر الفائز",
+  htp_step1_note: "يظهر لكل لاعب كم يساوي فوزه.",
+  htp_step2: "اختر النتيجة",
+  htp_step2_note: "مجموعة بمجموعة: مجموعتان أو ثلاث.",
+  htp_step3: "تُلعب المباراة",
+  htp_step3_note: "تُغلق التوقعات مع أول ضربة. ثم نقارن.",
+  htp_step4: "تحصد النقاط",
+  htp_step4_note: "التوقع المثالي بمجموعتين هنا يساوي {most}.",
+  htp_step4_exact: "المجموعة 1 صحيحة تماماً",
+  htp_upset_short: "اختر اللاعب الأقل تصنيفاً: إن فاز تحصد نقاطاً أكثر.",
+  htp_wins: "فوز {name}",
+  htp_road_title: "من المجموعات إلى اللقب",
+  htp_road_note: "الأول والثاني في كل مجموعة يتأهلان إلى نصف النهائي. الأدوار اللاحقة تساوي أكثر.",
+  htp_road_pts: "{n} نقطة للفوز",
+  htp_friends_title: "العب مع أصدقائك",
+  htp_friends_note: "أنشئ دورياً وشارك رمزه. حين تبدأ المباراة ترى توقعات الجميع.",
+  htp_friend_a: "مروان",
+  htp_friend_b: "سارة",
+  htp_rules_title: "كل القواعد",
   htp_enter: "سجّل توقعاً",
   htp_enter_1: "اختر من سيفوز بالمباراة.",
   htp_enter_2:

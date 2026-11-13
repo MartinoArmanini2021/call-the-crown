@@ -348,6 +348,29 @@ export const en = {
 
   // how to play
   htp_title: "How to play",
+  // the visual How to play (13 Nov 2026)
+  htp_steps_title: "How it works",
+  htp_example_on: "Example",
+  htp_step1: "Pick the winner",
+  htp_step1_note: "Each player shows what his win is worth.",
+  htp_step2: "Pick the score",
+  htp_step2_note: "Set by set: two sets or three.",
+  htp_step3: "The match is played",
+  htp_step3_note: "Picks close at the first ball. Then we compare.",
+  htp_step4: "You score",
+  htp_step4_note: "A perfect two-set pick here would be worth {most}.",
+  htp_step4_exact: "Set 1 exactly right",
+  htp_upset_short: "Pick the lower-ranked player: if he wins, you score more.",
+  htp_wins: "{name} wins",
+  htp_road_title: "From the groups to the title",
+  htp_road_note: "The top two of each group reach the semi-finals. Later rounds are worth more.",
+  htp_road_pts: "{n} pts a win",
+  htp_friends_title: "Play with friends",
+  htp_friends_note:
+    "Make a league and share its code. Once a match starts, you see everyone's pick.",
+  htp_friend_a: "Marco",
+  htp_friend_b: "Giulia",
+  htp_rules_title: "All the rules",
   htp_enter: "Make a pick",
   htp_enter_1: "Pick who will win the match.",
   htp_enter_2:

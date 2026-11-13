@@ -354,6 +354,30 @@ export const it: Record<StringKey, string> = {
 
   // how to play
   htp_title: "Come si gioca",
+  // the visual How to play (13 Nov 2026)
+  htp_steps_title: "Come funziona",
+  htp_example_on: "Esempio",
+  htp_step1: "Scegli il vincitore",
+  htp_step1_note: "Ogni giocatore mostra quanto vale la sua vittoria.",
+  htp_step2: "Scegli il punteggio",
+  htp_step2_note: "Set per set: due o tre set.",
+  htp_step3: "Si gioca la partita",
+  htp_step3_note: "I pronostici si chiudono al primo punto. Poi si confronta.",
+  htp_step4: "Fai punti",
+  htp_step4_note: "Un pronostico perfetto in due set qui varrebbe {most}.",
+  htp_step4_exact: "Set 1 esatto",
+  htp_upset_short: "Scegli il giocatore più in basso in classifica: se vince, fai più punti.",
+  htp_wins: "Vince {name}",
+  htp_road_title: "Dai gironi al titolo",
+  htp_road_note:
+    "I primi due di ogni girone vanno in semifinale. Più si va avanti, più valgono i punti.",
+  htp_road_pts: "{n} pt a vittoria",
+  htp_friends_title: "Gioca con gli amici",
+  htp_friends_note:
+    "Crea una lega e condividi il codice. Quando una partita inizia, vedi i pronostici di tutti.",
+  htp_friend_a: "Marco",
+  htp_friend_b: "Giulia",
+  htp_rules_title: "Tutte le regole",
   htp_enter: "Fai un pronostico",
   htp_enter_1: "Scegli chi vincerà la partita.",
   htp_enter_2:

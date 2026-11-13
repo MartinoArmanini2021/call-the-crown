@@ -8,6 +8,7 @@ import type { Round } from "@/lib/api";
 import { surname } from "@/lib/format";
 import { creditFor } from "@/lib/photoCredits";
 import { PhotoCreditList } from "@/components/PhotoCredits";
+import { HowItWorks } from "@/components/HowItWorks";
 
 export const Route = createFileRoute("/how-to-play")({ component: HowToPlay });
 
@@ -87,20 +88,14 @@ function HowToPlay() {
 
   return (
     <AppShell>
-      <PageTitle title={t("htp_title")} sub={t("landing_sentence", { n: all.length || 6 })} />
+      <PageTitle title={t("htp_title")} sub={t("landing_one_line", { n: all.length || 6 })} />
 
-      <h2 className={h2}>{t("htp_enter")}</h2>
-      <ol className="card space-y-3 p-4 text-sm text-ink-2">
-        {[t("htp_enter_1"), t("htp_enter_2", { scores }), t("htp_enter_3")].map((text, i) => (
-          <li key={i} className="grid grid-cols-[26px_1fr] items-start gap-2.5">
-            <span className="num grid h-[26px] w-[26px] place-items-center rounded-full bg-accent text-xs text-ink">
-              {i + 1}
-            </span>
-            <span>{text}</span>
-          </li>
-        ))}
-      </ol>
-      <p className="mt-3 text-sm text-ink-2">{t("htp_lock")}</p>
+      {/* shown, not told (13 Nov 2026): a real match walked through, then the road and friends */}
+      <h2 className={h2}>{t("htp_steps_title")}</h2>
+      <HowItWorks matches={all} byPlayer={byPlayer} />
+
+      <h2 className="headline mb-1 mt-12 text-3xl">{t("htp_rules_title")}</h2>
+      <p className="text-sm text-ink-2">{t("htp_lock")}</p>
 
       <h2 className={h2}>{t("htp_scoring")}</h2>
       <p className="mb-3 text-sm text-ink-2">{t("htp_scoring_intro")}</p>
@@ -134,28 +129,6 @@ function HowToPlay() {
           </tbody>
         </table>
       </div>
-
-      <h2 className={h2}>{t("htp_example_title")}</h2>
-      <section className="card p-4 text-sm">
-        <div className="grid grid-cols-2 gap-2">
-          <p className="num rounded-xl bg-raised px-3 py-2">
-            {t("htp_example_pick", { a: sfPlayer })}
-          </p>
-          <p className="num rounded-xl bg-raised px-3 py-2">
-            {t("htp_example_result", { a: sfPlayer })}
-          </p>
-        </div>
-        <ul className="mt-3 grid gap-1.5">
-          {line(true, t("htp_example_winner"), sf)}
-          {line(true, t("htp_example_sets"), sfSets)}
-          {line(true, t("htp_example_exact"), 2 * e)}
-          {line(false, t("htp_example_miss"), 0)}
-          <li className="mt-1 flex justify-between gap-3 border-t border-line pt-2 font-semibold">
-            <span>{t("htp_example_total")}</span>
-            <b className="num text-accent-text">{sf + sfSets + 2 * e}</b>
-          </li>
-        </ul>
-      </section>
 
       <h2 className={h2}>{t("htp_upset_title")}</h2>
       <div className="card space-y-2 p-4 text-sm text-ink-2">
