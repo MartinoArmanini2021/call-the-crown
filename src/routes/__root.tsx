@@ -8,6 +8,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { UpdateBar } from "@/components/UpdateBar";
 import { EventProvider } from "@/config/eventConfig";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { useT } from "@/i18n/useT";
@@ -29,6 +30,7 @@ function RootComponent() {
         <AuthProvider>
           <ScreenTracker />
           <PendingJoin />
+          <UpdateBar />
           <Outlet />
         </AuthProvider>
       </EventProvider>

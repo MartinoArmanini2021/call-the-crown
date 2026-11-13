@@ -21,6 +21,9 @@ export const en = {
   not_found: "This page does not exist.",
   go_home: "Go home",
   something_wrong: "Something went wrong",
+  // the update check (UX review, 13 Nov 2026): a newer version is live; the fan chooses when to reload
+  update_ready: "A new version is ready",
+  update_refresh: "Refresh",
 
   // landing
   landing_title: "Guess every match",

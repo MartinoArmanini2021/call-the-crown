@@ -113,6 +113,12 @@ body {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
+/* Added to the home screen (iOS, black-translucent status bar): the page runs under the status bar,
+   so the sticky header keeps clear of it. Zero in a normal browser tab. */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
 /* A bracket match that still needs your pick (Bracket.tsx). Calm when motion is reduced. */
 .skg-glow {
   box-shadow: 0 0 0 1px var(--accent) inset;

@@ -20,6 +20,8 @@ export const ar: Record<StringKey, string> = {
   not_found: "هذه الصفحة غير موجودة.",
   go_home: "العودة إلى الرئيسية",
   something_wrong: "حدث خطأ ما",
+  update_ready: "نسخة جديدة جاهزة",
+  update_refresh: "تحديث",
 
   // landing
   landing_title: "خمّن كل مباراة",
