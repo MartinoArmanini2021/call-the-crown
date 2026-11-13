@@ -180,7 +180,10 @@ async function dump(tag: string) {
   const { writeFileSync, mkdirSync } = await import("node:fs");
   mkdirSync(dir, { recursive: true });
   for (const t of ["event_config", "players", "matches"])
-    writeFileSync(join(dir, `${tag}-${t}.json`), JSON.stringify(await q(`select * from public.${t} order by 1`)));
+    writeFileSync(
+      join(dir, `${tag}-${t}.json`),
+      JSON.stringify(await q(`select * from public.${t} order by 1`)),
+    );
 }
 const status = async () =>
   Object.fromEntries(
