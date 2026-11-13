@@ -301,7 +301,9 @@ select public.request_refetch(3);           -- the next poll fetches match 3 wha
 select public.reseat_paused_match(3);       -- after bracket_conflict: take match 3's players from the corrected bracket and resume
 ```
 
-**A corrected result changed a match that had already started** (`bracket_conflict`: that match is paused, and the provider's result for it, naming the real players, cannot settle while our match has the old ones). Run `reseat_paused_match(n)`: it takes the players from the corrected bracket, stores their potential points and resumes settlement. It takes no score; the provider's result then settles the match.
+**A corrected result changed a match that had already started** (`bracket_conflict`: that match is paused, and the provider's result for it, naming the real players, cannot settle while our match has the old ones). Run `reseat_paused_match(n)`: it takes the players from the corrected bracket (a group-fed slot from the corrected group standings, since 0055), stores their potential points and resumes settlement. It takes no score; the provider's result then settles the match.
+
+**A group is not ordered automatically** (`group_standings_manual`): an alternate played in it, it had a walkover, or a three-way tie had to go to % of games after a retirement (0055: the ATP counts a retirement as a straight-set win or loss and leaves its games out; which games, and the "fewer than three matches completed" elimination, are for the official standings, not for us). Fill each of its semi-final slots from the official ATP standings, before the semi-final starts: `select public.set_group_slot(13, 1, '<player id>');` (match, side 1 or 2, a player who played in that group).
 
 What the poller did, latest first:
 

@@ -6,7 +6,8 @@
 // How a match reads on the page:
 //   the winner's name is in bold (''' … ''')       → final; no bold → live or not started
 //   a set score: games, with tiebreak points in <sup> (7<sup>7</sup> → 7)
-//   a retirement: <sup>r</sup> (or "ret.") next to a score → status retired
+//   a retirement: <sup>r</sup> (or "ret.") next to a score → status retired (a default, <sup>d</sup> or
+//   "def.", reads the same: an unfinished match)
 //   a walkover: "w/o" in a score or name cell        → status walkover
 //   both names in bold                               → unknown (an editing mistake): never final
 // The adapter only translates. Everything that guards against a wrong page — a legal score that the
