@@ -108,24 +108,28 @@ function Profile() {
           </button>
         </section>
 
-        {/* Night reminders (brief "bragging rights", Phase 5): its own consent, saved as it is switched */}
-        <section className="card mb-3 p-4">
-          <label className="flex cursor-pointer items-center justify-between gap-3 text-sm">
-            <span>{t("reminder_optin")}</span>
-            <input
-              type="checkbox"
-              role="switch"
-              aria-checked={reminders}
-              checked={reminders}
-              onChange={(e) => {
-                const on = e.target.checked;
-                setReminders(on);
-                void act(() => setReminderOptin(on), t("consents_saved"));
-              }}
-              className="focus-ring h-5 w-5 shrink-0 accent-[var(--gold)]"
-            />
-          </label>
-        </section>
+        {/* Night reminders (brief "bragging rights", Phase 5): its own consent, saved as it is switched.
+            Shown only once reminder emails can really be sent (flags.reminders, 13 Nov 2026): no
+            switch that promises an email nobody sends. */}
+        {event.flags.reminders === true && (
+          <section className="card mb-3 p-4">
+            <label className="flex cursor-pointer items-center justify-between gap-3 text-sm">
+              <span>{t("reminder_optin")}</span>
+              <input
+                type="checkbox"
+                role="switch"
+                aria-checked={reminders}
+                checked={reminders}
+                onChange={(e) => {
+                  const on = e.target.checked;
+                  setReminders(on);
+                  void act(() => setReminderOptin(on), t("consents_saved"));
+                }}
+                className="focus-ring h-5 w-5 shrink-0 accent-[var(--gold)]"
+              />
+            </label>
+          </section>
+        )}
 
         <section className="card mb-3 space-y-3 p-4">
           <h2 className="text-sm font-semibold">{t("consents_title")}</h2>

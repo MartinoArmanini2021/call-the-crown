@@ -57,7 +57,8 @@ export type EventConfig = {
     consent_gsgm_ar?: string;
   };
   sponsor_slots: SponsorSlot[];
-  flags: { arabic?: boolean; italian?: boolean };
+  /** reminders: offer the reminder emails only once they can really be sent (13 Nov 2026) */
+  flags: { arabic?: boolean; italian?: boolean; reminders?: boolean };
   tiebreak_seed: string;
 };
 export type Player = {

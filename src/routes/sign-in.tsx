@@ -268,11 +268,14 @@ function SignIn() {
                   onChange={setConsentGsgm}
                   text={inLocale(event.privacy, "consent_gsgm", locale) ?? ""}
                 />
-                <Consent
-                  checked={consentReminders}
-                  onChange={setConsentReminders}
-                  text={t("reminder_optin")}
-                />
+                {/* offered only once reminder emails can really be sent (flags.reminders, 13 Nov 2026) */}
+                {event.flags.reminders === true && (
+                  <Consent
+                    checked={consentReminders}
+                    onChange={setConsentReminders}
+                    text={t("reminder_optin")}
+                  />
+                )}
                 <details className="text-xs text-ink-3">
                   <summary className="focus-ring cursor-pointer rounded font-semibold text-ink-2">
                     {t("privacy_title")}

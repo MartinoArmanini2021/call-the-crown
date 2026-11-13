@@ -110,7 +110,7 @@ perform public.set_players(
     {"match_no":15,"round":"F", "p1":{"type":"winner","match":13},"p2":{"type":"winner","match":14}}]');
 
 perform public.set_match_start(1,  '2026-11-15 14:00+01');   -- Zverev v Jódar, day session
-perform public.set_match_start(2,  '2026-11-15 20:30+01');   -- Shelton v Fils, night session (not before 20:30)
+perform public.set_match_start(2,  '2026-11-15 14:00+01');   -- Shelton v Fils: 14:00 until the order of play is out (13 Nov 2026); the evening check moves a night match to 20:30
 perform public.set_match_start(7,  '2026-11-16 14:00+01');   -- Alcaraz v Tiafoe (session to confirm)
 perform public.set_match_start(8,  '2026-11-16 14:00+01');   -- Medvedev v Cobolli (session to confirm)
 perform public.set_match_start(13, '2026-11-21 14:00+01');
