@@ -131,10 +131,12 @@ function Standings() {
     return (
       <AppShell>
         <PageTitle title={t("board_title")} {...(search.join ? { sub: t("join_prompt") } : {})} />
+        {/* signed out: say what is behind the button, not just "Sign in" (UX review, 13 Nov 2026) */}
+        {!search.join && <p className="card px-4 py-4 text-sm text-ink-2">{t("leagues_intro")}</p>}
         <Link
           to="/sign-in"
           search={search.join ? { code: search.join } : { redirect: "/standings" }}
-          className="focus-ring mt-5 block rounded-full bg-accent py-3 text-center text-sm font-bold"
+          className="focus-ring mt-5 flex h-12 items-center justify-center rounded-full bg-accent text-center text-sm font-bold"
         >
           {t("sign_in")}
         </Link>
@@ -155,7 +157,7 @@ function Standings() {
       aria-selected={!crews && league === tab.id}
       onClick={() => void navigate({ search: { ...(tab.id ? { league: tab.id } : {}), view } })}
       className={cn(
-        "focus-ring max-w-[12rem] shrink-0 truncate rounded-full px-4 py-2 text-sm font-semibold",
+        "focus-ring min-h-10 max-w-[12rem] shrink-0 truncate rounded-full px-4 py-2 text-sm font-semibold",
         !crews && league === tab.id ? "bg-accent text-ink" : "bg-card text-ink-2",
       )}
     >
@@ -166,7 +168,18 @@ function Standings() {
 
   return (
     <AppShell>
-      <PageTitle title={t("board_title")} />
+      {/* "+ League" next to the title (UX review, 13 Nov 2026): at the end of the tab row it was off
+          screen on a phone once a fan had a league, and creating or joining one is the point. */}
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <h1 className="headline text-4xl">{t("board_title")}</h1>
+        <button
+          type="button"
+          onClick={() => setSheet(true)}
+          className="focus-ring h-10 shrink-0 rounded-full border border-dashed border-ink-3/60 px-4 text-sm font-semibold text-ink-2 hover:text-ink"
+        >
+          + {t("add_league")}
+        </button>
+      </div>
       <SponsorSlot slot="leaderboard_header" className="mb-4" />
 
       {notice && (
@@ -188,20 +201,13 @@ function Standings() {
           aria-selected={crews}
           onClick={() => void navigate({ search: { crews: true } })}
           className={cn(
-            "focus-ring shrink-0 rounded-full px-4 py-2 text-sm font-semibold",
+            "focus-ring min-h-10 shrink-0 rounded-full px-4 py-2 text-sm font-semibold",
             crews ? "bg-gold text-bg" : "bg-card text-gold",
           )}
         >
           ♛ {t("crews_tab")}
         </button>
         {tabs.slice(1).map(tabButton)}
-        <button
-          type="button"
-          onClick={() => setSheet(true)}
-          className="focus-ring shrink-0 rounded-full border border-dashed border-ink-3/60 px-4 py-2 text-sm font-semibold text-ink-2"
-        >
-          + {t("add_league")}
-        </button>
       </div>
 
       {crews ? (
@@ -232,7 +238,7 @@ function Standings() {
                   aria-pressed={view === v}
                   onClick={() => go({ view: v })}
                   className={cn(
-                    "focus-ring rounded-full px-4 py-1.5",
+                    "focus-ring min-h-9 rounded-full px-4 py-2",
                     view === v ? "bg-raised text-ink" : "text-ink-3",
                   )}
                 >
@@ -277,7 +283,7 @@ function Standings() {
 
           {me && view === "top" && !rows.some((r) => r.is_me) && (
             <div className="sticky bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-10 mt-4">
-              <div className="grid grid-cols-[2.5rem_1fr_3.5rem_3.5rem] items-center rounded-2xl border border-accent/50 bg-[#1f0c0d] px-3 py-2.5 text-sm shadow-[0_8px_30px_-10px_black]">
+              <div className="grid grid-cols-[2.5rem_1fr_3.5rem_3.5rem] items-center rounded-2xl border border-accent/50 bg-card px-3 py-2.5 text-sm shadow-[0_8px_30px_-10px_black]">
                 <span className="num text-base">{me.pos}</span>
                 <span className="truncate font-semibold">
                   {t("you_cap")} · {me.display_name ?? "—"}
@@ -592,7 +598,7 @@ function LeagueSheet({
             type="button"
             onClick={onClose}
             aria-label={t("close")}
-            className="focus-ring flex h-9 w-9 items-center justify-center rounded-full bg-raised text-lg text-ink-2"
+            className="focus-ring flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-raised text-lg text-ink-2"
           >
             ×
           </button>

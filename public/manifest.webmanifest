@@ -1,0 +1,21 @@
+{
+  "name": "The Final Prediction",
+  "short_name": "Final Prediction",
+  "description": "Guess every match of the ATP Finals: the winner and the score. Make a league and beat your friends. Free, no betting.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#051224",
+  "theme_color": "#051224",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

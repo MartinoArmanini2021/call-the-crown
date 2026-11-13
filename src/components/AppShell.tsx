@@ -33,7 +33,9 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
+      {/* safe-top: opened from the home screen the page runs under a see-through status bar
+          (index.html, black-translucent), so the header starts below it */}
+      <header className="safe-top sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
         <div aria-hidden className="brand-rule absolute inset-x-0 -bottom-px h-0.5" />
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-3 px-4 sm:h-20">
           <Link to="/" className="focus-ring flex min-w-0 items-center gap-2 rounded">
@@ -47,12 +49,12 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
               <Wordmark words={headerName} spread={locale !== "ar"} />
             )}
           </Link>
-          <nav className="flex shrink-0 items-center gap-1 text-sm">
+          <nav className="flex shrink-0 items-center gap-1.5 text-sm">
             {/* On a phone a "?" keeps the full app name in view; the words from sm up. */}
             <Link
               to="/how-to-play"
               aria-label={t("how_to_play")}
-              className="focus-ring flex h-9 w-9 items-center justify-center rounded-full bg-raised font-bold text-ink-2 hover:text-ink sm:h-auto sm:w-auto sm:bg-transparent sm:px-3 sm:py-1.5 sm:font-normal"
+              className="focus-ring flex h-10 w-10 items-center justify-center rounded-full bg-raised font-bold text-ink-2 hover:text-ink sm:w-auto sm:bg-transparent sm:px-3 sm:font-normal"
             >
               <span aria-hidden className="sm:hidden">
                 ?
@@ -64,19 +66,22 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
                 to="/profile"
                 aria-label={t("nav_profile")}
                 className={cn(
-                  "focus-ring flex h-9 w-9 items-center justify-center rounded-full bg-raised text-sm font-bold",
+                  "focus-ring flex h-10 w-10 items-center justify-center rounded-full bg-raised text-sm font-bold",
                   path === "/profile" && "bg-accent",
                 )}
               >
                 {avatar}
               </Link>
             ) : (
-              <Link
-                to="/sign-in"
-                className="focus-ring rounded-full bg-accent px-3 py-1.5 sm:px-4 font-bold"
-              >
-                {t("sign_in")}
-              </Link>
+              // not on the sign-in page itself, where it would only repeat the page
+              path !== "/sign-in" && (
+                <Link
+                  to="/sign-in"
+                  className="focus-ring flex h-10 items-center rounded-full bg-accent px-4 font-bold"
+                >
+                  {t("sign_in")}
+                </Link>
+              )
             )}
           </nav>
         </div>

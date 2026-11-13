@@ -360,13 +360,18 @@ export function drawCard(canvas: HTMLCanvasElement, s: CardSpec): void {
   font(f.headW, 40, f.head);
   if (rtl) text(last, nameX - topW / 2, 166, c.gold, "center");
   else {
-    // the last word spread to the width of the line above, as in the header
+    // the last word spread to the width of the line above, as in the header (justify-between: the
+    // same space between every two letters; equal start positions left "PREDI CTI ON" with a gap
+    // after each narrow I, UX review 13 Nov 2026)
     const letters = [...upper(last)];
-    const step =
-      letters.length > 1
-        ? (topW - ctx.measureText(letters.at(-1)!).width) / (letters.length - 1)
-        : 0;
-    letters.forEach((ch, i) => text(ch, nameX + i * step, 166, c.gold, "left"));
+    const widths = letters.map((ch) => ctx.measureText(ch).width);
+    const gap =
+      letters.length > 1 ? (topW - widths.reduce((a, b) => a + b, 0)) / (letters.length - 1) : 0;
+    let lx = nameX;
+    letters.forEach((ch, i) => {
+      text(ch, lx, 166, c.gold, "left");
+      lx += widths[i]! + gap;
+    });
   }
 
   // Perfect Night: a gold ribbon at the other end of the top row from the name.

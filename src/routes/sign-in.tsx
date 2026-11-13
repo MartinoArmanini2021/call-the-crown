@@ -191,7 +191,8 @@ function SignIn() {
 
   return (
     <AppShell>
-      <PageTitle title={t("sign_in")} />
+      {/* the title follows the tab: a friend arriving from an invite is joining, not signing in */}
+      <PageTitle title={t(mode === "join" ? "join_tab" : "sign_in")} />
 
       {step === "email" ? (
         <>

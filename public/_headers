@@ -3,7 +3,7 @@
 # VITE_POSTHOG_HOST must be added here), Turnstile, the hotlinked ATP headshots and the
 # Wikimedia Commons player photos on the vote page (17 Oct 2026).
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://*.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://www.atptour.com https://thumb.wikimedia.org https://upload.wikimedia.org; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.posthog.com; frame-src https://challenges.cloudflare.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://*.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://www.atptour.com https://thumb.wikimedia.org https://upload.wikimedia.org; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.posthog.com; frame-src https://challenges.cloudflare.com; manifest-src 'self'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -14,4 +14,9 @@
   Cache-Control: no-cache
 
 /
+  Cache-Control: no-cache
+
+# "Add to Home Screen" (UX review, 13 Nov 2026): the web app manifest, with its own content type.
+/manifest.webmanifest
+  Content-Type: application/manifest+json
   Cache-Control: no-cache

@@ -6,6 +6,14 @@
     <meta name="theme-color" content="#051224" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- "Add to Home Screen" opens it full screen, like an app (manifest for Android and desktop; the
+         apple- tags for iOS). The status bar is see-through over the navy header, which keeps clear of
+         it with env(safe-area-inset-top) (.safe-top in src/styles.css). -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Final Prediction" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>The Final Prediction</title>
     <meta name="description" content="Guess every match of the ATP Finals in Turin, 15–22 November: the winner and the score. Make a league and beat your friends. Free, no betting." />
     <!-- Link previews (WhatsApp, X, iMessage). Absolute address: crawlers do not resolve relative images. -->

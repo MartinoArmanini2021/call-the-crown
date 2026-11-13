@@ -195,7 +195,7 @@ export function PickSheet({
           <button
             type="button"
             onClick={onClose}
-            className="focus-ring flex h-9 w-9 items-center justify-center rounded-full bg-raised text-lg text-ink-2"
+            className="focus-ring flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-raised text-lg text-ink-2"
             aria-label={t("close")}
           >
             ×
@@ -240,7 +240,7 @@ export function PickSheet({
                             disabled={i === 2 && s !== draft.winner}
                             onClick={() => i < 2 && change((d) => withSetWinner(d, i as 0 | 1, s))}
                             className={cn(
-                              "focus-ring max-w-[8rem] truncate rounded-full px-3 py-1 text-xs font-bold transition-colors disabled:opacity-30",
+                              "focus-ring min-h-8 max-w-[8rem] truncate rounded-full px-3 py-1.5 text-xs font-bold transition-colors disabled:opacity-30",
                               by === s ? SIDE_COLOR[s].chosen : "text-ink-3 hover:text-ink",
                             )}
                           >
@@ -263,7 +263,7 @@ export function PickSheet({
                             })}
                             onClick={() => change((d) => withScore(d, i, [hi, lo]))}
                             className={cn(
-                              "focus-ring num rounded-lg py-2 text-[13px] transition-colors",
+                              "focus-ring num min-h-10 rounded-lg py-2 text-[13px] transition-colors",
                               on ? SIDE_COLOR[by].chosen : "bg-raised text-ink-2 hover:text-ink",
                             )}
                           >

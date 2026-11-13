@@ -44,23 +44,24 @@ export function CourtPicker({
         aria-pressed={on}
         aria-label={`${names[side]}${pts !== null ? `, ${t("pts_if_right", { points: pts })}` : ""}`}
         onClick={() => onPick(side)}
-        className={cn(
-          "focus-ring relative z-10 flex flex-1 flex-col items-center justify-center gap-1.5 rounded-xl px-2 py-3 transition-opacity duration-300",
-          off && "opacity-45",
-        )}
+        className="focus-ring relative z-10 flex flex-1 flex-col items-center justify-center gap-1.5 rounded-xl px-2 py-3"
       >
+        {/* the other half dims its photo and words, never its name plate: a see-through plate let the
+            court lines run across the name (UX review, 13 Nov 2026) */}
         <PlayerPhoto
           player={players[side]}
           size={56}
           className={cn(
-            "rounded-xl ring-1 transition-shadow duration-300",
+            "rounded-xl ring-1 transition-[box-shadow,opacity] duration-300",
             on ? cn("ring-2", side === 1 ? "ring-p1" : "ring-p2") : "ring-white/25",
+            off && "opacity-45",
           )}
         />
         <span
           className={cn(
-            "max-w-full rounded-lg bg-bg/80 px-2.5 py-1 text-center backdrop-blur-[2px] transition-colors",
+            "max-w-full rounded-lg bg-bg/90 px-2.5 py-1 text-center backdrop-blur-[2px] transition-[color,opacity] duration-300",
             on && SIDE_COLOR[side].text,
+            off && "[&>*]:opacity-50",
           )}
         >
           <span className="headline block truncate text-lg leading-tight">

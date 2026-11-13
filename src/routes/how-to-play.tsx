@@ -67,9 +67,12 @@ function HowToPlay() {
         : [];
     })
     .sort((a, b) => b.points - a.points)[0];
-  // The worked example names the first semi-final's seeded player when the draw is in.
+  // The worked example names the first semi-final's seeded player when the draw is in; before that, the
+  // top seed ("You pick Your player 6-4…" read badly: UX review, 13 Nov 2026).
+  const topSeed = [...byPlayer.values()].sort((a, b) => (a.seed ?? 99) - (b.seed ?? 99))[0];
   const sfPlayer =
     name((matches.data ?? []).find((m) => m.round === "SF" && m.p1_id)?.p1_id) ??
+    name(topSeed?.id) ??
     t("example_player");
 
   const h2 = "headline mb-3 mt-8 text-2xl";

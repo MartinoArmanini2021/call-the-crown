@@ -128,6 +128,27 @@ export function Draw(props: Props) {
     setActive(best);
   };
 
+  // Phone carousel with groups (UX review, 13 Nov 2026): the columns differ a lot in height (a group's
+  // table and six matches against the final's one card), so the carousel takes the height of the
+  // column in view instead of the tallest one: no empty screen under the final. Side by side (sm and
+  // up) the columns sit in a grid at their natural height.
+  const grouped = groups.length > 0;
+  const [fit, setFit] = useState<number | null>(null);
+  useEffect(() => {
+    const col = scroller.current?.querySelectorAll<HTMLElement>(":scope > section")[active];
+    if (!grouped || !col) return;
+    const wide = window.matchMedia("(min-width: 640px)");
+    const measure = () => setFit(wide.matches ? null : col.offsetHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(col);
+    wide.addEventListener("change", measure);
+    return () => {
+      ro.disconnect();
+      wide.removeEventListener("change", measure);
+    };
+  }, [active, grouped]);
+
   return (
     <div>
       <div
@@ -146,7 +167,7 @@ export function Draw(props: Props) {
               aria-selected={active === i}
               onClick={() => goTo(i)}
               className={cn(
-                "focus-ring rounded-xl px-2 py-2 text-center transition-colors",
+                "focus-ring relative rounded-xl px-2 py-2 text-center transition-colors",
                 active === i
                   ? last
                     ? "bg-raised ring-1 ring-inset ring-gold/60"
@@ -166,13 +187,19 @@ export function Draw(props: Props) {
                         : "text-ink-2",
                 )}
               >
-                {s.done && <span className="text-good">✓</span>}
                 {last && !s.done && <Crown className="h-3.5 w-3.5 shrink-0" />}
                 <span className="truncate">{s.tab}</span>
               </span>
               <span className="block text-2xs text-ink-3">
                 {s.first ? localDay(s.first, event.timezone, locale) : ""}
               </span>
+              {/* a played stage: a small tick on the corner, so the name keeps its whole width
+                  ("McEnroe" was cut to "McEnr…" beside an inline tick on a phone) */}
+              {s.done && (
+                <span className="absolute -end-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-good text-[10px] font-bold leading-none text-bg">
+                  ✓
+                </span>
+              )}
             </button>
           );
         })}
@@ -201,9 +228,13 @@ export function Draw(props: Props) {
       <div
         ref={scroller}
         onScroll={onScroll}
+        // pb-1 (4px) is inside the height
+        style={fit !== null ? { height: fit + 4 } : undefined}
         className={cn(
           "relative -mx-4 mt-3 flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-px-4 px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden",
           stages.length >= 4 ? "sm:grid-cols-4 sm:gap-4" : "sm:grid-cols-3",
+          grouped &&
+            "items-start overflow-y-hidden transition-[height] duration-300 sm:items-stretch",
         )}
       >
         <StageLines scroller={scroller} matches={matches} />
@@ -527,7 +558,8 @@ function GroupTable({ grp, matches, players }: Props & { grp: string }) {
                 </span>
               )}
             </span>
-            <span className="num shrink-0 text-ink">
+            {/* left to right in Arabic too: an RTL line turned "1–0" into "0–1" */}
+            <span dir="ltr" className="num shrink-0 text-ink">
               {r.w}–{r.l}
             </span>
           </li>
