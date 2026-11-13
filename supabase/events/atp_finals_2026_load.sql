@@ -1,0 +1,141 @@
+-- ONE statement (a DO block): atp_finals_2026.sql + atp_finals_2026_draw.sql, for
+-- `bunx supabase db query --linked -f supabase/events/atp_finals_2026_load.sql`, which runs a single
+-- statement only. Generated from those two files on 13 Nov 2026; they stay the readable source.
+-- Also removes the one test vote left from October (quick_votes) and the Six Kings provider ids.
+do $load$
+begin
+insert into public.event_config (
+  id, name, timezone, launch_at, billing_close_at, rank_snapshot_date,
+  rules, league_limits, branding, prizes, prize_terms_url, privacy, sponsor_slots, flags, group_schedule
+) values (
+  true,
+  'Call the Crown · ATP Finals 2026',
+  'Europe/Rome',
+  '2026-11-13 00:00+01',
+  '2026-11-22 23:59:59+01',
+  '2026-11-02',                                -- the ATP ranking published Mon 2 Nov 2026 (see the draw file)
+  '{
+     "winner_points":      {"RR": 8, "SF": 13, "F": 20},
+     "sets_points":        {"RR": 4, "SF": 6,  "F": 10},
+     "per_set_exact":      2,
+     "upset_constant":     30,
+     "allowed_set_scores": [[6,0],[6,1],[6,2],[6,3],[6,4],[7,5],[7,6]],
+     "deciding_set":       "full"
+   }',
+  '{"max_leagues_per_user": 10, "max_members": 200, "crew_min_members": 5}',
+  '{
+     "app_name":  "Call the Crown",
+     "short_name": "Call the Crown",
+     "event_line": "Eight players · Turin · 15–22 November",
+     "event_name": "ATP Finals",
+     "city": "Turin",
+     "session": "Day",
+     "vote_eyebrow": "ATP Finals · Turin · 15–22 November",
+     "app_name_ar":  "توقّع التاج",
+     "short_name_ar": "توقّع التاج",
+     "event_line_ar": "ثمانية لاعبين · تورينو · 15–22 نوفمبر",
+     "event_name_ar": "بطولة الماسترز الختامية",
+     "city_ar": "تورينو",
+     "session_ar": "اليوم",
+     "vote_eyebrow_ar": "بطولة الماسترز الختامية · تورينو · 15–22 نوفمبر",
+     "logo_path": null,
+     "colors": {"bg": "#0b0b0b", "card": "#181818", "raised": "#242424", "accent": "#e50914",
+                "accent_deep": "#b20710", "accent_text": "#ff4f57", "text": "#ffffff",
+                "text_secondary": "#c9c9c9", "text_muted": "#9c9c9c"},
+     "fonts": {"headline": "Barlow Condensed", "display": "Urbanist", "body": "Plus Jakarta Sans"}
+   }',
+  '[]',                                        -- no prizes: bragging rights only (0019)
+  null,
+  '{
+     "version": "draft-2",
+     "notice": "Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.",
+     "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM."
+   }',
+  '[]',
+  '{"arabic": false, "rarity_min_picks": 50}',
+  '{"time": "14:00",
+    "days": {"McEnroe": ["2026-11-15", "2026-11-17", "2026-11-19"],
+             "Lendl":   ["2026-11-16", "2026-11-18", "2026-11-20"]}}'
+)
+on conflict (id) do update set
+  name = excluded.name, timezone = excluded.timezone, launch_at = excluded.launch_at,
+  billing_close_at = excluded.billing_close_at, rank_snapshot_date = excluded.rank_snapshot_date,
+  rules = excluded.rules, league_limits = excluded.league_limits, branding = excluded.branding,
+  prizes = excluded.prizes, prize_terms_url = excluded.prize_terms_url, privacy = excluded.privacy,
+  sponsor_slots = excluded.sponsor_slots, flags = excluded.flags, group_schedule = excluded.group_schedule,
+  updated_at = now();
+
+perform public.set_players(
+  '[{"id":"zverev",  "name":"Alexander Zverev", "name_ar":"ألكسندر زفيريف",  "country":"GER","seed":1,"rank":1,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Alexander_Zverev_%28cropped%29.jpg/500px-Alexander_Zverev_%28cropped%29.jpg"},
+    {"id":"alcaraz", "name":"Carlos Alcaraz",   "name_ar":"كارلوس ألكاراز",   "country":"ESP","seed":2,"rank":3,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg/500px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg"},
+    {"id":"shelton", "name":"Ben Shelton",      "name_ar":"بن شيلتون",        "country":"USA","seed":3,"rank":4,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Ben_Shelton%2C_media_conference%2C_Swiss_Indoors_Basel_2025_%28cropped%29.jpg/500px-Ben_Shelton%2C_media_conference%2C_Swiss_Indoors_Basel_2025_%28cropped%29.jpg"},
+    {"id":"medvedev","name":"Daniil Medvedev",  "name_ar":"دانييل ميدفيديف",  "country":null, "seed":4,"rank":5,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Danill_Medvedev_Miami_2019_%28cropped%29.jpg/500px-Danill_Medvedev_Miami_2019_%28cropped%29.jpg"},
+    {"id":"cobolli", "name":"Flavio Cobolli",   "name_ar":"فلافيو كوبولي",    "country":"ITA","seed":5,"rank":6,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Cobolli_RGQ23_%2852944096963%29.jpg/500px-Cobolli_RGQ23_%2852944096963%29.jpg"},
+    {"id":"fils",    "name":"Arthur Fils",      "name_ar":"آرثر فيس",         "country":"FRA","seed":6,"rank":7,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Fils_BOR22_%2852083970501%29.jpg/500px-Fils_BOR22_%2852083970501%29.jpg"},
+    {"id":"tiafoe",  "name":"Frances Tiafoe",   "name_ar":"فرانسيس تيافو",    "country":"USA","seed":7,"rank":8,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/FrancesTiafo.jpg/500px-FrancesTiafo.jpg"},
+    {"id":"jodar",   "name":"Rafael Jódar",     "name_ar":"رافائيل خودار",    "country":"ESP","seed":8,"rank":10,
+     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Rafael_J%C3%B3dar_Roland_Garros_2026_%28cropped%29.jpg/500px-Rafael_J%C3%B3dar_Roland_Garros_2026_%28cropped%29.jpg"}]',
+  '[{"match_no":1, "round":"RR","group":"McEnroe","day":1,"p1":{"type":"player","id":"zverev"}, "p2":{"type":"player","id":"jodar"}},
+    {"match_no":2, "round":"RR","group":"McEnroe","day":1,"p1":{"type":"player","id":"shelton"},"p2":{"type":"player","id":"fils"}},
+    {"match_no":3, "round":"RR","group":"McEnroe",        "p1":{"type":"player","id":"zverev"}, "p2":{"type":"player","id":"shelton"}},
+    {"match_no":4, "round":"RR","group":"McEnroe",        "p1":{"type":"player","id":"zverev"}, "p2":{"type":"player","id":"fils"}},
+    {"match_no":5, "round":"RR","group":"McEnroe",        "p1":{"type":"player","id":"shelton"},"p2":{"type":"player","id":"jodar"}},
+    {"match_no":6, "round":"RR","group":"McEnroe",        "p1":{"type":"player","id":"fils"},   "p2":{"type":"player","id":"jodar"}},
+    {"match_no":7, "round":"RR","group":"Lendl",  "day":1,"p1":{"type":"player","id":"alcaraz"},"p2":{"type":"player","id":"tiafoe"}},
+    {"match_no":8, "round":"RR","group":"Lendl",  "day":1,"p1":{"type":"player","id":"medvedev"},"p2":{"type":"player","id":"cobolli"}},
+    {"match_no":9, "round":"RR","group":"Lendl",          "p1":{"type":"player","id":"alcaraz"},"p2":{"type":"player","id":"medvedev"}},
+    {"match_no":10,"round":"RR","group":"Lendl",          "p1":{"type":"player","id":"alcaraz"},"p2":{"type":"player","id":"cobolli"}},
+    {"match_no":11,"round":"RR","group":"Lendl",          "p1":{"type":"player","id":"medvedev"},"p2":{"type":"player","id":"tiafoe"}},
+    {"match_no":12,"round":"RR","group":"Lendl",          "p1":{"type":"player","id":"cobolli"},"p2":{"type":"player","id":"tiafoe"}},
+    {"match_no":13,"round":"SF","p1":{"type":"group","group":"McEnroe","place":1},"p2":{"type":"group","group":"Lendl","place":2}},
+    {"match_no":14,"round":"SF","p1":{"type":"group","group":"Lendl","place":1},  "p2":{"type":"group","group":"McEnroe","place":2}},
+    {"match_no":15,"round":"F", "p1":{"type":"winner","match":13},"p2":{"type":"winner","match":14}}]');
+
+perform public.set_match_start(1,  '2026-11-15 14:00+01');   -- Zverev v Jódar, day session
+perform public.set_match_start(2,  '2026-11-15 20:30+01');   -- Shelton v Fils, night session (not before 20:30)
+perform public.set_match_start(7,  '2026-11-16 14:00+01');   -- Alcaraz v Tiafoe (session to confirm)
+perform public.set_match_start(8,  '2026-11-16 14:00+01');   -- Medvedev v Cobolli (session to confirm)
+perform public.set_match_start(13, '2026-11-21 14:00+01');
+perform public.set_match_start(14, '2026-11-21 14:00+01');
+perform public.set_match_start(15, '2026-11-22 18:00+01');
+
+
+delete from public.provider_map where provider = 'wikipedia';
+insert into public.provider_map (provider, kind, provider_ref, our_ref) values
+  ('wikipedia', 'match', 'John McEnroe Group:1v4', '1'),
+  ('wikipedia', 'match', 'John McEnroe Group:2v3', '2'),
+  ('wikipedia', 'match', 'John McEnroe Group:1v2', '3'),
+  ('wikipedia', 'match', 'John McEnroe Group:1v3', '4'),
+  ('wikipedia', 'match', 'John McEnroe Group:2v4', '5'),
+  ('wikipedia', 'match', 'John McEnroe Group:3v4', '6'),
+  ('wikipedia', 'match', 'Ivan Lendl Group:1v4',   '7'),
+  ('wikipedia', 'match', 'Ivan Lendl Group:2v3',   '8'),
+  ('wikipedia', 'match', 'Ivan Lendl Group:1v2',   '9'),
+  ('wikipedia', 'match', 'Ivan Lendl Group:1v3',   '10'),
+  ('wikipedia', 'match', 'Ivan Lendl Group:2v4',   '11'),
+  ('wikipedia', 'match', 'Ivan Lendl Group:3v4',   '12'),
+  ('wikipedia', 'match', 'RD1:1-2', '13'),
+  ('wikipedia', 'match', 'RD1:3-4', '14'),
+  ('wikipedia', 'match', 'RD2:1-2', '15'),
+  ('wikipedia', 'player', 'Alexander Zverev', 'zverev'),
+  ('wikipedia', 'player', 'Carlos Alcaraz',   'alcaraz'),
+  ('wikipedia', 'player', 'Ben Shelton',      'shelton'),
+  ('wikipedia', 'player', 'Daniil Medvedev',  'medvedev'),
+  ('wikipedia', 'player', 'Flavio Cobolli',   'cobolli'),
+  ('wikipedia', 'player', 'Arthur Fils',      'fils'),
+  ('wikipedia', 'player', 'Frances Tiafoe',   'tiafoe'),
+  ('wikipedia', 'player', 'Rafael Jódar',     'jodar'),
+  ('wikipedia', 'player', 'Alex de Minaur',   'deminaur'),
+  ('wikipedia', 'player', 'Taylor Fritz',     'fritz')
+on conflict (provider, kind, provider_ref) do update set our_ref = excluded.our_ref;
+
+delete from public.quick_votes where true;
+end
+$load$;
