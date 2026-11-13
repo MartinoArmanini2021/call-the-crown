@@ -29,6 +29,8 @@ export function activeLeague(uid: string, list: League[]): League | undefined {
   return list.find((l) => l.id === stored) ?? list[list.length - 1];
 }
 
+// Not shown on Picks since 13 Nov 2026 (Tino: "take the box below Your Picks"); rank and invite live on
+// Standings. Kept for another event that wants it back.
 export function LeagueRankLine({ uid, matches }: { uid: string; matches: Match[] }) {
   const { t } = useT();
   const leagues = useQuery(myLeaguesQuery(uid));

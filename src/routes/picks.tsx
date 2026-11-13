@@ -2,7 +2,7 @@ import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/AppShell";
 import { CallCardSheet } from "@/components/CallCard";
-import { LeagueRankLine, OnboardSheet } from "@/components/LeagueNudge";
+import { OnboardSheet } from "@/components/LeagueNudge";
 import { SponsorSlot } from "@/components/Brand";
 import { MatchCard } from "@/components/MatchCard";
 import { NextStepBanner } from "@/components/NextStep";
@@ -105,8 +105,6 @@ function Picks() {
           {t("how_to_play")}
         </Link>
       </div>
-
-      {user && <LeagueRankLine uid={user.id} matches={all} />}
 
       <QueryGate queries={queries} label={t("picks_title").toLowerCase()}>
         {open.length === 0 ? (
