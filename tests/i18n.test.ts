@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { ar } from "../src/i18n/ar";
+import { it } from "../src/i18n/it";
 import { en, type StringKey } from "../src/i18n/strings";
 
 const holes = (text: string) => [...text.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
@@ -57,5 +58,25 @@ describe("How to play: a 2-set pick on a 3-set match", () => {
     expect(en.htp_two_on_three).not.toMatch(/sets 1 and 2/i);
     expect(ar.htp_two_on_three).toContain("أو");
     expect(ar.htp_two_on_three).not.toMatch(/1 و ?2/);
+  });
+});
+
+// Italian (13 Nov 2026, the ATP Finals in Turin): complete, placeholders kept, no betting words.
+describe("Italian texts", () => {
+  test("every English key has a non-empty Italian text", () => {
+    for (const key of Object.keys(en) as StringKey[]) {
+      expect(it[key]?.trim().length ?? 0, key).toBeGreaterThan(0);
+    }
+  });
+  test("every {placeholder} is kept, and no new one appears", () => {
+    for (const key of Object.keys(en) as StringKey[]) {
+      expect(holes(it[key]), key).toEqual(holes(en[key]));
+    }
+  });
+  test("no betting words", () => {
+    for (const key of Object.keys(en) as StringKey[]) {
+      if (NO_BETTING_FINE_PRINT.includes(key)) continue;
+      expect(it[key], key).not.toMatch(/scommess|scommett|\bquot[ae]\b|puntat|azzard/i);
+    }
   });
 });

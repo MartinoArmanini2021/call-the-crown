@@ -19,7 +19,7 @@ export type SponsorSlot = {
   slot: "landing_strip" | "leaderboard_header" | "picks_footer" | "results_card";
   image_path: string | null;
   href: string;
-  alt: Partial<Record<"en" | "ar", string>>;
+  alt: Partial<Record<"en" | "ar" | "it", string>>;
 };
 export type EventConfig = {
   name: string;
@@ -57,7 +57,7 @@ export type EventConfig = {
     consent_gsgm_ar?: string;
   };
   sponsor_slots: SponsorSlot[];
-  flags: { arabic?: boolean };
+  flags: { arabic?: boolean; italian?: boolean };
   tiebreak_seed: string;
 };
 export type Player = {
@@ -122,7 +122,7 @@ export type League = {
   is_owner: boolean;
   member_count: number;
 };
-export type Profile = { user_id: string; display_name: string | null; locale: "en" | "ar" };
+export type Profile = { user_id: string; display_name: string | null; locale: "en" | "ar" | "it" };
 export type Consent = {
   party: "organiser" | "gsgm" | "reminders";
   granted: boolean;
@@ -308,8 +308,17 @@ export const leaveLeague = (league: string) => rpc<void>("leave_league", { p_lea
 export const removeMember = (league: string, user: string) =>
   rpc<void>("remove_member", { p_league: league, p_user: user });
 export const deleteLeague = (league: string) => rpc<void>("delete_league", { p_league: league });
-export const updateProfile = (name: string, locale?: "en" | "ar") =>
-  rpc<void>("update_profile", { p_display_name: name, p_locale: locale ?? null });
+export const updateProfile = async (name: string, locale?: "en" | "ar" | "it") => {
+  try {
+    return await rpc<void>("update_profile", { p_display_name: name, p_locale: locale ?? null });
+  } catch (e) {
+    // A database without Italian yet (before 0060) answers bad_locale: the name still saves, the app
+    // keeps the language on the phone (13 Nov 2026).
+    if (locale && /bad_locale/.test(String((e as { message?: string })?.message ?? e)))
+      return rpc<void>("update_profile", { p_display_name: name, p_locale: null });
+    throw e;
+  }
+};
 /** Night reminder emails on or off (0022: the "reminders" consent, text version reminders-1). */
 export const setReminderOptin = (on: boolean) => rpc<void>("set_reminder_optin", { p_on: on });
 /** Perfect Night: for each complete night, whether the fan called every winner (0022). */
@@ -340,8 +349,9 @@ export const deleteAccount = () => rpc<void>("delete_account");
  */
 export function inLocale<T extends object>(o: T, key: keyof T & string, locale: string) {
   const r = o as Record<string, unknown>;
-  const ar = r[`${key}_ar`];
-  return (locale === "ar" && typeof ar === "string" && ar ? ar : r[key]) as string | undefined;
+  // the language's twin (`event_line_ar`, `event_line_it` …) when there is one, else the English
+  const twin = locale === "en" ? undefined : r[`${key}_${locale}`];
+  return (typeof twin === "string" && twin ? twin : r[key]) as string | undefined;
 }
 
 // Images (organiser-supplied, in the instance's own storage bucket; never hotlinked).

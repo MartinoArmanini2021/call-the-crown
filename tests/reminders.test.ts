@@ -207,3 +207,26 @@ describe("the email", () => {
     expect(riyadh.html).toContain("background:#f2c14e;");
   });
 });
+
+describe("Italian reminders (13 Nov 2026)", () => {
+  const turin = {
+    city: "Turin",
+    city_ar: "تورينو",
+    session: "Day",
+    session_ar: "اليوم",
+    city_it: "Torino",
+    session_it: "Giornata",
+  };
+  test("an Italian fan gets the Italian email with the Italian city and day words", async () => {
+    const e = await renderEmail(cand(U1, { locale: "it" }), cfg(), "Europe/Rome", turin);
+    expect(e.subject).toBe("I pronostici si chiudono tra 2 ore");
+    expect(e.text).toMatch(/^Giornata 2: si comincia alle \d\d:\d\d, ora di Torino\./);
+    expect(e.html).toContain('lang="it"');
+    expect(e.html).toContain('dir="ltr"');
+  });
+  test("without Italian twins the email still reads (English city, Giornata)", async () => {
+    const { city_it: _c, session_it: _s, ...plain } = turin;
+    const e = await renderEmail(cand(U1, { locale: "it" }), cfg(), "Europe/Rome", plain);
+    expect(e.text).toMatch(/^Giornata 2: si comincia alle \d\d:\d\d, ora di Turin\./);
+  });
+});

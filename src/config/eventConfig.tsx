@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
 import { eventConfigQuery, type EventConfig } from "@/lib/api";
 import { LocaleProvider, type EventVars } from "@/i18n/useT";
+import type { Locale } from "@/i18n/strings";
 
 // The event's brand, rules and texts, loaded once at boot from event_config. Brand colours
 // are written onto the CSS variables in src/styles.css, so every component re-skins with no code.
@@ -29,25 +30,37 @@ export function EventProvider({ children }: { children: ReactNode }) {
   const q = useQuery(eventConfigQuery);
   const config = q.data ?? null;
   // {event}, {city}, {session} … in the texts come from the event's branding (Turin: "ATP Finals",
-  // "Turin", "Day"; Riyadh: "Six Kings Slam", "Riyadh", "Night"), each with its Arabic twin.
+  // "Turin", "Day"; Riyadh: "Six Kings Slam", "Riyadh", "Night"), each with its twin per language
+  // (`city_ar`, `city_it` …; English when a twin is missing).
   const eventVars = useMemo<EventVars>(() => {
     const b = (config?.branding ?? {}) as Record<string, unknown>;
-    const pick = (k: string, ar: boolean, fallback: string) =>
-      String((ar ? b[k + "_ar"] : undefined) ?? b[k] ?? fallback);
-    const vars = (ar: boolean) => {
-      const session = pick("session", ar, ar ? "اليوم" : "Day");
+    const pick = (k: string, l: Locale, fallback: string) =>
+      String((l === "en" ? undefined : b[`${k}_${l}`]) ?? b[k] ?? fallback);
+    const SESSION_WORD: Record<Locale, string> = { en: "Day", ar: "اليوم", it: "Giornata" };
+    const vars = (l: Locale) => {
+      const session = pick("session", l, SESSION_WORD[l]);
+      const cased = l !== "ar"; // Arabic has no letter case
       return {
-        event: pick("event_name", ar, config?.name ?? ""),
-        city: pick("city", ar, ""),
+        event: pick("event_name", l, config?.name ?? ""),
+        city: pick("city", l, ""),
         session,
-        session_lower: ar ? session : session.toLowerCase(),
-        SESSION: ar ? session : session.toUpperCase(),
-        vote_eyebrow: pick("vote_eyebrow", ar, ""),
-        vote_note: pick("vote_note", ar, ""),
+        session_lower: cased ? session.toLowerCase() : session,
+        SESSION: cased ? session.toUpperCase() : session,
+        vote_eyebrow: pick("vote_eyebrow", l, ""),
+        vote_note: pick("vote_note", l, ""),
       };
     };
-    return { en: vars(false), ar: vars(true) };
+    return { en: vars("en"), ar: vars("ar"), it: vars("it") };
   }, [config]);
+  // English always; Arabic and Italian when the event switches them on (event_config.flags).
+  const languages = useMemo<Locale[]>(
+    () => [
+      "en",
+      ...(config?.flags.arabic === true ? (["ar"] as const) : []),
+      ...(config?.flags.italian === true ? (["it"] as const) : []),
+    ],
+    [config],
+  );
 
   useEffect(() => {
     if (!config) return;
@@ -85,7 +98,7 @@ export function EventProvider({ children }: { children: ReactNode }) {
 
   return (
     <EventContext.Provider value={config}>
-      <LocaleProvider arabicEnabled={config.flags.arabic === true} eventVars={eventVars}>
+      <LocaleProvider languages={languages} eventVars={eventVars}>
         {children}
       </LocaleProvider>
     </EventContext.Provider>

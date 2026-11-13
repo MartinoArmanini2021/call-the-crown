@@ -1,8 +1,10 @@
 import { ar } from "./ar";
+import { it } from "./it";
 
 // Every word the fan sees. English here; Arabic in ./ar.ts (draft for the organiser's review, complete:
 // its type refuses a missing key). Arabic ships behind event_config.flags.arabic, with right-to-left
-// layout and the language switch.
+// layout and the language switch. Italian in ./it.ts (13 Nov 2026, the ATP Finals in Turin) ships
+// behind event_config.flags.italian.
 // {name} placeholders are filled by t(key, {name: value}).
 
 export const en = {
@@ -439,5 +441,12 @@ export const en = {
 
 export type StringKey = keyof typeof en;
 
-export const strings = { en, ar } as const;
+export const strings = { en, ar, it } as const;
 export type Locale = keyof typeof strings;
+
+/** Each language's own name, for the switches. */
+export const LANGUAGE_NAMES: Record<Locale, string> = {
+  en: "English",
+  ar: "العربية",
+  it: "Italiano",
+};

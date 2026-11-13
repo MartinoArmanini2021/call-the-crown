@@ -52,6 +52,8 @@ Deno.serve(async (req) => {
         city_ar: b.city_ar ?? b.city ?? "الرياض",
         session: b.session ?? "Night",
         session_ar: b.session_ar ?? "الليلة",
+        city_it: b.city_it,
+        session_it: b.session_it,
         button: (b as unknown as { colors?: Record<string, string> }).colors?.gold,
       };
     },

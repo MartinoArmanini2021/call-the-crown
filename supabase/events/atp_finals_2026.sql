@@ -48,6 +48,13 @@ insert into public.event_config (
      "city_ar": "تورينو",
      "session_ar": "اليوم",
      "vote_eyebrow_ar": "بطولة الماسترز الختامية · تورينو · 15–22 نوفمبر",
+     "app_name_it":  "The Final Prediction",
+     "short_name_it": "The Final Prediction",
+     "event_line_it": "Otto giocatori · Torino · 15–22 novembre",
+     "event_name_it": "ATP Finals",
+     "city_it": "Torino",
+     "session_it": "Giornata",
+     "vote_eyebrow_it": "ATP Finals · Torino · 15–22 novembre",
      "logo_path": null,
      "colors": {"bg": "#051224", "card": "#0b1e38", "raised": "#14305a", "accent": "#1652f0",
                 "accent_deep": "#171c8f", "accent_text": "#6fa0ff", "text": "#ffffff",
@@ -60,10 +67,12 @@ insert into public.event_config (
   '{
      "version": "draft-2",
      "notice": "Privacy notice placeholder, pending legal review. The Final Prediction is run by Grand Slam GM.",
-     "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM."
+     "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM.",
+     "notice_it": "Informativa sulla privacy provvisoria, in attesa di revisione legale. The Final Prediction è gestito da Grand Slam GM.",
+     "consent_gsgm_it": "Provvisorio: voglio ricevere novità da Grand Slam GM."
    }',
   '[]',
-  '{"arabic": false, "rarity_min_picks": 50}',
+  '{"arabic": false, "italian": true, "rarity_min_picks": 50}',
   -- Days 2 and 3 of each group are scheduled by the database once its day-1 matches are settled
   -- (0053): the day-1 winners meet on day 2, the day-1 losers too; the other two pairs on day 3. Each
   -- gets 14:00 Turin, the first singles start of the day session, as its lock; an operator can move a

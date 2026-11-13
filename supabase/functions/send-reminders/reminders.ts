@@ -67,6 +67,15 @@ const COPY = {
     league: "أنت في المركز {rank} من {n} في {league}.",
     footer: "تصلك هذه الرسالة لأنك طلبت التذكير. لإيقافه: {unsub}",
   },
+  // Italian (13 Nov 2026, the ATP Finals in Turin; informal "tu" as in the app)
+  it: {
+    subject: "I pronostici si chiudono tra 2 ore",
+    line1: "{session} {night}: si comincia alle {time}, ora di {city}.",
+    line2: "Non hai ancora pronosticato {open} delle {total} partite.",
+    button: "Fai i miei pronostici",
+    league: "Sei {rank}° su {n} in {league}.",
+    footer: "Ricevi questa email perché hai chiesto i promemoria. Per disattivarli: {unsub}",
+  },
 } as const;
 
 const fill = (s: string, v: Record<string, string | number>) =>
@@ -82,6 +91,9 @@ export type Place = {
   city_ar: string;
   session: string;
   session_ar: string;
+  /** Italian twins (13 Nov 2026); English when missing */
+  city_it?: string;
+  session_it?: string;
   button?: string;
 };
 const RIYADH: Place = { city: "Riyadh", city_ar: "الرياض", session: "Night", session_ar: "الليلة" };
@@ -92,8 +104,9 @@ export async function renderEmail(
   timezone: string,
   place: Place = RIYADH,
 ): Promise<Email> {
-  const ar = c.locale === "ar";
-  const copy = COPY[ar ? "ar" : "en"];
+  const lang = c.locale === "ar" || c.locale === "it" ? c.locale : "en";
+  const ar = lang === "ar";
+  const copy = COPY[lang];
   const time = new Intl.DateTimeFormat("en-GB", {
     timeZone: timezone,
     hour: "2-digit",
@@ -109,8 +122,12 @@ export async function renderEmail(
   const line1 = fill(copy.line1, {
     night: c.night_no,
     time,
-    city: ar ? place.city_ar : place.city,
-    session: ar ? place.session_ar : place.session,
+    city: ar ? place.city_ar : lang === "it" ? (place.city_it ?? place.city) : place.city,
+    session: ar
+      ? place.session_ar
+      : lang === "it"
+        ? (place.session_it ?? "Giornata")
+        : place.session,
   });
   const line2 = fill(copy.line2, { open: c.open_count, total: c.total_count });
   const league =
@@ -129,7 +146,6 @@ export async function renderEmail(
     .filter((l) => l !== null)
     .join("\n");
   const dir = ar ? "rtl" : "ltr";
-  const lang = ar ? "ar" : "en";
   const p = (s: string) => `<p style="margin:0 0 12px">${s}</p>`;
   const html = `<!doctype html>
 <html lang="${lang}" dir="${dir}">

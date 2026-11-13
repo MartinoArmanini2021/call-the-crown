@@ -10,6 +10,7 @@
 // drawCard() paints it; cardPng() waits for the fonts and returns the PNG.
 import type { CallStats, Match, Pick } from "./api";
 import type { SetScore } from "./validation";
+import { intlLocale } from "./format";
 
 export type CardKind = "my_call" | "called_it";
 export type CardVariant = "my_call" | "exact" | "winner" | "void";
@@ -20,7 +21,7 @@ type T = (key: never, vars?: Vars) => string;
 type Tr = (key: string, vars?: Vars) => string;
 
 export type CardSpec = {
-  locale: "en" | "ar";
+  locale: "en" | "ar" | "it";
   variant: CardVariant;
   /** the game's name, word by word (the header wordmark: last word underneath, in gold) */
   brand: string[];
@@ -90,7 +91,7 @@ export function cardSpec(input: {
   pick: Pick;
   /** surnames, player 1 then player 2, in the card's language */
   names: [string, string];
-  locale: "en" | "ar";
+  locale: "en" | "ar" | "it";
   t: Tr | T;
   timezone: string;
   brand: string[];
@@ -128,7 +129,7 @@ export function cardSpec(input: {
 
   if (kind === "my_call") {
     const fmt = (o: Intl.DateTimeFormatOptions) =>
-      new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en-GB", {
+      new Intl.DateTimeFormat(intlLocale(locale), {
         timeZone: timezone,
         ...o,
       }).format(new Date(m.starts_at!));
@@ -266,7 +267,7 @@ export async function loadCardFonts(spec: CardSpec): Promise<void> {
       import("@fontsource/noto-kufi-arabic/800.css"),
     ]);
   }
-  const f = FONTS[spec.locale];
+  const f = FONTS[spec.locale === "ar" ? "ar" : "en"]; // Italian uses the Latin fonts
   const text = allText(spec);
   const faces =
     spec.locale === "ar"
@@ -285,7 +286,7 @@ export async function loadCardFonts(spec: CardSpec): Promise<void> {
 /** Paint the card. Right to left for Arabic: the whole layout mirrors, so set 1 sits on the right. */
 export function drawCard(canvas: HTMLCanvasElement, s: CardSpec): void {
   const c = tokens();
-  const f = FONTS[s.locale];
+  const f = FONTS[s.locale === "ar" ? "ar" : "en"];
   const rtl = s.locale === "ar";
   const upper = (x: string) => (rtl ? x : x.toUpperCase());
   const W = CARD_W;

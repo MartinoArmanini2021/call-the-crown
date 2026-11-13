@@ -6,6 +6,7 @@ import { SponsorSlot, playerName } from "@/components/Brand";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerNow } from "@/hooks/useNow";
+import { LANGUAGE_NAMES } from "@/i18n/strings";
 import { useT } from "@/i18n/useT";
 import {
   inLocale,
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/")({ component: Landing });
 // hard-coded). First-time-fan test, 2 Oct 2026: one plain sentence and one example beat three tiles.
 function Landing() {
   const event = useEvent();
-  const { t, locale, setLocale } = useT();
+  const { t, locale, languages, setLocale } = useT();
   const { user } = useAuth();
   const now = useServerNow();
   const players = useQuery(playersQuery);
@@ -148,16 +149,19 @@ function Landing() {
         <Link to="/how-to-play" className="focus-ring underline underline-offset-2">
           {t("how_to_play")}
         </Link>
-        {event.flags.arabic && (
-          <button
-            type="button"
-            onClick={() => setLocale(locale === "ar" ? "en" : "ar")}
-            className="focus-ring underline underline-offset-2"
-            lang={locale === "ar" ? "en" : "ar"}
-          >
-            {locale === "ar" ? "English" : "العربية"}
-          </button>
-        )}
+        {languages
+          .filter((l) => l !== locale)
+          .map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={() => setLocale(l)}
+              className="focus-ring underline underline-offset-2"
+              lang={l}
+            >
+              {LANGUAGE_NAMES[l]}
+            </button>
+          ))}
       </p>
     </AppShell>
   );

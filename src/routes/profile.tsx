@@ -6,6 +6,7 @@ import { PerfectNightBadges } from "@/components/PerfectNight";
 import { QueryGate } from "@/components/QueryGate";
 import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
+import { LANGUAGE_NAMES } from "@/i18n/strings";
 import { errorText, useT } from "@/i18n/useT";
 import {
   consentsQuery,
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/profile")({ component: Profile });
 
 function Profile() {
   const event = useEvent();
-  const { t, locale, setLocale } = useT();
+  const { t, locale, languages, setLocale } = useT();
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const qc = useQueryClient();
@@ -196,11 +197,11 @@ function Profile() {
           </button>
         </section>
 
-        {event.flags.arabic && (
+        {languages.length > 1 && (
           <section className="card mb-3 flex items-center justify-between p-4">
             <span className="text-sm font-semibold">{t("language")}</span>
             <div className="flex gap-1">
-              {(["en", "ar"] as const).map((l) => (
+              {languages.map((l) => (
                 <button
                   key={l}
                   type="button"
@@ -214,7 +215,7 @@ function Profile() {
                     locale === l ? "bg-accent" : "bg-raised",
                   )}
                 >
-                  {l === "en" ? "English" : "العربية"}
+                  {LANGUAGE_NAMES[l]}
                 </button>
               ))}
             </div>

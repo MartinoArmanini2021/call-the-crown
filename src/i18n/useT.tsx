@@ -15,43 +15,56 @@ type T = (key: StringKey, vars?: Vars) => string;
 const fill = (text: string, vars?: Vars) =>
   vars ? text.replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? String(vars[k]) : m)) : text;
 
-const LocaleContext = createContext<{ locale: Locale; setLocale: (l: Locale) => void; t: T }>({
+const LocaleContext = createContext<{
+  locale: Locale;
+  languages: Locale[];
+  setLocale: (l: Locale) => void;
+  t: T;
+}>({
   locale: "en",
+  languages: ["en"],
   setLocale: () => {},
   t: (k, v) => fill(en[k], v),
 });
 
 const STORE = "locale";
 // The fan's own choice if they made one; otherwise the phone's language (a phone set to Arabic opens
-// in Arabic). Only used when the event has Arabic switched on.
-function stored(): Locale {
+// in Arabic, one set to Italian in Italian, 13 Nov 2026). Only languages the event switched on count.
+function stored(languages: Locale[]): Locale {
   let choice: string | null = null;
   try {
     choice = localStorage.getItem(STORE);
   } catch {
     /* storage blocked: fall through to the phone's language */
   }
-  if (choice === "ar" || choice === "en") return choice;
-  const phone = typeof navigator === "undefined" ? "" : (navigator.language ?? "");
-  return phone.toLowerCase().startsWith("ar") ? "ar" : "en";
+  if (choice && (languages as string[]).includes(choice)) return choice as Locale;
+  const phones =
+    typeof navigator === "undefined"
+      ? []
+      : [...(navigator.languages ?? []), navigator.language ?? ""];
+  for (const phone of phones) {
+    const code = phone.toLowerCase().slice(0, 2);
+    if ((languages as string[]).includes(code)) return code as Locale;
+  }
+  return "en";
 }
 
-// arabicEnabled comes from event_config.flags.arabic: when it is off, the app is English only.
+// languages comes from event_config.flags (arabic, italian): English is always on.
 /** Event-wide placeholders, per language, filled into every text unless the caller passes its own. */
 export type EventVars = Partial<Record<Locale, Vars>>;
 const NO_VARS: EventVars = {};
 
 export function LocaleProvider({
-  arabicEnabled,
+  languages = ["en"],
   eventVars = NO_VARS,
   children,
 }: {
-  arabicEnabled: boolean;
+  languages?: Locale[];
   eventVars?: EventVars;
   children: ReactNode;
 }) {
-  const [chosen, setChosen] = useState<Locale>(stored);
-  const locale: Locale = arabicEnabled ? chosen : "en";
+  const [chosen, setChosen] = useState<Locale>(() => stored(languages));
+  const locale: Locale = languages.includes(chosen) ? chosen : "en";
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -71,7 +84,10 @@ export function LocaleProvider({
     (key, vars) => fill(strings[locale][key] ?? en[key], { ...eventVars[locale], ...vars }),
     [locale, eventVars],
   );
-  const value = useMemo(() => ({ locale, setLocale, t }), [locale, setLocale, t]);
+  const value = useMemo(
+    () => ({ locale, languages, setLocale, t }),
+    [locale, languages, setLocale, t],
+  );
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 

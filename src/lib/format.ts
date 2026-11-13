@@ -2,11 +2,20 @@ import type { Match, Player } from "./api";
 import type { SetScore } from "./validation";
 
 // Time units for the countdowns. Arabic: ي يوم, س ساعة, د دقيقة, ث ثانية (draft, organiser review).
-const UNITS = { en: ["d", "h", "m", "s"], ar: ["ي", "س", "د", "ث"] } as const;
+// Italian: g ore m s (13 Nov 2026).
+const UNITS = {
+  en: ["d", "h", "m", "s"],
+  ar: ["ي", "س", "د", "ث"],
+  it: ["g", "h", "m", "s"],
+} as const;
+
+/** The Intl locale for dates and times in each app language. */
+export const intlLocale = (locale: string) =>
+  locale === "ar" ? "ar" : locale === "it" ? "it-IT" : "en-GB";
 
 /** "2d 5h", "3h 20m", "12m 05s", "45s" (Arabic "2ي 5س"). Adapted from grand-slam-gm/src/lib/timeLeft.ts. */
 export function shortTimeLeft(ms: number, locale: string = "en"): string {
-  const [d, h, m, sec] = UNITS[locale === "ar" ? "ar" : "en"];
+  const [d, h, m, sec] = UNITS[locale === "ar" || locale === "it" ? locale : "en"];
   const seconds = Math.max(0, Math.floor(ms / 1000));
   if (seconds < 60) return `${seconds}${sec}`;
   const minutes = Math.floor(seconds / 60);
@@ -22,7 +31,7 @@ export const scoreLine = (sets: SetScore[] | null | undefined) =>
 
 /** The event's local day, e.g. "Wed 21 Oct". */
 export function localDay(iso: string, timezone: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en-GB", {
+  return new Intl.DateTimeFormat(intlLocale(locale), {
     timeZone: timezone,
     weekday: "short",
     day: "numeric",
@@ -32,7 +41,7 @@ export function localDay(iso: string, timezone: string, locale: string): string 
 
 /** The event's local time with its zone, e.g. "Wed 21 Oct, 19:30 GMT+3": fans watch from anywhere. */
 export function localTime(iso: string, timezone: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale === "ar" ? "ar" : "en-GB", {
+  return new Intl.DateTimeFormat(intlLocale(locale), {
     timeZone: timezone,
     weekday: "short",
     day: "numeric",
