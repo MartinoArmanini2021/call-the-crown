@@ -185,3 +185,147 @@ describe("the adapter serves group refs from the same page request", () => {
     expect(ko.normalised.winner).toBe("Jannik Sinner");
   });
 });
+
+// ---------------------------------------------------------------------------------------------------
+// Audit 13 Nov 2026: the live 2026 article, saved before play (revision 1385229882), read against the
+// event's own draw file, so a heading, a row order or a link title that does not produce exactly our
+// provider_map refs and our pairings fails here and not on Sunday.
+// ---------------------------------------------------------------------------------------------------
+const live = readFileSync(
+  join(import.meta.dir, "fixtures", "wikipedia", "2026_ATP_Finals_Singles.wikitext"),
+  "utf8",
+);
+const drawSql = readFileSync(
+  join(import.meta.dir, "..", "supabase", "events", "atp_finals_2026_draw.sql"),
+  "utf8",
+);
+const mapRows = [
+  ...drawSql.matchAll(/\('wikipedia', '(match|player)', '([^']+)',\s*'([^']+)'\)/g),
+].map((m) => ({ kind: m[1]!, ref: m[2]!, our: m[3]! }));
+const matchRef = new Map(
+  mapRows.filter((r) => r.kind === "match").map((r) => [Number(r.our), r.ref]),
+);
+const playerOf = new Map(mapRows.filter((r) => r.kind === "player").map((r) => [r.ref, r.our]));
+const ourPair = new Map(
+  [
+    ...drawSql.matchAll(
+      /"match_no":(\d+),\s*"round":"RR".*?"p1":\{"type":"player","id":"(\w+)"\},\s*"p2":\{"type":"player","id":"(\w+)"\}/g,
+    ),
+  ].map((m) => [Number(m[1]), [m[2]!, m[3]!].sort().join(" v ")]),
+);
+
+describe("2026 ATP Finals: the live article before play", () => {
+  const rr = parseRoundRobin(live);
+  const ko = parseBracket(live);
+  it("the draw file maps twelve group matches and three knockout matches", () => {
+    expect(ourPair.size).toBe(12);
+    expect(matchRef.size).toBe(15);
+  });
+  it("the page has exactly the twelve group refs of provider_map, all scheduled", () => {
+    const refs = [...matchRef.entries()]
+      .filter(([n]) => n <= 12)
+      .map(([, r]) => r)
+      .sort();
+    expect([...rr.keys()].sort()).toEqual(refs);
+    for (const [, m] of rr) expect(m.result.status).toBe("scheduled");
+  });
+  it("each ref pairs the same two players as our match (titles with diacritics resolve)", () => {
+    for (let n = 1; n <= 12; n++) {
+      const got = rr
+        .get(matchRef.get(n)!)!
+        .result.players.map((t) => playerOf.get(t) ?? `unmapped:${t}`);
+      expect(`${n}: ${[...got].sort().join(" v ")}`).toBe(`${n}: ${ourPair.get(n)}`);
+    }
+  });
+  it("the knockout refs exist, empty until the groups end", () => {
+    expect([...ko.keys()].sort()).toEqual(
+      [matchRef.get(13), matchRef.get(14), matchRef.get(15)].sort(),
+    );
+    for (const [, m] of ko) {
+      expect(m.result).toEqual({ status: "scheduled", players: [], winner: null, set_scores: [] });
+    }
+  });
+  it("a heading tidied to sentence case keeps the refs", () => {
+    const tidied = parseRoundRobin(
+      live.replace("===[[John McEnroe]] Group===", "===[[John McEnroe]] group==="),
+    );
+    expect(tidied.get("John McEnroe Group:1v4")?.result.players).toEqual([
+      "Alexander Zverev",
+      "Rafael Jódar",
+    ]);
+  });
+});
+
+// The real 2021 article: Norrie in for Tsitsipas, Sinner in for Berrettini (each sharing the row of the
+// player he replaced, every cell noting who played), and Berrettini's retirement against Zverev.
+const y2021 = readFileSync(
+  join(import.meta.dir, "fixtures", "wikipedia", "2021_ATP_Finals_Singles.wikitext"),
+  "utf8",
+);
+
+describe("2021 ATP Finals: alternates and a retirement", () => {
+  const rr = parseRoundRobin(y2021);
+  it("headings in sentence case ('Red group') are read, the ref says 'Group'", () => {
+    expect([...rr.keys()].filter((k) => k.startsWith("Red Group:")).length).toBe(6);
+    expect([...rr.keys()].filter((k) => k.startsWith("Green Group:")).length).toBe(6);
+  });
+  it("a match the alternate played names the alternate", () => {
+    expect(rr.get("Red Group:1v3")!.result).toEqual({
+      status: "completed",
+      players: ["Daniil Medvedev", "Jannik Sinner"],
+      winner: "Daniil Medvedev",
+      set_scores: s([6, 0], [6, 7], [7, 6]),
+    });
+    expect(rr.get("Red Group:3v4")!.result.players).toEqual(["Jannik Sinner", "Hubert Hurkacz"]);
+    expect(rr.get("Green Group:1v2")!.result.players).toEqual(["Novak Djokovic", "Cameron Norrie"]);
+    expect(rr.get("Green Group:2v4")!.result.players).toEqual(["Cameron Norrie", "Casper Ruud"]);
+  });
+  it("a match the withdrawn player played still names him", () => {
+    expect(rr.get("Green Group:2v3")!.result).toEqual({
+      status: "completed",
+      players: ["Stefanos Tsitsipas", "Andrey Rublev"],
+      winner: "Andrey Rublev",
+      set_scores: s([4, 6], [4, 6]),
+    });
+  });
+  it("the retirement, with the unfinished set", () => {
+    expect(rr.get("Red Group:2v3")!.result).toEqual({
+      status: "retired",
+      players: ["Alexander Zverev", "Matteo Berrettini"],
+      winner: "Alexander Zverev",
+      set_scores: s([7, 6], [1, 0]),
+    });
+  });
+  it("an alternate's match not yet played names the alternate (the row's last player)", () => {
+    const before = y2021
+      .replace(
+        "|3v4='''6–2, 6–2''' <small><br />''(w/ [[Jannik Sinner|Sinner]])''</small>",
+        "|3v4=",
+      )
+      .replace("|4v3=2–6, 2–6 <small><br />''(w/ [[Jannik Sinner|Sinner]])''</small>", "|4v3=");
+    expect(before).not.toBe(y2021);
+    expect(parseRoundRobin(before).get("Red Group:3v4")!.result).toEqual({
+      status: "scheduled",
+      players: ["Jannik Sinner", "Hubert Hurkacz"],
+      winner: null,
+      set_scores: [],
+    });
+  });
+});
+
+describe("cells with more than a score", () => {
+  it("a citation in a cell is not read as games", () => {
+    const g = group("'''6–4, 6–4'''<ref name=atp>Scores of 2026-11-15</ref>", "4–6, 4–6");
+    expect(g.get("John McEnroe Group:1v4")!.result).toEqual({
+      status: "completed",
+      players: ["Alexander Zverev", "Rafael Jódar"],
+      winner: "Alexander Zverev",
+      set_scores: s([6, 4], [6, 4]),
+    });
+  });
+  it("a default mid-match reads like a retirement, not as a finished match", () => {
+    const r = group("'''6–4, 3–1 def.'''", "4–6, 1–3 def.").get("John McEnroe Group:1v4")!.result;
+    expect(r.status).toBe("retired");
+    expect(r.set_scores).toEqual(s([6, 4], [3, 1]));
+  });
+});
