@@ -6,6 +6,11 @@
 begin;
 
 select t.setup_event();   -- clock: 20 Oct 2026, the day before the first match
+-- Since 0053 the vote takes any player of the event (public.players). This file votes for the Riyadh six,
+-- so they join the invented test field here.
+insert into public.players (id, name, seed, rank_snapshot)
+select id, id, 10 + n, 10 + n
+  from unnest(array['alcaraz', 'djokovic', 'zverev', 'deminaur', 'fritz', 'tien']) with ordinality as x(id, n);
 
 create function pg_temp.dev(n int) returns uuid language sql immutable
 as $$ select ('10000000-0000-0000-0000-' || lpad(n::text, 12, '0'))::uuid $$;

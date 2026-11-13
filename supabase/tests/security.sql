@@ -285,8 +285,11 @@ create temp view score_inputs as
      and coalesce(a.mode, 'i') in ('i', 'b', 'v')
      and (a.name ~* '(score|winner|result|status|games|normalised|point|sets)' or p.proargtypes::oid[] && array['jsonb'::regtype::oid]);
 select t.check('no function a fan or the operator can call takes a result, except ingest_result (operator side)',
-  (select array_agg(fn order by fn) from score_inputs) = array['ingest_result', 'save_pick', 'set_players'],
+  (select array_agg(fn order by fn) from score_inputs) = array['ingest_result', 'replace_player', 'save_pick', 'set_players'],
   (select array_to_string(array_agg(fn order by fn), ',') from score_inputs));
+select t.check('replace_player (0053, jsonb = the alternate''s name, seed, rank) never writes a result',
+  (select prosrc !~* 'update public.matches[^;]*(winner_id|set_scores|status|settled_at)s*=' and prosrc not ilike '%settle_match%'
+     from pg_proc where oid = 'public.replace_player(text, jsonb)'::regprocedure));
 select t.check('set_players (the only other jsonb input) takes names, seeds, ranks and the bracket, no result',
   (select prosrc not ilike '%winner_id =%' and prosrc not ilike '%set_scores%' and prosrc not ilike '%settle%'
      from pg_proc where oid = 'public.set_players(jsonb, jsonb)'::regprocedure));
