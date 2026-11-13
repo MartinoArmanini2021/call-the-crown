@@ -1,0 +1,140 @@
+<!-- Excerpt (the "Draw" section: finals bracket and both round-robin groups, before play) of the Wikipedia article "2026 ATP Finals – Singles", revision 1385229882 (2026-11-12T12:06:53Z), https://en.wikipedia.org/w/index.php?oldid=1385229882. Text licensed CC BY-SA 4.0. Kept as a parser test fixture (audit 13 Nov 2026: the page the poller reads this week, as it stood before play). -->
+==Draw==
+{{Draw key}}
+
+===Finals===
+{{4TeamBracket-Tennis3
+|RD1=Semifinals
+|RD2=Final
+
+|team-width=175
+
+|RD1-seed1=&nbsp;
+|RD1-team1={{flagicon|}}
+|RD1-score1-1= 
+|RD1-score1-2= 
+|RD1-score1-3= 
+|RD1-seed2=
+|RD1-team2={{flagicon|}}
+|RD1-score2-1= 
+|RD1-score2-2=
+|RD1-score2-3=
+
+|RD1-seed3=&nbsp;
+|RD1-team3={{flagicon|}}
+|RD1-score3-1= 
+|RD1-score3-2= 
+|RD1-score3-3=
+|RD1-seed4=
+|RD1-team4={{flagicon|}}
+|RD1-score4-1= 
+|RD1-score4-2= 
+|RD1-score4-3=
+
+|RD2-seed1=&nbsp;
+|RD2-team1={{flagicon|}}
+|RD2-score1-1= 
+|RD2-score1-2= 
+|RD2-score1-3= 
+|RD2-seed2=
+|RD2-team2={{flagicon|}}
+|RD2-score2-1= 
+|RD2-score2-2= 
+|RD2-score2-3=
+}}
+
+===[[John McEnroe]] Group===
+<!--Use this template {{twlp|W=0|L=0|dec=0}} to automatically calculate the percentage of sets and games won, using W for wins and L for loses.-->
+{{4TeamRR-TennisWide
+| title-1=
+|title-2=RR<br />{{nowrap|W–L}}
+|title-3=Set<br />W–L
+|title-4=Game<br />W–L
+|title-5=Standings
+
+| seed-1=1
+| team-1-abbrev={{flagicon|GER}} [[Alexander Zverev|Zverev]]
+| team-1={{nowrap|{{flagicon|GER}} [[Alexander Zverev]]}}
+| match-w/l-1=
+| set-w/l-1={{twlp|W=0|L=0|dec=0}}
+| game-w/l-1={{twlp|W=0|L=0|dec=0}}
+| standings-1=
+
+| seed-2=3
+| team-2-abbrev={{flagicon|USA}} [[Ben Shelton|Shelton]]
+| team-2={{flagicon|USA}} [[Ben Shelton]]
+| match-w/l-2=
+| set-w/l-2={{twlp|W=0|L=0|dec=0}}
+| game-w/l-2={{twlp|W=0|L=0|dec=0}}
+| standings-2=
+
+| seed-3=6
+| team-3-abbrev={{flagicon|FRA}} [[Arthur Fils|Fils]]
+| team-3={{flagicon|FRA}} [[Arthur Fils]]
+| match-w/l-3=
+| set-w/l-3={{twlp|W=0|L=0|dec=0}}
+| game-w/l-3={{twlp|W=0|L=0|dec=0}}
+| standings-3=
+
+| seed-4=8
+| team-4-abbrev={{flagicon|ESP}} [[Rafael Jódar|Jódar]]
+| team-4={{flagicon|ESP}} [[Rafael Jódar]]
+| match-w/l-4=
+| set-w/l-4={{twlp|W=0|L=0|dec=0}}
+| game-w/l-4={{twlp|W=0|L=0|dec=0}}
+| standings-4=
+
+|color-row-1= |1v2= |1v3= |1v4=
+|color-row-2= |2v1= |2v3= |2v4=
+|color-row-3= |3v1= |3v2= |3v4=
+|color-row-4= |4v1= |4v2= |4v3=
+}}
+
+===[[Ivan Lendl]] Group===
+<!--Use this template {{twlp|W=0|L=0|dec=0}} to automatically calculate the percentage of sets and games won, using W for wins and L for loses.-->
+{{4TeamRR-TennisWide
+| title-1=
+|title-2=RR<br />{{nowrap|W–L}}
+|title-3=Set<br />W–L
+|title-4=Game<br />W–L
+|title-5=Standings
+
+| seed-1=2
+| team-1-abbrev={{flagicon|ESP}} [[Carlos Alcaraz|Alcaraz]]
+| team-1={{nowrap|{{flagicon|ESP}} [[Carlos Alcaraz]]}}
+| match-w/l-1=
+| set-w/l-1={{twlp|W=0|L=0|dec=0}}
+| game-w/l-1={{twlp|W=0|L=0|dec=0}}
+| standings-1=
+
+| seed-2=4
+| team-2-abbrev={{flagicon|}} [[Daniil Medvedev|Medvedev]]
+| team-2={{flagicon|}} [[Daniil Medvedev]]
+| match-w/l-2=
+| set-w/l-2={{twlp|W=0|L=0|dec=0}}
+| game-w/l-2={{twlp|W=0|L=0|dec=0}}
+| standings-2=
+
+| seed-3=5
+| team-3-abbrev={{flagicon|ITA}} [[Flavio Cobolli|Cobolli]]
+| team-3={{flagicon|ITA}} [[Flavio Cobolli]]
+| match-w/l-3=
+| set-w/l-3={{twlp|W=0|L=0|dec=0}}
+| game-w/l-3={{twlp|W=0|L=0|dec=0}}
+| standings-3=
+
+| seed-4=7
+| team-4-abbrev={{flagicon|USA}} [[Frances Tiafoe|Tiafoe]]
+| team-4={{flagicon|USA}} [[Frances Tiafoe]]
+| match-w/l-4=
+| set-w/l-4={{twlp|W=0|L=0|dec=0}}
+| game-w/l-4={{twlp|W=0|L=0|dec=0}}
+| standings-4=
+
+|color-row-1= |1v2= |1v3= |1v4=
+|color-row-2= |2v1= |2v3= |2v4=
+|color-row-3= |3v1= |3v2= |3v4=
+|color-row-4= |4v1= |4v2= |4v3=
+}}
+
+<small>''Standings are determined by: 1. number of wins; 2. number of matches; 3. in two-player ties, head-to-head records; 4. in three-player ties, (a) percentage of sets won (head-to-head records if two players remain tied), then (b) percentage of games won (head-to-head records if two players remain tied), then (c) ATP rankings.''</small>

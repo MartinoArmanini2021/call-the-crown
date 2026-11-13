@@ -6,7 +6,8 @@
 // How a match reads on the page:
 //   the winner's name is in bold (''' … ''')       → final; no bold → live or not started
 //   a set score: games, with tiebreak points in <sup> (7<sup>7</sup> → 7)
-//   a retirement: <sup>r</sup> (or "ret.") next to a score → status retired
+//   a retirement: <sup>r</sup> (or "ret.") next to a score → status retired (a default, <sup>d</sup> or
+//   "def.", reads the same: an unfinished match)
 //   a walkover: "w/o" in a score or name cell        → status walkover
 //   both names in bold                               → unknown (an editing mistake): never final
 // The adapter only translates. Everything that guards against a wrong page — a legal score that the
@@ -24,8 +25,15 @@ export type ParsedMatch = { ref: string; result: Omit<NormalisedResult, "match_r
 
 const PARAM = /^\|\s*(RD\d+|3rd)-(team|score|seed)0*(\d+)(?:-(\d+))?\s*=(.*)$/;
 const LINK = /\[\[([^\]|]+)(?:\|[^\]]*)?\]\]/;
-const RETIRED = /<sup>\s*r(?:et)?\.?\s*<\/sup>|\bret(?:ired|\.)?(?![a-z])/i;
+// A default (disqualification) mid-match is an unfinished match like a retirement: the Draw key marks it
+// "d" (<sup>d</sup>) or "def." (audit 13 Nov 2026: it read as "completed" with an unfinished set, which
+// the database refuses on every poll, so the match never settled).
+const RETIRED = /<sup>\s*(?:r(?:et)?|d(?:ef)?)\.?\s*<\/sup>|\bret(?:ired|\.)?(?![a-z])|\bdef\.|\bdefaulted\b/i;
 const WALKOVER = /\bw\/o\b|\bw\.o\.?(?![a-z])/i;
+
+// A citation inside a cell ("<ref>… 2026-11-15 …</ref>") is never part of the result: its digits read
+// as games and its words as markers (audit 13 Nov 2026). Dropped from every cell before reading it.
+const dropRefs = (s: string) => s.replace(/<ref[^>]*\/>/gi, "").replace(/<ref[^>]*>.*?<\/ref>/gi, "");
 
 const stripMarkup = (s: string) =>
   s
@@ -63,7 +71,7 @@ export function parseBracket(wikitext: string): Map<string, ParsedMatch> {
     if (!m) continue;
     const [, round, kind, slot, set, value] = m;
     const key = kind === "score" ? `${round}|score|${Number(slot)}|${Number(set)}` : `${round}|${kind}|${Number(slot)}`;
-    cells.set(key, { raw: value ?? "", line: line.trim() });
+    cells.set(key, { raw: dropRefs(value ?? ""), line: line.trim() });
   }
 
   const out = new Map<string, ParsedMatch>();
@@ -135,16 +143,42 @@ export function parseBracket(wikitext: string): Map<string, ParsedMatch> {
 //   both cells of a pair must tell the same story (mirrored), or the reading is "unknown"
 //   a cell with games and no bold on either side → live; empty → scheduled
 // Match refs: "<group heading text>:<N>v<M>" with N < M, e.g. "John McEnroe Group:1v4".
+//
+// Audit 13 Nov 2026, from the real 2021 and 2023 articles:
+//   · the heading's last word may be "group" (sentence case, as in 2021 and 2023: "===Red group==="):
+//     read either way, the ref always says "Group", so a tidy-up edit does not unmap all twelve matches;
+//   · an alternate who comes in shares the withdrawn player's row: "team-3=[[Matteo Berrettini|…]]<br />
+//     [[Jannik Sinner]]", and each cell the pair played names who played it, "(w/ [[Jannik Sinner|Sinner]])".
+//     A row's player for a match is the one its cells name; with no such note, the last player of the
+//     row (the alternate, who plays the matches still to come). Reading the first link only gave the
+//     withdrawn player for the alternate's matches, which the database refused on every poll.
 // ---------------------------------------------------------------------------------------------------
-const GROUP_HEADING = /^===\s*(.*?Group)\s*===\s*$/;
+const GROUP_HEADING = /^===\s*(.*?group)\s*===\s*$/i;
 const RR_TEAM = /^\|\s*team-(\d)\s*=(.*)$/;
 const RR_CELL = /\|\s*(\d)v(\d)\s*=/g;
+const LINKS = /\[\[([^\]|]+)(?:\|[^\]]*)?\]\]/g;
+const PLAYED_BY = /\bw\/\s*\[\[([^\]|]+)/g; // "(w/ [[Jannik Sinner|Sinner]])"
 
 function rrSets(raw: string): { p1_games: number; p2_games: number }[] {
   const text = stripMarkup(raw).replace(/[–—−]/g, "-");
   const out: { p1_games: number; p2_games: number }[] = [];
-  for (const m of text.matchAll(/(\d{1,2})\s*-\s*(\d{1,2})/g)) out.push({ p1_games: Number(m[1]), p2_games: Number(m[2]) });
+  for (const m of text.matchAll(/(?<!\d)(\d{1,2})\s*-\s*(\d{1,2})(?!\d)/g)) out.push({ p1_games: Number(m[1]), p2_games: Number(m[2]) });
   return out;
+}
+
+/** The players a group row names, in order (two when an alternate came in). */
+function rowPlayers(cell: Cell | undefined): string[] {
+  if (!cell) return [];
+  const linked = [...cell.raw.matchAll(LINKS)].map((m) => canonicalTitle(m[1]!)).filter((t) => !t.includes(":"));
+  if (linked.length > 0) return linked.filter((t) => !/^(tbd|tba|bye)$/i.test(t));
+  const one = team(cell).ref;
+  return one ? [one] : [];
+}
+
+/** Who played for a row in one match: the player its cells name, else the row's last player. */
+function rowPlayerFor(players: string[], named: string[]): string | null {
+  if (players.length <= 1) return players[0] ?? null;
+  return players.find((p) => named.includes(p)) ?? players[players.length - 1]!;
 }
 
 /** Every round-robin match on the page, keyed "<group>:<i>v<j>". Pure: no network. */
@@ -158,10 +192,11 @@ export function parseRoundRobin(wikitext: string): Map<string, ParsedMatch> {
     if (!group) return;
     for (let i = 1; i <= 4; i++) {
       for (let j = i + 1; j <= 4; j++) {
-        const t1 = team(teams.get(i));
-        const t2 = team(teams.get(j));
         const a = cells.get(`${i}v${j}`);
         const b = cells.get(`${j}v${i}`);
+        const named = [...`${a?.raw ?? ""} ${b?.raw ?? ""}`.matchAll(PLAYED_BY)].map((m) => canonicalTitle(m[1]!));
+        const t1 = { ref: rowPlayerFor(rowPlayers(teams.get(i)), named) };
+        const t2 = { ref: rowPlayerFor(rowPlayers(teams.get(j)), named) };
         if (!t1.ref || !t2.ref) continue;
         const ref = `${group}:${i}v${j}`;
         const lines = [teams.get(i)!.line, teams.get(j)!.line, ...(a ? [a.line] : []), ...(b && b.line !== a?.line ? [b.line] : [])];
@@ -196,30 +231,34 @@ export function parseRoundRobin(wikitext: string): Map<string, ParsedMatch> {
 
   for (const rawLine of wikitext.split("\n")) {
     const line = rawLine.trim();
+    const text = dropRefs(line);
     const h = GROUP_HEADING.exec(line);
     if (h) {
       flush();
-      group = stripMarkup(h[1]!.replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, "$1")).replace(/\s+/g, " ");
+      group = stripMarkup(h[1]!.replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, "$1"))
+        .replace(/\s+/g, " ")
+        .replace(/group$/i, "Group");
       teams = new Map();
       cells = new Map();
       continue;
     }
-    if (/^==[^=]/.test(line)) {
+    // any other heading ends the group (a section moved below the groups is not part of the last one)
+    if (/^==/.test(line)) {
       flush();
       group = null;
       continue;
     }
     if (!group) continue;
-    const t = RR_TEAM.exec(line);
+    const t = RR_TEAM.exec(text);
     if (t) {
       teams.set(Number(t[1]), { raw: t[2] ?? "", line });
       continue;
     }
-    const marks = [...line.matchAll(RR_CELL)];
+    const marks = [...text.matchAll(RR_CELL)];
     marks.forEach((m, k) => {
       const start = m.index! + m[0].length;
-      const end = k + 1 < marks.length ? marks[k + 1]!.index! : line.length;
-      cells.set(`${m[1]}v${m[2]}`, { raw: line.slice(start, end).trim(), line });
+      const end = k + 1 < marks.length ? marks[k + 1]!.index! : text.length;
+      cells.set(`${m[1]}v${m[2]}`, { raw: text.slice(start, end).trim(), line });
     });
   }
   flush();

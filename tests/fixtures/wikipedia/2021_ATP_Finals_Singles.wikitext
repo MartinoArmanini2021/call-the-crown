@@ -1,0 +1,139 @@
+<!-- Excerpt (the "Draw" section: finals bracket and both round-robin groups, each with an alternate who came in) of the Wikipedia article "2021 ATP Finals – Singles", revision 1363313460 (2026-07-09T12:17:53Z), https://en.wikipedia.org/w/index.php?oldid=1363313460. Text licensed CC BY-SA 4.0. Kept as a parser test fixture (audit 13 Nov 2026: how the article shows an alternate and a retirement). -->
+==Draw==
+
+===Finals===
+{{4TeamBracket-Tennis3
+| RD1=Semifinals
+| RD2=Final
+
+| team-width=185
+
+| RD1-seed1=1
+| RD1-team1={{flagicon|SRB}} [[Novak Djokovic]]
+| RD1-score1-1=6<sup>4</sup>
+| RD1-score1-2='''6'''
+| RD1-score1-3=3
+| RD1-seed2=3
+| RD1-team2='''{{flagicon|GER}} [[Alexander Zverev]]'''
+| RD1-score2-1='''7<sup>7</sup>'''
+| RD1-score2-2=4
+| RD1-score2-3='''6'''
+
+| RD1-seed3=2
+| RD1-team3='''{{flagicon|RUS}} [[Daniil Medvedev]]'''
+| RD1-score3-1='''6'''
+| RD1-score3-2='''6'''
+| RD1-score3-3=
+| RD1-seed4=8
+| RD1-team4={{flagicon|NOR}} [[Casper Ruud]]
+| RD1-score4-1=4
+| RD1-score4-2=2
+| RD1-score4-3=
+
+| RD2-seed1=3
+| RD2-team1='''{{flagicon|GER}} [[Alexander Zverev]]'''
+| RD2-score1-1='''6'''
+| RD2-score1-2='''6'''
+| RD2-score1-3=
+| RD2-seed2=2
+| RD2-team2={{flagicon|RUS}} [[Daniil Medvedev]]
+| RD2-score2-1=4
+| RD2-score2-2=4
+| RD2-score2-3=
+}}
+
+===Green group===
+<!--Use this template {{twlp|W=0|L=0|dec=0}} to automatically calculate the percentage of sets and games won, using W for wins and L for loses.-->
+{{4TeamRR-TennisWide
+|title-1=
+|title-2=RR W–L
+|title-3=Set W–L
+|title-4=Game W–L
+|title-5=Standings
+
+| seed-1=1
+| team-1-abbrev={{flagicon|SRB}} '''[[Novak Djokovic|Djokovic]]'''
+| team-1={{nowrap|{{flagicon|SRB}} '''[[Novak Djokovic]]'''}}
+| match-w/l-1='''3–0'''
+| set-w/l-1='''{{twlp|W=6|L=0|dec=0}}'''
+| game-w/l-1='''{{twlp|W=37|L=16|dec=0}}'''
+| standings-1='''1'''
+
+| seed-3=5
+| team-3-abbrev={{flagicon|RUS}} [[Andrey Rublev|Rublev]]
+| team-3={{nowrap|{{flagicon|RUS}} [[Andrey Rublev]]}}
+| match-w/l-3=1–2
+| set-w/l-3={{twlp|W=3|L=4|dec=0}}
+| game-w/l-3={{twlp|W=34|L=36|dec=0}}
+| standings-3=3
+
+| seed-2=<span style="color:gray">4</span><br />10
+| team-2-abbrev={{flagicon|GRE}} [[Stefanos Tsitsipas|<span style="color:gray">Tsitsipas</span>]]<br />{{flagicon|GBR}} [[Cameron Norrie|Norrie]]
+| team-2={{nowrap|{{flagicon|GRE}} [[Stefanos Tsitsipas|<span style="color:gray">Stefanos Tsitsipas</span>]]}}<br />{{nowrap|{{flagicon|GBR}} [[Cameron Norrie]]}}
+| match-w/l-2=<span style="color:gray">0–1</span><br>0–2
+| set-w/l-2=<span style="color:gray">{{twlp|W=0|L=2|dec=0}}</span><br />{{twlp|W=1|L=4|dec=0}}
+| game-w/l-2=<span style="color:gray">{{twlp|W=8|L=12|dec=0}}</span><br />{{twlp|W=16|L=25|dec=0}}
+| standings-2=<span style="color:gray">X</span><br>4
+
+| seed-4=8
+| team-4-abbrev={{flagicon|NOR}} '''[[Casper Ruud|Ruud]]'''
+| team-4={{nowrap|{{flagicon|NOR}} '''[[Casper Ruud]]'''}}
+| match-w/l-4='''2–1'''
+| set-w/l-4='''{{twlp|W=4|L=4|dec=0}}'''
+| game-w/l-4='''{{twlp|W=37|L=43|dec=0}}'''
+| standings-4='''2'''
+
+|color-row-1=           |1v2= '''6–2, 6–1''' <small><br />''(w/ [[Cameron Norrie|Norrie]])''</small> |1v3='''6–3, 6–2''' |1v4='''7–6<sup>(7–4)</sup>, 6–2'''
+|color-row-2= |2v1= 2–6, 1–6 <small><br />''(w/ [[Cameron Norrie|Norrie]])''</small>          |2v3=<span style="color:gray">4–6, 4–6 <small><br />''(w/ [[Stefanos Tsitsipas|Tsitsipas]])''</small></span> |2v4=6–1, 3–6, 4–6 <small><br />''(w/ [[Cameron Norrie|Norrie]])''</small>
+|color-row-3= |3v1=3–6, 2–6 |3v2='''6–4, 6–4<br />''' <small>''(w/ [[Stefanos Tsitsipas|Tsitsipas]])''</small>        |3v4= 6–2, 5–7, 6–7<sup>(5–7)</sup>
+|color-row-4= |4v1=6–7<sup>(4–7)</sup>, 2–6 |4v2= '''1–6, 6–3, 6–4''' <small><br />''(w/ [[Cameron Norrie|Norrie]])''</small> |4v3='''2–6, 7–5, 7–6<sup>(7–5)</sup>'''
+}}
+
+===Red group===
+<!--Use this template {{twlp|W=0|L=0|dec=0}} to automatically calculate the percentage of sets and games won, using W for wins and L for loses.-->
+{{4TeamRR-TennisWide
+|title-1=
+|title-2=RR W–L
+|title-3=Set W–L
+|title-4=Game W–L
+|title-5=Standings
+
+| seed-1=2
+| team-1-abbrev='''{{flagicon|RUS}} [[Daniil Medvedev|Medvedev]]'''
+| team-1='''{{nowrap|{{flagicon|RUS}} [[Daniil Medvedev]]}}'''
+| match-w/l-1='''3–0'''
+| set-w/l-1='''{{twlp|W=6|L=3|dec=0}}'''
+| game-w/l-1='''{{twlp|W=56|L=43|dec=0}}'''
+| standings-1='''1'''
+
+| seed-2=3
+| team-2-abbrev='''{{flagicon|GER}} [[Alexander Zverev|Zverev]]'''
+| team-2='''{{nowrap|{{flagicon|GER}} [[Alexander Zverev]]}}'''
+| match-w/l-2='''2–1'''
+| set-w/l-2='''{{twlp|W=5|L=2|dec=0}}'''
+| game-w/l-2='''{{twlp|W=36|L=31|dec=0}}'''
+| standings-2='''2'''
+
+| seed-3=<span style="color:gray">6</span><br />9
+| team-3-abbrev={{flagicon|ITA}} [[Matteo Berrettini|<span style="color:gray">Berrettini</span>]]<br />{{flagicon|ITA}} [[Jannik Sinner|Sinner]]
+| team-3={{nowrap|{{flagicon|ITA}} [[Matteo Berrettini|<span style="color:gray">Matteo Berrettini</span>]]}}<br />{{nowrap|{{flagicon|ITA}} [[Jannik Sinner]]}}
+| match-w/l-3=<span style="color:gray">0–1</span><br>1–1
+| set-w/l-3=<span style="color:gray">{{nowrap|0–2 (0%)}}<sup>†</sup></span><br />{{twlp|W=3|L=2|dec=0}}
+| game-w/l-3=<span style="color:gray"> {{twlp|W=0|L=0|dec=0|none=yes}} </span><br />{{twlp|W=25|L=23|dec=0}}
+| standings-3=<span style="color:gray">X</span><br>3
+
+| seed-4=7
+| team-4-abbrev={{flagicon|POL}} [[Hubert Hurkacz|Hurkacz]]
+| team-4={{nowrap|{{flagicon|POL}} [[Hubert Hurkacz]]}}
+| match-w/l-4=0–3
+| set-w/l-4={{twlp|W=1|L=6|dec=0}}
+| game-w/l-4={{twlp|W=24|L=42|dec=0}}
+| standings-4=4
+
+|color-row-1= |1v2='''6–3, 6–7<sup>(3–7)</sup>, 7–6<sup>(8–6)</sup>''' |1v3='''6–0, 6–7<sup>(5–7)</sup>, 7–6<sup>(10–8)</sup>''' <br /><small>''(w/ [[Jannik Sinner|Sinner]])''</small> |1v4='''6–7<sup>(5–7)</sup>, 6–3, 6–4'''
+|color-row-2= |2v1=3–6, 7–6<sup>(7–3)</sup>, 6–7<sup>(6–8)</sup> |2v3='''7–6<sup>(9–7)</sup>, 1–0, ret.''' <small><br />''(w/ [[Matteo Berrettini|Berrettini]])''</small> |2v4= '''6–2, 6–4'''
+|color-row-3= |3v1= 0–6, 7–6<sup>(7–5)</sup>, 6–7<sup>(8–10)</sup> <br /><small>''(w/ [[Jannik Sinner|Sinner]])''</small> |3v2=<span style="color:gray">6–7<sup>(7–9)</sup>, 0–1, ret. <small><br />''(w/ [[Matteo Berrettini|Berrettini]])''</small></span> |3v4='''6–2, 6–2''' <small><br />''(w/ [[Jannik Sinner|Sinner]])''</small>
+|color-row-4= |4v1=7–6<sup>(7–5)</sup>, 3–6, 4–6 |4v2=2–6, 4–6 |4v3=2–6, 2–6 <small><br />''(w/ [[Jannik Sinner|Sinner]])''</small>
+}}
+† Following ATP rules, Berrettini's retirement against Zverev was counted as a straight-set loss in determining round robin standings.
+
