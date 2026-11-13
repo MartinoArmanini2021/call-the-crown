@@ -156,7 +156,7 @@ export function PickPager({ matches, all, players, pickByMatch, focus, status, r
           <button
             type="button"
             onClick={() => goTo(index + 1)}
-            className="focus-ring rounded-full bg-card px-3 py-1 font-semibold text-ink-2"
+            className="focus-ring min-h-9 rounded-full bg-card px-3 py-1.5 font-semibold text-ink-2"
           >
             {t("pager_swipe")} ↓
           </button>

@@ -181,7 +181,7 @@ function Picks() {
       {sessionEnded && (
         <div
           role="alert"
-          className="fixed inset-x-0 bottom-20 z-30 mx-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-accent/45 bg-card px-4 py-3 text-sm shadow-lg"
+          className="fixed inset-x-0 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-30 mx-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-accent/45 bg-card px-4 py-3 text-sm shadow-lg"
         >
           <p className="font-bold text-accent-text">{t("session_ended")}</p>
           <Link
@@ -197,7 +197,7 @@ function Picks() {
       {saved && (
         <div
           role="status"
-          className="fixed inset-x-0 bottom-20 z-30 mx-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-good/45 bg-card px-4 py-3 text-sm shadow-lg"
+          className="fixed inset-x-0 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-30 mx-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-good/45 bg-card px-4 py-3 text-sm shadow-lg"
         >
           <p className="font-bold text-good">✓ {t("saved_toast", { pick: saved.pick })}</p>
           <p className="mt-0.5 text-xs text-ink-2">{t("saved_toast_sub", { time: saved.until })}</p>

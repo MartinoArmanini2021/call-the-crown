@@ -39,6 +39,11 @@ function Landing() {
     .filter((ms) => ms > now)
     .sort((a, b) => a - b)[0];
 
+  const firstBall = (matches.data ?? [])
+    .map((m) => (m.starts_at ? Date.parse(m.starts_at) : Infinity))
+    .reduce((a, b) => Math.min(a, b), Infinity);
+  const voteOpen = matches.isSuccess && (firstBall === Infinity || firstBall > now);
+
   const count = (matches.data ?? []).length;
   // the example is a pick in the event's first round, so it names a player from it
   const qf = [...(matches.data ?? [])].sort((a, b) => a.match_no - b.match_no).find((m) => m.p1_id);
@@ -59,15 +64,59 @@ function Landing() {
         )}
         <h1 className="headline mt-3 text-6xl sm:text-7xl">{t("landing_title")}</h1>
         <p className="mt-2 text-base font-semibold text-ink">{t("landing_league_line")}</p>
-        <Link
-          to="/vote"
-          className="focus-ring mt-3 inline-flex items-center gap-2 rounded-full border border-gold/60 bg-gold/10 px-4 py-2 text-sm font-semibold text-gold"
-        >
-          ♛ {t("landing_vote_link")} <span aria-hidden>{locale === "ar" ? "←" : "→"}</span>
-        </Link>
         <p className="mt-2 max-w-md text-sm text-ink-2">
           {t("landing_sentence", { n: count || 6 })}
         </p>
+
+        {firstLock !== undefined && (
+          <p className="mt-4 flex items-baseline gap-2">
+            <span className="text-xs text-ink-2">{t("first_lock_in")}</span>
+            <span className="num text-3xl text-accent-text">
+              {shortTimeLeft(firstLock - now, locale)}
+            </span>
+          </p>
+        )}
+
+        {/* Leagues first (brief "bragging rights", Phase 2): the game is beating your friends. The
+            buttons sit above the players (UX review, 13 Nov 2026): a friend arriving from a WhatsApp
+            link sees what to do on the first screen of a phone, without scrolling. */}
+        {user ? (
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link to="/picks" className={primary}>
+              {t("landing_cta_signed_in")}
+            </Link>
+            {noLeague && (
+              <Link to="/standings" search={{ add: "create" }} className={secondary}>
+                {t("cta_start_league")}
+              </Link>
+            )}
+          </div>
+        ) : (
+          <>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                to="/sign-in"
+                search={{ redirect: "/standings?add=create" }}
+                className={primary}
+              >
+                {t("cta_start_league")}
+              </Link>
+              <Link
+                to="/sign-in"
+                search={{ redirect: "/standings?add=join" }}
+                className={secondary}
+              >
+                {t("cta_join_code")}
+              </Link>
+            </div>
+            <Link
+              to="/sign-in"
+              className="focus-ring mt-1 inline-flex min-h-11 items-center rounded text-sm text-ink-2 underline underline-offset-4"
+            >
+              {t("cta_solo")}
+            </Link>
+          </>
+        )}
 
         {(players.data ?? []).length > 0 && (
           <ul
@@ -91,52 +140,14 @@ function Landing() {
           </ul>
         )}
 
-        {firstLock !== undefined && (
-          <p className="mt-5 flex items-baseline gap-2">
-            <span className="text-xs text-ink-2">{t("first_lock_in")}</span>
-            <span className="num text-3xl text-accent-text">
-              {shortTimeLeft(firstLock - now, locale)}
-            </span>
-          </p>
-        )}
-
-        {/* Leagues first (brief "bragging rights", Phase 2): the game is beating your friends. */}
-        {user ? (
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Link to="/picks" className={primary}>
-              {t("landing_cta_signed_in")}
-            </Link>
-            {noLeague && (
-              <Link to="/standings" search={{ add: "create" }} className={secondary}>
-                {t("cta_start_league")}
-              </Link>
-            )}
-          </div>
-        ) : (
-          <>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <Link
-                to="/sign-in"
-                search={{ redirect: "/standings?add=create" }}
-                className={primary}
-              >
-                {t("cta_start_league")}
-              </Link>
-              <Link
-                to="/sign-in"
-                search={{ redirect: "/standings?add=join" }}
-                className={secondary}
-              >
-                {t("cta_join_code")}
-              </Link>
-            </div>
-            <Link
-              to="/sign-in"
-              className="focus-ring mt-3 inline-block rounded text-sm text-ink-2 underline underline-offset-4"
-            >
-              {t("cta_solo")}
-            </Link>
-          </>
+        {/* the quick vote closes at the first ball: no link to a closed vote */}
+        {voteOpen && (
+          <Link
+            to="/vote"
+            className="focus-ring mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/60 bg-gold/10 px-4 py-2 text-sm font-semibold text-gold"
+          >
+            {t("landing_vote_link")} <span aria-hidden>{locale === "ar" ? "←" : "→"}</span>
+          </Link>
         )}
       </section>
 
@@ -193,6 +204,9 @@ function Portrait({
           <img
             src={img}
             alt=""
+            // like every other headshot (PlayerPhoto, vote): without it atptour.com refuses the
+            // image and the landing tiles showed names only
+            referrerPolicy="no-referrer"
             onError={() => setFailed(true)}
             className="absolute inset-0 h-full w-full object-cover object-top"
           />

@@ -110,7 +110,8 @@ function Stat({
 }) {
   const { t } = useT();
   return (
-    <div className="card px-3 py-2.5">
+    // the number sits on the tile's bottom edge, so the three line up when a label wraps
+    <div className="card flex flex-col justify-between gap-1 px-3 py-2.5">
       <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">{label}</p>
       <p className={accent ? "num text-2xl text-accent-text" : "num text-2xl"}>
         {value}
