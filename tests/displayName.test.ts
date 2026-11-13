@@ -17,6 +17,11 @@ const samples: [string, boolean][] = [
   ["C" + C(1072) + "ll the Cr" + C(1086) + "wn", true], // Cyrillic a and o
   ["Call the Crown", true],
   ["Call The Crown HQ", true],
+  ["The Final Prediction", true],
+  ["THE FINAL PREDICTION official", true],
+  ["The F1nal Predicti0n", true],
+  ["التوقّع النهائي", true],
+  ["My final prediction", false],
   ["Staff", true],
   ["Moderator", true],
   ["Support", true],

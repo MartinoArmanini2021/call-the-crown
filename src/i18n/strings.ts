@@ -144,7 +144,7 @@ export const en = {
   set_who_aria: "Who wins set {n}",
   save_up_to: "Save · up to {points} pts",
   scoreboard_caption: "Your pick as a scoreboard, set by set",
-  draw_title: "Road to the crown",
+  draw_title: "Road to the title",
   draw_next: "Next up:",
   draw_live: "Live",
   draw_champion: "Champion",

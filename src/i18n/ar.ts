@@ -138,7 +138,7 @@ export const ar: Record<StringKey, string> = {
   set_who_aria: "من يفوز بالمجموعة {n}",
   save_up_to: "احفظ · حتى {points} نقطة",
   scoreboard_caption: "توقعك على لوحة النتائج، مجموعة بمجموعة",
-  draw_title: "الطريق إلى التاج",
+  draw_title: "الطريق إلى اللقب",
   draw_next: "التالي:",
   draw_live: "مباشر",
   draw_champion: "البطل",

@@ -1,13 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- The app's mark, "the crowned ball" (Tino, 4 Oct 2026): a red tennis ball wearing a gold crown. -->
+  <!-- The app's mark, "The Final Prediction" (13 Nov 2026): a tennis ball as a crystal ball, on a gold stand, with a gold sparkle. -->
   <rect width="100" height="100" rx="22" fill="#e50914"/>
-  <g transform="translate(6 5) scale(0.88)">
-  <circle cx="50" cy="60" r="30" fill="none" stroke="#fff" stroke-width="6"/>
-  <path d="M26 40 C42 52 42 68 26 80" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
-  <path d="M74 40 C58 52 58 68 74 80" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
-  <g transform="rotate(-12 50 20)">
-    <path fill="#f2c14e" d="M30 33 L30 13 L39 24 L50 6 L61 24 L70 13 L70 33 Z"/>
-    <rect x="29" y="32" width="42" height="6" rx="2" fill="#f2c14e"/>
+  <g transform="translate(7 6) scale(0.86)">
+  <circle cx="50" cy="44" r="30" fill="none" stroke="#fff" stroke-width="6"/>
+  <path d="M27.6 24 C42 36 42 52 27.6 64" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M72.4 24 C58 36 58 52 72.4 64" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/>
+  <g fill="#f2c14e">
+    <path d="M27 70 Q50 88 73 70 L68 81 L32 81 Z"/>
+    <rect x="24" y="84" width="52" height="9" rx="3"/>
+    <path d="M88 0 Q90 10 100 12 Q90 14 88 24 Q86 14 76 12 Q86 10 88 0 Z"/>
   </g>
   </g>
 </svg>

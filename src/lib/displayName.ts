@@ -118,9 +118,15 @@ const WORDS = new Set(
     "الدعم",
   ].map(nameSkeleton),
 );
-const INSIDE = ["Call the Crown", "توقع التاج", "Grand Slam GM", "administrator", "moderator"].map(
-  nameSkeleton,
-);
+const INSIDE = [
+  "The Final Prediction",
+  "التوقع النهائي",
+  "Call the Crown",
+  "توقع التاج",
+  "Grand Slam GM",
+  "administrator",
+  "moderator",
+].map(nameSkeleton);
 
 /** True when a display name could be taken for the game's own team. */
 export function reservedName(name: string): boolean {

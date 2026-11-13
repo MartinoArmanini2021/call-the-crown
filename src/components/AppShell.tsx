@@ -23,7 +23,7 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
   const avatar = (profile.data?.display_name || user?.email || "?").trim()[0]?.toUpperCase();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const logo = publicImage(event.branding.logo_path);
-  // The header's short mark (branding.short_name, e.g. "Call the Crown"), drawn by Wordmark:
+  // The header's short mark (branding.short_name, e.g. "The Final Prediction"), drawn by Wordmark:
   // all but the last word on top, the last word underneath. The full app name stays in the page title.
   const headerName = (
     inLocale(event.branding, "short_name", locale) ??
@@ -114,11 +114,12 @@ export function AppShell({ children, wide = false }: { children: ReactNode; wide
 }
 
 /**
- * The game's name as a logo (Tino, 4 Oct 2026: "a bigger game name logo at the top"; then "go with the
- * crowned ball"): the mark, a red tennis ball wearing a gold crown (also public/favicon.svg), then two
- * stacked lines, all but the last word in white on top ("CALL THE") and the last word in gold
- * underneath ("CROWN"), its letters spread to the same width so the two lines read as one block.
+ * The game's name as a logo (Tino, 4 Oct 2026: "a bigger game name logo at the top"): the mark, then two
+ * stacked lines, all but the last word in white on top ("THE FINAL") and the last word in gold
+ * underneath ("PREDICTION"), its letters spread to the same width so the two lines read as one block.
  * Arabic letters join, so they are never spread apart: centred instead.
+ * The mark (13 Nov 2026, the rename to "The Final Prediction"): a red tennis ball as a crystal ball,
+ * on a gold stand, with a gold sparkle (also public/favicon.svg and drawMark in src/lib/callCard.ts).
  */
 function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {
   const top = words.slice(0, -1).join(" ");
@@ -126,24 +127,25 @@ function Wordmark({ words, spread }: { words: string[]; spread: boolean }) {
   return (
     <span className="flex items-center gap-2">
       <svg viewBox="0 0 100 100" aria-hidden className="h-10 w-10 shrink-0 sm:h-12 sm:w-12">
-        <circle cx="50" cy="60" r="34" fill="var(--accent)" />
+        <circle cx="50" cy="44" r="32" fill="var(--accent)" />
         <path
-          d="M23 37 C41 51 41 69 23 83"
+          d="M26.4 22.4 C42 35.5 42 52.5 26.4 65.6"
           fill="none"
           stroke="#fff"
           strokeWidth="4.5"
           strokeLinecap="round"
         />
         <path
-          d="M77 37 C59 51 59 69 77 83"
+          d="M73.6 22.4 C58 35.5 58 52.5 73.6 65.6"
           fill="none"
           stroke="#fff"
           strokeWidth="4.5"
           strokeLinecap="round"
         />
-        <g transform="rotate(-12 50 18)" fill="var(--gold)">
-          <path d="M31 30 L31 12 L39 22 L50 6 L61 22 L69 12 L69 30 Z" />
-          <rect x="30" y="29.5" width="40" height="5.5" rx="1.5" />
+        <g fill="var(--gold)">
+          <path d="M27 70 Q50 88 73 70 L68 81 L32 81 Z" />
+          <rect x="24" y="84" width="52" height="9" rx="3" />
+          <path d="M86 2 Q88 11 97 13 Q88 15 86 24 Q84 15 75 13 Q84 11 86 2 Z" />
         </g>
       </svg>
       <span className="headline inline-grid leading-[0.92]">

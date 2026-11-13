@@ -9,7 +9,7 @@ insert into public.event_config (
   rules, league_limits, branding, prizes, prize_terms_url, privacy, sponsor_slots, flags, group_schedule
 ) values (
   true,
-  'Call the Crown · ATP Finals 2026',
+  'The Final Prediction · ATP Finals 2026',
   'Europe/Rome',
   '2026-11-13 00:00+01',
   '2026-11-22 23:59:59+01',
@@ -24,15 +24,15 @@ insert into public.event_config (
    }',
   '{"max_leagues_per_user": 10, "max_members": 200, "crew_min_members": 5}',
   '{
-     "app_name":  "Call the Crown",
-     "short_name": "Call the Crown",
+     "app_name":  "The Final Prediction",
+     "short_name": "The Final Prediction",
      "event_line": "Eight players · Turin · 15–22 November",
      "event_name": "ATP Finals",
      "city": "Turin",
      "session": "Day",
      "vote_eyebrow": "ATP Finals · Turin · 15–22 November",
-     "app_name_ar":  "توقّع التاج",
-     "short_name_ar": "توقّع التاج",
+     "app_name_ar":  "التوقّع النهائي",
+     "short_name_ar": "التوقّع النهائي",
      "event_line_ar": "ثمانية لاعبين · تورينو · 15–22 نوفمبر",
      "event_name_ar": "بطولة الماسترز الختامية",
      "city_ar": "تورينو",
@@ -48,7 +48,7 @@ insert into public.event_config (
   null,
   '{
      "version": "draft-2",
-     "notice": "Privacy notice placeholder, pending legal review. Call the Crown is run by Grand Slam GM.",
+     "notice": "Privacy notice placeholder, pending legal review. The Final Prediction is run by Grand Slam GM.",
      "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM."
    }',
   '[]',

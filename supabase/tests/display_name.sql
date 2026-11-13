@@ -61,6 +61,9 @@ select t.check('staff words refused',
 select t.check('the operator name refused',    pg_temp.c('Grand Slam GM') is null);
 select t.check('the Arabic app name refused',  pg_temp.c('توقّع التاج') is null and pg_temp.c('توقع التاج') is null);
 select t.check('Arabic staff words refused',   pg_temp.c('مشرف') is null and pg_temp.c('الإدارة') is null);
+select t.check('the new app name refused (0054)',
+  pg_temp.c('The Final Prediction') is null and pg_temp.c('thefinalprediction') is null
+  and pg_temp.c('التوقّع النهائي') is null and pg_temp.c('My final prediction') = 'My final prediction');
 select t.check('real names that merely contain the letters pass',
   pg_temp.c('Badminton Bob') = 'Badminton Bob' and pg_temp.c('Staffan') = 'Staffan'
   and pg_temp.c('Crown Prince') = 'Crown Prince' and pg_temp.c('Supporter 7') = 'Supporter 7'

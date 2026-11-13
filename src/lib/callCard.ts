@@ -556,27 +556,25 @@ function withAlpha(color: string, alpha: number): string {
   return rgb ? `rgb(${rgb[1]} ${rgb[2]} ${rgb[3]} / ${alpha})` : color;
 }
 
-/** The crowned ball (the header's mark, AppShell Wordmark), at (x, y), `size` wide. */
+/** The tennis-ball crystal ball (the header's mark, AppShell Wordmark), at (x, y), `size` wide. */
 function drawMark(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, c: Tokens) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(size / 100, size / 100);
   ctx.beginPath();
-  ctx.arc(50, 60, 34, 0, Math.PI * 2);
+  ctx.arc(50, 44, 32, 0, Math.PI * 2);
   ctx.fillStyle = c.accent;
   ctx.fill();
   ctx.strokeStyle = "#fff";
   ctx.lineWidth = 4.5;
   ctx.lineCap = "round";
-  ctx.stroke(new Path2D("M23 37 C41 51 41 69 23 83"));
-  ctx.stroke(new Path2D("M77 37 C59 51 59 69 77 83"));
-  ctx.translate(50, 18);
-  ctx.rotate((-12 * Math.PI) / 180);
-  ctx.translate(-50, -18);
+  ctx.stroke(new Path2D("M26.4 22.4 C42 35.5 42 52.5 26.4 65.6"));
+  ctx.stroke(new Path2D("M73.6 22.4 C58 35.5 58 52.5 73.6 65.6"));
   ctx.fillStyle = c.gold;
-  ctx.fill(new Path2D("M31 30 L31 12 L39 22 L50 6 L61 22 L69 12 L69 30 Z"));
+  ctx.fill(new Path2D("M27 70 Q50 88 73 70 L68 81 L32 81 Z"));
+  ctx.fill(new Path2D("M86 2 Q88 11 97 13 Q88 15 86 24 Q84 15 75 13 Q84 11 86 2 Z"));
   ctx.beginPath();
-  ctx.roundRect(30, 29.5, 40, 5.5, 1.5);
+  ctx.roundRect(24, 84, 52, 9, 3);
   ctx.fill();
   ctx.restore();
 }
