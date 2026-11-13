@@ -158,6 +158,7 @@ export const it: Record<StringKey, string> = {
   draw_pick_now: "Pronostica ora · {time}",
   draw_hint: "Tocca una partita per vedere il risultato, o per fare il pronostico finché è aperta.",
   pager_swipe: "Prossima partita",
+  pager_prev: "Precedente",
   court_hint: "Tocca il giocatore che secondo te vincerà",
   pager_count: "Partita {n} di {total}",
   picks_status: "{n} su {total} fatti",

@@ -157,21 +157,48 @@ export function PickPager({ matches, all, players, pickByMatch, focus, status, r
           </div>
         ))}
       </div>
-      <p
-        className="mt-2 flex items-center justify-center gap-2 text-xs text-ink-3"
-        aria-live="polite"
-      >
-        <span>{t("pager_count", { n: index + 1, total: matches.length })}</span>
-        {index < matches.length - 1 && (
-          <button
-            type="button"
-            onClick={() => goTo(index + 1)}
-            className="focus-ring min-h-9 rounded-full bg-card px-3 py-1.5 font-semibold text-ink-2"
-          >
-            {t("pager_swipe")} ↓
-          </button>
-        )}
-      </p>
+      {/* Where you are and how to move on, easy to see and tap (Tino, 13 Nov 2026: "not too
+          visible"): Previous, the count with a dot per match in its group's colour, Next match. */}
+      <div className="mt-3 flex items-center justify-between gap-2">
+        <button
+          type="button"
+          onClick={() => goTo(index - 1)}
+          disabled={index === 0}
+          aria-label={t("pager_prev")}
+          className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-card text-lg font-semibold text-ink disabled:opacity-30"
+        >
+          ↑
+        </button>
+        <div className="flex min-w-0 flex-col items-center gap-1.5" aria-live="polite">
+          <span className="text-sm font-semibold text-ink-2">
+            {t("pager_count", { n: index + 1, total: matches.length })}
+          </span>
+          {matches.length <= 16 && (
+            <span aria-hidden className="flex items-center gap-1">
+              {matches.map((m, i) => (
+                <span
+                  key={m.match_no}
+                  className={cn(
+                    "h-1.5 rounded-full transition-all",
+                    i === index ? "w-4" : "w-1.5 opacity-50",
+                  )}
+                  style={{
+                    background: groupColor(m.round === "RR" ? m.grp : null) ?? "var(--text-2)",
+                  }}
+                />
+              ))}
+            </span>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={() => goTo(index + 1)}
+          disabled={index >= matches.length - 1}
+          className="focus-ring min-h-11 shrink-0 rounded-full bg-ink px-4 text-sm font-bold text-bg disabled:opacity-30"
+        >
+          {t("pager_swipe")} ↓
+        </button>
+      </div>
     </div>
   );
 }

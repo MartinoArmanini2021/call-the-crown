@@ -152,6 +152,7 @@ export const ar: Record<StringKey, string> = {
   draw_pick_now: "توقّع الآن · {time}",
   draw_hint: "اضغط على مباراة لترى نتيجتها، أو لتسجّل توقعك ما دامت مفتوحة.",
   pager_swipe: "المباراة التالية",
+  pager_prev: "السابقة",
   court_hint: "اضغط على اللاعب الذي تتوقع فوزه",
   pager_count: "المباراة {n} من {total}",
   picks_status: "{n} من {total} مختارة",

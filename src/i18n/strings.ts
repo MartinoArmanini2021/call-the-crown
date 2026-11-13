@@ -161,6 +161,7 @@ export const en = {
   draw_pick_now: "Pick now · {time}",
   draw_hint: "Tap a match to see its result, or to make your pick while it's open.",
   pager_swipe: "Next match",
+  pager_prev: "Previous",
   court_hint: "Tap the player you think will win",
   pager_count: "Match {n} of {total}",
   picks_status: "{n} of {total} picked",
