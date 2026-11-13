@@ -207,6 +207,12 @@ export const en = {
   crowd_title: "How fans picked",
   crowd_you: "you",
   crowd_top: "Most picked score: {pick} ({share})",
+  // who picked what in your leagues, once the match has started (0061, 13 Nov 2026)
+  league_picks_title: "Your leagues' picks",
+  league_picks_none: "Nobody else in your leagues picked this match.",
+  league_picks_join:
+    "Join or start a league to see your friends' picks here once each match starts.",
+  league_picks_cta: "Leagues",
   results_title: "Results",
   beat: "{w} beat {l}",
   row_result: "Result",

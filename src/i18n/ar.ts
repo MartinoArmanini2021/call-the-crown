@@ -197,6 +197,10 @@ export const ar: Record<StringKey, string> = {
   // results
   crowd_title: "توقعات الجماهير",
   crowd_you: "أنت",
+  league_picks_title: "توقعات دورياتك",
+  league_picks_none: "لم يتوقع أحد آخر في دورياتك هذه المباراة.",
+  league_picks_join: "انضم إلى دوري أو أنشئ واحدًا لترى توقعات أصدقائك هنا بعد بدء كل مباراة.",
+  league_picks_cta: "الدوريات",
   crowd_top: "النتيجة الأكثر توقعاً: {pick} ({share})",
   results_title: "النتائج",
   beat: "{w} فاز على {l}",

@@ -265,6 +265,24 @@ export type CallStats = {
   /** same exact score on 20% of picks or fewer */
   exact_rare: boolean | null;
 };
+/**
+ * Who picked what among the people you share a league with (0061), once the match has started: never
+ * before, never strangers, no ids. Points are the stored ones (null until settled).
+ */
+export type LeaguePick = {
+  display_name: string | null;
+  is_me: boolean;
+  winner_id: string;
+  set_scores: SetScore[];
+  pts_total: number | null;
+};
+export const leaguePicksQuery = (match: number, uid: string) =>
+  queryOptions({
+    queryKey: ["league_picks", match, uid],
+    queryFn: () => rpc<LeaguePick[]>("get_league_picks", { p_match: match }),
+    refetchInterval: 60_000, // points arrive with the result
+  });
+
 export type Crowd = {
   p1_share: number;
   p2_share: number;

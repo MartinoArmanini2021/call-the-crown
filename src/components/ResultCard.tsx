@@ -2,11 +2,20 @@
 // sets you called exactly in green, and the points the server stored. Nothing is worked out here:
 // the green marks are picks.exact_flags, the points are picks.pts_*.
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { useEvent } from "@/config/eventConfig";
 import { useT } from "@/i18n/useT";
-import { crowdQuery, type Match, type Pick, type Player } from "@/lib/api";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  crowdQuery,
+  leaguePicksQuery,
+  myLeaguesQuery,
+  type Match,
+  type Pick,
+  type Player,
+} from "@/lib/api";
 import { calledIt } from "@/lib/callCard";
-import { localTime, scoreLine, surname } from "@/lib/format";
+import { localTime, surname } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { playerName } from "./Brand";
 import { ShareCallButton } from "./CallCard";
@@ -100,6 +109,7 @@ export function ResultCard({
       )}
 
       {signedIn && <CrowdBlock match={match} pick={pick} short={short} />}
+      {signedIn && <LeaguePicksBlock match={match} short={short} />}
 
       {settled && match.status !== "completed" && (
         <p className="text-xs text-ink-3">
@@ -169,10 +179,93 @@ function CrowdBlock({
       {top.length > 0 && (
         <p className="text-xs text-ink-2">
           {t("crowd_top", {
-            pick: `${short(topWinner)} · ${scoreLine(top)}`,
+            // from the winner's side, as the league picks below (13 Nov 2026)
+            pick: `${short(topWinner)} · ${top
+              .map((x) =>
+                topWinner === match.p1_id
+                  ? `${x.p1_games}-${x.p2_games}`
+                  : `${x.p2_games}-${x.p1_games}`,
+              )
+              .join(" ")}`,
             share: pct(crowd.top_share),
           })}
         </p>
+      )}
+    </section>
+  );
+}
+
+/**
+ * Who picked what among the people you share a league with (0061, 13 Nov 2026), once the match has
+ * started: the server sends nothing before, and nothing about strangers. Each pick reads from its
+ * winner's side ("Zverev 6-4 6-3"); points are the stored ones. Not in a league: a nudge to join one.
+ */
+function LeaguePicksBlock({
+  match,
+  short,
+}: {
+  match: Match;
+  short: (id: string | null) => string;
+}) {
+  const { t } = useT();
+  const { user } = useAuth();
+  const uid = user?.id ?? "";
+  const rows = useQuery({ ...leaguePicksQuery(match.match_no, uid), enabled: !!uid }).data;
+  const leagues = useQuery({ ...myLeaguesQuery(uid), enabled: !!uid }).data;
+  if (!rows || !leagues) return null;
+  if (leagues.length === 0)
+    return (
+      <p className="border-t border-line pt-3 text-xs text-ink-3">
+        {t("league_picks_join")}{" "}
+        <Link to="/standings" className="focus-ring font-semibold text-accent-text underline">
+          {t("league_picks_cta")}
+        </Link>
+      </p>
+    );
+  const others = rows.filter((r) => !r.is_me).length;
+  // the pick seen from its winner's side: the set scores are stored in the match's player order
+  const line = (winner: string, sets: { p1_games: number; p2_games: number }[]) =>
+    sets
+      .map((x) =>
+        winner === match.p1_id ? `${x.p1_games}-${x.p2_games}` : `${x.p2_games}-${x.p1_games}`,
+      )
+      .join(" ");
+  return (
+    <section className="space-y-1.5 border-t border-line pt-3" aria-label={t("league_picks_title")}>
+      <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">
+        {t("league_picks_title")}
+      </p>
+      {others === 0 ? (
+        <p className="text-xs text-ink-3">{t("league_picks_none")}</p>
+      ) : (
+        <ul className="space-y-1">
+          {rows.map((r, i) => (
+            <li key={i} className="flex items-center gap-2 text-sm">
+              <span className={cn("min-w-0 flex-1 truncate", r.is_me ? "font-bold" : "text-ink-2")}>
+                {r.display_name ?? "—"}
+                {r.is_me && <span className="font-normal text-ink-3"> · {t("crowd_you")}</span>}
+              </span>
+              <span
+                className={cn(
+                  "num shrink-0 whitespace-nowrap text-xs",
+                  match.winner_id && r.winner_id === match.winner_id ? "text-good" : "text-ink",
+                )}
+              >
+                {short(r.winner_id)} {line(r.winner_id, r.set_scores)}
+              </span>
+              {r.pts_total !== null && (
+                <span
+                  className={cn(
+                    "num w-10 shrink-0 text-end text-xs",
+                    r.pts_total > 0 ? "text-good" : "text-ink-3",
+                  )}
+                >
+                  +{r.pts_total}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
       )}
     </section>
   );

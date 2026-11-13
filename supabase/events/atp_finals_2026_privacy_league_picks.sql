@@ -1,0 +1,5 @@
+-- Privacy wording after the league reveal (0061, 13 Nov 2026)
+update public.event_config set privacy = privacy || jsonb_build_object('version', '2026-11-13b',
+  'notice', replace(privacy->>'notice', 'Other players see your display name and your points; how many fans picked each player is shown without names.', 'Other players see your display name and your points; people in your leagues also see your picks once each match has started. How many fans picked each player is shown without names.'),
+  'notice_it', replace(privacy->>'notice_it', 'Gli altri giocatori vedono il tuo nome e i tuoi punti; quanti tifosi hanno scelto ogni giocatore si vede senza nomi.', 'Gli altri giocatori vedono il tuo nome e i tuoi punti; chi è nelle tue leghe vede anche i tuoi pronostici, appena inizia ogni partita. Quanti tifosi hanno scelto ogni giocatore si vede senza nomi.')), updated_at = now()
+returning privacy->>'version' v, position('leagues also see' in privacy->>'notice') > 0 en_ok, position('tue leghe vede' in privacy->>'notice_it') > 0 it_ok;

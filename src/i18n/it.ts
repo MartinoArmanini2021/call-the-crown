@@ -208,6 +208,11 @@ export const it: Record<StringKey, string> = {
   // results
   crowd_title: "Cosa hanno pronosticato i tifosi",
   crowd_you: "tu",
+  league_picks_title: "I pronostici delle tue leghe",
+  league_picks_none: "Nessun altro delle tue leghe ha pronosticato questa partita.",
+  league_picks_join:
+    "Entra in una lega o creane una per vedere qui i pronostici dei tuoi amici, appena inizia ogni partita.",
+  league_picks_cta: "Leghe",
   crowd_top: "Punteggio più scelto: {pick} ({share})",
   results_title: "Risultati",
   beat: "{w} batte {l}",
