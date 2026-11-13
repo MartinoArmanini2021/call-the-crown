@@ -28,6 +28,7 @@ export const ar: Record<StringKey, string> = {
   landing_one_line: "الفائز والنتيجة في كل المباريات الـ{n}. تفوّق على أصدقائك.",
   landing_players: "اللاعبون",
   first_lock_in: "تُغلق التوقعات التالية بعد",
+  first_lock_short: "تُغلق خلال",
   landing_sentence:
     "خمّن الفائز في كل مباراة من المباريات الـ{n} ونتيجتها. كل تخمين صحيح يمنحك نقاطاً. المشجع صاحب أكثر النقاط هو الفائز.",
   landing_league_line: "أنشئ دورياً لمجموعتك، وأثبتوا من يفهم في التنس.",

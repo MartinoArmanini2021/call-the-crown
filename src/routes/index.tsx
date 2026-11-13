@@ -64,6 +64,16 @@ function Landing() {
   const secondary =
     "focus-ring inline-flex h-12 items-center rounded-full border border-line bg-raised/70 px-6 text-sm font-semibold";
 
+  const countdown =
+    firstLock !== undefined ? (
+      <span className="flex flex-col leading-tight">
+        <span className="text-2xs text-ink-2">{t("first_lock_short")}</span>
+        <span className="num whitespace-nowrap text-2xl text-accent-text">
+          {shortTimeLeft(firstLock - now, locale)}
+        </span>
+      </span>
+    ) : null;
+
   return (
     <AppShell>
       <section className="relative overflow-hidden rounded-3xl border border-line bg-[radial-gradient(120%_80%_at_100%_0%,color-mix(in_srgb,var(--accent)_45%,transparent),transparent_60%),linear-gradient(160deg,color-mix(in_srgb,var(--accent-deep)_40%,var(--bg)),var(--bg)_70%)] px-5 pb-6 pt-7">
@@ -79,24 +89,17 @@ function Landing() {
           {t("landing_one_line", { n: count || 6 })}
         </p>
 
-        {firstLock !== undefined && (
-          <p className="mt-4 flex flex-wrap items-baseline gap-x-2">
-            <span className="text-xs text-ink-2">{t("first_lock_in")}</span>
-            {/* the time never breaks inside itself (Italian's longer label, 13 Nov 2026) */}
-            <span className="num whitespace-nowrap text-3xl text-accent-text">
-              {shortTimeLeft(firstLock - now, locale)}
-            </span>
-          </p>
-        )}
-
         {/* Leagues first (brief "bragging rights", Phase 2): the game is beating your friends. The
             buttons sit above the players (UX review, 13 Nov 2026): a friend arriving from a WhatsApp
             link sees what to do on the first screen of a phone, without scrolling. */}
+        {/* The countdown sits beside the main button, on its line (Tino, 13 Nov 2026: "less free
+            space"): a short label over the time, which never breaks inside itself. */}
         {user ? (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
             <Link to="/picks" className={primary}>
               {t("landing_cta_signed_in")}
             </Link>
+            {countdown}
             {noLeague && (
               <Link to="/standings" search={{ add: "create" }} className={secondary}>
                 {t("cta_start_league")}
@@ -105,7 +108,7 @@ function Landing() {
           </div>
         ) : (
           <>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
               <Link
                 to="/sign-in"
                 search={{ redirect: "/standings?add=create" }}
@@ -113,6 +116,9 @@ function Landing() {
               >
                 {t("cta_start_league")}
               </Link>
+              {countdown}
+            </div>
+            <div className="mt-2 flex flex-wrap gap-2">
               <Link
                 to="/sign-in"
                 search={{ redirect: "/standings?add=join" }}

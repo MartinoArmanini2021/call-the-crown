@@ -29,6 +29,7 @@ export const it: Record<StringKey, string> = {
   landing_one_line: "Vincitore e punteggio di tutte le {n} partite. Batti i tuoi amici.",
   landing_players: "I giocatori",
   first_lock_in: "I prossimi pronostici si chiudono tra",
+  first_lock_short: "Si chiude tra",
   landing_sentence:
     "Indovina chi vince ciascuna delle {n} partite, e con che punteggio. Ogni pronostico giusto vale punti. Vince chi fa più punti.",
   landing_league_line: "Crea una lega per il tuo gruppo. Scoprite chi ne sa davvero di tennis.",

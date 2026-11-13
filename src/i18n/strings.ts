@@ -32,6 +32,7 @@ export const en = {
   landing_one_line: "Winner and score of all {n} matches. Beat your friends.",
   landing_players: "The players",
   first_lock_in: "Next picks close in",
+  first_lock_short: "Picks close in",
   landing_sentence:
     "Guess who wins each of the {n} matches, and the score. Every right guess earns points. The fan with the most points wins.",
   landing_league_line: "Make a league for your group. Settle who knows tennis.",
