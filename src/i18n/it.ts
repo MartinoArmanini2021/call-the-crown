@@ -20,6 +20,9 @@ export const it: Record<StringKey, string> = {
   not_found: "Questa pagina non esiste.",
   go_home: "Torna alla home",
   something_wrong: "Qualcosa è andato storto",
+  // the update check (UX review, 13 Nov 2026): a newer version is live; the fan chooses when to reload
+  update_ready: "È pronta una nuova versione",
+  update_refresh: "Aggiorna",
 
   // landing
   landing_title: "Indovina ogni partita",

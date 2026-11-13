@@ -17,7 +17,7 @@ function Step($title, [scriptblock]$cmd) {
 Step "1/6 Database: 0054 reserved name, 0055 round-robin fixes, 0060 Italian" { bunx supabase db push --linked --yes }
 Step "2/6 Results feed: the improved Wikipedia reader" { bunx supabase functions deploy poll-results --project-ref $ref }
 Step "3/6 Reminder emails: Italian" { bunx supabase functions deploy send-reminders --project-ref $ref }
-Step "4/6 Switch Italian on for the event" { bunx supabase db query --linked -f supabase/events/atp_finals_2026_italian.sql }
+Step "4/6 Switch Italian on and set the final privacy wording" { bunx supabase db query --linked -f supabase/events/atp_finals_2026_italian.sql }
 Step "5/6 Build the site" {
   bunx vite build --mode staging
   if ($LASTEXITCODE -ne 0) { return }

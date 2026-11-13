@@ -55,11 +55,11 @@ insert into public.event_config (
   '[]',                                        -- no prizes: bragging rights only (0019)
   null,
   '{
-     "version": "draft-2",
-     "notice": "Privacy notice placeholder, pending legal review. The Final Prediction is run by Grand Slam GM.",
-     "consent_gsgm": "Placeholder: I would like to receive news from Grand Slam GM.",
-     "notice_it": "Informativa sulla privacy provvisoria, in attesa di revisione legale. The Final Prediction è gestito da Grand Slam GM.",
-     "consent_gsgm_it": "Provvisorio: voglio ricevere novità da Grand Slam GM."
+     "version": "2026-11-13",
+     "notice": "The Final Prediction is a free game run by Grand Slam GM: no betting, no money. We use your email only to sign you in and, if you turn them on, to send pick reminders. Other players see your display name and your points; how many fans picked each player is shown without names. You can delete your account from your profile at any time.",
+     "consent_gsgm": "Send me news about Grand Slam GM games (optional).",
+     "notice_it": "The Final Prediction è un gioco gratuito di Grand Slam GM: niente scommesse, niente soldi. Usiamo la tua email solo per farti accedere e, se li attivi, per mandarti i promemoria dei pronostici. Gli altri giocatori vedono il tuo nome e i tuoi punti; quanti tifosi hanno scelto ogni giocatore si vede senza nomi. Puoi cancellare il tuo account dal profilo quando vuoi.",
+     "consent_gsgm_it": "Mandami novità sui giochi di Grand Slam GM (facoltativo)."
    }',
   '[]',
   '{"arabic": false, "italian": true, "rarity_min_picks": 50}',

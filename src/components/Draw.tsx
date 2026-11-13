@@ -497,44 +497,56 @@ function GroupTable({ grp, matches, players }: Props & { grp: string }) {
   const { t, locale } = useT();
   const ms = matches.filter((m) => m.round === "RR" && m.grp === grp);
   const ids = [...new Set(ms.flatMap((m) => [m.p1_id, m.p2_id]).filter((x): x is string => !!x))];
-  const through = new Set(
+  // The qualifiers and their finishing place (1 = group winner, 2 = runner-up), as the database put
+  // them into the semi-finals: the official order, never re-derived here (13 Nov 2026).
+  const place = new Map<string, number>(
     matches
       .filter((m) => m.round !== "RR")
       .flatMap((m) =>
         ([1, 2] as const).flatMap((side) => {
           const src = side === 1 ? m.p1_source : m.p2_source;
           const id = side === 1 ? m.p1_id : m.p2_id;
-          return src.type === "group" && src.group === grp && id ? [id] : [];
+          return src.type === "group" && src.group === grp && id
+            ? [[id, src.place] as [string, number]]
+            : [];
         }),
       ),
   );
-  const rows = ids
-    .map((id) => {
-      let w = 0;
-      let l = 0;
-      let sets = 0;
-      let games = 0;
-      for (const m of ms) {
-        if (m.status === "scheduled" || (m.p1_id !== id && m.p2_id !== id)) continue;
-        if (m.winner_id === id) w++;
-        else l++;
-        for (const s of m.set_scores ?? []) {
-          const [mine, theirs] =
-            m.p1_id === id ? [s.p1_games, s.p2_games] : [s.p2_games, s.p1_games];
-          games += mine - theirs;
-          sets += mine > theirs ? 1 : mine < theirs ? -1 : 0;
-        }
+  const through = new Set(place.keys());
+  // who beat whom, for a two-way tie on wins while the group is still being played
+  const beat = (a: string, b: string) =>
+    ms.some((m) => m.winner_id === a && (m.p1_id === b || m.p2_id === b));
+  const unsorted = ids.map((id) => {
+    let w = 0;
+    let l = 0;
+    let sets = 0;
+    let games = 0;
+    for (const m of ms) {
+      if (m.status === "scheduled" || (m.p1_id !== id && m.p2_id !== id)) continue;
+      if (m.winner_id === id) w++;
+      else l++;
+      for (const s of m.set_scores ?? []) {
+        const [mine, theirs] = m.p1_id === id ? [s.p1_games, s.p2_games] : [s.p2_games, s.p1_games];
+        games += mine - theirs;
+        sets += mine > theirs ? 1 : mine < theirs ? -1 : 0;
       }
-      return { id, w, l, sets, games, rank: players.get(id)?.rank_snapshot ?? 999 };
-    })
-    .sort(
-      (a, b) =>
-        Number(through.has(b.id)) - Number(through.has(a.id)) ||
-        b.w - a.w ||
-        b.sets - a.sets ||
-        b.games - a.games ||
-        a.rank - b.rank,
-    );
+    }
+    return { id, w, l, sets, games, rank: players.get(id)?.rank_snapshot ?? 999 };
+  });
+  const level = new Map<number, number>(); // how many players have each number of wins
+  for (const r of unsorted) level.set(r.w, (level.get(r.w) ?? 0) + 1);
+  const rows = unsorted.sort((a, b) => {
+    const pa = place.get(a.id) ?? 9;
+    const pb = place.get(b.id) ?? 9;
+    if (pa !== pb) return pa - pb;
+    if (b.w !== a.w) return b.w - a.w;
+    // exactly two level on wins: head to head first, as the ATP does
+    if ((level.get(a.w) ?? 0) === 2) {
+      if (beat(a.id, b.id)) return -1;
+      if (beat(b.id, a.id)) return 1;
+    }
+    return b.sets - a.sets || b.games - a.games || a.rank - b.rank;
+  });
   return (
     <div className="rounded-2xl border border-line bg-card/60 p-2.5">
       <div className="mb-1.5 flex justify-between px-1 text-2xs font-bold uppercase tracking-wider text-ink-3">

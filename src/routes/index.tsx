@@ -70,9 +70,10 @@ function Landing() {
         </p>
 
         {firstLock !== undefined && (
-          <p className="mt-4 flex items-baseline gap-2">
+          <p className="mt-4 flex flex-wrap items-baseline gap-x-2">
             <span className="text-xs text-ink-2">{t("first_lock_in")}</span>
-            <span className="num text-3xl text-accent-text">
+            {/* the time never breaks inside itself (Italian's longer label, 13 Nov 2026) */}
+            <span className="num whitespace-nowrap text-3xl text-accent-text">
               {shortTimeLeft(firstLock - now, locale)}
             </span>
           </p>
