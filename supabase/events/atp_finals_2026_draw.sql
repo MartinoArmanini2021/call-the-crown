@@ -17,28 +17,29 @@
 -- Ranks (the upset-bonus snapshot): the ATP singles ranking published Mon 2 Nov 2026, the most recent
 -- list confirmed on 13 Nov (atptour.com / Wikipedia "Current tennis rankings"): Zverev 1, Alcaraz 3,
 -- Shelton 4, Medvedev 5, Cobolli 6, Fils 7, Tiafoe 8, Jódar 10 (de Minaur 9, Fritz 12).
--- Photos: Wikimedia Commons thumbnails, credited in the app (src/lib/photoCredits.ts).
+-- Photos: the official ATP headshots, hotlinked by ATP id, never re-hosted (Tino, 13 Nov 2026: "use the
+-- official ATP headshots"; they load from our site in browsers again). Alternates: de Minaur DH58, Fritz FB98.
 -- =====================================================================================================
 
 set role service_role;
 
 select public.set_players(
   '[{"id":"zverev",  "name":"Alexander Zverev", "name_ar":"ألكسندر زفيريف",  "country":"GER","seed":1,"rank":1,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Alexander_Zverev_%28cropped%29.jpg/500px-Alexander_Zverev_%28cropped%29.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/Z355"},
     {"id":"alcaraz", "name":"Carlos Alcaraz",   "name_ar":"كارلوس ألكاراز",   "country":"ESP","seed":2,"rank":3,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg/500px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_%28cropped%29.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/A0E2"},
     {"id":"shelton", "name":"Ben Shelton",      "name_ar":"بن شيلتون",        "country":"USA","seed":3,"rank":4,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Ben_Shelton%2C_media_conference%2C_Swiss_Indoors_Basel_2025_%28cropped%29.jpg/500px-Ben_Shelton%2C_media_conference%2C_Swiss_Indoors_Basel_2025_%28cropped%29.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/S0S1"},
     {"id":"medvedev","name":"Daniil Medvedev",  "name_ar":"دانييل ميدفيديف",  "country":null, "seed":4,"rank":5,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Danill_Medvedev_Miami_2019_%28cropped%29.jpg/500px-Danill_Medvedev_Miami_2019_%28cropped%29.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/MM58"},
     {"id":"cobolli", "name":"Flavio Cobolli",   "name_ar":"فلافيو كوبولي",    "country":"ITA","seed":5,"rank":6,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Cobolli_RGQ23_%2852944096963%29.jpg/500px-Cobolli_RGQ23_%2852944096963%29.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/C0E9"},
     {"id":"fils",    "name":"Arthur Fils",      "name_ar":"آرثر فيس",         "country":"FRA","seed":6,"rank":7,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Fils_BOR22_%2852083970501%29.jpg/500px-Fils_BOR22_%2852083970501%29.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/F0F1"},
     {"id":"tiafoe",  "name":"Frances Tiafoe",   "name_ar":"فرانسيس تيافو",    "country":"USA","seed":7,"rank":8,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/FrancesTiafo.jpg/500px-FrancesTiafo.jpg"},
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/TD51"},
     {"id":"jodar",   "name":"Rafael Jódar",     "name_ar":"رافائيل خودار",    "country":"ESP","seed":8,"rank":10,
-     "image_path":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Rafael_J%C3%B3dar_Roland_Garros_2026_%28cropped%29.jpg/500px-Rafael_J%C3%B3dar_Roland_Garros_2026_%28cropped%29.jpg"}]',
+     "image_path":"https://www.atptour.com/-/media/alias/player-headshot/J0DZ"}]',
   '[{"match_no":1, "round":"RR","group":"McEnroe","day":1,"p1":{"type":"player","id":"zverev"}, "p2":{"type":"player","id":"jodar"}},
     {"match_no":2, "round":"RR","group":"McEnroe","day":1,"p1":{"type":"player","id":"shelton"},"p2":{"type":"player","id":"fils"}},
     {"match_no":3, "round":"RR","group":"McEnroe",        "p1":{"type":"player","id":"zverev"}, "p2":{"type":"player","id":"shelton"}},

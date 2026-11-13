@@ -10,7 +10,7 @@ import { AppShell } from "@/components/AppShell";
 import { useT } from "@/i18n/useT";
 import { track } from "@/lib/analytics";
 import { castQuickVote, playersQuery, quickVoteSharesQuery } from "@/lib/api";
-import { PHOTO_CREDITS } from "@/lib/photoCredits";
+import { PHOTO_CREDITS, creditFor } from "@/lib/photoCredits";
 import { PhotoCreditList } from "@/components/PhotoCredits";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +26,7 @@ function usePlayers(locale: string) {
       id: p.id,
       name: locale === "ar" && p.name_ar ? p.name_ar : p.name,
       rank: p.rank_snapshot,
-      credit: PHOTO_CREDITS[p.id],
+      credit: creditFor(p.id, p.image_path),
       photo: p.image_path ?? PHOTO_CREDITS[p.id]?.photo ?? null,
     }));
 }
@@ -229,14 +229,16 @@ function Vote() {
       )}
 
       <p className="mt-6 text-2xs text-ink-3">{t("vote_independent")}</p>
-      <details className="mt-2 text-2xs text-ink-3">
-        <summary className="cursor-pointer">{t("vote_photo_credits")}</summary>
-        <p className="mt-1">{t("vote_photo_licence")}:</p>
-        <PhotoCreditList
-          ids={PLAYERS.map((p) => p.id)}
-          names={new Map(PLAYERS.map((p) => [p.id, p.name]))}
-        />
-      </details>
+      {PLAYERS.some((p) => p.credit) && (
+        <details className="mt-2 text-2xs text-ink-3">
+          <summary className="cursor-pointer">{t("vote_photo_credits")}</summary>
+          <p className="mt-1">{t("vote_photo_licence")}:</p>
+          <PhotoCreditList
+            ids={PLAYERS.filter((p) => p.credit).map((p) => p.id)}
+            names={new Map(PLAYERS.map((p) => [p.id, p.name]))}
+          />
+        </details>
+      )}
     </AppShell>
   );
 }

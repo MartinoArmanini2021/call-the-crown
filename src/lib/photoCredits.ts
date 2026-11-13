@@ -22,6 +22,19 @@ export type PhotoCredit = {
   licenceUrl: string;
 };
 
+/**
+ * The credit owed for the photo actually shown for a player: only when that photo is the Commons one
+ * (no image_path falls back to it). Since 13 Nov 2026 (Tino: "use the official ATP headshots") the
+ * players point at ATP headshots, which carry no Commons credit, so the credit lists stay hidden.
+ */
+export function creditFor(
+  id: string,
+  imagePath: string | null | undefined,
+): PhotoCredit | undefined {
+  const c = PHOTO_CREDITS[id];
+  return c && (!imagePath || imagePath === c.photo) ? c : undefined;
+}
+
 export const PHOTO_CREDITS: Record<string, PhotoCredit> = {
   alcaraz: {
     photo:

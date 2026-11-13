@@ -6,7 +6,7 @@ import { useGame } from "@/hooks/useGame";
 import { useT } from "@/i18n/useT";
 import type { Round } from "@/lib/api";
 import { surname } from "@/lib/format";
-import { PHOTO_CREDITS } from "@/lib/photoCredits";
+import { creditFor } from "@/lib/photoCredits";
 import { PhotoCreditList } from "@/components/PhotoCredits";
 
 export const Route = createFileRoute("/how-to-play")({ component: HowToPlay });
@@ -198,12 +198,14 @@ function HowToPlay() {
       </ol>
       <p className="mt-2 px-1 text-xs text-ink-3">{t("htp_ties_late")}</p>
 
-      {[...byPlayer.keys()].some((id) => PHOTO_CREDITS[id]) && (
+      {[...byPlayer.values()].some((p) => creditFor(p.id, p.image_path)) && (
         <details className="mt-8 text-2xs text-ink-3">
           <summary className="cursor-pointer">{t("vote_photo_credits")}</summary>
           <p className="mt-1">{t("vote_photo_licence")}:</p>
           <PhotoCreditList
-            ids={[...byPlayer.keys()]}
+            ids={[...byPlayer.values()]
+              .filter((p) => creditFor(p.id, p.image_path))
+              .map((p) => p.id)}
             names={new Map([...byPlayer.values()].map((p) => [p.id, playerName(p, locale)]))}
           />
         </details>
