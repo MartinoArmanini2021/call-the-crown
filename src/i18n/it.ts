@@ -26,6 +26,7 @@ export const it: Record<StringKey, string> = {
 
   // landing
   landing_title: "Indovina ogni partita",
+  landing_one_line: "Vincitore e punteggio di tutte le {n} partite. Batti i tuoi amici.",
   landing_players: "I giocatori",
   first_lock_in: "I prossimi pronostici si chiudono tra",
   landing_sentence:

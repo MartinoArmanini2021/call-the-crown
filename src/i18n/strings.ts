@@ -29,6 +29,7 @@ export const en = {
 
   // landing
   landing_title: "Guess every match",
+  landing_one_line: "Winner and score of all {n} matches. Beat your friends.",
   landing_players: "The players",
   first_lock_in: "Next picks close in",
   landing_sentence:

@@ -25,6 +25,7 @@ export const ar: Record<StringKey, string> = {
 
   // landing
   landing_title: "خمّن كل مباراة",
+  landing_one_line: "الفائز والنتيجة في كل المباريات الـ{n}. تفوّق على أصدقائك.",
   landing_players: "اللاعبون",
   first_lock_in: "تُغلق التوقعات التالية بعد",
   landing_sentence:

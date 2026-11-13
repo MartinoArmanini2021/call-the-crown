@@ -23,8 +23,8 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({ component: Landing });
 
 // The front door leads with the event: where and when, the six players, how long until the first
-// picks close, and a worked example of how a pick scores (all from config and the bracket; nothing
-// hard-coded). First-time-fan test, 2 Oct 2026: one plain sentence and one example beat three tiles.
+// picks close (all from config and the bracket; nothing hard-coded). Since 13 Nov 2026 one short line
+// and no scoring example ("there is a lot of text"): How to play has it.
 function Landing() {
   const event = useEvent();
   const { t, locale, languages, setLocale } = useT();
@@ -58,9 +58,6 @@ function Landing() {
     const g = groupOf.get(id);
     return g ? groupOrder.indexOf(g) : 99;
   };
-  // the example is a pick in the event's first round, so it names a player from it
-  const qf = [...(matches.data ?? [])].sort((a, b) => a.match_no - b.match_no).find((m) => m.p1_id);
-  const top = (players.data ?? []).find((p) => p.id === qf?.p1_id);
 
   const primary =
     "focus-ring inline-flex h-12 items-center rounded-full bg-accent px-7 text-sm font-bold shadow-[0_8px_30px_-8px_var(--accent)]";
@@ -76,9 +73,10 @@ function Landing() {
           </p>
         )}
         <h1 className="headline mt-3 text-6xl sm:text-7xl">{t("landing_title")}</h1>
-        <p className="mt-2 text-base font-semibold text-ink">{t("landing_league_line")}</p>
-        <p className="mt-2 max-w-md text-sm text-ink-2">
-          {t("landing_sentence", { n: count || 6 })}
+        {/* one line, not a paragraph (Tino, 13 Nov 2026: "there is a lot of text"); the scoring
+            example lives on How to play */}
+        <p className="mt-2 text-base font-semibold text-ink">
+          {t("landing_one_line", { n: count || 6 })}
         </p>
 
         {firstLock !== undefined && (
@@ -166,8 +164,6 @@ function Landing() {
         )}
       </section>
 
-      <ScoringExample name={top ? surname(playerName(top, locale)) : t("example_player")} />
-
       <SponsorSlot slot="landing_strip" className="mt-4" />
 
       <p className="mt-6 flex justify-center gap-4 text-center text-xs text-ink-3">
@@ -251,61 +247,5 @@ function Portrait({
         {last}
       </span>
     </div>
-  );
-}
-
-/**
- * How a pick scores, worked through once: a quarter-final pick of 6-4 6-3 against a 6-4 7-5 result.
- * The points are read from the rules (winner, sets, per exact set), never computed from a real pick.
- */
-function ScoringExample({ name }: { name: string }) {
-  const event = useEvent();
-  const { t } = useT();
-  const { winner_points: wp, sets_points: sp, per_set_exact: pe } = event.rules;
-  // the event's first round (Riyadh: quarter-final; Turin: a group match)
-  const first = (["RR", "QF", "SF", "3P", "F"] as const).find((r) => wp[r] != null) ?? "SF";
-  const lines: [string, number][] = [
-    [t("example_winner"), wp[first]],
-    [t("example_sets", { n: 2 }), sp[first]],
-    [t("example_exact", { n: 1 }), pe],
-  ];
-  return (
-    <section className="card mt-4 px-4 py-4" aria-labelledby="example-title">
-      <h2 id="example-title" className="headline text-lg">
-        {t("example_title")}
-      </h2>
-      <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
-        <p className="rounded-xl bg-raised px-3 py-2">
-          <span className="block text-2xs font-bold uppercase tracking-wider text-ink-3">
-            {t("example_you_pick")}
-          </span>
-          <span className="num">{name} 6-4 6-3</span>
-        </p>
-        <p className="rounded-xl bg-raised px-3 py-2">
-          <span className="block text-2xs font-bold uppercase tracking-wider text-ink-3">
-            {t("example_result")}
-          </span>
-          <span className="num">{name} 6-4 7-5</span>
-        </p>
-      </div>
-      <ul className="mt-3 grid gap-1.5 text-sm">
-        {lines.map(([label, pts]) => (
-          <li key={label} className="flex justify-between gap-3 text-ink-2">
-            <span>
-              <span className="text-good">✓</span> {label}
-            </span>
-            <b className="num text-ink">+{pts}</b>
-          </li>
-        ))}
-        <li className="flex justify-between gap-3 text-ink-3">
-          <span>✗ {t("example_miss")}</span>
-          <b className="num">+0</b>
-        </li>
-        <li className="mt-1 flex justify-between gap-3 border-t border-line pt-2 font-semibold">
-          <span>{t("example_total")}</span>
-          <b className="num text-accent-text">{wp[first] + sp[first] + pe}</b>
-        </li>
-      </ul>
-    </section>
   );
 }

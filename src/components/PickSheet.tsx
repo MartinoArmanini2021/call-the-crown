@@ -32,6 +32,7 @@ import { cn } from "@/lib/utils";
 import { validateSetScores, type SetScore } from "@/lib/validation";
 import { playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
+import { useGroupColor } from "./groupColors";
 import { useMatchNames } from "./matchNames";
 import { CourtPicker } from "./CourtPicker";
 import { SIDE_COLOR } from "./sides";
@@ -63,6 +64,7 @@ export function PickSheet({
   const event = useEvent();
   const { t, locale } = useT();
   const label = useMatchLabel();
+  const groupColor = useGroupColor(matches)(match.round === "RR" ? match.grp : null);
   const { title } = useMatchNames(players);
   const qc = useQueryClient();
   const [draft, setDraft] = useState<Draft>(() =>
@@ -179,10 +181,14 @@ export function PickSheet({
         aria-modal="true"
         aria-label={title(match, matches)}
         className="safe-bottom relative flex max-h-[92dvh] w-full max-w-xl flex-col rounded-t-3xl border-t border-line bg-card"
+        style={groupColor ? { borderTopWidth: 3, borderTopColor: groupColor } : undefined}
       >
         <div className="flex items-center justify-between px-4 pb-1 pt-3">
           <div>
-            <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">
+            <p
+              className="text-2xs font-bold uppercase tracking-wider text-ink-3"
+              style={groupColor ? { color: groupColor } : undefined}
+            >
               {label(match, matches)}
             </p>
             <h2 className="headline text-2xl leading-tight">{title(match, matches)}</h2>
