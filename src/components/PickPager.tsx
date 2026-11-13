@@ -10,6 +10,7 @@ import { useT } from "@/i18n/useT";
 import type { Match, Pick, Player } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { useMatchNames } from "./matchNames";
+import { useGroupColor } from "./groupColors";
 
 type Props = {
   matches: Match[];
@@ -26,6 +27,7 @@ type Props = {
 export function PickPager({ matches, all, players, pickByMatch, focus, status, render }: Props) {
   const { t } = useT();
   const { title } = useMatchNames(players);
+  const groupColor = useGroupColor(all);
   const track = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [height, setHeight] = useState<number | null>(null);
@@ -111,6 +113,14 @@ export function PickPager({ matches, all, players, pickByMatch, focus, status, r
             >
               {pickByMatch.has(m.match_no) && (
                 <span className={index === i ? "text-bg" : "text-good"}>✓ </span>
+              )}
+              {/* the group's colour (13 Nov 2026) */}
+              {groupColor(m.round === "RR" ? m.grp : null) && (
+                <span
+                  aria-hidden
+                  className="me-1.5 inline-block h-2 w-2 rounded-full align-middle"
+                  style={{ background: groupColor(m.grp) }}
+                />
               )}
               {title(m, all)}
             </button>

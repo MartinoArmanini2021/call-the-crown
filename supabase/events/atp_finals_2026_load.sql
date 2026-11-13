@@ -50,6 +50,7 @@ insert into public.event_config (
                 "accent_deep": "#171c8f", "accent_text": "#6fa0ff", "text": "#ffffff",
                 "text_secondary": "#c5d0e0", "text_muted": "#8c9cb8",
                 "gold": "#0ad4be", "good": "#a3e635", "medal": "#f2c14e"},
+     "group_colors": {"McEnroe": "#fb923c", "Lendl": "#e879f9"},
      "fonts": {"headline": "Barlow Condensed", "display": "Urbanist", "body": "Plus Jakarta Sans"}
    }',
   '[]',                                        -- no prizes: bragging rights only (0019)

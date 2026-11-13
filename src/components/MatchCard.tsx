@@ -7,6 +7,7 @@ import { PlayerPhoto, playerName } from "./Brand";
 import { ShareCallButton } from "./CallCard";
 import { useMatchNames } from "./matchNames";
 import { SIDE_COLOR } from "./sides";
+import { useGroupColor } from "./groupColors";
 
 /** "Quarter-final 1", "Semi-final 2", "Third place", "Final", "McEnroe Group". */
 export function useMatchLabel() {
@@ -49,6 +50,7 @@ export function MatchCard({
   const { t, locale } = useT();
   const label = useMatchLabel();
   const { title } = useMatchNames(players);
+  const groupColor = useGroupColor(matches)(match.round === "RR" ? match.grp : null);
   const base = event.rules.winner_points[match.round];
   const points = { 1: match.p1_win_points, 2: match.p2_win_points } as const;
   const best = Math.max(points[1] ?? 0, points[2] ?? 0);
@@ -103,10 +105,22 @@ export function MatchCard({
   };
 
   return (
-    <article className="card p-4" aria-label={title(match, matches)}>
+    <article
+      className="card p-4"
+      // inline: .card sets its own border outside the utility layer
+      style={
+        groupColor ? { borderInlineStartWidth: 4, borderInlineStartColor: groupColor } : undefined
+      }
+      aria-label={title(match, matches)}
+    >
       <header>
         <p className="flex justify-between gap-2 text-2xs text-ink-3">
-          <span className="font-bold uppercase tracking-wider">{label(match, matches)}</span>
+          <span
+            className="font-bold uppercase tracking-wider"
+            style={groupColor ? { color: groupColor } : undefined}
+          >
+            {label(match, matches)}
+          </span>
           <span>
             {match.starts_at
               ? localTime(match.starts_at, event.timezone, locale)

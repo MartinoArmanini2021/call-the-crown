@@ -7,6 +7,7 @@ import { useEvent } from "@/config/eventConfig";
 import { useAuth } from "@/hooks/useAuth";
 import { useServerNow } from "@/hooks/useNow";
 import { LANGUAGE_NAMES } from "@/i18n/strings";
+import { groupsInOrder, useGroupColor } from "@/components/groupColors";
 import { useT } from "@/i18n/useT";
 import {
   inLocale,
@@ -46,6 +47,17 @@ function Landing() {
   const voteOpen = matches.isSuccess && (firstBall === Infinity || firstBall > now);
 
   const count = (matches.data ?? []).length;
+  // Round robin: each player's group, for the tiles' order and colour (13 Nov 2026)
+  const groupColor = useGroupColor(matches.data ?? []);
+  const groupOrder = groupsInOrder(matches.data ?? []);
+  const groupOf = new Map<string, string>();
+  for (const m of matches.data ?? [])
+    if (m.round === "RR" && m.grp)
+      for (const id of [m.p1_id, m.p2_id]) if (id) groupOf.set(id, m.grp);
+  const groupRank = (id: string) => {
+    const g = groupOf.get(id);
+    return g ? groupOrder.indexOf(g) : 99;
+  };
   // the example is a pick in the event's first round, so it names a player from it
   const qf = [...(matches.data ?? [])].sort((a, b) => a.match_no - b.match_no).find((m) => m.p1_id);
   const top = (players.data ?? []).find((p) => p.id === qf?.p1_id);
@@ -129,13 +141,14 @@ function Landing() {
             aria-label={t("landing_players")}
           >
             {[...(players.data ?? [])]
-              .sort((a, b) => (a.seed ?? 99) - (b.seed ?? 99))
+              .sort((a, b) => groupRank(a.id) - groupRank(b.id) || (a.seed ?? 99) - (b.seed ?? 99))
               .map((p) => (
                 <li key={p.id}>
                   <Portrait
                     player={p}
                     name={playerName(p, locale)}
                     dense={(players.data ?? []).length % 4 === 0}
+                    color={groupColor(groupOf.get(p.id))}
                   />
                 </li>
               ))}
@@ -185,10 +198,13 @@ function Portrait({
   player,
   name,
   dense = false,
+  color,
 }: {
   player: Player;
   name: string;
   dense?: boolean;
+  /** the player's group colour (round robin), as a bar along the tile's foot */
+  color?: string | undefined;
 }) {
   // A photo that will not load (ATP stopped serving its headshots to other sites, Oct 2026) leaves the
   // name alone in the tile, never a broken-image icon.
@@ -217,6 +233,13 @@ function Portrait({
           />
           <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
         </>
+      )}
+      {color && (
+        <span
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-1"
+          style={{ background: color }}
+        />
       )}
       {first && !dense && <span className="relative truncate text-2xs text-ink-2">{first}</span>}
       <span

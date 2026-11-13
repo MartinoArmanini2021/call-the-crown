@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { PlayerPhoto, playerName } from "./Brand";
 import { useMatchLabel } from "./MatchCard";
 import { useMatchNames } from "./matchNames";
+import { useGroupColor } from "./groupColors";
 
 type Props = {
   matches: Match[];
@@ -45,6 +46,7 @@ export function Draw(props: Props) {
   // The event's stages: a column per group (in draw order) when there is a round robin, then the
   // knockout stages the event actually has.
   const groups = [...new Set(matches.filter((m) => m.round === "RR" && m.grp).map((m) => m.grp!))];
+  const groupColor = useGroupColor(matches);
   const plan: Stage[] = [
     ...groups.map((g) => ({
       key: `group:${g}`,
@@ -193,6 +195,13 @@ export function Draw(props: Props) {
               <span className="block text-2xs text-ink-3">
                 {s.first ? localDay(s.first, event.timezone, locale) : ""}
               </span>
+              {s.grp && (
+                <span
+                  aria-hidden
+                  className="absolute inset-x-3 top-0 h-[3px] rounded-b-full"
+                  style={{ background: groupColor(s.grp) }}
+                />
+              )}
               {/* a played stage: a small tick on the corner, so the name keeps its whole width
                   ("McEnroe" was cut to "McEnr…" beside an inline tick on a phone) */}
               {s.done && (
@@ -495,6 +504,7 @@ function Status({ m, now }: { m: Match; now: number }) {
  */
 function GroupTable({ grp, matches, players }: Props & { grp: string }) {
   const { t, locale } = useT();
+  const color = useGroupColor(matches)(grp);
   const ms = matches.filter((m) => m.round === "RR" && m.grp === grp);
   const ids = [...new Set(ms.flatMap((m) => [m.p1_id, m.p2_id]).filter((x): x is string => !!x))];
   // The qualifiers and their finishing place (1 = group winner, 2 = runner-up), as the database put
@@ -548,9 +558,12 @@ function GroupTable({ grp, matches, players }: Props & { grp: string }) {
     return b.sets - a.sets || b.games - a.games || a.rank - b.rank;
   });
   return (
-    <div className="rounded-2xl border border-line bg-card/60 p-2.5">
+    <div
+      className="rounded-2xl border border-line border-t-[3px] bg-card/60 p-2.5"
+      style={{ borderTopColor: color }}
+    >
       <div className="mb-1.5 flex justify-between px-1 text-2xs font-bold uppercase tracking-wider text-ink-3">
-        <span>{t("group_name", { group: grp })}</span>
+        <span style={{ color }}>{t("group_name", { group: grp })}</span>
         <span>{t("group_table")}</span>
       </div>
       <ol className="space-y-1">
@@ -591,6 +604,7 @@ function DrawCard(props: CardProps & { compact?: boolean }) {
   const { slot } = useMatchNames(players);
   const state = matchState(m, now);
   const todo = state === "open" && !pickByMatch.get(m.match_no);
+  const color = useGroupColor(matches)(m.round === "RR" ? m.grp : null);
 
   return (
     <button
@@ -600,7 +614,7 @@ function DrawCard(props: CardProps & { compact?: boolean }) {
       disabled={state === "waiting"}
       aria-label={`${label(m, matches)}: ${slot(m, 1, matches)} – ${slot(m, 2, matches)}`}
       className={cn(
-        "focus-ring block w-full rounded-2xl border bg-card text-start transition-colors",
+        "focus-ring relative block w-full overflow-hidden rounded-2xl border bg-card text-start transition-colors",
         compact ? "p-2.5 text-sm" : "p-3",
         todo
           ? "skg-glow border-accent"
@@ -612,6 +626,13 @@ function DrawCard(props: CardProps & { compact?: boolean }) {
         state !== "waiting" && "hover:border-ink-3",
       )}
     >
+      {color && (
+        <span
+          aria-hidden
+          className="absolute inset-y-0 start-0 w-1"
+          style={{ background: color }}
+        />
+      )}
       <div className="mb-2 flex items-baseline justify-between gap-2 text-2xs">
         <span className="font-bold uppercase tracking-wider text-ink-3">{label(m, matches)}</span>
         <Status m={m} now={now} />

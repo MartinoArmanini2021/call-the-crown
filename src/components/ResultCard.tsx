@@ -21,6 +21,7 @@ import { playerName } from "./Brand";
 import { ShareCallButton } from "./CallCard";
 import { useMatchLabel } from "./MatchCard";
 import { Scoreboard } from "./Scoreboard";
+import { useGroupColor } from "./groupColors";
 
 export function ResultCard({
   match,
@@ -38,6 +39,7 @@ export function ResultCard({
   const event = useEvent();
   const { t, locale } = useT();
   const label = useMatchLabel();
+  const groupColor = useGroupColor(matches)(match.round === "RR" ? match.grp : null);
   const settled = match.status !== "scheduled";
   const short = (id: string | null) => {
     const name = playerName(id ? players.get(id) : undefined, locale);
@@ -57,7 +59,10 @@ export function ResultCard({
     <article className="card space-y-3 p-4" aria-label={label(match, matches)}>
       <header className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-2xs font-bold uppercase tracking-wider text-ink-3">
+          <p
+            className="text-2xs font-bold uppercase tracking-wider text-ink-3"
+            style={groupColor ? { color: groupColor } : undefined}
+          >
             {label(match, matches)}
           </p>
           <h3 className="headline truncate text-xl">
