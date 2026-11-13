@@ -62,7 +62,7 @@ insert into public.event_config (
      "consent_gsgm_it": "Mandami novità sui giochi di Grand Slam GM (facoltativo)."
    }',
   '[]',
-  '{"arabic": false, "italian": true, "rarity_min_picks": 50}',
+  '{"arabic": false, "italian": true, "rarity_min_picks": 5}',   -- crowd split from 5 picks (Tino, 13 Nov 2026: friends)
   '{"time": "14:00",
     "days": {"McEnroe": ["2026-11-15", "2026-11-17", "2026-11-19"],
              "Lendl":   ["2026-11-16", "2026-11-18", "2026-11-20"]}}'

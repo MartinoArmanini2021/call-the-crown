@@ -72,7 +72,7 @@ insert into public.event_config (
      "consent_gsgm_it": "Mandami novità sui giochi di Grand Slam GM (facoltativo)."
    }',
   '[]',
-  '{"arabic": false, "italian": true, "rarity_min_picks": 50}',
+  '{"arabic": false, "italian": true, "rarity_min_picks": 5}',   -- crowd split from 5 picks (Tino, 13 Nov 2026: friends)
   -- Days 2 and 3 of each group are scheduled by the database once its day-1 matches are settled
   -- (0053): the day-1 winners meet on day 2, the day-1 losers too; the other two pairs on day 3. Each
   -- gets 14:00 Turin, the first singles start of the day session, as its lock; an operator can move a
